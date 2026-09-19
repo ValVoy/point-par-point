@@ -66,6 +66,11 @@ plupart des arbitrages à venir.
 | Hébergement | VPS Hetzner, Coolify, `Dockerfile` | Conforme à `APP/Coolify/ETAT.md`, budget mémoire estimé 300 à 500 Mo |
 | Dépôt | GitHub **privé**, déploiement Coolify depuis `main` | Le dossier n'a aucun distant aujourd'hui, c'est le risque à lever en premier |
 
+**Pas de CLI Turso sur cette machine**, vérifié le 20-09-2026 : la version `1.0.32` ne publie
+que des binaires Darwin et Linux, et la documentation officielle exige WSL, abandonné mi-2026. Les
+bases et les jetons se créent au tableau de bord `turso.tech` ; tout le reste passe par
+`@libsql/client`, déjà installé (`npm run db:migrate`, `db:demo`, `db:sql`).
+
 Pas de dépendance à une API tierce au premier lot : ni Instagram, ni fédération, ni YouTube Data.
 Les épisodes se saisissent par leur adresse publique.
 

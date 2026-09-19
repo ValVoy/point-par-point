@@ -19,7 +19,8 @@ Prochaine étape : la connexion et la coquille de l'administration.
 - [x] Créer le dépôt GitHub privé et pousser le squelette
 - [x] Initialiser Next.js 15, TypeScript strict, Tailwind
 - [x] Schéma Drizzle complet, 17 tables, colonnes du lot 2 comprises, migration vérifiée
-- [ ] Créer la base Turso réelle et y appliquer la migration
+- [x] Base Turso de développement migrée et semée (`projet-volley-local-valvoy`, `aws-eu-west-1`)
+- [ ] Base Turso de production, le jour du déploiement
 - [x] Authentification identifiant et mot de passe, sessions en base, deux rôles
 - [ ] Envoi d'images vers R2 avec redimension
 - [x] Jeu de données de démonstration marqué `demo`, comptage et commande de purge

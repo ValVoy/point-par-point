@@ -8,12 +8,13 @@
     "start": "next start",
     "lint": "eslint",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
+    "db:migrate": "tsx scripts/migrer.ts",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:demo": "tsx scripts/semer-demo.ts",
     "db:purge-demo": "tsx scripts/purger-demo.ts",
-    "db:admin": "tsx scripts/creer-admin.ts"
+    "db:admin": "tsx scripts/creer-admin.ts",
+    "db:sql": "tsx scripts/sql.ts"
   },
   "dependencies": {
     "@libsql/client": "^0.17.3",
