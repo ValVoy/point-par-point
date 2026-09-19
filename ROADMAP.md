@@ -4,24 +4,30 @@
 
 ## État actuel
 
-**Cadrage terminé le 19-09-2026**, 40 questions en neuf salves. Le plan complet est dans
-`PLAN.md`, les principes de conception dans `codex.md`. Aucun code écrit.
+**Plan validé le 19-09-2026 au soir, fondations posées dans la nuit du 19 au 20-09-2026.**
 
-En attente de validation du plan par l'utilisateur avant le premier fichier de code.
+Ce qui tourne et a été vérifié : Next.js 15 en TypeScript strict, 17 tables Drizzle migrées sur
+SQLite, authentification à deux rôles éprouvée bout en bout, jeu de démonstration de 50
+enregistrements et sa purge. Aucun écran d'administration, aucune page publique réelle.
+
+Prochaine étape : la connexion et la coquille de l'administration.
 
 ## Lot 1 , le site en ligne
 
 ### Fondations
 
-- [ ] Créer le dépôt GitHub privé et pousser le squelette
-- [ ] Initialiser Next.js 15, TypeScript strict, Tailwind
-- [ ] Base Turso, schéma Drizzle complet (y compris les colonnes du lot 2, vides)
-- [ ] Authentification identifiant et mot de passe, sessions en base, deux rôles
+- [x] Créer le dépôt GitHub privé et pousser le squelette
+- [x] Initialiser Next.js 15, TypeScript strict, Tailwind
+- [x] Schéma Drizzle complet, 17 tables, colonnes du lot 2 comprises, migration vérifiée
+- [ ] Créer la base Turso réelle et y appliquer la migration
+- [x] Authentification identifiant et mot de passe, sessions en base, deux rôles
 - [ ] Envoi d'images vers R2 avec redimension
-- [ ] Jeu de données de démonstration, marqué `demo`, avec bandeau et commande de purge
+- [x] Jeu de données de démonstration marqué `demo`, comptage et commande de purge
+- [ ] Bandeau de démonstration dans l'administration (attend la coquille d'administration)
 
 ### Administration
 
+- [ ] Écran de connexion et coquille de l'administration
 - [ ] Saisons et effectif (numéro et poste portés par la saison)
 - [ ] Calendrier de la saison, saisie en masse
 - [ ] Score et détail set par set, écran court pensé pour le téléphone
@@ -45,6 +51,7 @@ En attente de validation du plan par l'utilisateur avant le premier fichier de c
 - [ ] Bilan de saison calculé depuis les scores
 - [ ] Mentions légales et politique de confidentialité
 - [ ] Compteur d'audience sans cookie
+- [ ] Favicon et identité visuelle (attend le vrai nom et les couleurs du maillot)
 
 ### Avant la mise en ligne
 

@@ -85,3 +85,58 @@ site où un inconnu écrit, et c'est lui qui déclenchera la revue de sécurité
 - Vérifié : rien à vérifier, aucun code. Le plan attend la validation de l'utilisateur.
 - Suite : faire valider le plan, créer le dépôt GitHub privé et pousser le squelette, puis
   initialiser Next.js 15 et le schéma Drizzle complet, colonnes du lot 2 comprises.
+
+## 20-09-2026
+
+**00:20** · **[fondations] Plan validé, fondations techniques posées et vérifiées**
+
+Le plan a été validé sans réserve dans la foulée du cadrage. Séance de nuit consacrée aux seules
+fondations : rien de visible, tout ce sur quoi le reste va s'appuyer.
+
+Choix de départ qui a évité une heure de tâtonnement : plutôt que de lancer `create-next-app`,
+interdit par la règle npm du socle puisqu'il s'exécute en `@latest`, j'ai repris à l'identique les
+versions de `ope_cdm`, qui tourne en production depuis des mois. Next 15.5.18, React 19.1.0,
+Drizzle 0.45, Tailwind 4. Elles sont éprouvées et publiées depuis longtemps, ce qui règle d'un coup
+la question de la chaîne d'approvisionnement. La structure du projet a été posée fichier par
+fichier, sans générateur.
+
+Le schéma fait dix-sept tables, découpées en trois fichiers par domaine plutôt qu'un seul gros :
+sportif, éditorial, exploitation, plus un fichier de colonnes communes qui porte à lui seul deux
+principes du codex. La corbeille et le marquage de démonstration ne sont pas recopiés table par
+table, ils sont définis une fois et réutilisés, ce qui rend impossible d'oublier l'un des deux en
+ajoutant une table.
+
+Deux écarts au plan, tous deux assumés et écrits dans `PLAN.md`. Le premier : bcrypt au lieu
+d'argon2id, parce que les portages argon2 pour Node demandent une compilation native qui alourdit
+l'image Docker et casse au moindre changement d'architecture, pour un enjeu qui reste un faux
+résultat de match publié. Le second va dans l'autre sens : le lint et la vérification des types
+restent actifs pendant le build, alors qu'ils étaient désactivés sur `ope_cdm`. La raison de leur
+désactivation là-bas était le plafond mémoire de 644 Mo de Clever Cloud, que le VPS Hetzner n'a pas.
+
+Rien n'a été déclaré fait sur la foi du code. La migration a été appliquée à une vraie base SQLite
+jetable, et les dix-sept tables ont été relues depuis `sqlite_master`, colonnes comprises : les
+champs de statistique sont bien nullables, ce qui vérifie le principe de saisie partielle dans le
+SQL et non seulement dans l'intention. L'authentification a été éprouvée en dix points, dont les
+trois qui comptent : le jeton stocké en base diffère bien de celui du cookie, un jeton inventé est
+refusé, et désactiver un compte lui retire sa session immédiatement sans qu'il faille penser à la
+supprimer. Le cycle de démonstration a tourné en entier, 50 enregistrements marqués semés puis 116
+lignes effacées enfants compris, le compte utilisateur survivant à la purge comme prévu.
+
+Un défaut trouvé à l'écran, et c'est précisément pourquoi la règle de vérification visuelle existe :
+la page s'affichait sans accents. J'avais écrit les chaînes comme les commentaires, en caractères
+simples. Les commentaires peuvent s'en passer, pas ce que lit un visiteur. Tout le texte affiché est
+repassé en français correct, jeu de démonstration compris, et la règle est notée dans `src/lib/site.ts`
+pour ne pas se reproduire. Au passage, la fabrique d'adresses est sortie du script de démonstration
+vers `src/lib/slug.ts` : deux implémentations divergentes auraient fini par produire deux adresses
+pour le même joueur.
+
+- Portée : `package.json`, configurations Next, TypeScript, ESLint, PostCSS et Drizzle, `Dockerfile`,
+  `src/lib/db/` (schéma en quatre fichiers), `src/lib/auth/` (quatre fichiers), `src/lib/demo.ts`,
+  `src/lib/slug.ts`, `src/app/` (layout, accueil provisoire, jetons de style), `scripts/` (migration,
+  semis, purge, vérification, création d'administrateur).
+- Vérifié : `next build`, `tsc --noEmit` et `eslint` sans erreur ; migration appliquée et relue sur
+  base SQLite ; authentification éprouvée en dix points ; semis et purge de démonstration joués en
+  entier ; page d'accueil vue dans un navigateur, défaut d'accents trouvé et corrigé.
+- Suite : créer la base Turso réelle et y appliquer la migration, puis écrire l'écran de connexion
+  et la coquille de l'administration, avec le bandeau de données de démonstration qui attend déjà
+  son emplacement.

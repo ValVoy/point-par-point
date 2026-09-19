@@ -60,7 +60,7 @@ plupart des arbitrages à venir.
 | Style | Tailwind | Cohérence avec les autres projets |
 | Base | **Turso** (libSQL), accès par Drizzle | Même fournisseur que le CRM et les pronostics, procédure de sauvegarde déjà connue, le VPS reste sans base à administrer |
 | Images | **Bucket R2**, redimension à l'envoi | Déjà en service sur le CRM, gratuit à cette échelle, et le disque du VPS reste tranquille |
-| Authentification | **Identifiant et mot de passe**, maison, session en base, cookie `httpOnly` | Demandé explicitement ; hachage argon2id, pas de dépendance d'authentification tierce |
+| Authentification | **Identifiant et mot de passe**, maison, session en base, cookie `httpOnly` | Demandé explicitement ; hachage **bcrypt** (voir ci-dessous), pas de dépendance d'authentification tierce |
 | Audience | Compteur sans cookie (Plausible ou Umami) | Pas de bannière de consentement, et c'est le chiffre qu'un sponsor demandera |
 | Envoi d'e-mail | **Aucun** | Ni lettre d'information, ni notification : les messages de contact se lisent dans l'administration |
 | Hébergement | VPS Hetzner, Coolify, `Dockerfile` | Conforme à `APP/Coolify/ETAT.md`, budget mémoire estimé 300 à 500 Mo |
@@ -68,6 +68,16 @@ plupart des arbitrages à venir.
 
 Pas de dépendance à une API tierce au premier lot : ni Instagram, ni fédération, ni YouTube Data.
 Les épisodes se saisissent par leur adresse publique.
+
+**Écart assumé par rapport au cadrage** : le plan annonçait argon2id, l'implémentation utilise
+bcrypt. Les portages argon2 pour Node demandent une compilation native ou des binaires par
+plateforme, ce qui alourdit l'image Docker et casse au moindre changement d'architecture. bcrypt en
+JavaScript pur n'a aucune de ces contraintes, tourne déjà en production sur `ope_cdm`, et reste
+adapté : le pire dégât possible derrière ce mot de passe est un faux résultat de match publié.
+
+**Second écart, dans l'autre sens** : contrairement à `ope_cdm`, le lint et la vérification des
+types restent **actifs pendant le build**. Ils avaient été désactivés là-bas parce que l'instance
+Clever Cloud était plafonnée à 644 Mo ; le VPS Hetzner n'a pas cette contrainte.
 
 ## 4. Modèle de données
 

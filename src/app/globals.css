@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+/*
+ * Direction retenue au cadrage : clair et editorial, lisible avant tout, avec
+ * un accent bleu vers violet inspire des maillots. L'accent est PROVISOIRE :
+ * il se confirmera sur une vraie photo de maillot. Tout passe par ces jetons,
+ * de sorte que le changer soit une modification d'une ligne.
+ */
+@theme {
+  --color-papier: #fbfbfd;
+  --color-papier-creuse: #f2f2f6;
+  --color-encre: #14141a;
+  --color-encre-douce: #4a4a58;
+  --color-encre-tenue: #7c7c8c;
+  --color-trait: #e2e2ea;
+
+  --color-accent: #3b4ddb;
+  --color-accent-clair: #6d5ce8;
+  --color-accent-sourd: #eceafc;
+
+  --color-victoire: #17794a;
+  --color-defaite: #a8324a;
+
+  --font-titre: var(--police-titre), ui-serif, Georgia, serif;
+  --font-texte: var(--police-texte), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-papier);
+  color: var(--color-encre);
+  font-family: var(--font-texte);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Le degrade d'accent, utilise avec parcimonie : titres de section et etats. */
+.accent-degrade {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-accent),
+    var(--color-accent-clair)
+  );
+}
+
+/*
+ * Anneau de focus visible partout. Un site consulte au telephone dans un
+ * gymnase se navigue aussi au clavier sur un ordinateur, et le focus par
+ * defaut de Tailwind disparait des qu'on touche aux couleurs.
+ */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

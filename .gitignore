@@ -3,7 +3,18 @@ dist/
 build/
 .next/
 out/
+next-env.d.ts
+
+# Secrets : jamais en clair dans le depot, variables d'environnement seulement.
+.env
 .env*.local
 *.pem
 *.key
+/config/master.key
+/storage/*.sqlite3
+*.sqlite3
+*.db
+
 .DS_Store
+.playwright-mcp/
+tsconfig.tsbuildinfo

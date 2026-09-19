@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+.env
+.env*.local
+*.db
+*.sqlite3
+carnetdebord.md
+codex.md
+ROADMAP.md
+PLAN.md
+CLAUDE.md
