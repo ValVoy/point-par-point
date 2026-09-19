@@ -31,3 +31,57 @@ dossier comme le dépôt seront renommés à ce moment-là.
 - Suite : ouvrir une séance dans ce dossier et lancer le cadrage par questions décrit dans
   `CLAUDE.md`. Première chose à établir avec l'ami : le vrai nom, puis ce que l'interface
   d'administration doit permettre, poste par poste.
+
+**23:15** · **[cadrage] Cadrage d'ouverture terminé, plan écrit**
+
+Neuf salves, quarante questions, tous les terrains du `CLAUDE.md` couverts. Le projet sort de la
+séance avec `PLAN.md`, cinq principes de conception dans le codex et une roadmap en trois lots.
+Aucune ligne de code, comme prévu.
+
+Le concept est un projet média d'abord, adossé à une vraie équipe de championnat FFVB
+départemental ou régional. Le site doit servir deux choses et pas dix : faire s'abonner à la série,
+et faire venir au match. La page d'accueil découle directement de là, dernier épisode et prochain
+match en tête, parce que ce sont les deux seuls contenus qui bougent souvent.
+
+La décision la plus structurante est venue de l'utilisateur, pas de moi. Sur la question des
+statistiques, il a refusé l'arbitrage que je proposais entre fiche riche et fiche pauvre, et a posé
+l'architecture correcte : le match est la source unique, on saisit une feuille de match et tout le
+reste se recalcule. Cela l'a conduit à demander les statistiques volley complètes, ce qui est
+ambitieux, le dépouillement vidéo représentant une vingtaine de minutes par match pendant huit
+mois. La parade est dans le principe de saisie partielle : tous les champs de statistique sont
+nullables, un match peut n'avoir qu'un score, et le site s'affiche proprement dans tous les cas.
+L'ambition est gardée sans que le site meure en novembre comme tous les sites d'équipe.
+
+La deuxième décision de fond est un refus, et elle vaut mieux qu'une fonctionnalité. J'ai proposé
+un classement interne des marqueurs, présenté comme la récompense naturelle des statistiques
+saisies. Réponse : le volley est avant tout un sport d'équipe. Le site ne classera donc jamais les
+joueurs entre eux, les chiffres collectifs passent devant, et les chiffres individuels n'existent
+que sur la page du joueur concerné, sans comparaison. C'est écrit dans le codex comme principe, pas
+comme préférence d'affichage : cela tranche d'avance toutes les demandes futures qui reviendraient
+à hiérarchiser douze copains.
+
+Le reste s'est joué sur des garde-fous, tous retenus : pas de mise en page libre, pas de création
+de pages, pas de suppression définitive, pas de publication sans brouillon. C'est ce qui empêche un
+CMS complet de naître par accident. S'y ajoute une idée de l'utilisateur, durcie d'un cran : le
+site sera livré avec des données de démonstration pour ne pas imposer à l'ami de remplir un site
+vide, mais chaque faux enregistrement portera une colonne `demo`, l'administration affichera un
+bandeau tant qu'il en reste un, et une commande unique purgera l'ensemble. Une note dans un coin
+s'oublie, un bandeau rouge non.
+
+Deux points ont été posés pour ne pas rester flous entre amis. La maintenance : la construction et
+l'hébergement sont offerts, les pannes corrigées au fil de l'eau, aucune nouvelle fonctionnalité
+promise au-delà du lot 1. Et le domaine : acheté par l'utilisateur et offert, alors que l'éditeur
+déclaré du site sera l'ami à titre de particulier. Les deux rôles sont distincts et c'est normal,
+mais les relances de renouvellement arriveront chez l'utilisateur, d'où le transfert prévu et
+documenté à l'avance.
+
+Écarté au passage, et c'est autant de travail en moins : la lettre d'information, donc tout envoi
+d'e-mail et tout le volet données personnelles des visiteurs qui allait avec ; la galerie photos,
+parce que personne ne sait s'il y a des photos ; la boutique avec paiement. Le mur de soutiens est
+gardé mais renvoyé au lot 2, avec validation obligatoire avant affichage : c'est le seul endroit du
+site où un inconnu écrit, et c'est lui qui déclenchera la revue de sécurité manuelle.
+
+- Portée : `PLAN.md` créé, `codex.md` et `ROADMAP.md` réécrits, `carnetdebord.md`.
+- Vérifié : rien à vérifier, aucun code. Le plan attend la validation de l'utilisateur.
+- Suite : faire valider le plan, créer le dépôt GitHub privé et pousser le squelette, puis
+  initialiser Next.js 15 et le schéma Drizzle complet, colonnes du lot 2 comprises.

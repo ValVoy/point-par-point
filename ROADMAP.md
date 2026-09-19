@@ -4,18 +4,79 @@
 
 ## État actuel
 
-Bootstrap initial, 19-09-2026. Aucun code.
+**Cadrage terminé le 19-09-2026**, 40 questions en neuf salves. Le plan complet est dans
+`PLAN.md`, les principes de conception dans `codex.md`. Aucun code écrit.
 
-Trois décisions déjà prises : interface d'administration obligatoire, hébergement sur le VPS
-Coolify, pas d'intégration Instagram dans le premier lot.
+En attente de validation du plan par l'utilisateur avant le premier fichier de code.
 
-## À faire
+## Lot 1 , le site en ligne
 
-- [ ] Récupérer le vrai nom du concept auprès de l'ami, et renommer dossier et dépôt
-- [ ] Cadrage par questions (cf. `CLAUDE.md`), et plan validé
-- [ ] Définir ce que l'interface d'administration permet, et ce qu'elle ne permet pas
-- [ ] Trancher la stack, la base de données et l'authentification
-- [ ] Vérifier que l'accord d'image des joueurs couvre aussi la publication sur le site
-- [ ] Trancher le nom de domaine (qui l'achète, à quel nom)
-- [ ] Première version du site
-- [ ] Avant mise en ligne : sonde Todai et sauvegarde nocturne de la base
+### Fondations
+
+- [ ] Créer le dépôt GitHub privé et pousser le squelette
+- [ ] Initialiser Next.js 15, TypeScript strict, Tailwind
+- [ ] Base Turso, schéma Drizzle complet (y compris les colonnes du lot 2, vides)
+- [ ] Authentification identifiant et mot de passe, sessions en base, deux rôles
+- [ ] Envoi d'images vers R2 avec redimension
+- [ ] Jeu de données de démonstration, marqué `demo`, avec bandeau et commande de purge
+
+### Administration
+
+- [ ] Saisons et effectif (numéro et poste portés par la saison)
+- [ ] Calendrier de la saison, saisie en masse
+- [ ] Score et détail set par set, écran court pensé pour le téléphone
+- [ ] Épisodes : adresse YouTube, résumé, lien vers un match
+- [ ] Actualités, avec brouillon obligatoire
+- [ ] Chronologie du projet, staff, partenaires
+- [ ] Classement de la poule, avec sa date de mise à jour
+- [ ] Messages de contact
+- [ ] Comptes utilisateurs, corbeille
+
+### Site public
+
+- [ ] Accueil : dernier épisode et prochain match
+- [ ] Effectif, et une page par joueur
+- [ ] Matchs : calendrier, page d'un match, bouton d'ajout à l'agenda
+- [ ] Série : liste et page par épisode
+- [ ] Actualités
+- [ ] Le projet et sa chronologie, l'équipe derrière
+- [ ] Où nous voir jouer : salle, adresse, carte
+- [ ] Partenaires, contact
+- [ ] Bilan de saison calculé depuis les scores
+- [ ] Mentions légales et politique de confidentialité
+- [ ] Compteur d'audience sans cookie
+
+### Avant la mise en ligne
+
+- [ ] Revue de sécurité manuelle en passe adversariale (formulaire de contact, passe complète)
+- [ ] Purge des données de démonstration, bandeau disparu
+- [ ] Déploiement Coolify depuis `main`
+- [ ] Sonde Todai sur le domaine
+- [ ] Sauvegarde nocturne de la base Turso
+
+## Lot 2
+
+- [ ] Saisie tabulaire des feuilles de match, pensée pour le clavier
+- [ ] Statistiques collectives publiées, chiffres sur les fiches joueurs
+- [ ] Mur de soutiens, validation avant affichage
+- [ ] Kit presse et partenaires à télécharger
+- [ ] Historique des confrontations
+
+## Lot 3
+
+- [ ] Score en direct depuis le gymnase
+- [ ] Récupération automatique du classement fédéral, si le portail le permet
+- [ ] Galerie photos
+- [ ] Intégration Instagram, si l'API le permet un jour
+
+## À vérifier auprès de l'ami
+
+Aucun de ces points ne bloque le développement.
+
+- [ ] Le vrai nom du concept, puis renommer dossier et dépôt
+- [ ] Identité graphique de la série : logo, couleurs, typographie
+- [ ] Le championnat exact et la poule
+- [ ] Que l'accord de droit à l'image couvre aussi la publication sur un site public
+- [ ] La salle, son adresse et ses horaires
+- [ ] Qui saisira, et donc s'il faut vraiment deux comptes dès le départ
+- [ ] Achat du nom de domaine, et transfert éventuel à son nom plus tard
