@@ -11,10 +11,9 @@ SQLite, authentification à deux rôles éprouvée bout en bout, jeu de démonst
 enregistrements et sa purge. Aucun écran d'administration, aucune page publique réelle.
 
 Ce qui marche à l'écran : connexion, déconnexion, navigation réduite selon le rôle, bandeau de
-démonstration. Aucun écran de saisie, aucune page publique réelle.
+démonstration, gestion des saisons et de l'effectif. Aucune page publique réelle.
 
-Prochaine étape : les écrans de saisie, en commençant par les saisons et l'effectif, puisque tout
-le reste s'y rattache.
+Prochaine étape : les matchs, calendrier puis score set par set.
 
 ## Lot 1 , le site en ligne
 
@@ -33,7 +32,9 @@ le reste s'y rattache.
 ### Administration
 
 - [x] Écran de connexion, limitation des tentatives, coquille et navigation par rôle
-- [ ] Saisons et effectif (numéro et poste portés par la saison)
+- [x] Saisons : création, modification, saison courante, corbeille
+- [x] Effectif : ajout de joueur, numéro et poste par saison, capitaine, retrait
+- [ ] Fiche joueur détaillée (photo, présentation longue, parcours)
 - [ ] Calendrier de la saison, saisie en masse
 - [ ] Score et détail set par set, écran court pensé pour le téléphone
 - [ ] Épisodes : adresse YouTube, résumé, lien vers un match

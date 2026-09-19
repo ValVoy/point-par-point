@@ -192,3 +192,46 @@ pluriel.
   Compte d'essai et tentatives effacés de la base après le test.
 - Suite : les écrans de saisie, en commençant par les saisons et l'effectif, puisque tout le reste
   s'y rattache. Changer le mot de passe provisoire affiché en clair dans le terminal.
+
+**00:50** · **[administration] Saisons et effectif, les deux écrans dont tout dépend**
+
+Premiers écrans de saisie. Ils passent en premier parce que tout le reste s'y rattache : un match
+appartient à une saison, une feuille de match désigne des joueurs, et sans ces deux tables rien
+d'autre ne peut être saisi.
+
+Les règles métier tenues par le code plutôt que par la base, chacune pour une raison. **Une seule
+saison courante** : SQLite ne sait pas exprimer « un seul vrai dans cette colonne », et deux
+saisons courantes rendraient la page d'accueil indéterministe. **Un numéro de maillot unique par
+saison** : une contrainte d'unicité aurait renvoyé « constraint failed », alors que l'écran dit
+maintenant « Le numéro 10 est déjà porté par Romain Démo ». **Un seul capitaine par saison**, même
+logique. Et **une saison courante ne peut pas partir à la corbeille**, ce serait laisser le site
+sans saison affichable.
+
+Le retrait d'un joueur du groupe ne touche pas au joueur lui-même, seulement à sa ligne d'effectif :
+ses feuilles de match des saisons passées y font référence, et il peut revenir l'année suivante.
+C'est le principe de la source unique appliqué à l'effectif.
+
+Trois défauts trouvés à l'écran, aucun par le compilateur. Le bouton « Enregistrer » sautait à la
+ligne dès qu'un nom était long : `flex-wrap` fait dépendre le retour à la ligne de la largeur du
+contenu, remplacé par une grille dont les colonnes sont décidées. Les actions « désigner capitaine »
+et « retirer du groupe » flottaient hors de la carte, sur le fond gris, faute d'être dans le
+composant de ligne. Et le badge « capitaine » se faisait couper par la troncature du nom alors
+qu'il est plus court que lui : il est descendu sur la ligne de détails.
+
+Une correction avant même l'écran : j'avais placé des `<div>` en enfants directs d'un `<ul>`, ce qui
+est invalide en HTML. Le composant de ligne rend désormais un `<div>` et c'est la page qui
+l'enveloppe dans son `<li>`.
+
+Noté au passage, parce que la panne est déroutante : lancer `next build` pendant que le serveur de
+développement tourne écrase son `.next` et casse tous ses fichiers statiques, sans message clair.
+Le serveur continue de répondre en HTML mais la page arrive sans style ni script.
+
+- Portée : `src/components/formulaire.tsx`, `src/lib/dates.ts`, `src/lib/postes.ts`,
+  `src/lib/saisons.ts`, `src/app/administration/(interieur)/saisons/` et `.../effectif/`.
+- Vérifié : `next build`, `tsc --noEmit` et `eslint` sans erreur. Dans le navigateur : création
+  d'une saison, mise à la corbeille et restauration, tri de l'effectif par poste puis par numéro,
+  refus d'un numéro en double avec le nom du joueur en conflit, ajout de deux joueurs homonymes
+  produisant `etienne-demo` et `etienne-demo-2`. Données d'essai effacées de la base après le test,
+  les 50 enregistrements de démonstration sont intacts.
+- Suite : les matchs, calendrier de la saison saisi d'un coup, puis le score set par set sur un
+  écran court pensé pour le téléphone.
