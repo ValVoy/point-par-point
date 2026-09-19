@@ -6,14 +6,17 @@
 
 **Plan validé le 19-09-2026 au soir, fondations posées dans la nuit du 19 au 20-09-2026.**
 
-Ce qui tourne et a été vérifié : Next.js 15 en TypeScript strict, 17 tables Drizzle migrées sur
-SQLite, authentification à deux rôles éprouvée bout en bout, jeu de démonstration de 50
-enregistrements et sa purge. Aucun écran d'administration, aucune page publique réelle.
+Ce qui tourne et a été vérifié : Next.js 15 en TypeScript strict, 18 tables Drizzle migrées sur
+Turso, jeu de démonstration de 50 enregistrements et sa purge.
 
-Ce qui marche à l'écran : connexion, déconnexion, navigation réduite selon le rôle, bandeau de
-démonstration, gestion des saisons et de l'effectif. Aucune page publique réelle.
+Ce qui marche à l'écran : connexion avec limitation des tentatives, déconnexion, navigation
+réduite selon le rôle, bandeau de démonstration, gestion des saisons et de l'effectif.
+**Aucune page publique réelle**, l'accueil est encore provisoire.
 
 Prochaine étape : les matchs, calendrier puis score set par set.
+
+**À revoir avant d'écrire les pages publiques** : la largeur de la mise en page et le motion
+design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`.
 
 ## Lot 1 , le site en ligne
 
@@ -58,6 +61,23 @@ Prochaine étape : les matchs, calendrier puis score set par set.
 - [ ] Mentions légales et politique de confidentialité
 - [ ] Compteur d'audience sans cookie
 - [ ] Favicon et identité visuelle (attend le vrai nom et les couleurs du maillot)
+
+### Direction artistique , à revoir (demandé le 20-09-2026)
+
+Le détail et les raisons sont dans `codex.md`, section Direction artistique. Ces deux chantiers
+concernent le **site public**, pas l'administration.
+
+- [ ] **Élargir la mise en page** : réduire la marge latérale sans la supprimer, définir une
+      échelle de largeurs nommée (colonne de lecture, colonne large, pleine largeur) et
+      l'appliquer partout plutôt que de décider page par page
+- [ ] **Bandeaux pleine largeur** : images, bandes de résultats, lecteurs vidéo et sections
+      colorées vont d'un bord à l'autre, seul le texte reste dans la colonne
+- [ ] **Motion design, chantier à part entière** : le mouvement doit raconter le volley.
+      Repère donné par l'utilisateur, un ballon qui passe au-dessus d'un filet au défilement
+- [ ] Choisir la bibliothèque d'animation (Framer Motion est déjà en service sur `ope_cdm`) ou
+      s'en tenir au CSS, **avant** d'écrire les pages publiques : plaquer l'animation après coup
+      coûte toujours plus cher
+- [ ] Vérifier `prefers-reduced-motion` sur chaque animation ajoutée
 
 ### Avant la mise en ligne
 

@@ -235,3 +235,34 @@ Le serveur continue de répondre en HTML mais la page arrive sans style ni scrip
   les 50 enregistrements de démonstration sont intacts.
 - Suite : les matchs, calendrier de la saison saisi d'un coup, puis le score set par set sur un
   écran court pensé pour le téléphone.
+
+**00:55** · **[direction artistique] Deux exigences de design posées en fin de séance**
+
+Fin de la première journée de code. L'utilisateur arrête la séance mais pose deux demandes qu'il
+veut voir survivre à la session, et elles sont notées dans `codex.md`, `ROADMAP.md`, `PLAN.md` et
+en mémoire plutôt que dans une seule.
+
+**La largeur.** Tout le site est aujourd'hui dans une colonne de `max-w-5xl`, jugée trop étroite.
+La marge latérale reste, elle n'est pas remise en cause, mais elle doit maigrir. Et surtout, elle
+cesse d'être absolue : les bandeaux doivent pouvoir aller d'un bord à l'autre de l'écran, images,
+bandes de résultats, lecteurs vidéo, sections colorées. La conséquence pratique est qu'il faut une
+échelle de largeurs nommée appliquée partout, sinon chaque page aura la sienne.
+
+**Le motion design**, avec insistance, le mot « vraiment » en majuscules. Ce n'est pas une finition
+de fin de projet mais une ambition du site. L'exemple donné dit bien l'intention : au défilement,
+un ballon de volley qui passe au-dessus d'un filet. Ce qui compte n'est pas l'effet, c'est que le
+mouvement raconte le sport dont le site parle.
+
+La conséquence sur l'ordre des travaux est réelle et vaut d'être écrite : **la bibliothèque
+d'animation se tranche avant d'écrire les pages publiques**, pas après. Plaquer du mouvement sur
+des pages déjà faites coûte toujours plus cher que de les concevoir animées. Trois garde-fous
+notés au codex pour que l'ambition ne se retourne pas contre le site : `prefers-reduced-motion`
+respecté sans exception, le mouvement qui ne retarde jamais la lecture d'une information, et rien
+de tout cela dans l'administration, où l'ami veut de la vitesse et de la prévisibilité.
+
+- Portée : `codex.md` (nouvelle section Direction artistique), `ROADMAP.md` (chantier dédié),
+  `PLAN.md` (ligne Animation dans l'architecture), mémoire de projet.
+- Vérifié : rien à vérifier, aucun code écrit dans cette entrée.
+- Suite : trancher la bibliothèque d'animation et l'échelle de largeurs, **avant** d'écrire les
+  pages publiques. Côté administration, reprendre aux matchs : calendrier de la saison saisi d'un
+  coup, puis score set par set sur un écran court pensé pour le gymnase.

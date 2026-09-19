@@ -58,6 +58,7 @@ plupart des arbitrages à venir.
 |---|---|---|
 | Cadre | Next.js 15, App Router, TypeScript strict | Même stack que le reste des projets, rendu serveur pour le référencement |
 | Style | Tailwind | Cohérence avec les autres projets |
+| Animation | À trancher avant les pages publiques | Le motion design est un objectif du projet, pas une finition : voir `codex.md` |
 | Base | **Turso** (libSQL), accès par Drizzle | Même fournisseur que le CRM et les pronostics, procédure de sauvegarde déjà connue, le VPS reste sans base à administrer |
 | Images | **Bucket R2**, redimension à l'envoi | Déjà en service sur le CRM, gratuit à cette échelle, et le disque du VPS reste tranquille |
 | Authentification | **Identifiant et mot de passe**, maison, session en base, cookie `httpOnly` | Demandé explicitement ; hachage **bcrypt** (voir ci-dessous), pas de dépendance d'authentification tierce |

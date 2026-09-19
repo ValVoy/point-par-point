@@ -10,6 +10,9 @@
   - [La saisie est partielle par nature](#la-saisie-est-partielle-par-nature)
   - [Le site vieillit dignement](#le-site-vieillit-dignement)
   - [Des champs, jamais de la mise en page](#des-champs-jamais-de-la-mise-en-page)
+- [Direction artistique](#direction-artistique)
+  - [La largeur : des marges, mais moins, et des bandeaux pleine largeur](#la-largeur--des-marges-mais-moins-et-des-bandeaux-pleine-largeur)
+  - [Le motion design est un objectif, pas une décoration](#le-motion-design-est-un-objectif-pas-une-décoration)
 - [Conventions](#conventions)
   - [Le marquage des données de démonstration](#le-marquage-des-données-de-démonstration)
   - [L'effectif appartient à la saison, pas au joueur](#leffectif-appartient-à-la-saison-pas-au-joueur)
@@ -58,6 +61,59 @@ création de pages nouvelles. La structure du site est fixe, seul son contenu bo
 
 Deux effets recherchés : le site ne peut pas devenir laid en trois mois, et un CMS complet ne peut
 pas naître par accident au fil des demandes.
+
+## Direction artistique
+
+Demandé par l'utilisateur le 20-09-2026, en fin de première séance de code, après avoir vu les
+premiers écrans d'administration. **Ces deux points sont à revoir**, ils ne sont pas tenus par
+l'existant : les écrans actuels ont été posés pour valider la mécanique, pas l'apparence.
+
+### La largeur : des marges, mais moins, et des bandeaux pleine largeur
+
+Le site est actuellement contenu dans une colonne centrée de `max-w-5xl`, soit 1024 pixels, avec
+une marge latérale importante sur un écran large. **La marge reste**, elle n'est pas remise en
+cause : c'est elle qui rend le texte lisible et le site respirable.
+
+Ce qui change, c'est son dosage et son caractère absolu.
+
+- **Réduire la marge**, donc élargir la colonne de contenu. Un site de média sportif qui vit de
+  photos et de vidéos ne peut pas tenir dans une colonne de texte.
+- **Ne pas hésiter aux bandeaux pleine largeur.** Une image de match, une bande de résultats, un
+  lecteur vidéo, une section de couleur : ces éléments vont d'un bord à l'autre de l'écran, et
+  seul leur contenu textuel reste dans la colonne. C'est l'alternance entre pleine largeur et
+  colonne contenue qui donne son rythme à une page.
+- Conséquence pratique : la largeur ne se décide plus page par page. Il faut une **échelle de
+  largeurs** nommée (colonne de lecture, colonne large, pleine largeur) appliquée partout, sinon
+  chaque écran aura la sienne.
+
+### Le motion design est un objectif, pas une décoration
+
+Demande explicite et insistante de l'utilisateur : **« je voudrais qu'on travaille VRAIMENT le
+motion design »**. Ce n'est pas une finition de fin de projet, c'est une ambition à part entière
+du site, et elle doit être prévue dans la conception plutôt que plaquée après coup.
+
+L'exemple donné, qui dit bien l'intention : **au défilement, un ballon de volley qui passe
+au-dessus d'un filet**. L'idée n'est pas l'effet en soi, c'est que le mouvement raconte le sport
+dont le site parle.
+
+Pistes à explorer le moment venu, pour ne pas repartir de zéro :
+
+- **Le défilement comme trame de jeu** : un ballon qui traverse la page, un filet qui sépare deux
+  sections, une trajectoire qui relie le dernier épisode au prochain match.
+- **Les chiffres qui se posent** : un score qui s'inscrit set par set plutôt que d'apparaître
+  d'un bloc, un bilan de saison qui se construit.
+- **Les entrées d'éléments** : fiches joueurs qui se placent comme une composition d'équipe,
+  cartes de match qui arrivent dans l'ordre du calendrier.
+- **Les transitions entre pages**, de la liste de l'effectif vers la page d'un joueur.
+
+Trois garde-fous, pour que l'ambition ne se retourne pas contre le site.
+
+1. **`prefers-reduced-motion` est respecté**, déjà en place dans `globals.css`. Toute animation
+   ajoutée doit s'y plier, sans exception.
+2. **Le mouvement ne retarde jamais la lecture.** Un visiteur qui cherche l'heure du prochain match
+   ne doit pas attendre la fin d'une animation pour la voir.
+3. **Rien de tout cela ne va dans l'administration.** L'ami y saisit des résultats, il veut de la
+   vitesse et de la prévisibilité, pas un spectacle.
 
 ## Conventions
 
