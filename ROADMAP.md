@@ -10,7 +10,11 @@ Ce qui tourne et a été vérifié : Next.js 15 en TypeScript strict, 17 tables 
 SQLite, authentification à deux rôles éprouvée bout en bout, jeu de démonstration de 50
 enregistrements et sa purge. Aucun écran d'administration, aucune page publique réelle.
 
-Prochaine étape : la connexion et la coquille de l'administration.
+Ce qui marche à l'écran : connexion, déconnexion, navigation réduite selon le rôle, bandeau de
+démonstration. Aucun écran de saisie, aucune page publique réelle.
+
+Prochaine étape : les écrans de saisie, en commençant par les saisons et l'effectif, puisque tout
+le reste s'y rattache.
 
 ## Lot 1 , le site en ligne
 
@@ -24,11 +28,11 @@ Prochaine étape : la connexion et la coquille de l'administration.
 - [x] Authentification identifiant et mot de passe, sessions en base, deux rôles
 - [ ] Envoi d'images vers R2 avec redimension
 - [x] Jeu de données de démonstration marqué `demo`, comptage et commande de purge
-- [ ] Bandeau de démonstration dans l'administration (attend la coquille d'administration)
+- [x] Bandeau de démonstration dans l'administration
 
 ### Administration
 
-- [ ] Écran de connexion et coquille de l'administration
+- [x] Écran de connexion, limitation des tentatives, coquille et navigation par rôle
 - [ ] Saisons et effectif (numéro et poste portés par la saison)
 - [ ] Calendrier de la saison, saisie en masse
 - [ ] Score et détail set par set, écran court pensé pour le téléphone

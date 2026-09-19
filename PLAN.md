@@ -172,6 +172,12 @@ classement, lire les messages de contact, gérer les comptes.
 Ce qu'elle ne permet pas, volontairement : **créer une page**, **mettre en page librement**,
 **supprimer définitivement**, **publier sans passer par un brouillon**.
 
+**La connexion est limitée en débit**, ajout du 20-09-2026 non prévu au cadrage. Deux compteurs en
+fenêtre glissante de quinze minutes : cinq échecs par adresse visée, cinquante par adresse réseau.
+Le contrôle passe **avant** le hachage du mot de passe, sinon un attaquant déclencherait à volonté
+un calcul volontairement coûteux. Le seuil par réseau est large à dessein : l'ami et ses
+coéquipiers peuvent partager une connexion, et verrouiller tout le monde serait pire que le mal.
+
 **La saisie se fait à deux mains**, décidé au cadrage : le score part du gymnase depuis un
 téléphone, écran court et gros boutons ; les statistiques détaillées se complètent plus tard depuis
 un ordinateur, dans une grille pensée pour le clavier. Ce sont deux écrans distincts, et le second

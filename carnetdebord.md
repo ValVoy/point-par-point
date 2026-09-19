@@ -140,3 +140,55 @@ pour le même joueur.
 - Suite : créer la base Turso réelle et y appliquer la migration, puis écrire l'écran de connexion
   et la coquille de l'administration, avec le bandeau de données de démonstration qui attend déjà
   son emplacement.
+
+**00:35** · **[administration] Connexion, rôles et bandeau de démonstration**
+
+Autonomie sur la base de données accordée en cours de séance, inscrite dans le `CLAUDE.md` du
+projet avec deux réserves que je me suis gardées faute d'accord explicite : la base de production
+et les migrations destructives se demandent toujours.
+
+La base Turso de développement était déjà branchée, l'utilisateur ayant posé le `.env.local`
+pendant la séance précédente. Migrée, semée, et la connexion vérifiée avant tout le reste.
+
+Point d'outillage tranché définitivement : **il n'existe pas de CLI Turso pour Windows**. Vérifié
+plutôt que supposé, la version `1.0.32` ne publie que des binaires Darwin et Linux, et la
+documentation officielle exige toujours WSL, abandonné mi-2026. Le carnet d'`ope_cdm` le
+documentait depuis des mois et je ne l'avais pas lu avant de proposer la commande. Plutôt que
+d'installer un manifest tiers, j'ai écrit `npm run db:sql`, qui couvre l'usage réel de
+`turso db shell` en passant par `@libsql/client`, déjà installé.
+
+L'écran de connexion a reçu une **limitation de débit** qui n'était pas au plan, reprise de ce qui
+existe sur `ope_cdm`. Elle se justifie par le cadrage lui-même : la connexion est, avec le
+formulaire de contact, l'un des deux seuls endroits où une entrée non contrôlée entre dans le
+système, donc l'un des deux qui déclenchent la revue de sécurité. Deux compteurs en fenêtre
+glissante, serré par adresse visée, large par adresse réseau, parce que l'équipe peut partager une
+connexion. Le contrôle passe avant le hachage du mot de passe : laisser déclencher sans limite un
+calcul volontairement coûteux serait offrir un déni de service sur le processeur.
+
+Deux défauts corrigés dans ma propre copie avant de committer. D'abord, j'avais écrit une purge des
+tentatives qui effaçait aussi par adresse réseau après une connexion réussie : quiconque possède un
+compte valide aurait pu remettre son compteur à zéro à volonté et contourner la protection contre
+le balayage. Restreinte à l'adresse visée. Ensuite, mon premier layout d'administration lisait un
+en-tête `x-chemin` qui n'existe pas, pour distinguer la page de connexion du reste. Remplacé par un
+groupe de routes `(interieur)`, qui est la vraie réponse Next.js : la connexion garde son adresse
+mais n'hérite ni de la navigation ni de l'exigence d'être connecté, ce qui serait circulaire.
+
+Deux défauts trouvés à l'écran, et non dans le code. Le formulaire se vidait après un échec, il
+fallait retaper son adresse : c'est le correctif que le carnet d'`ope_cdm` mentionne déjà, l'adresse
+revient désormais avec l'erreur, jamais le mot de passe. Et le bandeau de démonstration affichait
+« 1 saisons, 1 classements », sans accents et sans accord. Un garde-fou qu'on veut voir pris au
+sérieux ne peut pas être écrit à la va-vite, les libellés portent maintenant un singulier et un
+pluriel.
+
+- Portée : `src/lib/auth/tentatives.ts`, `src/lib/db/schema/exploitation.ts` (table
+  `tentatives_auth`, migration `0001`), `src/app/administration/` (layout, groupe `(interieur)`,
+  connexion, coquille, bandeau, tableau de bord), `src/lib/demo.ts`, `scripts/sql.ts`,
+  `CLAUDE.md`, `PLAN.md`, `ROADMAP.md`.
+- Vérifié : `next build`, `tsc --noEmit` et `eslint` sans erreur ; migration `0001` appliquée sur
+  Turso et table relue ; dans le navigateur, refus sur mauvais mot de passe, connexion réussie,
+  redirection de `/administration` vers la connexion, déconnexion effective, et navigation
+  réellement réduite en rôle rédacteur, cinq rubriques au lieu de huit ; limitation de débit
+  éprouvée, blocage au sixième essai, adresse voisine épargnée, compteur remis à zéro après succès.
+  Compte d'essai et tentatives effacés de la base après le test.
+- Suite : les écrans de saisie, en commençant par les saisons et l'effectif, puisque tout le reste
+  s'y rattache. Changer le mot de passe provisoire affiché en clair dans le terminal.

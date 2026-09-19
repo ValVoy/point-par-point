@@ -27,18 +27,27 @@ import {
  * faut alors vouloir ignorer un bandeau pour se tromper.
  */
 
-/** Les tables porteuses de la colonne `demo`, dans l'ordre d'affichage. */
+/**
+ * Les tables porteuses de la colonne `demo`, dans l'ordre d'affichage. Le
+ * libelle est donne au singulier et au pluriel : le bandeau affiche des
+ * comptes, et « 1 saisons » decredibilise un garde-fou qu'on veut voir pris
+ * au serieux.
+ */
 const TABLES_DEMO = [
-  { cle: "saisons", libelle: "saisons", table: saisons },
-  { cle: "joueurs", libelle: "joueurs", table: joueurs },
-  { cle: "effectifs", libelle: "lignes d'effectif", table: effectifs },
-  { cle: "rencontres", libelle: "matchs", table: rencontres },
-  { cle: "classements", libelle: "classements", table: classements },
-  { cle: "episodes", libelle: "episodes", table: episodes },
-  { cle: "actualites", libelle: "actualites", table: actualites },
-  { cle: "etapesProjet", libelle: "etapes de chronologie", table: etapesProjet },
-  { cle: "membresStaff", libelle: "membres du staff", table: membresStaff },
-  { cle: "partenaires", libelle: "partenaires", table: partenaires },
+  { un: "saison", plusieurs: "saisons", table: saisons },
+  { un: "joueur", plusieurs: "joueurs", table: joueurs },
+  { un: "ligne d'effectif", plusieurs: "lignes d'effectif", table: effectifs },
+  { un: "match", plusieurs: "matchs", table: rencontres },
+  { un: "classement", plusieurs: "classements", table: classements },
+  { un: "épisode", plusieurs: "épisodes", table: episodes },
+  { un: "actualité", plusieurs: "actualités", table: actualites },
+  {
+    un: "étape de chronologie",
+    plusieurs: "étapes de chronologie",
+    table: etapesProjet,
+  },
+  { un: "membre du staff", plusieurs: "membres du staff", table: membresStaff },
+  { un: "partenaire", plusieurs: "partenaires", table: partenaires },
 ] as const;
 
 export type CompteDemo = { libelle: string; nombre: number };
@@ -54,13 +63,13 @@ export async function compterDemo(): Promise<{
   const detail: CompteDemo[] = [];
   let total = 0;
 
-  for (const { libelle, table } of TABLES_DEMO) {
+  for (const { un, plusieurs, table } of TABLES_DEMO) {
     const lignes = await db()
       .select({ nombre: count() })
       .from(table)
       .where(and(eq(table.demo, true), isNull(table.supprimeLe)));
     const nombre = lignes[0]?.nombre ?? 0;
-    if (nombre > 0) detail.push({ libelle, nombre });
+    if (nombre > 0) detail.push({ libelle: nombre > 1 ? plusieurs : un, nombre });
     total += nombre;
   }
 

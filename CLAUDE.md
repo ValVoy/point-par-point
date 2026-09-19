@@ -80,10 +80,16 @@ En sortie : un plan écrit, validé par l'utilisateur, avant le premier fichier 
 
 ## Écarts par rapport au socle global
 
-Le socle de `~/.claude/CLAUDE.md` s'applique tel quel. Deux précisions propres à ce dépôt :
+Le socle de `~/.claude/CLAUDE.md` s'applique tel quel. Trois précisions propres à ce dépôt :
 
 - **Autonomie git complète** : Claude exécute lui-même `add`, `commit` et `push`. Jamais de commande
   destructive (`reset --hard`, `push --force`, réécriture d'historique) sans accord explicite.
+- **Autonomie sur la base de données** (accordée le 20-09-2026) : Claude exécute lui-même les
+  migrations et les opérations courantes sur la **base de développement** : `db:generate`,
+  `db:migrate`, `db:demo`, `db:purge-demo`, `db:admin`, `db:sql`. Inutile de fournir les commandes
+  à copier-coller. Deux réserves subsistent : toute opération sur la **base de production** se
+  demande d'abord, et une migration **destructive** (colonne ou table supprimée, données
+  réécrites) se demande aussi, même en développement.
 - **Commits au nom de l'utilisateur, sans aucune trace d'outil** : pas de `Co-Authored-By`, pas de
   `@`, pas de mention d'IA, ni dans les commits ni nulle part ailleurs. Conventional Commits,
   rédigés en français **et** en anglais.
