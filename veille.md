@@ -106,3 +106,46 @@ Branchement prévu : pages en Server Components, îlots client minimaux (`Ballon
 `ScoreRevele`, `TitreCinetique`), un seul point d'enregistrement `lib/gsap.ts`, GSAP jamais chargé
 par l'administration, `gsap.matchMedia()` centralisé pour la réduction du mouvement, test
 Playwright en `reducedMotion: 'reduce'`.
+
+---
+
+## 6. Verdicts de l'utilisateur, 29-09-2026 à 14:13
+
+Références ouvertes et jugées à l'écran par l'utilisateur.
+
+| Site | Verdict | Conséquence |
+|---|---|---|
+| LOVB | Pas intéressant | Écarté |
+| Volleyball World | Aime la série intégrée | **Retenu** : la série traitée comme un contenu à part entière |
+| David Alaba | Superbe, mais hors de portée | **Écarté pour la fiche joueur** : équipe amateur, jamais autant de contenu par joueur. La fiche se construit sur peu de données |
+| Cadillac F1 | Aime beaucoup les présentations Pérez et Bottas, « propre, très qualitatif » | **Référence n°1 de la fiche joueur** : portrait fort, nom massif, peu de texte, traitement égal |
+| EF Pro Cycling | Pas fan | Écarté |
+| Toulouse FC | Très bonne inspiration pour l'effectif | **Référence n°1 de la page effectif** |
+| KV Diksmuide | Classique | Le bloc prochain match est à réinventer, pas à copier |
+| Lando Norris | Ultra qualitatif, adore | **Confirmé référence n°1 du motion** et de la scène du ballon |
+| Audi F1 | Aime, sans voir le lien | Le lien proposé : le geste sportif dans l'interface, soit le prochain match en tableau d'affichage de gymnase, à la place du VS de KV |
+| Mat Voyce | Pourquoi pas | Titres cinétiques retenus, avec parcimonie |
+| Radian | Idée très bonne | **Retenu** : le terrain et les six postes présentés par points au défilement |
+| The Last Dance For Glory | Trop poussé, à la limite de l'illisible | Écarté. « Le projet » peut rester en chapitres, mais sobres |
+| The Immortals | Demanderait beaucoup trop | Écarté |
+| Scout Motors | Des choses à prendre | Garde-fou : l'animation sert l'information |
+| Lacoste Ace Breaker | Rôle pas clair | C'était un contre-exemple (accessibilité). Rien à en tirer de plus, sorti de la liste |
+
+## 7. Système de design, décisions de cadrage du 29-09-2026
+
+- **Couleurs** : reprendre l'existant de l'équipe (maillot, logo, réseaux). À récupérer auprès de l'utilisateur.
+- **Ambiance** : fond sombre et une seule couleur vive, façon Cadillac, soir de match.
+- **Typographie des titres** : grotesque condensée massive, esprit numéro de maillot et tableau de score.
+- **Fiche joueur au lot 1** : portrait, poste, numéro, âge, taille, et une phrase de présentation facultative.
+- **Portraits** : photos existantes (série, Instagram), harmonisées par le site. Pas de séance dédiée au lot 1.
+- **Scène du ballon** : transition de l'accueil, juste sous l'ouverture, qui mène au prochain match. Une seule scène.
+- **Prochain match** : tableau de score de gymnase avec compte à rebours, qui devient le score après le match.
+- **Radian** : terrain cliquable en tête de l'effectif, un clic sur un poste filtre les joueurs et explique le rôle.
+- **Traitement photo** : bichromie aux couleurs de l'équipe (ombres noires, lumières dans la couleur vive), en CSS. La couleur réelle se révèle au survol ou sur la fiche.
+- **Cadrage** : l'ami clique sur le visage à l'envoi, le site cadre toutes les photos autour de ce point au même format. Demande un champ de point focal dans le schéma.
+- **Série** : dernier épisode en vedette, les autres en grille, lecteur YouTube chargé au clic seulement.
+- **Largeurs** : bandeaux pleine largeur pour l'image, le mouvement et les portraits, colonne étroite pour le texte courant.
+- **Tempérament du mouvement** : nerveux et net, départs rapides, arrêt franc, léger rebond, 200 à 400 ms.
+- **Mobile** : version courte de la scène du ballon, pensée pour l'écran vertical, sans épinglage.
+- **Police des titres** : condensée libre et gratuite, auto-hébergée. Trois candidates à comparer à l'écran.
+- **Suite** : planche de style (couleurs, trois polices, un portrait en bichromie, le tableau de score) avant le prototype du ballon. Bloquée par les couleurs de l'équipe.

@@ -13,7 +13,8 @@ Ce qui marche à l'écran : connexion avec limitation des tentatives, déconnexi
 réduite selon le rôle, bandeau de démonstration, gestion des saisons et de l'effectif.
 **Aucune page publique réelle**, l'accueil est encore provisoire.
 
-Prochaine étape (29-09-2026) : la refonte visuelle complète, veille puis système de design. Les
+Prochaine étape (29-09-2026) : la planche de style, dès que les couleurs de l'équipe sont
+connues, puis le prototype du ballon. Les
 matchs dans l'administration suivent, ils ne dépendent pas du visuel.
 
 **À revoir avant d'écrire les pages publiques** : la largeur de la mise en page et le motion
@@ -85,11 +86,13 @@ concernent le **site public**, pas l'administration.
 Méthode décrite dans `CLAUDE.md`, section « Méthode de travail ». Le visuel existant repart de
 zéro, la logique reste.
 
-- [ ] Veille : sites de sport haut de gamme, sites primés pour leur motion, outils d'animation,
-      synthèse commentée dans `veille.md`
-- [ ] Système de design : couleurs, typographie (remplacer le duo provisoire Instrument Serif et
+- [x] Veille : sites de sport haut de gamme, sites primés pour leur motion, outils d'animation,
+      synthèse commentée dans `veille.md`, références jugées par l'utilisateur (29-09-2026)
+- [ ] Système de design, orientations tranchées le 29-09-2026 (`veille.md`, section 7) :
+      planche de style à faire, bloquée par les couleurs de l'équipe. Couleurs, typographie (remplacer le duo provisoire Instrument Serif et
       Inter), échelle de largeurs, espacements, grammaire du mouvement
-- [ ] Choix de la bibliothèque d'animation, versions vérifiées dans le registre
+- [x] Choix de la bibliothèque d'animation : GSAP 3.15.0 et `@gsap/react` 2.1.2, plus le CSS
+      natif (29-09-2026), à installer avec le prototype
 - [x] Montée vers Next 16.3.5 et React 19.3.0 (29-09-2026), pour les View Transitions stables
 - [ ] Prototype de la scène signature : le ballon au-dessus du filet
 - [ ] Réhabillage de l'administration avec le nouveau système, sobre et sans animation

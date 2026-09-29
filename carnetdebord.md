@@ -328,3 +328,28 @@ Next préfère, et la convention est au codex.
   intact après relancement du serveur.
 - Suite : l'utilisateur parcourt les références de `veille.md` et dit ce qui lui parle, puis on
   tranche le système de design en salves de questions.
+
+**14:30** · **[cadrage] Références jugées et système de design orienté**
+
+Reprise après une coupure de session, reconstituée depuis `veille.md` et ce carnet. L'utilisateur a
+ouvert les références et les a jugées à l'écran. Retenus : Lando Norris pour le mouvement, Cadillac
+F1 pour la fiche joueur, Toulouse FC pour l'effectif, Radian pour le terrain et les postes,
+Volleyball World pour la série intégrée. Écartés : LOVB, EF, The Immortals, et The Last Dance, jugé
+à la limite de l'illisible. Alaba est superbe mais hors de portée d'une équipe amateur, qui n'aura
+jamais autant de matière par joueur : la fiche se conçoit donc sur peu de données.
+
+Quatre salves ont suivi et toutes les options recommandées ont été prises sauf une. Pour les
+portraits, pas de séance photo dédiée : on reprend les photos existantes et c'est le site qui les
+harmonise, par une bichromie aux couleurs de l'équipe et un point de visage cliqué dans
+l'administration. Ce choix déplace le travail vers le code, et il ajoute un champ au schéma.
+
+Le reste : fond sombre et une couleur vive, titres en grotesque condensée libre, bandeaux pleine
+largeur et colonne de lecture étroite, mouvement nerveux et net, scène du ballon en transition sous
+l'ouverture de l'accueil avec une version mobile courte, prochain match en tableau de score de
+gymnase. Le détail est dans `veille.md`, sections 6 et 7.
+
+- Portée : `veille.md`, `ROADMAP.md`, `carnetdebord.md`.
+- Vérifié : rien à vérifier, aucun code écrit dans cette entrée.
+- Suite : récupérer les couleurs de l'équipe (maillot, logo, réseaux), puis construire la planche
+  de style : palette, trois polices condensées libres, un portrait en bichromie, le tableau de
+  score. Le prototype du ballon vient ensuite.
