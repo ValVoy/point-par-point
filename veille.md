@@ -149,3 +149,21 @@ Références ouvertes et jugées à l'écran par l'utilisateur.
 - **Mobile** : version courte de la scène du ballon, pensée pour l'écran vertical, sans épinglage.
 - **Police des titres** : condensée libre et gratuite, auto-hébergée. Trois candidates à comparer à l'écran.
 - **Suite** : planche de style (couleurs, trois polices, un portrait en bichromie, le tableau de score) avant le prototype du ballon. Bloquée par les couleurs de l'équipe.
+
+## 8. Identité de l'équipe, relevée le 29-09-2026 à 14:35
+
+Source : la page compétition du club, [volley-francheville.com/competition](https://volley-francheville.com/competition/),
+vue à l'écran.
+
+- **L'équipe** : Départemental 2 masculin du VF Francheville (club fondé en 1976, ouest lyonnais).
+  Le site du club n'a pas encore de photo de cette équipe, seulement une affiche : les portraits
+  viendront de la série et de l'Instagram.
+- **Le club** : bleu marine, rouge et blanc (logo, site). **Pas retenu comme palette.**
+- **Le maillot** : bleu ciel turquoise, motif géométrique de triangles en bleu marine, violet et
+  blanc, shorts violets.
+- **Palette décidée** : celle du maillot. Fond nuit tiré du marine et du violet, turquoise comme
+  seule couleur vive. Teintes exactes à mesurer sur de vraies photos dans la planche de style.
+- **Motif** : les triangles du maillot en signature discrète, en texture légère sur les bandeaux et
+  les fiches, et en volet de transition dans la scène du ballon.
+- **Lien avec le club** : une mention sobre (« une équipe du VF Francheville ») et un lien, sans le
+  logo du club en vedette. L'utiliser demanderait l'accord du bureau.

@@ -353,3 +353,21 @@ gymnase. Le détail est dans `veille.md`, sections 6 et 7.
 - Suite : récupérer les couleurs de l'équipe (maillot, logo, réseaux), puis construire la planche
   de style : palette, trois polices condensées libres, un portrait en bichromie, le tableau de
   score. Le prototype du ballon vient ensuite.
+
+**14:40** · **[cadrage] Palette tirée du maillot**
+
+L'utilisateur a donné la page compétition du club. L'équipe de Projet Volley est le Départemental 2
+masculin du VF Francheville. Le club est en marine et rouge, mais les maillots sont turquoise avec
+un motif de triangles marine, violet et blanc : c'est le maillot qui est retenu. C'est lui qu'on
+voit dans la série et sur les photos, la bichromie des portraits tombera donc juste, et le site se
+distingue de celui du club au lieu de le doubler.
+
+Le motif de triangles est la meilleure trouvaille de la séance : une signature propre à l'équipe,
+qu'aucune référence de la veille ne pouvait donner. Il reste discret, en texture et en volet de
+transition. Le club est cité sobrement, avec un lien, sans son logo, faute d'accord du bureau.
+
+- Portée : `veille.md` (section 8), `carnetdebord.md`.
+- Vérifié : page du club vue à l'écran en 1440 px, les maillots lus sur les photos des équipes.
+- Suite : construire la planche de style, avec le fond nuit, le turquoise mesuré sur de vraies
+  photos, trois condensées libres, un portrait en bichromie, le motif de triangles et le tableau
+  de score.
