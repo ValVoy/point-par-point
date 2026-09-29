@@ -7,37 +7,89 @@ import { segments, type Geometrie } from "./ballon-geometrie";
  * coach. L'animation vit dans ballon-filet.tsx et retrouve chaque element par
  * son attribut data-*.
  *
+ * Deux etages, pour la fluidite. Le SVG porte le decor fixe (sol, filet,
+ * traces, eclat, ondes). Le ballon et le halo sont des calques HTML poses
+ * par-dessus et deplaces par transform : la carte graphique les fait glisser
+ * sans rien redessiner, la ou un element deplace dans un SVG oblige a
+ * repeindre tout le SVG a chaque image.
+ *
  * Le rendu serveur est l'etat de depart du geste : ballon a la passe, traces
- * masques (pathLength a 1, donc masquables sans mesurer leur longueur),
- * « Point » invisible. Ainsi rien ne clignote avant que l'animation prenne
- * la main.
+ * masques (pathLength a 1, donc masquables sans mesurer leur longueur). Rien
+ * ne clignote avant que l'animation prenne la main.
  */
 
 export type Variante = "grand" | "portrait";
 
-function Ballon({ rayon: r, x, y }: { rayon: number; x: number; y: number }) {
+/** Rayon du halo, en pixels d'ecran. */
+export const RAYON_HALO: Record<Variante, number> = { grand: 220, portrait: 160 };
+
+const pourcent = (valeur: number, total: number) => `${(valeur / total) * 100}%`;
+
+/**
+ * Le ballon, en calques imbriques, chacun une seule transformation : position,
+ * etirement dans le sens de la course (orienter, etirer, reorienter), les deux
+ * ecrasements (depuis le bas au sol, depuis le centre a la frappe), puis la
+ * rotation. Une origine par calque : en changer en pleine animation laissait
+ * un decalage residuel.
+ */
+function Ballon({ g }: { g: Geometrie }) {
+  const r = g.rayon;
+  const calque = "size-full will-change-transform";
   return (
-    <g data-ballon transform={`translate(${x} ${y})`}>
-      {/* Deux ecrasements, chacun son origine fixe : au sol, depuis le bas du
-          ballon ; a la frappe, depuis son centre. Changer l'origine d'un meme
-          groupe en cours d'animation laissait un decalage residuel. La rotation
-          vient en dernier : le ballon s'ecrase dans le sens du sol, quelle que
-          soit sa rotation. */}
-      <g data-ecrasement-sol>
-      <g data-ecrasement>
-        <g data-rotation>
-          <circle r={r} fill="var(--color-nuit)" stroke="var(--color-turquoise)" strokeWidth={2.5} />
-          <path
-            d={`M${-r * 0.96},${-r * 0.28} Q0,${-r * 0.02} ${r * 0.96},${-r * 0.28} M${-r * 0.7},${r * 0.7} Q${-r * 0.1},${r * 0.1} ${-r * 0.28},${-r * 0.96} M${r * 0.7},${r * 0.7} Q${r * 0.1},${r * 0.1} ${r * 0.28},${-r * 0.96}`}
-            fill="none"
-            stroke="var(--color-turquoise)"
-            strokeWidth={1.8}
-            strokeLinecap="round"
-          />
-        </g>
-      </g>
-      </g>
-    </g>
+    <div
+      data-ballon
+      className="absolute will-change-transform"
+      style={{
+        left: pourcent(g.depart.x, g.largeur),
+        top: pourcent(g.depart.y, g.hauteur),
+        width: pourcent(2 * r, g.largeur),
+        aspectRatio: "1",
+        transform: "translate(-50%, -50%)",
+      }}
+    >
+      <div data-oriente className={calque}>
+        <div data-etire className={calque}>
+          <div data-reoriente className={calque}>
+            <div data-ecrasement-sol className={calque}>
+              <div data-ecrasement className={calque}>
+                <svg data-rotation viewBox={`${-r} ${-r} ${2 * r} ${2 * r}`} className={`${calque} overflow-visible`}>
+                  <circle r={r - 1.5} fill="var(--color-nuit)" stroke="var(--color-turquoise)" strokeWidth={2.5} />
+                  <path
+                    d={`M${-r * 0.96},${-r * 0.28} Q0,${-r * 0.02} ${r * 0.96},${-r * 0.28} M${-r * 0.7},${r * 0.7} Q${-r * 0.1},${r * 0.1} ${-r * 0.28},${-r * 0.96} M${r * 0.7},${r * 0.7} Q${r * 0.1},${r * 0.1} ${r * 0.28},${-r * 0.96}`}
+                    fill="none"
+                    stroke="var(--color-turquoise)"
+                    strokeWidth={1.8}
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Le halo : une fenetre ronde qui se deplace, et dans laquelle le motif est
+ * contre-deplace, pour rester immobile par rapport au terrain. On voit donc le
+ * motif se reveler sous la lumiere, sans qu'il bouge lui-meme.
+ */
+function Halo({ variante }: { variante: Variante }) {
+  const rayon = RAYON_HALO[variante];
+  const masque = "radial-gradient(circle closest-side, #000 0%, rgb(0 0 0 / 0.35) 45%, transparent 100%)";
+  return (
+    <div
+      data-halo
+      aria-hidden="true"
+      className="pointer-events-none absolute top-0 left-0 overflow-hidden opacity-0 will-change-transform"
+      style={{ width: 2 * rayon, height: 2 * rayon, maskImage: masque, WebkitMaskImage: masque }}
+    >
+      <div data-halo-motif className="absolute top-0 left-0 opacity-30 will-change-transform">
+        <Motif contour fond="transparent" gauche="var(--color-turquoise)" taille={variante === "grand" ? 56 : 44} />
+      </div>
+    </div>
   );
 }
 
@@ -58,7 +110,7 @@ function Filet({ g }: { g: Geometrie }) {
   const fractions = (n: number) => Array.from({ length: n - 1 }, (_, i) => (i + 1) / n);
 
   return (
-    <g data-filet stroke="var(--color-craie)" fill="none">
+    <g stroke="var(--color-craie)" fill="none">
       <line x1={droite} x2={droite} y1={filet.haut - recul - 14} y2={sol - recul * 0.5} strokeWidth={2} strokeOpacity={0.4} />
       <g strokeWidth={1} strokeOpacity={0.28}>
         {fractions(8).map((u) => (
@@ -75,18 +127,19 @@ function Filet({ g }: { g: Geometrie }) {
   );
 }
 
-/** Une etoile de traits autour d'un point : l'eclat de la frappe. */
-function Eclat({ cx, cy, rayon, nom }: { cx: number; cy: number; rayon: number; nom: string }) {
+/** Une etoile de traits autour du point de frappe, invisible au depart. */
+function Eclat({ g }: { g: Geometrie }) {
+  const { frappe, rayon } = g;
   const angles = Array.from({ length: 8 }, (_, i) => (i * Math.PI) / 4 + Math.PI / 8);
   return (
-    <g data-eclat={nom} stroke="var(--color-turquoise-clair)" strokeWidth={2.5} strokeLinecap="round" opacity={0}>
+    <g data-eclat stroke="var(--color-turquoise-clair)" strokeWidth={2.5} strokeLinecap="round" opacity={0}>
       {angles.map((a) => (
         <line
           key={a}
-          x1={cx + Math.cos(a) * rayon * 1.3}
-          y1={cy + Math.sin(a) * rayon * 1.3}
-          x2={cx + Math.cos(a) * rayon * 2}
-          y2={cy + Math.sin(a) * rayon * 2}
+          x1={frappe.x + Math.cos(a) * rayon * 1.3}
+          y1={frappe.y + Math.sin(a) * rayon * 1.3}
+          x2={frappe.x + Math.cos(a) * rayon * 2}
+          y2={frappe.y + Math.sin(a) * rayon * 2}
         />
       ))}
     </g>
@@ -97,73 +150,61 @@ export function Scene({ g, variante }: { g: Geometrie; variante: Variante }) {
   const id = useId();
   const { montee, descente, smash, rebond } = segments(g);
   const traces = [montee, descente, smash];
-  const { sol, largeur, hauteur, frappe, impact, rayon } = g;
+  const { sol, largeur, hauteur, impact } = g;
 
   return (
     <div
       data-scene={variante}
-      className={variante === "grand" ? "relative hidden aspect-[16/9] w-full md:block" : "relative aspect-[3/4] w-full md:hidden"}
+      // Le debordement est coupe : c'est ce qui fait sortir le ballon du champ.
+      className={`relative w-full overflow-hidden ${variante === "grand" ? "hidden aspect-[16/9] md:block" : "aspect-[3/4] md:hidden"}`}
     >
-      <div
-        data-halo
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-30"
-        style={{
-          maskImage: "radial-gradient(circle var(--hr, 0px) at var(--hx, 50%) var(--hy, 50%), #000 0%, rgb(0 0 0 / 0.35) 45%, transparent 100%)",
-          WebkitMaskImage: "radial-gradient(circle var(--hr, 0px) at var(--hx, 50%) var(--hy, 50%), #000 0%, rgb(0 0 0 / 0.35) 45%, transparent 100%)",
-        }}
-      >
-        <Motif contour fond="transparent" gauche="var(--color-turquoise)" taille={variante === "grand" ? 56 : 44} />
-      </div>
+      <div data-plateau className="absolute inset-0 will-change-transform">
+        <Halo variante={variante} />
 
-      {/* Le debordement est coupe : c'est ce qui fait sortir le ballon du champ. */}
-      <svg data-toile viewBox={`0 0 ${largeur} ${hauteur}`} className="absolute inset-0 h-full w-full overflow-hidden" aria-hidden="true">
-        <defs>
-          <mask id={`${id}-trace`} maskUnits="userSpaceOnUse" x="0" y="0" width={largeur} height={hauteur}>
-            {traces.map((d) => (
-              <path
-                key={d}
-                data-revele
-                d={d}
-                pathLength={1}
-                strokeDasharray="1"
-                strokeDashoffset="1"
-                fill="none"
-                stroke="#fff"
-                strokeWidth={14}
-                strokeLinecap="butt"
-              />
-            ))}
-          </mask>
-        </defs>
-        <path data-rebond d={rebond} fill="none" stroke="none" />
+        <svg viewBox={`0 0 ${largeur} ${hauteur}`} className="absolute inset-0 h-full w-full" aria-hidden="true">
+          <defs>
+            <mask id={`${id}-trace`} maskUnits="userSpaceOnUse" x="0" y="0" width={largeur} height={hauteur}>
+              {traces.map((d) => (
+                <path
+                  key={d}
+                  data-revele
+                  d={d}
+                  pathLength={1}
+                  strokeDasharray="1"
+                  strokeDashoffset="1"
+                  fill="none"
+                  stroke="#fff"
+                  strokeWidth={14}
+                  strokeLinecap="butt"
+                />
+              ))}
+            </mask>
+          </defs>
+          <path data-rebond d={rebond} fill="none" stroke="none" />
 
-        <line data-sol x1={0} x2={largeur} y1={sol} y2={sol} stroke="var(--color-craie-douce)" strokeOpacity={0.35} strokeWidth={1.5} />
-        {[0.25, 0.75].map((f) => (
-          <line key={f} x1={largeur * f} x2={largeur * f} y1={sol} y2={sol + 14} stroke="var(--color-craie-douce)" strokeOpacity={0.35} />
-        ))}
-
-        <Filet g={g} />
-
-        <g mask={`url(#${id}-trace)`} fill="none" stroke="var(--color-turquoise-clair)" strokeOpacity={0.8} strokeWidth={2} strokeDasharray="2 10" strokeLinecap="round">
-          {traces.map((d) => (
-            <path key={d} d={d} />
+          <line data-sol x1={0} x2={largeur} y1={sol} y2={sol} stroke="var(--color-craie-douce)" strokeOpacity={0.35} strokeWidth={1.5} />
+          {[0.25, 0.75].map((f) => (
+            <line key={f} x1={largeur * f} x2={largeur * f} y1={sol} y2={sol + 14} stroke="var(--color-craie-douce)" strokeOpacity={0.35} />
           ))}
-        </g>
 
-        <text data-point opacity={0} x={impact.x} y={sol + 70} className="titre-affiche" fill="var(--color-turquoise)" fontSize={variante === "grand" ? 34 : 46} textAnchor="middle">
-          Point
-        </text>
+          <Filet g={g} />
 
-        <Eclat nom="frappe" cx={frappe.x} cy={frappe.y} rayon={rayon} />
-        <g data-ondes fill="none" stroke="var(--color-turquoise)" strokeWidth={2}>
-          <ellipse cx={impact.x} cy={sol} rx={0} ry={0} />
-          <ellipse cx={impact.x} cy={sol} rx={0} ry={0} />
-          <ellipse cx={impact.x} cy={sol} rx={0} ry={0} />
-        </g>
+          <g mask={`url(#${id}-trace)`} fill="none" stroke="var(--color-turquoise-clair)" strokeOpacity={0.8} strokeWidth={2} strokeDasharray="2 10" strokeLinecap="round">
+            {traces.map((d) => (
+              <path key={d} d={d} />
+            ))}
+          </g>
 
-        <Ballon rayon={rayon} x={g.depart.x} y={g.depart.y} />
-      </svg>
+          <Eclat g={g} />
+          <g data-ondes fill="none" stroke="var(--color-turquoise)" strokeWidth={2}>
+            {[0, 1, 2].map((i) => (
+              <ellipse key={i} cx={impact.x} cy={sol} rx={0} ry={0} />
+            ))}
+          </g>
+        </svg>
+
+        <Ballon g={g} />
+      </div>
     </div>
   );
 }

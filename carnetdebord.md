@@ -580,3 +580,30 @@ redimensionnement, page vide comprise : un artefact d'environnement, pas de la s
   1,2 s, sortie à 1,9 s, néon), impacts figés à l'image près en 1440 et 390 px, mouvement réduit
   émulé.
 - Suite : l'utilisateur juge la deuxième version, puis la fiche de la page d'accueil.
+
+**22:10** · **[motion] Scène du ballon, fluidité**
+
+Trois retours : l'éclat de la frappe « attendait » visible avant la frappe, « Point » devait
+partir, et l'utilisateur voulait encore plus de fluidité. Il estime qu'on tient quelque chose.
+
+L'éclat venait d'un comportement de GSAP : `fromTo()` pose son état de départ dès la construction
+de la chronologie. L'éclat était donc à opacité pleine dès le chargement, et le sol allumé d'avance.
+Ces effets passent en `immediateRender: false`, ils n'existent qu'à leur instant.
+
+Pour la fluidité, le ballon et le halo quittent le SVG pour des calques HTML déplacés par
+`translate3d`, avec les setters rapides de GSAP : la carte graphique les fait glisser, là où
+déplacer un élément dans un SVG obligeait à repeindre tout le SVG à chaque image. Le halo devient
+une fenêtre ronde qui se déplace, avec le motif contre-déplacé dedans pour rester fixe sur le
+terrain. Le ballon s'étire dans l'axe du smash, un flou de vitesse dessiné, par trois calques
+(orienter, étirer, réorienter). Mesuré en temps réel : 550 images sur le geste, à 240 par seconde,
+aucune image perdue, la pire à 8,4 ms.
+
+Un défaut caché trouvé en figeant la chronologie : GSAP arrondit au pixel par défaut, et sur des
+tracés normalisés de 0 à 1 le pointillé sautait d'un coup de masqué à complet au lieu de suivre le
+ballon. `autoRound: false` sur ces tweens.
+
+- Portée : `src/components/public/ballon-scene.tsx`, `ballon-filet.tsx`.
+- Vérifié : 44 tests, `tsc`, lint, `next build` ; éclat à 0 et sol à 0,35 avant la frappe ; tracé
+  relevé à 0,94 puis 0,68 pendant le smash ; mesure d'images en temps réel en 1440 px.
+- Suite : la scène est validée dans son principe. Fiche de la page d'accueil, où elle prendra
+  place sous l'ouverture.
