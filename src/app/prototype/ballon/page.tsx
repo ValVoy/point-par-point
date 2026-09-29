@@ -30,9 +30,10 @@ export default function PrototypeBallon() {
           </p>
           <h1 className="titre-affiche mt-4 text-[clamp(4rem,13vw,11rem)]">Projet Volley</h1>
           <p className="mt-6 max-w-[62ch] text-lg leading-relaxed text-[var(--color-craie-douce)]">
-            Faites défiler : la passe monte, l&apos;attaquant frappe, le ballon
-            passe le filet et allume le tableau du prochain match. Remontez, il
-            revient en arrière.
+            Faites défiler : dès que la scène est à l&apos;écran, la passe part,
+            l&apos;attaquant frappe, le ballon passe le filet, rebondit et sort
+            du terrain, et le tableau du prochain match s&apos;allume. Remontez
+            au-dessus puis revenez, elle se rejoue.
           </p>
         </div>
       </header>

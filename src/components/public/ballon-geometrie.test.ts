@@ -18,5 +18,13 @@ describe("geometrie de la scene du ballon", () => {
       assert.ok(g.sommet.y < g.frappe.y && g.sommet.y < g.depart.y);
       assert.equal(g.impact.y + g.rayon, g.sol);
     });
+
+    it(`${nom} : la passe reste tendue, moins haute que la moitie de la scene`, () => {
+      assert.ok(g.depart.y - g.sommet.y < g.hauteur / 2);
+    });
+
+    it(`${nom} : le rebond sort entierement du cadre`, () => {
+      assert.ok(g.sortie.x - g.rayon > g.largeur);
+    });
   }
 });

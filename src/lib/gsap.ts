@@ -15,6 +15,13 @@ import { useGSAP } from "@gsap/react";
  */
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+// En developpement seulement : GSAP accessible depuis la console, pour ralentir
+// le temps (`__gsap.globalTimeline.timeScale(0.1)`) et juger une animation
+// image par image. Absent du build de production.
+if (process.env.NODE_ENV !== "production" && typeof window !== "undefined") {
+  (window as unknown as { __gsap: typeof gsap }).__gsap = gsap;
+}
+
 /**
  * Les durees et courbes du systeme de design, lues dans globals.css pour que
  * GSAP et le CSS bougent au meme rythme. Valeurs de repli si la lecture

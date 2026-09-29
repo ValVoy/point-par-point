@@ -550,3 +550,33 @@ reprend sa hauteur naturelle.
   allumé, retour en arrière au défilement inverse ; mouvement réduit émulé, état final immédiat et
   section non épinglée.
 - Suite : l'utilisateur juge la scène. Puis la fiche de la page d'accueil, où elle prendra place.
+
+**18:55** · **[motion] Scène du ballon, deuxième version**
+
+Retours de l'utilisateur sur le prototype : passe moins en cloche, plus d'étiquettes « Passe » ni
+« Attaque », ressentir les deux impacts, un rebond qui sort du champ, un ballon plus gros, et un
+déclenchement automatique plutôt qu'un pilotage au défilement.
+
+La scène se joue désormais d'elle-même quand elle est entièrement à l'écran, en moins de deux
+secondes, et se rejoue si l'on remonte au-dessus. La longue section épinglée disparaît avec le
+pilotage : la page défile normalement. À la frappe, le ballon s'écrase, un éclat part en étoile et
+la scène tremble ; au sol, écrasement, trois ondes, secousse plus forte, le sol s'éclaire et le
+tableau s'allume en grésillant comme un néon ; puis le ballon rebondit et sort par la droite. Le
+rendu serveur est l'état de départ : les tracés portent `pathLength="1"` et se masquent sans être
+mesurés, rien ne clignote avant l'animation.
+
+Deux défauts attrapés en figeant la chronologie image par image, ce que permet un accès à GSAP
+réservé au développement. La fonction qui enchaîne les temps plaçait tout à la fin de la
+chronologie, si bien que le smash serait parti après la fin des effets de frappe : chaque temps
+reçoit maintenant sa position. Et changer l'origine d'un même groupe en pleine animation laissait
+le ballon décalé de quatorze unités après l'impact : deux groupes d'écrasement, chacun son origine.
+Le navigateur de test a aussi bridé les animations à deux images par seconde après un
+redimensionnement, page vide comprise : un artefact d'environnement, pas de la scène.
+
+- Portée : `src/components/public/` (géométrie et tests, scène découpée en dessin et animation),
+  `src/lib/gsap.ts`, `src/app/prototype/ballon/page.tsx`.
+- Vérifié : 44 tests (marge au filet sur toute sa largeur, passe tendue, sortie du cadre), `tsc`,
+  lint, `next build`. Chronologie relevée en temps réel en 1440 px (passe, frappe à 0,96 s, sol à
+  1,2 s, sortie à 1,9 s, néon), impacts figés à l'image près en 1440 et 390 px, mouvement réduit
+  émulé.
+- Suite : l'utilisateur juge la deuxième version, puis la fiche de la page d'accueil.
