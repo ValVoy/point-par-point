@@ -32,7 +32,7 @@ const pourcent = (valeur: number, total: number) => `${(valeur / total) * 100}%`
  * rotation. Une origine par calque : en changer en pleine animation laissait
  * un decalage residuel.
  */
-function Ballon({ g }: { g: Geometrie }) {
+export function Ballon({ g }: { g: Geometrie }) {
   const r = g.rayon;
   const calque = "size-full will-change-transform";
   return (
@@ -128,7 +128,7 @@ function Filet({ g }: { g: Geometrie }) {
 }
 
 /** Une etoile de traits autour du point de frappe, invisible au depart. */
-function Eclat({ g }: { g: Geometrie }) {
+export function Eclat({ g }: { g: Geometrie }) {
   const { frappe, rayon } = g;
   const angles = Array.from({ length: 8 }, (_, i) => (i * Math.PI) / 4 + Math.PI / 8);
   return (
@@ -146,11 +146,64 @@ function Eclat({ g }: { g: Geometrie }) {
   );
 }
 
-export function Scene({ g, variante }: { g: Geometrie; variante: Variante }) {
+/**
+ * Le terrain dessine, a placer dans un <svg> dont la viewBox est celle de la
+ * geometrie : traces masques du geste, sol, filet, eclat, ondes. Partage par
+ * la scene du prototype et l'intro de l'accueil.
+ */
+export function Terrain({ g }: { g: Geometrie }) {
   const id = useId();
   const { montee, descente, smash, rebond } = segments(g);
   const traces = [montee, descente, smash];
   const { sol, largeur, hauteur, impact } = g;
+
+  return (
+    <>
+      <defs>
+        <mask id={`${id}-trace`} maskUnits="userSpaceOnUse" x="0" y="0" width={largeur} height={hauteur}>
+          {traces.map((d) => (
+            <path
+              key={d}
+              data-revele
+              d={d}
+              pathLength={1}
+              strokeDasharray="1"
+              strokeDashoffset="1"
+              fill="none"
+              stroke="#fff"
+              strokeWidth={14}
+              strokeLinecap="butt"
+            />
+          ))}
+        </mask>
+      </defs>
+      <path data-rebond d={rebond} fill="none" stroke="none" />
+
+      <line data-sol x1={0} x2={largeur} y1={sol} y2={sol} stroke="var(--color-craie-douce)" strokeOpacity={0.35} strokeWidth={1.5} />
+      {[0.25, 0.75].map((f) => (
+        <line key={f} x1={largeur * f} x2={largeur * f} y1={sol} y2={sol + 14} stroke="var(--color-craie-douce)" strokeOpacity={0.35} />
+      ))}
+
+      <Filet g={g} />
+
+      <g mask={`url(#${id}-trace)`} fill="none" stroke="var(--color-turquoise-clair)" strokeOpacity={0.8} strokeWidth={2} strokeDasharray="2 10" strokeLinecap="round">
+        {traces.map((d) => (
+          <path key={d} d={d} />
+        ))}
+      </g>
+
+      <Eclat g={g} />
+      <g data-ondes fill="none" stroke="var(--color-turquoise)" strokeWidth={2}>
+        {[0, 1, 2].map((i) => (
+          <ellipse key={i} cx={impact.x} cy={sol} rx={0} ry={0} />
+        ))}
+      </g>
+    </>
+  );
+}
+
+export function Scene({ g, variante }: { g: Geometrie; variante: Variante }) {
+  const { largeur, hauteur } = g;
 
   return (
     <div
@@ -162,45 +215,7 @@ export function Scene({ g, variante }: { g: Geometrie; variante: Variante }) {
         <Halo variante={variante} />
 
         <svg viewBox={`0 0 ${largeur} ${hauteur}`} className="absolute inset-0 h-full w-full" aria-hidden="true">
-          <defs>
-            <mask id={`${id}-trace`} maskUnits="userSpaceOnUse" x="0" y="0" width={largeur} height={hauteur}>
-              {traces.map((d) => (
-                <path
-                  key={d}
-                  data-revele
-                  d={d}
-                  pathLength={1}
-                  strokeDasharray="1"
-                  strokeDashoffset="1"
-                  fill="none"
-                  stroke="#fff"
-                  strokeWidth={14}
-                  strokeLinecap="butt"
-                />
-              ))}
-            </mask>
-          </defs>
-          <path data-rebond d={rebond} fill="none" stroke="none" />
-
-          <line data-sol x1={0} x2={largeur} y1={sol} y2={sol} stroke="var(--color-craie-douce)" strokeOpacity={0.35} strokeWidth={1.5} />
-          {[0.25, 0.75].map((f) => (
-            <line key={f} x1={largeur * f} x2={largeur * f} y1={sol} y2={sol + 14} stroke="var(--color-craie-douce)" strokeOpacity={0.35} />
-          ))}
-
-          <Filet g={g} />
-
-          <g mask={`url(#${id}-trace)`} fill="none" stroke="var(--color-turquoise-clair)" strokeOpacity={0.8} strokeWidth={2} strokeDasharray="2 10" strokeLinecap="round">
-            {traces.map((d) => (
-              <path key={d} d={d} />
-            ))}
-          </g>
-
-          <Eclat g={g} />
-          <g data-ondes fill="none" stroke="var(--color-turquoise)" strokeWidth={2}>
-            {[0, 1, 2].map((i) => (
-              <ellipse key={i} cx={impact.x} cy={sol} rx={0} ry={0} />
-            ))}
-          </g>
+          <Terrain g={g} />
         </svg>
 
         <Ballon g={g} />
