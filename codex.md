@@ -174,6 +174,11 @@ un score de cinq sets, c'est l'abandon. Les écrans de saisie longue gardent don
 l'état du composant, avec des champs contrôlés. Et un enregistrement groupé est tout ou rien : une
 seule ligne fautive et rien ne part, avec le numéro de chaque ligne à corriger.
 
+Pour un formulaire court, une technique plus légère suffit : en cas de refus, l'action renvoie les
+valeurs saisies, que le formulaire prend comme valeurs par défaut. React remet le formulaire à ses
+valeurs par défaut après l'envoi, donc il restaure la saisie au lieu de la vider, sans aucun champ
+contrôlé (écrans de la vitrine du projet).
+
 ### Le texte léger des actualités
 
 Décidé le 29-09-2026 contre un éditeur riche : quatre mises en forme et pas une de plus,

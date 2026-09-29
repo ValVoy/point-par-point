@@ -6,7 +6,8 @@ import type { UtilisateurConnecte } from "./sessions";
  * Pas de table de permissions, pas d'ecran de gestion : decide au cadrage.
  *
  * Le redacteur produit du contenu. Il ne touche ni a la structure (saisons,
- * comptes), ni a l'irreversible (purge de la corbeille, purge des donnees de
+ * comptes, et la vitrine du projet : chronologie, staff, partenaires), ni a
+ * l'irreversible (purge de la corbeille, purge des donnees de
  * demonstration).
  */
 export const ACTIONS = [
@@ -17,6 +18,7 @@ export const ACTIONS = [
   "lireMessages",
   "gererEffectif",
   "gererSaisons",
+  "gererProjet",
   "gererComptes",
   "viderCorbeille",
   "purgerDemo",

@@ -50,7 +50,7 @@ design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`
 - [ ] Point de visage des photos de joueurs (deux colonnes sur `joueurs`), avec l'envoi vers R2
 - [x] Épisodes : adresse YouTube, résumé, lien vers un match, brouillon puis publication (29-09-2026)
 - [x] Actualités, avec brouillon obligatoire et mise en forme légère maison (29-09-2026)
-- [ ] Chronologie du projet, staff, partenaires
+- [x] Chronologie du projet, staff, partenaires, ordre à la main, réservés à l'admin (29-09-2026). Photos et logos avec l'envoi vers R2
 - [ ] Classement de la poule, avec sa date de mise à jour
 - [ ] Messages de contact
 - [ ] Comptes utilisateurs, corbeille

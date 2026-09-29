@@ -18,6 +18,7 @@ const RUBRIQUES: { href: string; libelle: string; droit: Action }[] = [
   { href: "/administration/effectif", libelle: "Effectif", droit: "gererEffectif" },
   { href: "/administration/episodes", libelle: "Épisodes", droit: "redigerContenu" },
   { href: "/administration/actualites", libelle: "Actualités", droit: "redigerContenu" },
+  { href: "/administration/projet", libelle: "Le projet", droit: "gererProjet" },
   { href: "/administration/messages", libelle: "Messages", droit: "lireMessages" },
   { href: "/administration/saisons", libelle: "Saisons", droit: "gererSaisons" },
   { href: "/administration/comptes", libelle: "Comptes", droit: "gererComptes" },

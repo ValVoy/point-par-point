@@ -464,3 +464,36 @@ score oublié doit se voir.
   L'épisode de test a été supprimé de la base.
 - Suite : trancher la planche de style. En autonomie, les actualités ensuite, une fois décidé le
   format du texte (paragraphes simples ou mise en forme légère).
+
+**16:40** · **[admin] Actualités, puis la vitrine du projet**
+
+L'utilisateur a choisi une mise en forme légère pour les actualités, puis le staff, les
+partenaires et la chronologie comme chantier suivant.
+
+Le format des actualités est écrit dans le projet : intertitre, gras, italique et lien, rien
+d'autre. Aucun paquet ajouté, un analyseur lisible en entier, et un rendu en éléments React qui
+n'injecte jamais de HTML : un `<script>` tapé dans le texte s'affiche comme du texte, et seules
+les adresses web et de messagerie deviennent des liens. L'éditeur pose la syntaxe par des boutons
+et montre l'aperçu avec le composant même que les pages publiques réutiliseront. Le test à l'écran
+a trouvé un vrai défaut : un intertitre suivi directement d'un paragraphe s'affichait avec ses
+dièses. L'analyseur le détache désormais, puisque c'est ainsi qu'on l'écrit spontanément.
+
+La vitrine du projet est réservée à l'administrateur, sous un droit neuf, `gererProjet` : le plan
+ne la confiait pas au rédacteur, c'est ce que le site dit de lui-même. Trois onglets, un ordre
+choisi par des boutons monter et descendre plutôt qu'un glisser-déposer, qui se passe mal au doigt
+et au clavier, et une liste renumérotée à chaque déplacement. Les étapes naissent en brouillon, les
+partenaires se mettent en pause sans disparaître, et leur lien n'accepte qu'une adresse web. Photos
+et logos attendent l'envoi vers R2.
+
+- Portée : `src/lib/texte-leger.ts`, `src/components/texte-leger.tsx`,
+  `src/components/editeur-texte-leger.tsx`, `src/lib/actualites.ts`, `src/lib/ordre.ts`,
+  `src/lib/projet.ts`, `src/lib/slug.ts` (adresse libre factorisée), `src/lib/auth/roles.ts`,
+  `src/app/administration/(interieur)/actualites/` et `projet/`, la coquille, le tableau de bord,
+  `codex.md`, `ROADMAP.md`.
+- Vérifié : 34 tests, `tsc`, lint, `next build`. À l'écran : actualité écrite avec les boutons,
+  aperçu (script affiché en texte), brouillon enregistré depuis l'aperçu, publication, extrait sans
+  balisage ; étape déplacée puis remise, ajout refusé sans perte de saisie puis accepté ; lien
+  `javascript:` d'un partenaire refusé côté serveur. Données de test supprimées, ordre de
+  démonstration rétabli.
+- Suite : l'utilisateur tranche la planche de style. En autonomie, il reste le classement, les
+  comptes et les messages, puis l'envoi d'images vers R2, qui demande le bucket.
