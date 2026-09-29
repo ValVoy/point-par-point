@@ -266,3 +266,38 @@ de tout cela dans l'administration, où l'ami veut de la vitesse et de la prévi
 - Suite : trancher la bibliothèque d'animation et l'échelle de largeurs, **avant** d'écrire les
   pages publiques. Côté administration, reprendre aux matchs : calendrier de la saison saisi d'un
   coup, puis score set par set sur un écran court pensé pour le gymnase.
+
+## 29-09-2026
+
+**12:35** · **[méthode] Trois casquettes, refonte visuelle et première veille**
+
+Reprise après neuf jours. L'utilisateur relève encore l'exigence : un site très haut de gamme, avec
+un vrai motion design, et il veut que je tienne pendant tout le projet trois rôles à la fois,
+développeur fullstack senior, directeur artistique en veille permanente, directeur artistique UX et
+UI. Il m'a laissé carte blanche sur l'organisation, y compris en plusieurs agents.
+
+J'ai proposé une seule main pour le code et trois étapes par page, qui produisent une fiche validée
+avant le code. Trois agents qui codent chacun de leur côté casseraient la cohérence, et c'est
+précisément la cohérence qui fait un site haut de gamme. Les agents gardent deux rôles où ils
+apportent quelque chose que je n'ai pas seul : la veille en parallèle, et la critique à froid d'une
+page qu'ils n'ont pas construite. Méthode validée telle quelle, inscrite dans `CLAUDE.md` et en
+mémoire.
+
+Il a ajouté de lui-même que tout le visuel existant pouvait repartir de zéro. L'inventaire montre
+qu'il est petit : les jetons de `globals.css`, les polices, l'habillage de l'administration. La
+logique n'est pas concernée. Les polices actuelles, Instrument Serif et Inter, forment un duo très
+répandu qui ferait générique : elles sont les premières à partir.
+
+La veille a tourné en trois agents parallèles, triée dans `veille.md`. Ce qui en sort de plus
+utile n'est pas un effet mais une règle : les meilleurs sites ont **une seule scène spectaculaire**
+et une grammaire sobre partout ailleurs. La pile proposée est GSAP seul plus le CSS natif, sans
+Lenis, Motion, Rive ni 3D au premier lot, et j'ai revérifié moi-même les versions dans le registre
+plutôt que de me fier aux rapports. Les deux agents du web ont croisé une injection dans la
+documentation Next.js, un bloc qui invite les agents à installer un paquet : ignorée, rien
+d'exécuté.
+
+- Portée : `CLAUDE.md`, `ROADMAP.md`, `veille.md` (nouveau), mémoire de projet.
+- Vérifié : versions de `gsap`, `@gsap/react` et `next` relues dans le registre npm. Aucune
+  référence encore vue à l'écran, c'est une limite assumée de cette passe.
+- Suite : ouvrir les références retenues dans le navigateur, puis trancher le système de design
+  (couleurs, typographie, largeurs, grammaire du mouvement) et la montée vers Next 16.3.5.

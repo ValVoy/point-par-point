@@ -78,6 +78,31 @@ Terrains à couvrir, au minimum :
 
 En sortie : un plan écrit, validé par l'utilisateur, avant le premier fichier de code.
 
+## Méthode de travail : trois casquettes, une seule main (validée le 29-09-2026)
+
+L'utilisateur veut **un site très haut de gamme, avec un vrai motion design**, et que je tienne
+pendant tout le projet trois rôles à la fois : développeur fullstack senior, directeur artistique
+qui fait une veille poussée, directeur artistique spécialisé UX et UI.
+
+- **Chaque page publique passe par trois étapes, dans l'ordre**, qui produisent une **fiche de
+  page** courte :
+  1. **Direction artistique et veille** : l'intention, trois à cinq références réelles et
+     actuelles, ce que le mouvement raconte du volley sur cette page.
+  2. **UX et UI** : le parcours du visiteur, la hiérarchie, les états vide, partiel et périmé, le
+     mobile d'abord, l'accessibilité.
+  3. **Fullstack** : l'architecture, la performance (animations à 60 images par seconde, poids des
+     images), les tests, la vérification à l'écran en mobile et en grand écran.
+- **La fiche est validée par l'utilisateur avant le code**, puis le rendu à l'écran.
+- **Une seule main écrit le code.** Les sous-agents servent à deux choses seulement : la **veille**
+  (plusieurs en parallèle, résultats triés dans `veille.md`) et la **critique à froid** d'une page
+  terminée, par un agent qui ne l'a pas construite.
+- **Ordre des travaux** : veille, système de design complet (couleurs, typographie, échelle de
+  largeurs, grammaire du mouvement, bibliothèque d'animation), prototype de la scène signature (le
+  ballon qui passe au-dessus du filet), puis les pages une par une.
+- **Le visuel existant repart de zéro** (accord du 29-09-2026) : les jetons de `globals.css`, les
+  polices et l'habillage des écrans d'administration. La logique (schéma, authentification,
+  actions serveur) n'est pas concernée.
+
 ## Écarts par rapport au socle global
 
 Le socle de `~/.claude/CLAUDE.md` s'applique tel quel. Trois précisions propres à ce dépôt :

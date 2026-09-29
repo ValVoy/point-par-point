@@ -13,7 +13,8 @@ Ce qui marche à l'écran : connexion avec limitation des tentatives, déconnexi
 réduite selon le rôle, bandeau de démonstration, gestion des saisons et de l'effectif.
 **Aucune page publique réelle**, l'accueil est encore provisoire.
 
-Prochaine étape : les matchs, calendrier puis score set par set.
+Prochaine étape (29-09-2026) : la refonte visuelle complète, veille puis système de design. Les
+matchs dans l'administration suivent, ils ne dépendent pas du visuel.
 
 **À revoir avant d'écrire les pages publiques** : la largeur de la mise en page et le motion
 design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`.
@@ -78,6 +79,20 @@ concernent le **site public**, pas l'administration.
       s'en tenir au CSS, **avant** d'écrire les pages publiques : plaquer l'animation après coup
       coûte toujours plus cher
 - [ ] Vérifier `prefers-reduced-motion` sur chaque animation ajoutée
+
+### Refonte visuelle complète (décidée le 29-09-2026)
+
+Méthode décrite dans `CLAUDE.md`, section « Méthode de travail ». Le visuel existant repart de
+zéro, la logique reste.
+
+- [ ] Veille : sites de sport haut de gamme, sites primés pour leur motion, outils d'animation,
+      synthèse commentée dans `veille.md`
+- [ ] Système de design : couleurs, typographie (remplacer le duo provisoire Instrument Serif et
+      Inter), échelle de largeurs, espacements, grammaire du mouvement
+- [ ] Choix de la bibliothèque d'animation, versions vérifiées dans le registre
+- [ ] Prototype de la scène signature : le ballon au-dessus du filet
+- [ ] Réhabillage de l'administration avec le nouveau système, sobre et sans animation
+- [ ] Une fiche de page validée avant chaque page publique
 
 ### Avant la mise en ligne
 
