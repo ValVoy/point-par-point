@@ -156,7 +156,7 @@ export function Scene({ g, variante }: { g: Geometrie; variante: Variante }) {
     <div
       data-scene={variante}
       // Le debordement est coupe : c'est ce qui fait sortir le ballon du champ.
-      className={`relative w-full overflow-hidden ${variante === "grand" ? "hidden aspect-[16/9] md:block" : "aspect-[3/4] md:hidden"}`}
+      className={`relative w-full overflow-hidden ${variante === "grand" ? "hidden aspect-[16/9] md:block" : "aspect-[9/10] md:hidden"}`}
     >
       <div data-plateau className="absolute inset-0 will-change-transform">
         <Halo variante={variante} />

@@ -51,18 +51,21 @@ export const GRAND: Geometrie = {
   sortie: { x: 1700, y: 560 },
 };
 
+// Cadre presque carre (9/10) plutot que 3/4, et filet rapproche de la gauche :
+// sur un telephone, le terrain vide derriere le passeur ne racontait rien
+// (retour de l'utilisateur du 29-09-2026).
 export const PORTRAIT: Geometrie = {
   largeur: 900,
-  hauteur: 1200,
-  sol: 1080,
-  filet: { x: 450, haut: 560, bas: 720, demi: 16, recul: 10 },
+  hauteur: 1000,
+  sol: 900,
+  filet: { x: 320, haut: 480, bas: 620, demi: 16, recul: 10 },
   rayon: 30,
-  depart: { x: 190, y: 640 },
-  sommet: { x: 300, y: 290 },
-  frappe: { x: 380, y: 330 },
-  impact: { x: 720, y: 1050 },
-  rebond: { x: 830, y: 700 },
-  sortie: { x: 1010, y: 860 },
+  depart: { x: 110, y: 560 },
+  sommet: { x: 200, y: 260 },
+  frappe: { x: 250, y: 300 },
+  impact: { x: 680, y: 870 },
+  rebond: { x: 790, y: 560 },
+  sortie: { x: 1010, y: 700 },
 };
 
 /** Les temps du geste, chacun sa courbe. Seuls les trois premiers se tracent. */
