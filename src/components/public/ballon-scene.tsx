@@ -110,7 +110,7 @@ function Filet({ g }: { g: Geometrie }) {
   const fractions = (n: number) => Array.from({ length: n - 1 }, (_, i) => (i + 1) / n);
 
   return (
-    <g stroke="var(--color-craie)" fill="none">
+    <g data-filet stroke="var(--color-craie)" fill="none">
       <line x1={droite} x2={droite} y1={filet.haut - recul - 14} y2={sol - recul * 0.5} strokeWidth={2} strokeOpacity={0.4} />
       <g strokeWidth={1} strokeOpacity={0.28}>
         {fractions(8).map((u) => (
@@ -186,7 +186,7 @@ export function Terrain({ g }: { g: Geometrie }) {
 
       <Filet g={g} />
 
-      <g mask={`url(#${id}-trace)`} fill="none" stroke="var(--color-turquoise-clair)" strokeOpacity={0.8} strokeWidth={2} strokeDasharray="2 10" strokeLinecap="round">
+      <g data-traces mask={`url(#${id}-trace)`} fill="none" stroke="var(--color-turquoise-clair)" strokeOpacity={0.8} strokeWidth={2} strokeDasharray="2 10" strokeLinecap="round">
         {traces.map((d) => (
           <path key={d} d={d} />
         ))}

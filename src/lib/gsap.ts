@@ -1,6 +1,8 @@
 "use client";
 
 import { gsap } from "gsap";
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
+import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
@@ -13,7 +15,9 @@ import { useGSAP } from "@gsap/react";
  * Licence standard de GSAP : gratuite, usage commercial compris, mais ce
  * n'est pas du MIT.
  */
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+// DrawSVG trace les lignes de la salle, MorphSVG transforme le terrain en
+// titre (intro de l'accueil). Inclus dans le paquet gsap 3.15.0, meme licence.
+gsap.registerPlugin(ScrollTrigger, useGSAP, DrawSVGPlugin, MorphSVGPlugin);
 
 // En developpement seulement : GSAP accessible depuis la console, pour ralentir
 // le temps (`__gsap.globalTimeline.timeScale(0.1)`) et juger une animation

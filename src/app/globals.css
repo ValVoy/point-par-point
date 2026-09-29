@@ -154,3 +154,36 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/*
+ * L'intro de l'accueil (fiche fiches/accueil-ouverture.md). Le serveur rend
+ * l'etat final ; la classe intro-a-jouer, posee sur <html> avant le premier
+ * affichage par un script en ligne, montre le terrain et cache ce qui n'existe
+ * qu'a la fin. Sans elle, les elements de l'intro n'apparaissent jamais.
+ */
+html:not(.intro-a-jouer) [data-intro-seulement] {
+  display: none;
+}
+
+html.intro-a-jouer [data-final-seulement] {
+  opacity: 0;
+  /* Filet de securite : si le JavaScript echoue en route, l'etat final
+     revient seul au bout de six secondes. Personne ne reste bloque. */
+  animation: intro-filet-de-securite 0s 6s forwards;
+}
+
+html.intro-a-jouer [data-intro-seulement] {
+  animation: intro-filet-de-securite-inverse 0s 6s forwards;
+}
+
+@keyframes intro-filet-de-securite {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes intro-filet-de-securite-inverse {
+  to {
+    visibility: hidden;
+  }
+}

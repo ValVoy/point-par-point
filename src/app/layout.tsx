@@ -31,7 +31,9 @@ export default function RacineLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="fr" className={archivo.variable}>
+    // L'intro de l'accueil pose une classe sur <html> avant l'hydratation (voir
+    // components/public/intro/script-intro.ts) : l'ecart est voulu.
+    <html lang="fr" className={archivo.variable} suppressHydrationWarning>
       <body className="min-h-dvh antialiased">{children}</body>
     </html>
   );

@@ -632,3 +632,33 @@ vérifiés présents dans GSAP 3.15.0 installé : rien à ajouter pour l'animati
   lue dans `node_modules`.
 - Suite : l'utilisateur valide la fiche d'ouverture, en particulier la lecture « bandeau LED », puis
   on construit l'intro sur `/prototype/ballon` avant de l'installer sur l'accueil.
+
+**23:35** · **[motion] L'intro de l'accueil, premier prototype complet**
+
+Fiche validée par l'utilisateur, « bandeau LED » compris. Construite sur `/prototype/ouverture` :
+la salle se trace, le tableau affiche 24-23 (balle de set), le point se joue avec le geste du
+prototype, le score roule à 25, le public en points bondit, le bandeau s'emballe, puis les lignes du
+terrain se transforment en « PROJET VOLLEY », qui reste en place comme ouverture. 3,8 s, passable
+à tout moment, une fois par visite.
+
+Le geste a d'abord été extrait dans `ballon-geste.ts` et le terrain dans `Terrain`, partagés avec
+la scène du prototype, vérifiée sans régression au centième. Le titre est converti en tracés par
+`scripts/titre-en-traces.py` (fontTools 4.65.0, épinglé sous la règle des quinze jours, dans un
+environnement Python isolé, sans aucune dépendance npm) : relancer le script suffira le jour du vrai
+nom. Les lettres de « PROJET » naissent de la trajectoire, celles de « VOLLEY » du sol, par un
+découpage testé.
+
+Le serveur rend l'état final ; un script en ligne décide avant le premier affichage si l'intro joue,
+d'où zéro image parasite pour un visiteur qui l'a déjà vue. Un filet de sécurité CSS rétablit l'état
+final au bout de six secondes si le JavaScript échoue. Un défaut trouvé : en développement, React
+exécute l'effet deux fois, et le second passage relisait la ligne de départ comme cible, le titre ne
+bougeait plus. Les cibles viennent désormais du fichier généré, jamais du DOM.
+
+- Portée : `src/components/public/intro/` (nouveau), `ballon-geste.ts`, `ballon-scene.tsx`,
+  `ballon-filet.tsx`, `titre-traces.ts` (généré), `scripts/titre-en-traces.py`, `src/lib/gsap.ts`
+  (DrawSVG, MorphSVG), `globals.css`, `layout.tsx`, `src/app/prototype/ouverture/`.
+- Vérifié : 57 tests, `tsc`, lint, `next build`. En 1440 px : lecture complète 3,8 s, 896 images
+  sans perte (pire 12,6 ms) ; visiteur qui revient sans aucune classe d'intro ; « Passer » en 58 ms
+  vers l'état final ; tableau, joie et titre final vus figés. En 390 px : joie et titre final vus.
+- Suite : l'utilisateur regarde l'intro (bouton « Rejouer l'intro » en bas du prototype) et sur son
+  téléphone. Puis l'installer sur l'accueil, et le bloc prochain match simple à la place de la scène.
