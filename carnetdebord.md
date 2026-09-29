@@ -371,3 +371,27 @@ transition. Le club est cité sobrement, avec un lien, sans son logo, faute d'ac
 - Suite : construire la planche de style, avec le fond nuit, le turquoise mesuré sur de vraies
   photos, trois condensées libres, un portrait en bichromie, le motif de triangles et le tableau
   de score.
+
+**14:55** · **[design] Planche de style**
+
+Pas encore de photo de la D2 : la planche est construite avec une photo d'une équipe senior du club,
+téléchargée dans `public/_local/`, ignoré par git. Elle ne quitte pas le poste et sera remplacée.
+
+La planche est une route `/planche`, réservée au développement (`notFound` en production, jamais
+indexée), avec ses propres jetons : `globals.css` et l'administration ne bougent pas tant que rien
+n'est tranché. Elle montre la palette (teinte d'écran à côté de la teinte mesurée sur la photo),
+les trois condensées candidates sur le même texte, la photo en bichromie et en trichromie, quatre
+cartes joueurs, le motif du maillot à trois intensités et le tableau de score avant et après
+match. Un bouton bascule la police des cartes et du tableau entre les trois candidates.
+
+Les cartes sont toutes découpées dans une seule photo de groupe, par un point de visage relevé à la
+main : le pire cas, et il tient. Un défaut trouvé en le regardant : l'optimiseur d'images servait
+la taille affichée du cadre, puis la photo était agrandie cinq fois, d'où du flou. La taille
+demandée intègre désormais le zoom. La leçon vaudra pour le vrai composant.
+
+- Portée : `src/app/planche/` (nouveau), `.gitignore`.
+- Vérifié : `tsc`, lint, rendu à l'écran en 1440 et 390 px, bascule de police, aucun
+  défilement horizontal en mobile, console sans erreur hors l'icône du site absente.
+- Suite : l'utilisateur tranche sur la planche (police A, B ou C, bichromie ou trichromie,
+  intensité du motif). Puis les jetons montent dans `globals.css` et on attaque le prototype du
+  ballon.
