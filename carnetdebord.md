@@ -709,3 +709,21 @@ vague ; placé dans l'échelonnement, il répète chaque groupe. Corrigé, la jo
 - Vérifié : 57 tests, `tsc`, lint ; durée mesurée en temps réel à 3,86 s (chronologie 3,90 s),
   l'élément le plus tardif identifié avant et après correction.
 - Suite : installer l'intro sur l'accueil, avec le bloc prochain match branché sur la base.
+
+**00:30** · **[cadrage] La palette est à revoir en premier**
+
+Fin de séance. L'utilisateur est content de l'intro pour une première version, et pose la priorité
+de la prochaine séance : la palette, qu'il trouve « beaucoup trop site IA ». Fond nuit bleuté,
+turquoise lumineux, lueurs de néon : c'est le réflexe générique des sites sombres produits en
+série, et il a raison de le relever. La palette avait été tirée du maillot, mais le choix du fond
+nuit et de l'éclat turquoise ravivé l'a tirée vers ce cliché.
+
+À cadrer d'abord, avant l'installation de l'intro sur l'accueil : elle touche le site public,
+l'intro, l'administration et la planche, qui partagent les mêmes jetons dans `globals.css`, donc un
+changement se fera en une fois.
+
+- Portée : `ROADMAP.md`, `carnetdebord.md`.
+- Vérifié : rien à vérifier, aucun code dans cette entrée.
+- Suite : cadrer la palette en salve de questions (fond clair ou sombre, couleurs du maillot
+  gardées ou non, références qui ne ressemblent pas à un site généré), puis la décliner dans
+  `globals.css`.

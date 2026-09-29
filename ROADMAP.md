@@ -13,8 +13,12 @@ Ce qui marche à l'écran : connexion avec limitation des tentatives, déconnexi
 réduite selon le rôle, bandeau de démonstration, gestion des saisons et de l'effectif.
 **Aucune page publique réelle**, l'accueil est encore provisoire.
 
-Prochaine étape (30-09-2026) : installer l'intro validée sur l'accueil, avec le bloc prochain
-match branché sur la base.
+**Première chose à cadrer à la prochaine séance (demandé le 30-09-2026) : la palette.**
+L'utilisateur la trouve « beaucoup trop site IA » : fond nuit bleuté et turquoise lumineux, le
+réflexe générique du site sombre à néon. À revoir avant toute autre chose, en salve de questions,
+puisqu'elle touche tout (site public, intro, administration, planche).
+
+Ensuite : installer l'intro validée sur l'accueil, avec le bloc prochain match branché sur la base.
 
 **À revoir avant d'écrire les pages publiques** : la largeur de la mise en page et le motion
 design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`.
