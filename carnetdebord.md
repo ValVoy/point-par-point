@@ -435,3 +435,32 @@ sans nouvelle dépendance.
 - Suite : l'utilisateur tranche sur la planche (police A, B ou C, bichromie ou trichromie,
   variante du filigrane), puis les jetons montent dans `globals.css` et on attaque le prototype
   du ballon.
+
+**16:05** · **[admin] Épisodes de la série et tableau de bord**
+
+Toujours en autonomie, l'utilisateur m'ayant demandé ce que je pouvais encore avancer seul. Les
+épisodes d'abord, parce que la série est le pilier du site et que le schéma était prêt. L'ami colle
+le lien de la vidéo tel qu'il le copie, lien de partage, barre du navigateur, Shorts ou direct, et
+le site en tire l'identifiant. Seuls les domaines de YouTube sont acceptés : l'identifiant finit
+dans un lecteur intégré, il ne doit pas pouvoir venir d'ailleurs. La miniature s'affiche dès que
+le lien est reconnu, ce qui dit tout de suite si c'est la bonne vidéo.
+
+Un épisode naît en brouillon et se publie d'un geste séparé, sous le droit de publier. Publier pose
+la date du jour si la date de sortie manque. Un épisode lié à un match prend la saison du match,
+sinon la saison courante. Le formulaire garde ses champs contrôlés, pour qu'un lien mal collé
+n'efface pas un résumé déjà écrit, et repart vide avec le numéro suivant après un ajout.
+
+Le tableau de bord ne dit plus que ce qui attend une action : les scores à saisir, les épisodes en
+brouillon, le prochain match. C'est la première page vue à chaque connexion, donc l'endroit où un
+score oublié doit se voir.
+
+- Portée : `src/lib/youtube.ts` et son test, `src/lib/episodes.ts`, `src/lib/rencontres.ts`
+  (`prochainMatch`), `src/app/administration/(interieur)/episodes/`,
+  `src/app/administration/(interieur)/page.tsx`, `ROADMAP.md`.
+- Vérifié : 21 tests (dont douze formes d'adresse YouTube et les domaines déguisés), `tsc`, lint,
+  `next build`. À l'écran : miniature en direct, ajout en brouillon, formulaire remis à zéro avec
+  le numéro suivant, adresse d'un autre domaine refusée sans perte du résumé, brouillon signalé sur
+  le tableau de bord, publication (date posée, saison courante), liaison à un match, corbeille.
+  L'épisode de test a été supprimé de la base.
+- Suite : trancher la planche de style. En autonomie, les actualités ensuite, une fois décidé le
+  format du texte (paragraphes simples ou mise en forme légère).

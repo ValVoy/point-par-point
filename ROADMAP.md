@@ -46,9 +46,9 @@ design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`
 - [x] Calendrier de la saison, saisie en masse, tout ou rien (29-09-2026)
 - [x] Score et détail set par set, écran court pensé pour le téléphone, ou score final seul
       (29-09-2026)
-- [ ] Tableau de bord : relayer les scores à saisir, aujourd'hui visibles dans Matchs seulement
+- [x] Tableau de bord : scores à saisir, épisodes en brouillon, prochain match (29-09-2026)
 - [ ] Point de visage des photos de joueurs (deux colonnes sur `joueurs`), avec l'envoi vers R2
-- [ ] Épisodes : adresse YouTube, résumé, lien vers un match
+- [x] Épisodes : adresse YouTube, résumé, lien vers un match, brouillon puis publication (29-09-2026)
 - [ ] Actualités, avec brouillon obligatoire
 - [ ] Chronologie du projet, staff, partenaires
 - [ ] Classement de la poule, avec sa date de mise à jour

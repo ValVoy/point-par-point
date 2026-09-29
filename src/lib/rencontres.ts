@@ -79,6 +79,14 @@ export function scoreASaisir(rencontre: Rencontre, maintenant = new Date()) {
   );
 }
 
+/** Le premier match a venir d'une liste deja triee par date. */
+export function prochainMatch<T extends Rencontre>(liste: T[], maintenant = new Date()) {
+  return liste.find(
+    (rencontre) =>
+      rencontre.etat === "a_venir" && rencontre.joueLe.getTime() >= maintenant.getTime(),
+  );
+}
+
 /**
  * Adresse publique d'un match, /matchs/<slug> : la date a Paris puis
  * l'adversaire. Deux matchs le meme jour contre la meme equipe (un aller et

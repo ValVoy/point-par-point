@@ -1,8 +1,37 @@
+import Link from "next/link";
+import { and, eq, isNull } from "drizzle-orm";
 import { exigerConnexion } from "@/lib/auth/session-courante";
 import { peut } from "@/lib/auth/roles";
+import { db } from "@/lib/db";
+import { episodes } from "@/lib/db/schema";
+import { dateEtHeure } from "@/lib/dates";
+import { prochainMatch, rencontresDeLaSaison, scoreASaisir } from "@/lib/rencontres";
+import { saisonCourante } from "@/lib/saisons";
 
+/**
+ * Le tableau de bord dit ce qui attend une action, et rien d'autre. C'est la
+ * premiere page vue a chaque connexion : si un score oublie n'y apparait pas,
+ * il ne sera jamais saisi.
+ */
 export default async function TableauDeBord() {
   const utilisateur = await exigerConnexion();
+  const saison = await saisonCourante();
+
+  const matchs =
+    saison && peut(utilisateur, "saisirResultats")
+      ? await rencontresDeLaSaison(saison.id)
+      : [];
+  const aSaisir = matchs.filter((r) => scoreASaisir(r));
+  const prochain = prochainMatch(matchs);
+
+  const brouillons = peut(utilisateur, "redigerContenu")
+    ? await db()
+        .select({ id: episodes.id, titre: episodes.titre })
+        .from(episodes)
+        .where(and(eq(episodes.etat, "brouillon"), isNull(episodes.supprimeLe)))
+    : [];
+
+  const rienAFaire = aSaisir.length === 0 && brouillons.length === 0;
 
   return (
     <>
@@ -10,18 +39,68 @@ export default async function TableauDeBord() {
         Bonjour {utilisateur.nom}
       </h1>
       <p className="mt-2 text-sm text-[var(--color-encre-douce)]">
+        {rienAFaire
+          ? "Rien n'attend de votre côté : le site est à jour."
+          : "Voici ce qui attend une action."}
+      </p>
+
+      <div className="mt-8 grid gap-4 md:grid-cols-2">
+        {aSaisir.map((rencontre) => (
+          <Link
+            key={rencontre.id}
+            href={`/administration/matchs/${rencontre.id}/score`}
+            className="rounded-xl border border-[var(--color-accent)] bg-[var(--color-papier)] p-5 hover:bg-[var(--color-accent-sourd)]"
+          >
+            <p className="text-xs font-medium text-[var(--color-accent)]">Score à saisir</p>
+            <p className="mt-1 font-medium">
+              {rencontre.aDomicile ? "Contre " : "Chez "}
+              {rencontre.adversaire}
+            </p>
+            <p className="mt-0.5 text-xs text-[var(--color-encre-tenue)] first-letter:uppercase">
+              {dateEtHeure(rencontre.joueLe)}
+            </p>
+          </Link>
+        ))}
+
+        {brouillons.length > 0 ? (
+          <Link
+            href="/administration/episodes"
+            className="rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-5 hover:border-[var(--color-accent)]"
+          >
+            <p className="text-xs font-medium text-[var(--color-encre-douce)]">
+              {brouillons.length > 1
+                ? `${brouillons.length} épisodes en brouillon`
+                : "1 épisode en brouillon"}
+            </p>
+            <p className="mt-1 font-medium">{brouillons[0]?.titre}</p>
+            <p className="mt-0.5 text-xs text-[var(--color-encre-tenue)]">
+              Invisible sur le site tant qu&apos;il n&apos;est pas publié.
+            </p>
+          </Link>
+        ) : null}
+
+        {prochain ? (
+          <Link
+            href={`/administration/matchs/${prochain.id}`}
+            className="rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-5 hover:border-[var(--color-accent)]"
+          >
+            <p className="text-xs font-medium text-[var(--color-encre-douce)]">Prochain match</p>
+            <p className="mt-1 font-medium">
+              {prochain.aDomicile ? "Contre " : "Chez "}
+              {prochain.adversaire}
+            </p>
+            <p className="mt-0.5 text-xs text-[var(--color-encre-tenue)] first-letter:uppercase">
+              {dateEtHeure(prochain.joueLe)}
+            </p>
+          </Link>
+        ) : null}
+      </div>
+
+      <p className="mt-8 text-xs text-[var(--color-encre-tenue)]">
         {peut(utilisateur, "gererComptes")
           ? "Vous avez accès à l'ensemble de l'administration."
           : "Vous pouvez rédiger et saisir. La structure du site et les comptes sont réservés à l'administrateur."}
       </p>
-
-      <div className="mt-8 rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-5">
-        <p className="text-sm text-[var(--color-encre-douce)]">
-          Les écrans de saisie arrivent dans les prochaines séances. Les
-          fondations sont en place : comptes, rôles, et la base contient déjà le
-          jeu de démonstration.
-        </p>
-      </div>
     </>
   );
 }
