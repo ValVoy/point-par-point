@@ -3,7 +3,7 @@ import { and, eq, isNull } from "drizzle-orm";
 import { exigerConnexion } from "@/lib/auth/session-courante";
 import { peut } from "@/lib/auth/roles";
 import { db } from "@/lib/db";
-import { episodes } from "@/lib/db/schema";
+import { actualites, episodes } from "@/lib/db/schema";
 import { dateEtHeure } from "@/lib/dates";
 import { prochainMatch, rencontresDeLaSaison, scoreASaisir } from "@/lib/rencontres";
 import { saisonCourante } from "@/lib/saisons";
@@ -31,7 +31,15 @@ export default async function TableauDeBord() {
         .where(and(eq(episodes.etat, "brouillon"), isNull(episodes.supprimeLe)))
     : [];
 
-  const rienAFaire = aSaisir.length === 0 && brouillons.length === 0;
+  const articles = peut(utilisateur, "redigerContenu")
+    ? await db()
+        .select({ id: actualites.id, titre: actualites.titre })
+        .from(actualites)
+        .where(and(eq(actualites.etat, "brouillon"), isNull(actualites.supprimeLe)))
+    : [];
+
+  const rienAFaire =
+    aSaisir.length === 0 && brouillons.length === 0 && articles.length === 0;
 
   return (
     <>
@@ -75,6 +83,23 @@ export default async function TableauDeBord() {
             <p className="mt-1 font-medium">{brouillons[0]?.titre}</p>
             <p className="mt-0.5 text-xs text-[var(--color-encre-tenue)]">
               Invisible sur le site tant qu&apos;il n&apos;est pas publié.
+            </p>
+          </Link>
+        ) : null}
+
+        {articles.length > 0 ? (
+          <Link
+            href="/administration/actualites"
+            className="rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-5 hover:border-[var(--color-accent)]"
+          >
+            <p className="text-xs font-medium text-[var(--color-encre-douce)]">
+              {articles.length > 1
+                ? `${articles.length} actualités en brouillon`
+                : "1 actualité en brouillon"}
+            </p>
+            <p className="mt-1 font-medium">{articles[0]?.titre}</p>
+            <p className="mt-0.5 text-xs text-[var(--color-encre-tenue)]">
+              À relire puis publier.
             </p>
           </Link>
         ) : null}

@@ -49,7 +49,7 @@ design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`
 - [x] Tableau de bord : scores à saisir, épisodes en brouillon, prochain match (29-09-2026)
 - [ ] Point de visage des photos de joueurs (deux colonnes sur `joueurs`), avec l'envoi vers R2
 - [x] Épisodes : adresse YouTube, résumé, lien vers un match, brouillon puis publication (29-09-2026)
-- [ ] Actualités, avec brouillon obligatoire
+- [x] Actualités, avec brouillon obligatoire et mise en forme légère maison (29-09-2026)
 - [ ] Chronologie du projet, staff, partenaires
 - [ ] Classement de la poule, avec sa date de mise à jour
 - [ ] Messages de contact

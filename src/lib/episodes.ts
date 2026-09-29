@@ -2,7 +2,7 @@ import { and, desc, eq, isNotNull, isNull } from "drizzle-orm";
 import { db } from "./db";
 import { episodes, rencontres, saisons } from "./db/schema";
 import { dateCourte } from "./dates";
-import { slugifier } from "./slug";
+import { premiereLibre, slugifier } from "./slug";
 
 /**
  * Lectures liees aux episodes de la serie, partagees entre les ecrans. Comme
@@ -92,8 +92,5 @@ export async function slugEpisodeLibre(
     existants.filter((ligne) => ligne.id !== sauf).map((ligne) => ligne.slug),
   );
 
-  if (!pris.has(base)) return base;
-  let suffixe = 2;
-  while (pris.has(`${base}-${suffixe}`)) suffixe += 1;
-  return `${base}-${suffixe}`;
+  return premiereLibre(base, pris);
 }

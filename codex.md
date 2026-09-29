@@ -19,6 +19,7 @@
   - [Une heure saisie est une heure de Paris](#une-heure-saisie-est-une-heure-de-paris)
   - [Un score inhabituel s'enregistre, un score impossible non](#un-score-inhabituel-senregistre-un-score-impossible-non)
   - [Une grille de saisie survit à un refus](#une-grille-de-saisie-survit-à-un-refus)
+  - [Le texte léger des actualités](#le-texte-léger-des-actualités)
 
 ## Principes de conception
 
@@ -172,3 +173,16 @@ le refuse. Sur un formulaire de trois champs, c'est une gêne ; sur un calendrie
 un score de cinq sets, c'est l'abandon. Les écrans de saisie longue gardent donc leurs valeurs dans
 l'état du composant, avec des champs contrôlés. Et un enregistrement groupé est tout ou rien : une
 seule ligne fautive et rien ne part, avec le numéro de chaque ligne à corriger.
+
+### Le texte léger des actualités
+
+Décidé le 29-09-2026 contre un éditeur riche : quatre mises en forme et pas une de plus,
+l'intertitre (`## `), le gras (`**`), l'italique (`*`) et le lien (`[texte](adresse)`). Assez pour
+un compte rendu de match, trop peu pour casser la mise en page.
+
+Le format est écrit dans le projet (`src/lib/texte-leger.ts`) plutôt qu'importé : aucun paquet de
+plus, et un analyseur qu'on peut lire en entier. Le rendu produit des éléments React, **jamais du
+HTML injecté**, et seules les adresses `http`, `https` et `mailto` deviennent des liens : un
+`<script>` tapé dans le texte s'affiche comme du texte. Les boutons de l'éditeur posent la syntaxe,
+l'ami n'a pas à la connaître. Les pages publiques réutiliseront le même composant `TexteLeger`,
+habillé autrement.

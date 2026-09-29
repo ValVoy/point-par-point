@@ -15,3 +15,15 @@ export function slugifier(texte: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }
+
+/**
+ * Premiere adresse libre a partir d'une base : « theo-demo », puis
+ * « theo-demo-2 », « theo-demo-3 »... Deux contenus peuvent porter le meme
+ * titre, et l'adresse doit rester unique sans que personne n'y pense.
+ */
+export function premiereLibre(base: string, prises: Set<string>): string {
+  if (!prises.has(base)) return base;
+  let suffixe = 2;
+  while (prises.has(`${base}-${suffixe}`)) suffixe += 1;
+  return `${base}-${suffixe}`;
+}

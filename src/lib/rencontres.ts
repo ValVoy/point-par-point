@@ -2,7 +2,7 @@ import { and, asc, eq, inArray, isNotNull, isNull } from "drizzle-orm";
 import { db } from "./db";
 import { rencontres, setsRencontre } from "./db/schema";
 import { pourChampDate } from "./dates";
-import { slugifier } from "./slug";
+import { premiereLibre, slugifier } from "./slug";
 
 /**
  * Lectures liees aux matchs, partagees entre les ecrans. Comme pour les
@@ -109,8 +109,5 @@ export async function slugRencontreLibre(
   );
   for (const reserve of options.reserves ?? []) pris.add(reserve);
 
-  if (!pris.has(base)) return base;
-  let suffixe = 2;
-  while (pris.has(`${base}-${suffixe}`)) suffixe += 1;
-  return `${base}-${suffixe}`;
+  return premiereLibre(base, pris);
 }
