@@ -44,11 +44,25 @@
 
 /* --- Motif du maillot --------------------------------------------------- */
 
-.texture {
+/*
+ * Filigrane : le motif a la limite du perceptible. On le devine plus qu'on
+ * ne le voit, et il s'evanouit vers les bords pour ne jamais faire cadre.
+ */
+.filigrane {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.07;
+  opacity: 0.06;
+  mask-image: radial-gradient(ellipse 80% 70% at 70% 30%, #000 0%, transparent 75%);
+}
+
+/* Le halo : le motif n'apparait que dans une lumiere, comme sous un projecteur. */
+.halo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  mask-image: radial-gradient(circle 16rem at 75% 20%, #000 0%, transparent 100%);
 }
 
 /* --- Portraits ---------------------------------------------------------- */

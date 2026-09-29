@@ -23,7 +23,7 @@ function Specimen({ candidate, rang }: { candidate: Candidate; rang: number }) {
         rang % 2 === 1 ? "bg-[var(--nuit-surface)]" : ""
       }`}
     >
-      <Motif className={styles.texture} fond="transparent" />
+      <Motif className={styles.filigrane} fond="transparent" contour />
 
       <div className="relative flex flex-wrap items-baseline justify-between gap-4">
         <p className={styles.etiquette}>

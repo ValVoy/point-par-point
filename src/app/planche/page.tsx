@@ -27,42 +27,43 @@ function MotifSection() {
     <section className="border-t border-[var(--trait)] px-4 py-20 sm:px-10 lg:px-16">
       <p className={styles.etiquette}>04 · Motif</p>
       <h2 className="mt-3 max-w-[24ch] text-3xl font-semibold text-balance sm:text-4xl">
-        Les losanges du maillot, en signature discrète
+        Les losanges du maillot, en filigrane
       </h2>
       <p className="mt-4 max-w-[62ch] leading-relaxed text-[var(--craie-douce)]">
-        Trois intensités. La texture à peine visible sert aux bandeaux et aux
-        fiches. Le motif franc ne sert qu&apos;au volet de transition de la
-        scène du ballon, le temps d&apos;un passage.
+        À peine perceptible : on le devine plus qu&apos;on ne le voit. Trois
+        façons de le cacher. Le motif franc, comme sur le maillot, ne
+        servirait qu&apos;au volet de transition de la scène du ballon, le
+        temps d&apos;un passage.
       </p>
 
       <div className="mt-12 grid gap-6 md:grid-cols-3">
         <figure>
-          <div className="relative h-56 overflow-hidden rounded-sm bg-[var(--nuit-surface)]">
-            <Motif className={styles.texture} fond="transparent" />
+          <div className="relative h-72 overflow-hidden rounded-sm bg-[var(--nuit-surface)]">
+            <Motif className={styles.filigrane} fond="transparent" contour />
           </div>
           <figcaption className="mt-3 text-sm text-[var(--craie-douce)]">
-            Texture, 7 % : bandeaux et fiches
+            Contour : un trait fin, qui s&apos;efface vers les bords
           </figcaption>
         </figure>
         <figure>
-          <div className="relative h-56 overflow-hidden rounded-sm">
+          <div className="relative h-72 overflow-hidden rounded-sm bg-[var(--nuit)]">
             <Motif
-              fond="var(--nuit)"
-              gauche="var(--turquoise-fonce)"
-              droite="var(--nuit-releve)"
+              fond="transparent"
+              gauche="#0c0f1f"
+              droite="var(--nuit)"
               taille={40}
             />
           </div>
           <figcaption className="mt-3 text-sm text-[var(--craie-douce)]">
-            Ton sur ton : fond de section rare
+            Ton sur ton : deux noirs presque identiques
           </figcaption>
         </figure>
         <figure>
-          <div className="relative h-56 overflow-hidden rounded-sm">
-            <Motif fond="var(--craie)" gauche="var(--turquoise)" droite="var(--violet)" taille={56} />
+          <div className="relative h-72 overflow-hidden rounded-sm bg-[var(--nuit-surface)]">
+            <Motif className={styles.halo} fond="transparent" contour />
           </div>
           <figcaption className="mt-3 text-sm text-[var(--craie-douce)]">
-            Franc, comme le maillot : volet de transition seulement
+            Halo : visible seulement sous une lumière, comme un projecteur
           </figcaption>
         </figure>
       </div>
@@ -83,7 +84,7 @@ export default function Planche() {
       <FiltresSvg />
 
       <header className="relative overflow-hidden px-4 pt-24 pb-16 sm:px-10 lg:px-16">
-        <Motif className={styles.texture} fond="transparent" />
+        <Motif className={styles.filigrane} fond="transparent" contour />
         <p className={`relative ${styles.etiquette}`}>Planche de style · 29-09-2026</p>
         <h1
           className="relative mt-4 text-[clamp(3.5rem,11vw,9rem)] uppercase"
