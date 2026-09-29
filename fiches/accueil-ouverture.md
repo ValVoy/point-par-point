@@ -87,13 +87,17 @@ Le cadrage téléphone est celui déjà resserré (9/10). Le titre formé doit t
 
 | Instant | Ce qui se passe |
 |---|---|
-| 0,0 s | Fond nuit. Le sol, le filet, les tribunes et le bandeau se tracent (0,4 s) |
-| 0,3 s | Le tableau s'allume sur 24-23 |
-| 0,5 s | Passe, frappe, smash : le geste du prototype (1,2 s) |
-| 1,7 s | Impact : le tableau passe à 25-23, le public bondit, le bandeau s'emballe |
-| 2,2 s | Les lignes du terrain se replient et se transforment en lettres (1,2 s) |
-| 3,4 s | Le titre est formé, le reste de l'ouverture apparaît (sous-titre, suite de la page) |
-| 3,8 s | Fin. L'état final est celui que voit tout visiteur suivant |
+| 0,0 s | La salle, rendue en veilleuse par le serveur, s'allume : public, bandeau, tableau |
+| 0,2 s | « Balle de set » pulse deux fois sur le 24-23 : le temps de lire l'enjeu |
+| 1,0 s | Passe, frappe, smash : le geste du prototype (0,9 s jusqu'à l'impact) |
+| 1,9 s | Impact : le tableau passe à 25-23, le public bondit, le bandeau s'emballe |
+| 2,4 s | Les lignes du terrain se transforment en lettres (1,3 s, lettre après lettre) |
+| 3,5 s | Le titre est rempli, le sous-titre et « Défiler » apparaissent |
+| 3,9 s | Fin. L'état final est celui que voit tout visiteur suivant |
+
+Révisée le 30-09-2026 : la salle ne se trace plus, elle s'allume (plus de flash au démarrage sur
+téléphone lent), et la balle de set tient près d'une seconde, l'utilisateur n'avait pas le temps de
+lire le 24-23.
 
 ### Architecture
 

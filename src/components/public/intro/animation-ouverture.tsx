@@ -106,16 +106,22 @@ export function AnimationOuverture({ children }: { children: ReactNode }) {
           tl.fromTo(publicParent, { opacity: 0.3 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, 0);
           tl.fromTo(motif ?? [], { opacity: 0.12 }, { opacity: 0.45, duration: 0.35, ease: "power2.out" }, 0.05);
           tl.fromTo(tableau, { opacity: 0.35 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.1);
+          // Le temps de lire l'enjeu : « Balle de set » pulse deux fois avant la
+          // passe (retour de l'utilisateur : on ne voyait pas le 24-23). Deux
+          // pulsations en 0,8 s, sous le seuil de trois clignotements par seconde.
+          tl.to(balleDeSet, { opacity: 0.3, duration: 0.2, yoyo: true, repeat: 3, ease: "sine.inOut" }, 0.2);
 
           // 1. Le point : le geste du prototype, tel quel.
-          const { sol } = ajouterGeste(tl, el, t, ballon, 0.35);
+          const { sol } = ajouterGeste(tl, el, t, ballon, 1.0);
 
           // 2. La joie : le score passe a 25, le public bondit, le bandeau s'emballe.
           tl.to(scoreNous, { yPercent: -50, duration: 0.25, ease: "back.out(2)" }, sol + 0.02);
           tl.to(balleDeSet, { opacity: 0.35, duration: 0.2 }, sol);
+          // La repetition vit dans l'echelonnement : placee a cote, elle repeterait
+          // toute la vague, et le public sauterait encore apres la fin de l'intro.
           tl.to(
             publicGroupes,
-            { y: -14, duration: 0.16, ease: "power2.out", yoyo: true, repeat: 3, stagger: { each: 0.025, from: "random" } },
+            { y: -14, duration: 0.16, ease: "power2.out", stagger: { each: 0.025, from: "random", yoyo: true, repeat: 3 } },
             sol + 0.04,
           );
           if (defilement) {
@@ -126,18 +132,18 @@ export function AnimationOuverture({ children }: { children: ReactNode }) {
 
           // 3. Le terrain devient le titre : les lignes s'effacent au profit des
           // lettres, qui partent exactement de leur trace.
-          const morphe = sol + 0.6;
+          const morphe = sol + 0.5;
           tl.set(lettres, { attr: { "stroke-opacity": 1 } }, morphe);
           tl.set([traces, el.sol], { opacity: 0 }, morphe);
           tl.to(filet, { opacity: 0, duration: 0.3 }, morphe);
           lettres.forEach((lettre, rang) => {
-            tl.to(lettre, { morphSVG: cibles[rang] ?? "", duration: 1.1, ease: "power3.inOut" }, morphe + rang * 0.035);
+            tl.to(lettre, { morphSVG: cibles[rang] ?? "", duration: 0.95, ease: "power3.inOut" }, morphe + rang * 0.03);
           });
           tl.to(tableau, { opacity: 0, y: -10, duration: 0.4, ease: "power2.in" }, morphe + 0.2);
-          tl.to(lettres, { attr: { "fill-opacity": 1, "stroke-opacity": 0 }, duration: 0.35, ease: "power2.out" }, morphe + 1.05);
+          tl.to(lettres, { attr: { "fill-opacity": 1, "stroke-opacity": 0 }, duration: 0.35, ease: "power2.out" }, morphe + 0.95);
 
           // 4. L'ouverture se complete : sous-titre et invitation a defiler.
-          tl.to(apparitions, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, morphe + 1.25);
+          tl.to(apparitions, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, morphe + 1.1);
 
           // Passer : un geste de l'utilisateur, ou un onglet mis de cote.
           const passer = () => {

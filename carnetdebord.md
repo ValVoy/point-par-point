@@ -691,3 +691,21 @@ le halo ; le bandeau passe en motif plein, comme le tissu.
   production (ouverture temporaire des prototypes, retirée après) ; bandeau vu en gros plan.
 - Suite : l'utilisateur juge le nouveau motif et l'allumage de la salle. Puis installer l'intro sur
   l'accueil avec le bloc prochain match branché sur la base.
+
+## 30-09-2026
+
+**00:25** · **[motion] La balle de set respire**
+
+L'utilisateur aime l'intro mais la trouvait trop pressée : on n'avait pas le temps de voir le
+24-23, qui est tout le suspense. « Balle de set » pulse désormais deux fois sur le tableau et la
+passe ne part qu'à la première seconde ; la transformation en titre, un peu plus serrée, garde le
+total à 3,9 s, sous les quatre secondes promises par la fiche.
+
+En mesurant la durée, un défaut caché : le public bondissait en quatre vagues successives pendant
+2,3 s, bien après la fin de l'intro. Un `repeat` posé à côté d'un échelonnement répète toute la
+vague ; placé dans l'échelonnement, il répète chaque groupe. Corrigé, la joie tient en une seconde.
+
+- Portée : `src/components/public/intro/animation-ouverture.tsx`, `fiches/accueil-ouverture.md`.
+- Vérifié : 57 tests, `tsc`, lint ; durée mesurée en temps réel à 3,86 s (chronologie 3,90 s),
+  l'élément le plus tardif identifié avant et après correction.
+- Suite : installer l'intro sur l'accueil, avec le bloc prochain match branché sur la base.
