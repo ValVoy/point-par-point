@@ -13,7 +13,7 @@ export default function Accueil() {
         Nom provisoire
       </p>
 
-      <h1 className="mt-3 font-[family-name:var(--font-titre)] text-5xl leading-[1.05] text-balance sm:text-6xl">
+      <h1 className="mt-3 titre-affiche text-6xl text-balance sm:text-8xl">
         {NOM_DU_SITE}
       </h1>
 

@@ -13,6 +13,7 @@
 - [Direction artistique](#direction-artistique)
   - [La largeur : des marges, mais moins, et des bandeaux pleine largeur](#la-largeur--des-marges-mais-moins-et-des-bandeaux-pleine-largeur)
   - [Le motion design est un objectif, pas une décoration](#le-motion-design-est-un-objectif-pas-une-décoration)
+  - [Le système de design, figé le 29-09-2026](#le-système-de-design-figé-le-29-09-2026)
 - [Conventions](#conventions)
   - [Le marquage des données de démonstration](#le-marquage-des-données-de-démonstration)
   - [L'effectif appartient à la saison, pas au joueur](#leffectif-appartient-à-la-saison-pas-au-joueur)
@@ -118,6 +119,30 @@ Trois garde-fous, pour que l'ambition ne se retourne pas contre le site.
    ne doit pas attendre la fin d'une animation pour la voir.
 3. **Rien de tout cela ne va dans l'administration.** L'ami y saisit des résultats, il veut de la
    vitesse et de la prévisibilité, pas un spectacle.
+
+### Le système de design, figé le 29-09-2026
+
+Tranché par l'utilisateur sur la planche de style (`/planche`, développement seulement), détail et
+raisons dans `veille.md`, sections 7 à 9. Les jetons vivent dans `src/app/globals.css`, nulle part
+ailleurs.
+
+- **Couleurs** : celles du maillot. Le site public est de nuit (`nuit`, `nuit-surface`,
+  `nuit-releve`) avec le turquoise vif pour seule couleur forte ; le violet reste rare (motif,
+  libéro, trichromie). L'administration est claire, sur les mêmes teintes, avec le **turquoise
+  foncé** comme couleur d'action : le vif sur blanc tomberait à un contraste d'environ 2 pour 1.
+- **Typographie** : une seule famille, **Archivo**, chargée avec son axe de largeur.
+  `titre-affiche` (largeur 62 %, graisse 800, capitales, chiffres à largeur fixe) pour la voix du
+  site public ; `titre-admin` (largeur 80 %, graisse 700) pour les écrans de travail ; largeur
+  normale pour le texte. Les chiffres à largeur fixe sont une exigence : un score qui défile ne doit
+  pas bouger latéralement, et c'est ce qui a écarté Big Shoulders, pourtant la plus typée.
+- **Largeurs** : `colonne-lecture` (62 caractères), `colonne-large` (84 rem plus la marge),
+  `pleine-largeur`. La marge suit l'écran, de 1 à 4 rem.
+- **Mouvement** : nerveux et net. Trois durées (`--duree-breve` 160 ms, `--duree` 280 ms,
+  `--duree-appuyee` 420 ms) et deux courbes (`ease-ressort`, léger rebond ; `ease-sortie`, arrêt
+  franc), partagées avec GSAP.
+- **Portraits** : trichromie nuit, violet, turquoise clair, avec cadrage sur le point de visage.
+- **Motif du maillot** : en filigrane, un contour fin et à peine perceptible ; le halo, qui ne
+  révèle le motif que sous une lumière, est réservé à la scène du ballon.
 
 ## Conventions
 

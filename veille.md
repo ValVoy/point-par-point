@@ -167,3 +167,19 @@ vue à l'écran.
   les fiches, et en volet de transition dans la scène du ballon.
 - **Lien avec le club** : une mention sobre (« une équipe du VF Francheville ») et un lien, sans le
   logo du club en vedette. L'utiliser demanderait l'accord du bureau.
+
+## 9. Planche de style tranchée, 29-09-2026 à 17:50
+
+Choix de l'utilisateur à l'écran, sur `/planche`.
+
+- **Police : Archivo**, une seule famille. Largeur 62 et graisse 800 pour les titres et les
+  chiffres, largeur normale pour le texte courant (Hanken Grotesk n'est plus utile). Raisons :
+  chiffres à largeur fixe, donc un score qui défile ne bouge pas latéralement (Big Shoulders, la
+  plus typée, n'en a pas : constaté en mesurant « 22-25 » plus large que « 25-21 ») ; axe de
+  largeur animable pour les titres cinétiques ; un seul fichier de police à charger.
+- **Portraits : trichromie** nuit, violet, turquoise clair. Jugée moins violente que la
+  bichromie, le violet adoucit les tons moyens.
+- **Filigrane : contour** fin comme texture des bandeaux et des fiches. Le **halo** est réservé à
+  la scène du ballon, où il devient mouvement : la lumière suit le ballon et révèle le motif.
+- **Tableau de score** validé, avec le cas du cinquième set (tie-break en 15) : scores jamais
+  coupés, tailles réduites d'un cran sur téléphone, « Set 5 » en mobile et « Tie-break » au-delà.

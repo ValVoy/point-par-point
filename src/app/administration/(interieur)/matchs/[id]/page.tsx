@@ -33,7 +33,7 @@ export default async function PageMatch({
         Retour aux matchs
       </Link>
 
-      <h1 className="mt-3 font-[family-name:var(--font-titre)] text-3xl">
+      <h1 className="mt-3 titre-admin text-3xl">
         {rencontre.aDomicile ? "Contre " : "Chez "}
         {rencontre.adversaire}
       </h1>

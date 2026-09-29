@@ -19,7 +19,7 @@ export default async function PageConnexion() {
       <p className="text-xs font-medium tracking-widest text-[var(--color-encre-tenue)] uppercase">
         {NOM_DU_SITE}
       </p>
-      <h1 className="mt-2 font-[family-name:var(--font-titre)] text-4xl">
+      <h1 className="mt-2 titre-admin text-4xl">
         Administration
       </h1>
       <p className="mt-3 text-sm text-[var(--color-encre-douce)]">

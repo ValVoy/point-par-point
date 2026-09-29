@@ -23,7 +23,7 @@ export default async function PageEpisodes() {
 
   return (
     <>
-      <h1 className="font-[family-name:var(--font-titre)] text-3xl">Épisodes</h1>
+      <h1 className="titre-admin text-3xl">Épisodes</h1>
       <p className="mt-2 max-w-prose text-sm text-[var(--color-encre-douce)]">
         La série, épisode par épisode. On colle l&apos;adresse de la vidéo, le
         site affiche la miniature et le lecteur. Un nouvel épisode reste en

@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Inter } from "next/font/google";
+import { Archivo } from "next/font/google";
 import { DESCRIPTION_DU_SITE, NOM_DU_SITE } from "@/lib/site";
 import "./globals.css";
 
-const titre = Instrument_Serif({
-  weight: "400",
+/*
+ * Une seule famille pour tout le site, decide sur la planche de style le
+ * 29-09-2026 : Archivo, dont l'axe de largeur sert a la fois le texte courant
+ * (largeur normale) et les titres d'affiche (resserres a 62 %). Un seul
+ * fichier de police a charger, et une largeur qui s'anime.
+ */
+const archivo = Archivo({
   subsets: ["latin"],
-  variable: "--police-titre",
-  display: "swap",
-});
-
-const texte = Inter({
-  subsets: ["latin"],
-  variable: "--police-texte",
+  axes: ["wdth"],
+  variable: "--police-archivo",
   display: "swap",
 });
 
@@ -31,7 +31,7 @@ export default function RacineLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="fr" className={`${titre.variable} ${texte.variable}`}>
+    <html lang="fr" className={archivo.variable}>
       <body className="min-h-dvh antialiased">{children}</body>
     </html>
   );

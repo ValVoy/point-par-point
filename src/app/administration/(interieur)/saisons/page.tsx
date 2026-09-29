@@ -41,7 +41,7 @@ export default async function PageSaisons() {
 
   return (
     <>
-      <h1 className="font-[family-name:var(--font-titre)] text-3xl">Saisons</h1>
+      <h1 className="titre-admin text-3xl">Saisons</h1>
       <p className="mt-2 max-w-prose text-sm text-[var(--color-encre-douce)]">
         Chaque match, chaque effectif et chaque classement appartient à une
         saison. Une seule saison est courante à la fois : c&apos;est celle que

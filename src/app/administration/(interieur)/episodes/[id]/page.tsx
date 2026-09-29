@@ -33,7 +33,7 @@ export default async function PageEpisode({
         Retour aux épisodes
       </Link>
 
-      <h1 className="mt-3 font-[family-name:var(--font-titre)] text-3xl">{episode.titre}</h1>
+      <h1 className="mt-3 titre-admin text-3xl">{episode.titre}</h1>
       <p className="mt-1 text-sm text-[var(--color-encre-douce)]">
         {episode.etat === "publie" ? "Publié sur le site" : "Brouillon, invisible sur le site"}
         {" · "}

@@ -37,7 +37,7 @@ export default async function PageSaison({
         Retour aux saisons
       </Link>
 
-      <h1 className="mt-3 font-[family-name:var(--font-titre)] text-3xl">
+      <h1 className="mt-3 titre-admin text-3xl">
         {saison.libelle}
       </h1>
 

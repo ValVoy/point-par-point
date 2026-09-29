@@ -15,7 +15,7 @@ export default async function PageNouvelleActualite() {
       >
         Retour aux actualités
       </Link>
-      <h1 className="mt-3 font-[family-name:var(--font-titre)] text-3xl">Écrire une actualité</h1>
+      <h1 className="mt-3 titre-admin text-3xl">Écrire une actualité</h1>
       <p className="mt-2 max-w-prose text-sm text-[var(--color-encre-douce)]">
         Elle s&apos;enregistre en brouillon. Vous la relirez avant de la publier.
       </p>

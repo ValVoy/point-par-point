@@ -27,7 +27,7 @@ export default async function PageEffectif({
   if (!saison) {
     return (
       <>
-        <h1 className="font-[family-name:var(--font-titre)] text-3xl">
+        <h1 className="titre-admin text-3xl">
           Effectif
         </h1>
         <p className="mt-4 rounded-xl border border-dashed border-[var(--color-trait)] p-6 text-sm text-[var(--color-encre-tenue)]">
@@ -85,7 +85,7 @@ export default async function PageEffectif({
   return (
     <>
       <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
-        <h1 className="font-[family-name:var(--font-titre)] text-3xl">
+        <h1 className="titre-admin text-3xl">
           Effectif
         </h1>
         <nav className="flex gap-2 text-sm">

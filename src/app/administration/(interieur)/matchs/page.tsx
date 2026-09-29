@@ -56,7 +56,7 @@ export default async function PageMatchs({
   if (!saison) {
     return (
       <>
-        <h1 className="font-[family-name:var(--font-titre)] text-3xl">Matchs</h1>
+        <h1 className="titre-admin text-3xl">Matchs</h1>
         <p className="mt-4 rounded-xl border border-dashed border-[var(--color-trait)] p-6 text-sm text-[var(--color-encre-tenue)]">
           Il faut d&apos;abord créer une saison : chaque match s&apos;y rattache.
         </p>
@@ -80,7 +80,7 @@ export default async function PageMatchs({
   return (
     <>
       <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
-        <h1 className="font-[family-name:var(--font-titre)] text-3xl">Matchs</h1>
+        <h1 className="titre-admin text-3xl">Matchs</h1>
         <nav className="flex gap-2 text-sm">
           {saisons.map((autre) => (
             <Link

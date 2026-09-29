@@ -23,7 +23,7 @@ export default async function PageActualites() {
   return (
     <>
       <div className="flex flex-wrap items-baseline gap-4">
-        <h1 className="font-[family-name:var(--font-titre)] text-3xl">Actualités</h1>
+        <h1 className="titre-admin text-3xl">Actualités</h1>
         <Link
           href="/administration/actualites/nouvelle"
           className="ml-auto rounded-lg bg-[var(--color-encre)] px-4 py-2 text-sm font-medium text-[var(--color-papier)]"

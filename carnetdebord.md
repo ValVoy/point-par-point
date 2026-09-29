@@ -497,3 +497,28 @@ et logos attendent l'envoi vers R2.
   démonstration rétabli.
 - Suite : l'utilisateur tranche la planche de style. En autonomie, il reste le classement, les
   comptes et les messages, puis l'envoi d'images vers R2, qui demande le bucket.
+
+**17:55** · **[design] Planche tranchée, système figé**
+
+De retour devant l'écran, l'utilisateur a jugé la planche. Trichromie pour les portraits, jugée
+moins violente que la bichromie. Contour pour le filigrane, et le halo gardé pour un seul endroit,
+la scène du ballon, où il deviendra mouvement. Il a rappelé qu'un match peut aller au cinquième
+set : le tableau de score montre désormais ce cas, le plus large sur un téléphone, et le test a
+fait apparaître des scores coupés au tiret, corrigés.
+
+Il n'arrivait pas à choisir la police. La mesure du cinquième set a tranché mieux qu'un goût :
+Big Shoulders n'a pas de chiffres à largeur fixe, « 22-25 » y est plus large que « 25-21 », et un
+score qui défile bougerait de côté. Archivo retenue, une seule famille pour tout, avec un axe de
+largeur qui s'anime. L'administration reste claire, sur les mêmes teintes, avec le turquoise foncé
+pour les actions, lisible sur blanc.
+
+Le système est dans `globals.css` : couleurs de nuit et claires, `titre-affiche` et `titre-admin`,
+trois largeurs, trois durées et deux courbes partagées avec GSAP. Les quinze écrans
+d'administration ont basculé d'un coup, sans toucher à leur logique.
+
+- Portée : `src/app/globals.css`, `src/app/layout.tsx`, `src/app/page.tsx`, les titres de
+  `src/app/administration/`, `src/app/planche/tableau-score.tsx`, `veille.md` (section 9),
+  `codex.md`, `ROADMAP.md`.
+- Vérifié : `tsc`, lint ; cinq sets mesurés sur 375 px avec les trois polices ; administration et
+  accueil provisoire vus à l'écran en 1280 px.
+- Suite : cadrer puis construire le prototype de la scène du ballon, avec GSAP 3.15.0.

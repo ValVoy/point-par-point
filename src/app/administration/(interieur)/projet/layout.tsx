@@ -11,7 +11,7 @@ export default async function LayoutProjet({ children }: { children: React.React
 
   return (
     <>
-      <h1 className="font-[family-name:var(--font-titre)] text-3xl">Le projet</h1>
+      <h1 className="titre-admin text-3xl">Le projet</h1>
       <p className="mt-2 max-w-prose text-sm text-[var(--color-encre-douce)]">
         Ce que le site raconte de lui-même : l&apos;histoire du projet, les
         personnes derrière, les partenaires. Les photos et les logos arriveront

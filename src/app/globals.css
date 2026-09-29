@@ -1,32 +1,73 @@
 @import "tailwindcss";
 
 /*
- * Direction retenue au cadrage : clair et editorial, lisible avant tout, avec
- * un accent bleu vers violet inspire des maillots. L'accent est PROVISOIRE :
- * il se confirmera sur une vraie photo de maillot. Tout passe par ces jetons,
- * de sorte que le changer soit une modification d'une ligne.
+ * Systeme de design, tranche le 29-09-2026 sur la planche de style (voir
+ * veille.md, sections 7 a 9). Tout passe par ces jetons : changer une teinte
+ * ou une duree est une modification d'une ligne, ici et nulle part ailleurs.
+ *
+ * Teintes tirees du maillot de l'equipe, mesurees sur photo (turquoise
+ * #64979d, violet #66486b) puis ravivees pour l'ecran.
+ *
+ * Deux ambiances sur les memes teintes :
+ * - le site public, de nuit, avec le turquoise vif pour seule couleur forte ;
+ * - l'administration, claire, parce qu'on y saisit des scores en plein jour et
+ *   qu'on y ecrit des textes longs. Le turquoise vif sur blanc tomberait a un
+ *   contraste d'environ 2 pour 1 : l'administration prend le turquoise fonce.
  */
 @theme {
-  --color-papier: #fbfbfd;
-  --color-papier-creuse: #f2f2f6;
-  --color-encre: #14141a;
-  --color-encre-douce: #4a4a58;
-  --color-encre-tenue: #7c7c8c;
-  --color-trait: #e2e2ea;
+  /* --- Le site public, de nuit ------------------------------------------ */
+  --color-nuit: #0a0d1a;
+  --color-nuit-surface: #11162a;
+  --color-nuit-releve: #1a2140;
+  --color-nuit-trait: #262e4d;
+  --color-turquoise: #3ec5cc;
+  --color-turquoise-fonce: #1b7a82;
+  --color-turquoise-clair: #bff1f3;
+  --color-violet: #5e3f98;
+  --color-craie: #eef2f4;
+  --color-craie-douce: #a3adc0;
 
-  --color-accent: #3b4ddb;
-  --color-accent-clair: #6d5ce8;
-  --color-accent-sourd: #eceafc;
+  /* --- L'administration, claire ------------------------------------------ */
+  --color-papier: #fbfcfc;
+  --color-papier-creuse: #eef2f3;
+  --color-encre: #0a0d1a;
+  --color-encre-douce: #434a5e;
+  --color-encre-tenue: #6f7688;
+  --color-trait: #dde3e6;
+
+  --color-accent: #1b7a82;
+  --color-accent-clair: #3ec5cc;
+  --color-accent-sourd: #e2f5f6;
 
   --color-victoire: #17794a;
   --color-defaite: #a8324a;
 
-  --font-titre: var(--police-titre), ui-serif, Georgia, serif;
-  --font-texte: var(--police-texte), ui-sans-serif, system-ui, sans-serif;
+  /* --- Typographie : une seule famille, Archivo --------------------------- */
+  --font-titre: var(--police-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-texte: var(--police-archivo), ui-sans-serif, system-ui, sans-serif;
+
+  /* --- Mouvement : nerveux et net ------------------------------------------ */
+  --ease-ressort: cubic-bezier(0.2, 0.9, 0.25, 1.15);
+  --ease-sortie: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/*
+ * Les durees du mouvement, hors du theme Tailwind parce qu'elles servent aussi
+ * a GSAP (lues en JavaScript par getComputedStyle). Depart rapide, arret franc,
+ * 200 a 400 ms : le temps d'une frappe, pas d'une glissade.
+ */
 :root {
   color-scheme: light;
+
+  --duree-breve: 160ms;
+  --duree: 280ms;
+  --duree-appuyee: 420ms;
+
+  /* Echelle de largeurs : une colonne de lecture, une colonne large, et la
+     pleine largeur pour l'image et le mouvement. La marge suit l'ecran. */
+  --largeur-lecture: 62ch;
+  --largeur-large: 84rem;
+  --marge: clamp(1rem, 4vw, 4rem);
 }
 
 body {
@@ -36,13 +77,57 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/*
+ * Le titre d'affiche : Archivo resserree a 62 % et tres grasse, en capitales.
+ * C'est la voix du site public, celle des numeros de maillot et du tableau de
+ * score. Les chiffres y sont a largeur fixe, pour qu'un score qui defile ne
+ * bouge pas lateralement.
+ */
+@utility titre-affiche {
+  font-family: var(--font-titre);
+  font-weight: 800;
+  font-stretch: 62%;
+  text-transform: uppercase;
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+/*
+ * Le titre des ecrans d'administration : la meme famille, en plus calme. Gras
+ * et legerement resserre, en casse normale : l'identite du site sans le cri
+ * de l'affiche, sur des ecrans ou l'on travaille.
+ */
+@utility titre-admin {
+  font-family: var(--font-titre);
+  font-weight: 700;
+  font-stretch: 80%;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+
+/* Les trois largeurs de l'echelle. La pleine largeur ne garde que la marge. */
+@utility colonne-lecture {
+  width: 100%;
+  max-width: var(--largeur-lecture);
+  margin-inline: auto;
+}
+
+@utility colonne-large {
+  width: 100%;
+  max-width: calc(var(--largeur-large) + 2 * var(--marge));
+  margin-inline: auto;
+  padding-inline: var(--marge);
+}
+
+@utility pleine-largeur {
+  width: 100%;
+  padding-inline: var(--marge);
+}
+
 /* Le degrade d'accent, utilise avec parcimonie : titres de section et etats. */
 .accent-degrade {
-  background-image: linear-gradient(
-    100deg,
-    var(--color-accent),
-    var(--color-accent-clair)
-  );
+  background-image: linear-gradient(100deg, var(--color-accent), var(--color-accent-clair));
 }
 
 /*
@@ -55,6 +140,10 @@ body {
   outline-offset: 2px;
 }
 
+/*
+ * Reduction du mouvement : l'etat final, tout de suite. Les animations GSAP
+ * passent par gsap.matchMedia() et donnent le meme etat final de leur cote.
+ */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -62,5 +151,6 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

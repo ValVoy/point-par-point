@@ -35,7 +35,7 @@ export default async function PageActualite({
       >
         Retour aux actualités
       </Link>
-      <h1 className="mt-3 font-[family-name:var(--font-titre)] text-3xl">{actualite.titre}</h1>
+      <h1 className="mt-3 titre-admin text-3xl">{actualite.titre}</h1>
       <p className="mt-1 text-sm text-[var(--color-encre-douce)]">
         {brouillon
           ? "Brouillon, invisible sur le site"

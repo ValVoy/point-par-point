@@ -43,7 +43,7 @@ export default async function TableauDeBord() {
 
   return (
     <>
-      <h1 className="font-[family-name:var(--font-titre)] text-3xl">
+      <h1 className="titre-admin text-3xl">
         Bonjour {utilisateur.nom}
       </h1>
       <p className="mt-2 text-sm text-[var(--color-encre-douce)]">

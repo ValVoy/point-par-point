@@ -13,10 +13,9 @@ Ce qui marche à l'écran : connexion avec limitation des tentatives, déconnexi
 réduite selon le rôle, bandeau de démonstration, gestion des saisons et de l'effectif.
 **Aucune page publique réelle**, l'accueil est encore provisoire.
 
-Prochaine étape (29-09-2026) : l'utilisateur tranche sur la planche de style (`/planche`, en
-développement seulement) : police A, B ou C, bichromie ou trichromie, variante du filigrane. Puis
-les jetons montent dans `globals.css` et on attaque le prototype du ballon. Les matchs de
-l'administration sont faits.
+Prochaine étape (29-09-2026) : le prototype de la scène signature, le ballon au-dessus du filet.
+Le système de design est figé dans `globals.css`, l'administration du premier lot est presque
+complète.
 
 **À revoir avant d'écrire les pages publiques** : la largeur de la mise en page et le motion
 design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`.
@@ -94,14 +93,14 @@ zéro, la logique reste.
 
 - [x] Veille : sites de sport haut de gamme, sites primés pour leur motion, outils d'animation,
       synthèse commentée dans `veille.md`, références jugées par l'utilisateur (29-09-2026)
-- [ ] Système de design, orientations tranchées le 29-09-2026 (`veille.md`, sections 7 et 8) :
-      planche de style construite, en attente des choix de l'utilisateur. Couleurs, typographie (remplacer le duo provisoire Instrument Serif et
+- [x] Système de design figé le 29-09-2026 dans `globals.css` (codex, « Le système de design »),
+      après la planche de style : Archivo, palette du maillot, largeurs, grammaire du mouvement Couleurs, typographie (remplacer le duo provisoire Instrument Serif et
       Inter), échelle de largeurs, espacements, grammaire du mouvement
 - [x] Choix de la bibliothèque d'animation : GSAP 3.15.0 et `@gsap/react` 2.1.2, plus le CSS
       natif (29-09-2026), à installer avec le prototype
 - [x] Montée vers Next 16.3.5 et React 19.3.0 (29-09-2026), pour les View Transitions stables
 - [ ] Prototype de la scène signature : le ballon au-dessus du filet
-- [ ] Réhabillage de l'administration avec le nouveau système, sobre et sans animation
+- [x] Réhabillage de l'administration avec le nouveau système, sobre, clair et sans animation (29-09-2026)
 - [ ] Une fiche de page validée avant chaque page publique
 
 ### Avant la mise en ligne

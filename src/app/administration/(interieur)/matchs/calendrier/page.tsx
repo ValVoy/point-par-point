@@ -26,7 +26,7 @@ export default async function PageCalendrier({
         Retour aux matchs
       </Link>
 
-      <h1 className="mt-3 font-[family-name:var(--font-titre)] text-3xl">
+      <h1 className="mt-3 titre-admin text-3xl">
         Saisir le calendrier
       </h1>
 
