@@ -607,3 +607,28 @@ ballon. `autoRound: false` sur ces tweens.
   relevé à 0,94 puis 0,68 pendant le smash ; mesure d'images en temps réel en 1440 px.
 - Suite : la scène est validée dans son principe. Fiche de la page d'accueil, où elle prendra
   place sous l'ouverture.
+
+**22:35** · **[cadrage] L'intro de l'accueil, fiche d'ouverture**
+
+Deux retouches sur la scène d'abord : la version téléphone passe d'un cadre 3/4 à 9/10, filet
+rapproché de la gauche, et le tableau du prochain match se voit désormais au moment de l'impact.
+
+Puis une proposition de l'utilisateur, qui change l'accueil : ouvrir le site sur le point de
+volley, rendu plus riche (tableau de score, public), une exclamation de joie visuelle, puis le
+terrain qui se transforme en titre. Jouée une fois par visite. Mon avis a été favorable, avec trois
+garde-fous que j'ai posés comme non négociables : quatre secondes au plus, passable dès la première
+image, et une fin qui est l'ouverture de la page elle-même plutôt qu'un rideau. Cette intro assouplit
+consciemment la règle « pas d'écran de chargement » ; ces garde-fous sont ce qui la rend tenable.
+
+Arbitrages : une fois par visite (session du navigateur) ; à l'impact, le tableau passe de 24-23 à
+25-23 et un public en points bondit ; l'utilisateur a refusé le motif qui éclate à l'écran et
+proposé de le faire vivre dans le public, en bandeau, que je lis comme le bandeau LED de la salle ;
+l'intro devient l'ouverture ; la scène du ballon sous l'ouverture disparaît au profit d'un bloc
+prochain match, pour ne pas jouer deux fois le même geste. MorphSVG, DrawSVG et SplitText sont
+vérifiés présents dans GSAP 3.15.0 installé : rien à ajouter pour l'animation.
+
+- Portée : `fiches/accueil-ouverture.md` (nouveau), `src/components/public/` (cadrage téléphone).
+- Vérifié : 44 tests ; cadrage téléphone vu à l'écran en 390 px ; présence des extensions de GSAP
+  lue dans `node_modules`.
+- Suite : l'utilisateur valide la fiche d'ouverture, en particulier la lecture « bandeau LED », puis
+  on construit l'intro sur `/prototype/ballon` avant de l'installer sur l'accueil.
