@@ -60,6 +60,63 @@ export function pourChampDateHeure(date: Date | null | undefined): string {
   return parties.replace(" ", "T");
 }
 
+/**
+ * Ecart entre l'heure de Paris et l'heure universelle a un instant donne, en
+ * millisecondes. Il vaut une heure l'hiver, deux l'ete.
+ */
+function decalageParis(instant: number): number {
+  const parties = new Intl.DateTimeFormat("en-US", {
+    timeZone: FUSEAU,
+    hourCycle: "h23",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).formatToParts(new Date(instant));
+  const lire = (type: string) =>
+    Number(parties.find((partie) => partie.type === type)?.value);
+  const commeSiUtc = Date.UTC(
+    lire("year"),
+    lire("month") - 1,
+    lire("day"),
+    lire("hour"),
+    lire("minute"),
+    lire("second"),
+  );
+  return commeSiUtc - instant;
+}
+
+/**
+ * Inverse de `pourChampDateHeure` : « 2026-10-04T20:30 » saisi dans
+ * l'administration veut dire 20 h 30 a Paris, quel que soit le fuseau du
+ * serveur. `new Date(valeur)` lirait l'heure dans le fuseau de la machine, et
+ * le VPS tourne en heure universelle : chaque match serait decale.
+ *
+ * Renvoie null pour une saisie malformee ou une date qui n'existe pas (31
+ * fevrier, heure sautee au passage a l'heure d'ete).
+ */
+export function depuisChampDateHeure(valeur: string): Date | null {
+  const morceaux = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/.exec(valeur);
+  if (!morceaux) return null;
+  const [, annee, mois, jour, heure, minute] = morceaux.map(Number);
+  if ([annee, mois, jour, heure, minute].some((n) => n === undefined)) {
+    return null;
+  }
+
+  const naif = Date.UTC(annee!, mois! - 1, jour!, heure!, minute!);
+  // Deux passes : le decalage depend de l'instant, qu'on ne connait qu'apres
+  // la premiere estimation. Sans la seconde, les heures proches d'un
+  // changement d'heure tomberaient a cote.
+  const estimation = naif - decalageParis(naif);
+  const instant = naif - decalageParis(estimation);
+
+  const date = new Date(instant);
+  if (Number.isNaN(date.getTime())) return null;
+  return pourChampDateHeure(date) === valeur ? date : null;
+}
+
 /** Age en annees revolues, ou null si la date de naissance est inconnue. */
 export function age(neLe: Date | null | undefined): number | null {
   if (!neLe) return null;

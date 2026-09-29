@@ -16,6 +16,9 @@
 - [Conventions](#conventions)
   - [Le marquage des données de démonstration](#le-marquage-des-données-de-démonstration)
   - [L'effectif appartient à la saison, pas au joueur](#leffectif-appartient-à-la-saison-pas-au-joueur)
+  - [Une heure saisie est une heure de Paris](#une-heure-saisie-est-une-heure-de-paris)
+  - [Un score inhabituel s'enregistre, un score impossible non](#un-score-inhabituel-senregistre-un-score-impossible-non)
+  - [Une grille de saisie survit à un refus](#une-grille-de-saisie-survit-à-un-refus)
 
 ## Principes de conception
 
@@ -145,3 +148,27 @@ injection).
 Le bloc est donc placé dans `AGENTS.md`, que Next préfère dès qu'il l'y trouve. `CLAUDE.md` reste
 écrit par nous seuls. Si le bloc réapparaît dans `CLAUDE.md` après une montée de version de Next,
 c'est que son contenu a changé : le redéplacer dans `AGENTS.md`.
+
+### Une heure saisie est une heure de Paris
+
+Un match saisi à « 20:30 » a lieu à 20 h 30 à Paris. `new Date("2026-10-04T20:30")` lirait cette
+heure dans le fuseau de la machine, et le VPS tourne en heure universelle : chaque match serait
+décalé d'une ou deux heures selon la saison. Toute date avec heure venant d'un formulaire passe donc
+par `depuisChampDateHeure` (`src/lib/dates.ts`), testée sur les deux changements d'heure.
+
+### Un score inhabituel s'enregistre, un score impossible non
+
+L'analyse d'un score (`src/lib/score.ts`) distingue deux gravités. Une **erreur** bloque : un set à
+égalité, un set à moitié saisi, un trou dans la suite des sets. Une **alerte** prévient sans
+bloquer : un set gagné à 24, un écart d'un point, un set joué après la fin du match. Un championnat
+départemental peut avoir ses formats particuliers, et c'est l'ami qui sait ce qui s'est passé dans
+la salle, pas le code. La même fonction tourne en direct sur l'écran du gymnase et dans l'action
+serveur, qui seule fait foi.
+
+### Une grille de saisie survit à un refus
+
+React vide les champs non contrôlés d'un formulaire après chaque envoi, y compris quand le serveur
+le refuse. Sur un formulaire de trois champs, c'est une gêne ; sur un calendrier de vingt lignes ou
+un score de cinq sets, c'est l'abandon. Les écrans de saisie longue gardent donc leurs valeurs dans
+l'état du composant, avec des champs contrôlés. Et un enregistrement groupé est tout ou rien : une
+seule ligne fautive et rien ne part, avec le numéro de chaque ligne à corriger.

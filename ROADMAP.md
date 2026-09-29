@@ -13,9 +13,10 @@ Ce qui marche à l'écran : connexion avec limitation des tentatives, déconnexi
 réduite selon le rôle, bandeau de démonstration, gestion des saisons et de l'effectif.
 **Aucune page publique réelle**, l'accueil est encore provisoire.
 
-Prochaine étape (29-09-2026) : la planche de style, dès que les couleurs de l'équipe sont
-connues, puis le prototype du ballon. Les
-matchs dans l'administration suivent, ils ne dépendent pas du visuel.
+Prochaine étape (29-09-2026) : l'utilisateur tranche sur la planche de style (`/planche`, en
+développement seulement) : police A, B ou C, bichromie ou trichromie, variante du filigrane. Puis
+les jetons montent dans `globals.css` et on attaque le prototype du ballon. Les matchs de
+l'administration sont faits.
 
 **À revoir avant d'écrire les pages publiques** : la largeur de la mise en page et le motion
 design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`.
@@ -40,8 +41,13 @@ design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`
 - [x] Saisons : création, modification, saison courante, corbeille
 - [x] Effectif : ajout de joueur, numéro et poste par saison, capitaine, retrait
 - [ ] Fiche joueur détaillée (photo, présentation longue, parcours)
-- [ ] Calendrier de la saison, saisie en masse
-- [ ] Score et détail set par set, écran court pensé pour le téléphone
+- [x] Matchs : liste par saison, scores à saisir en tête, ajout isolé, modification, état,
+      commentaire, corbeille (29-09-2026)
+- [x] Calendrier de la saison, saisie en masse, tout ou rien (29-09-2026)
+- [x] Score et détail set par set, écran court pensé pour le téléphone, ou score final seul
+      (29-09-2026)
+- [ ] Tableau de bord : relayer les scores à saisir, aujourd'hui visibles dans Matchs seulement
+- [ ] Point de visage des photos de joueurs (deux colonnes sur `joueurs`), avec l'envoi vers R2
 - [ ] Épisodes : adresse YouTube, résumé, lien vers un match
 - [ ] Actualités, avec brouillon obligatoire
 - [ ] Chronologie du projet, staff, partenaires
@@ -88,8 +94,8 @@ zéro, la logique reste.
 
 - [x] Veille : sites de sport haut de gamme, sites primés pour leur motion, outils d'animation,
       synthèse commentée dans `veille.md`, références jugées par l'utilisateur (29-09-2026)
-- [ ] Système de design, orientations tranchées le 29-09-2026 (`veille.md`, section 7) :
-      planche de style à faire, bloquée par les couleurs de l'équipe. Couleurs, typographie (remplacer le duo provisoire Instrument Serif et
+- [ ] Système de design, orientations tranchées le 29-09-2026 (`veille.md`, sections 7 et 8) :
+      planche de style construite, en attente des choix de l'utilisateur. Couleurs, typographie (remplacer le duo provisoire Instrument Serif et
       Inter), échelle de largeurs, espacements, grammaire du mouvement
 - [x] Choix de la bibliothèque d'animation : GSAP 3.15.0 et `@gsap/react` 2.1.2, plus le CSS
       natif (29-09-2026), à installer avec le prototype
@@ -127,7 +133,8 @@ Aucun de ces points ne bloque le développement.
 
 - [ ] Le vrai nom du concept, puis renommer dossier et dépôt
 - [ ] Identité graphique de la série : logo, couleurs, typographie
-- [ ] Le championnat exact et la poule
+- [ ] Le championnat exact et la poule, et son format : trois sets gagnants ou autre (l'écran
+      de score alerte sans bloquer sur un format inhabituel)
 - [ ] Que l'accord de droit à l'image couvre aussi la publication sur un site public
 - [ ] La salle, son adresse et ses horaires
 - [ ] Qui saisira, et donc s'il faut vraiment deux comptes dès le départ

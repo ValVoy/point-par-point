@@ -395,3 +395,43 @@ demandée intègre désormais le zoom. La leçon vaudra pour le vrai composant.
 - Suite : l'utilisateur tranche sur la planche (police A, B ou C, bichromie ou trichromie,
   intensité du motif). Puis les jetons montent dans `globals.css` et on attaque le prototype du
   ballon.
+
+**15:20** · **[admin] Filigrane, puis les matchs de bout en bout**
+
+L'utilisateur trouve le motif du maillot trop voyant et le veut à peine perceptible. Il passe en
+filigrane sur la planche, en trois variantes : contour fin qui s'efface vers les bords, ton sur ton
+presque noir, halo façon projecteur. Les choix de la planche restent en suspens, l'utilisateur
+devant partir : il m'a demandé d'enchaîner sur ce que je pouvais faire seul.
+
+J'ai pris les matchs de l'administration, que la feuille de route donnait comme indépendants du
+visuel. La liste d'une saison met en tête les matchs passés sans score, parce que c'est la relance
+qui fait vivre le site. Le calendrier se saisit d'un coup dans une grille, tout ou rien, et la
+grille survit à un refus : React vide un formulaire après chaque envoi, et vingt lignes perdues sur
+une faute de frappe feraient abandonner la saisie. Une date posée sans heure reprend celle de la
+ligne du dessus, et domicile et extérieur alternent d'office.
+
+L'écran de score est pensé pour le gymnase : gros chiffres, clavier numérique, passage automatique
+au champ suivant après deux chiffres, un set de plus seulement si le match n'est pas décidé, total
+calculé sous les yeux. Il accepte aussi le score final seul. L'analyse distingue ce qui est
+impossible, refusé, de ce qui est inhabituel, signalé mais enregistrable : c'est l'ami qui sait ce
+qui s'est passé dans la salle.
+
+Deux pièges évités, qui valent d'être écrits. Une heure saisie doit être lue comme heure de Paris,
+alors que le VPS tourne en heure universelle : sans conversion, chaque match aurait été décalé.
+Et importer le schéma dans un formulaire client aurait embarqué Drizzle dans le navigateur, d'où un
+fichier de libellés à part. Premiers tests automatisés du projet, avec l'exécuteur intégré à Node,
+sans nouvelle dépendance.
+
+- Portée : `src/lib/score.ts`, `src/lib/rencontres.ts`, `src/lib/etats-rencontre.ts`,
+  `src/lib/dates.ts`, leurs tests, `src/app/administration/(interieur)/matchs/`, `src/app/planche/`,
+  `package.json` (script `test`), `codex.md`, `ROADMAP.md`.
+- Vérifié : 18 tests (sets, score final, heures d'été et d'hiver, dates impossibles), `tsc`, lint,
+  `next build`, `/planche` en 404 sur un serveur de production. À l'écran avec ta session de
+  développement : liste, score saisi en une frappe continue sur 390 px puis relu en base, refus
+  d'un set à égalité sans perte de saisie, calendrier refusé puis accepté (heure 20 h 30 relue
+  19:30 UTC en novembre), modification, corbeille, restauration. Les deux matchs de test et un
+  compte de vérification créés pour l'occasion ont été supprimés ; le match de démonstration
+  contre Sainte-Colombe garde le score saisi pendant le test.
+- Suite : l'utilisateur tranche sur la planche (police A, B ou C, bichromie ou trichromie,
+  variante du filigrane), puis les jetons montent dans `globals.css` et on attaque le prototype
+  du ballon.
