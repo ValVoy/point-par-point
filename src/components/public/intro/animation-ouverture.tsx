@@ -1,16 +1,18 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
+import { CARRES } from "@/components/motif";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { ajouterGeste, preparerBallon, trouverElementsGeste } from "../ballon-geste";
 import { TITRE_TRACES } from "../titre-traces";
-import { INTRO_GRAND, INTRO_PORTRAIT, placementTitre } from "./geometrie-intro";
+import { INTRO_GRAND, INTRO_PORTRAIT, placementTitre, TAILLE_BANDEAU } from "./geometrie-intro";
 import { introAJouer, marquerIntroVue, terminerIntro } from "./script-intro";
 import { sourcesDuTitre } from "./sources-titre";
 
 /*
  * La sequence de l'intro (fiche `fiches/accueil-ouverture.md`), en moins de
- * quatre secondes : la salle se trace, le tableau affiche une balle de set,
+ * quatre secondes : la salle, rendue en veilleuse, s'allume, le tableau
+ * affiche une balle de set,
  * le point se joue, la salle exulte, puis les lignes du terrain se replient et
  * deviennent le titre, qui reste en place.
  *
@@ -46,8 +48,8 @@ export function AnimationOuverture({ children }: { children: ReactNode }) {
 
           // Le bandeau LED defile en continu, intro ou pas : une tuile par cycle.
           const motif = salle.querySelector<HTMLElement>("[data-bandeau-motif]");
-          const tuile = grand ? 28 : 24;
-          const defilement = motif && !reduit ? gsap.to(motif, { x: -tuile * 2, duration: 4, ease: "none", repeat: -1 }) : null;
+          const tuile = CARRES * TAILLE_BANDEAU[grand ? "grand" : "portrait"];
+          const defilement = motif && !reduit ? gsap.to(motif, { x: -tuile, duration: 2.4, ease: "none", repeat: -1 }) : null;
 
           if (reduit || !introAJouer()) return;
           marquerIntroVue();
@@ -61,7 +63,8 @@ export function AnimationOuverture({ children }: { children: ReactNode }) {
           const [balleDeSet] = q<HTMLElement>("[data-balle-de-set]");
           const [filet] = q<SVGGElement>("[data-filet]");
           const [traces] = q<SVGGElement>("[data-traces]");
-          if (!el || !titre || !tableau || !scoreNous || !balleDeSet || !filet || !traces || lettres.length === 0) {
+          const [publicParent] = q<SVGGElement>("[data-public]");
+          if (!el || !titre || !tableau || !scoreNous || !balleDeSet || !filet || !traces || lettres.length === 0 || !publicParent) {
             terminerIntro();
             return;
           }
@@ -86,8 +89,7 @@ export function AnimationOuverture({ children }: { children: ReactNode }) {
           gsap.set(lettres, { attr: { "fill-opacity": 0, "stroke-opacity": 0 } });
           gsap.set(titre, { opacity: 1 });
 
-          const publicPoints = q<SVGCircleElement>("[data-public] circle");
-          const lignesSalle = [el.sol, ...q<SVGLineElement>("[data-bandeau-cadre] line")];
+          const publicGroupes = q<SVGGElement>("[data-public] [data-groupe]");
           const apparitions = q<HTMLElement>("[data-apparition]");
           gsap.set(apparitions, { opacity: 0, y: 12 });
 
@@ -98,21 +100,22 @@ export function AnimationOuverture({ children }: { children: ReactNode }) {
           };
           const tl = gsap.timeline({ defaults: { ease: "none" }, onComplete: fin });
 
-          // 0. La salle se trace, le public apparait, le tableau s'allume.
-          tl.from(lignesSalle, { drawSVG: "50% 50%", duration: 0.45, ease: "power2.out" }, 0);
-          tl.from(filet, { opacity: 0, duration: 0.3 }, 0.15);
-          tl.from(publicPoints, { opacity: 0, duration: 0.25, stagger: { each: 0.002, from: "center" } }, 0.05);
-          tl.from(tableau, { opacity: 0, y: -10, duration: 0.3, ease: "power2.out" }, 0.3);
+          // 0. La salle s'allume. Le serveur l'a rendue en veilleuse (globals.css) :
+          // la premiere image de l'intro est donc celle deja affichee, et rien ne
+          // clignote entre le chargement et le demarrage, meme sur un telephone lent.
+          tl.fromTo(publicParent, { opacity: 0.3 }, { opacity: 1, duration: 0.35, ease: "power2.out" }, 0);
+          tl.fromTo(motif ?? [], { opacity: 0.12 }, { opacity: 0.45, duration: 0.35, ease: "power2.out" }, 0.05);
+          tl.fromTo(tableau, { opacity: 0.35 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.1);
 
           // 1. Le point : le geste du prototype, tel quel.
-          const { sol } = ajouterGeste(tl, el, t, ballon, 0.5);
+          const { sol } = ajouterGeste(tl, el, t, ballon, 0.35);
 
           // 2. La joie : le score passe a 25, le public bondit, le bandeau s'emballe.
           tl.to(scoreNous, { yPercent: -50, duration: 0.25, ease: "back.out(2)" }, sol + 0.02);
           tl.to(balleDeSet, { opacity: 0.35, duration: 0.2 }, sol);
           tl.to(
-            publicPoints,
-            { y: -14, duration: 0.16, ease: "power2.out", yoyo: true, repeat: 3, stagger: { each: 0.0015, from: "random" } },
+            publicGroupes,
+            { y: -14, duration: 0.16, ease: "power2.out", yoyo: true, repeat: 3, stagger: { each: 0.025, from: "random" } },
             sol + 0.04,
           );
           if (defilement) {

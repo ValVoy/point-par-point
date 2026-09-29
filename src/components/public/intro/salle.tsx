@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
-import { Motif } from "@/components/motif";
+import { CARRES, Motif } from "@/components/motif";
 import { Ballon, Terrain } from "../ballon-scene";
 import { TITRE_TRACES } from "../titre-traces";
-import { placementTitre, pointsDuPublic, type GeometrieIntro } from "./geometrie-intro";
+import { placementTitre, pointsDuPublic, TAILLE_BANDEAU, type GeometrieIntro } from "./geometrie-intro";
 
 /*
  * La salle de l'intro, dessinee, sans mouvement (fiche
@@ -77,9 +77,14 @@ function Bandeau({ gi, variante }: { gi: GeometrieIntro; variante: VarianteSalle
         height: pourcent(b.hauteur, hauteur),
       }}
     >
-      {/* Deux tuiles de plus que la largeur : le defilement boucle sans couture. */}
-      <div data-bandeau-motif className="absolute inset-y-0 left-0 w-[calc(100%+112px)] opacity-40 will-change-transform">
-        <Motif contour fond="transparent" gauche="var(--color-turquoise)" taille={variante === "grand" ? 28 : 24} />
+      {/* Le motif plein, comme sur le maillot. Une tuile de plus que la largeur :
+          le defilement d'une tuile boucle sans couture. */}
+      <div
+        data-bandeau-motif
+        className="absolute inset-y-0 left-0 opacity-45 will-change-transform"
+        style={{ width: `calc(100% + ${CARRES * TAILLE_BANDEAU[variante]}px)` }}
+      >
+        <Motif fond="transparent" taille={TAILLE_BANDEAU[variante]} />
       </div>
     </div>
   );
@@ -113,6 +118,7 @@ function Titre({ gi }: { gi: GeometrieIntro }) {
 export function Salle({ gi, variante, children }: { gi: GeometrieIntro; variante: VarianteSalle; children?: ReactNode }) {
   const t = gi.terrain;
   const public_ = pointsDuPublic(gi);
+  const groupes = Object.values(Object.groupBy(public_, (point) => point.groupe)).filter((g) => g !== undefined);
   const { bandeau } = gi;
 
   return (
@@ -126,15 +132,19 @@ export function Salle({ gi, variante, children }: { gi: GeometrieIntro; variante
         {/* Decoratif : le titre existe en <h1> dans l'ouverture, pour tous. */}
         <svg viewBox={`0 0 ${t.largeur} ${t.hauteur}`} className="absolute inset-0 h-full w-full" aria-hidden="true">
           <g data-public fill="var(--color-craie-douce)">
-            {public_.map((point) => (
-              <circle
-                key={`${point.x}-${point.y}`}
-                cx={point.x}
-                cy={point.y}
-                r={gi.tribunes.rayon}
-                // Un public vivant n'est pas une grille : chaque point a sa nuance.
-                opacity={0.25 + ((point.x * 7 + point.rang * 13) % 10) / 22}
-              />
+            {groupes.map((points, groupe) => (
+              <g key={groupe} data-groupe>
+                {points.map((point) => (
+                  <circle
+                    key={`${point.x}-${point.y}`}
+                    cx={point.x}
+                    cy={point.y}
+                    r={gi.tribunes.rayon}
+                    // Un public vivant n'est pas une grille : chaque point a sa nuance.
+                    opacity={0.25 + ((point.x * 7 + point.rang * 13) % 10) / 22}
+                  />
+                ))}
+              </g>
             ))}
           </g>
           <g data-bandeau-cadre stroke="var(--color-craie)" strokeOpacity={0.5} strokeWidth={1.5}>

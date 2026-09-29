@@ -176,6 +176,19 @@ html.intro-a-jouer [data-intro-seulement] {
   animation: intro-filet-de-securite-inverse 0s 6s forwards;
 }
 
+/* La salle en veilleuse, telle que l'intro la prend : elle s'allume ensuite. */
+html.intro-a-jouer [data-public] {
+  opacity: 0.3;
+}
+
+html.intro-a-jouer [data-bandeau-motif] {
+  opacity: 0.12;
+}
+
+html.intro-a-jouer [data-tableau-intro] {
+  opacity: 0.35;
+}
+
 @keyframes intro-filet-de-securite {
   to {
     opacity: 1;

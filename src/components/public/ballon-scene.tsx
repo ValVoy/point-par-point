@@ -87,7 +87,7 @@ function Halo({ variante }: { variante: Variante }) {
       style={{ width: 2 * rayon, height: 2 * rayon, maskImage: masque, WebkitMaskImage: masque }}
     >
       <div data-halo-motif className="absolute top-0 left-0 opacity-30 will-change-transform">
-        <Motif contour fond="transparent" gauche="var(--color-turquoise)" taille={variante === "grand" ? 56 : 44} />
+        <Motif contour fond="transparent" taille={variante === "grand" ? 28 : 22} />
       </div>
     </div>
   );

@@ -662,3 +662,32 @@ bougeait plus. Les cibles viennent désormais du fichier généré, jamais du DO
   vers l'état final ; tableau, joie et titre final vus figés. En 390 px : joie et titre final vus.
 - Suite : l'utilisateur regarde l'intro (bouton « Rejouer l'intro » en bas du prototype) et sur son
   téléphone. Puis l'installer sur l'accueil, et le bloc prochain match simple à la place de la scène.
+
+**00:15** · **[perf] Intro plus légère au démarrage, motif du maillot corrigé**
+
+Mesure demandée par l'utilisateur, faite sur un build de production local, au processeur bridé six
+fois (Android d'entrée de gamme) : environ 315 Ko transférés au premier chargement (socle React et
+Next 144 Ko, police 88 Ko, intro 57 Ko, HTML 14 Ko), premier affichage sous 0,35 s, intro fidèle à
+3,8 s. Un seul défaut perceptible : un accroc au démarrage, deux blocages de 64 et 87 ms.
+
+Deux causes traitées. Le public était animé point par point, plus de cinq cents animations à
+préparer : il bondit désormais par dix-huit groupes (rang et portion de tribune), en ordre
+aléatoire. Et en regardant où tombaient les saccades, un défaut plus gênant est apparu : le serveur
+montrait la salle dessinée, puis l'animation l'effaçait pour la retracer, d'où un flash sur
+téléphone lent. La salle est maintenant rendue en veilleuse et s'allume : la première image de
+l'intro est celle déjà affichée. Le tracé progressif et l'extension DrawSVG disparaissent. Résultat
+mesuré trois fois : plus aucun blocage au-dessus de 50 ms, opacité du public strictement croissante
+depuis la première image, saccades résiduelles toutes dans la demi-seconde de démarrage de la page,
+salle immobile.
+
+L'utilisateur trouvait le motif du bandeau méconnaissable. Relevé sur la photo : le maillot n'est
+pas fait de losanges fendus mais de carrés coupés en deux par une diagonale, orientés différemment.
+Le composant `Motif` est réécrit sur ce modèle, ce qui corrige d'un coup le bandeau, le filigrane et
+le halo ; le bandeau passe en motif plein, comme le tissu.
+
+- Portée : `src/components/motif.tsx`, `src/components/public/intro/`, `ballon-scene.tsx`,
+  `globals.css`, `src/lib/gsap.ts`, la planche et le prototype du ballon (nouvelle API du motif).
+- Vérifié : 57 tests, `tsc`, lint, `next build` ; trois mesures au processeur bridé sur build de
+  production (ouverture temporaire des prototypes, retirée après) ; bandeau vu en gros plan.
+- Suite : l'utilisateur juge le nouveau motif et l'allumage de la salle. Puis installer l'intro sur
+  l'accueil avec le bloc prochain match branché sur la base.

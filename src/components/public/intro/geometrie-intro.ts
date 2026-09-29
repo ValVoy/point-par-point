@@ -65,15 +65,31 @@ export const INTRO_PORTRAIT: GeometrieIntro = {
   miseEnPage: "parMot",
 };
 
-/** Les points du public, rang par rang, en quinconce. */
-export function pointsDuPublic(g: GeometrieIntro): { x: number; y: number; rang: number }[] {
+/**
+ * Cote d'un carre du motif dans le bandeau LED, en pixels : environ trois
+ * rangees dans sa hauteur. Ici plutot que dans le dessin de la salle, parce que
+ * l'animation, cote navigateur, en a aussi besoin.
+ */
+export const TAILLE_BANDEAU = { grand: 10, portrait: 9 } as const;
+
+/** Portions de tribune par rang : chaque portion bondit d'un bloc. */
+export const PORTIONS_PAR_RANG = 6;
+
+/**
+ * Les points du public, rang par rang, en quinconce, avec leur groupe (rang et
+ * portion de tribune). L'animation fait bondir des groupes, pas des points :
+ * dix-huit animations au lieu de plus de cinq cents a preparer au lancement,
+ * qui causaient un accroc sur les telephones lents.
+ */
+export function pointsDuPublic(g: GeometrieIntro): { x: number; y: number; rang: number; groupe: number }[] {
   const { haut, rangs, ecart, marge } = g.tribunes;
   const largeur = g.terrain.largeur;
   const points = [];
   for (let rang = 0; rang < rangs; rang += 1) {
     const decalage = rang % 2 === 0 ? 0 : ecart / 2;
     for (let x = marge + decalage; x <= largeur - marge; x += ecart) {
-      points.push({ x, y: haut + rang * ecart * 0.9, rang });
+      const portion = Math.min(PORTIONS_PAR_RANG - 1, Math.floor((x / largeur) * PORTIONS_PAR_RANG));
+      points.push({ x, y: haut + rang * ecart * 0.9, rang, groupe: rang * PORTIONS_PAR_RANG + portion });
     }
   }
   return points;

@@ -47,12 +47,7 @@ function MotifSection() {
         </figure>
         <figure>
           <div className="relative h-72 overflow-hidden rounded-sm bg-[var(--nuit)]">
-            <Motif
-              fond="transparent"
-              gauche="#0c0f1f"
-              droite="var(--nuit)"
-              taille={40}
-            />
+            <Motif fond="transparent" sombre="#0c0f1f" clair="var(--nuit)" taille={20} />
           </div>
           <figcaption className="mt-3 text-sm text-[var(--craie-douce)]">
             Ton sur ton : deux noirs presque identiques
