@@ -13,9 +13,8 @@ Ce qui marche à l'écran : connexion avec limitation des tentatives, déconnexi
 réduite selon le rôle, bandeau de démonstration, gestion des saisons et de l'effectif.
 **Aucune page publique réelle**, l'accueil est encore provisoire.
 
-Prochaine étape (29-09-2026) : le prototype de la scène signature, le ballon au-dessus du filet.
-Le système de design est figé dans `globals.css`, l'administration du premier lot est presque
-complète.
+Prochaine étape (29-09-2026) : l'utilisateur juge le prototype du ballon sur `/prototype/ballon`.
+Ensuite, la fiche de la page d'accueil, première page publique, où la scène prendra place.
 
 **À revoir avant d'écrire les pages publiques** : la largeur de la mise en page et le motion
 design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`.
@@ -99,7 +98,7 @@ zéro, la logique reste.
 - [x] Choix de la bibliothèque d'animation : GSAP 3.15.0 et `@gsap/react` 2.1.2, plus le CSS
       natif (29-09-2026), à installer avec le prototype
 - [x] Montée vers Next 16.3.5 et React 19.3.0 (29-09-2026), pour les View Transitions stables
-- [ ] Prototype de la scène signature : le ballon au-dessus du filet
+- [x] Prototype de la scène signature : le ballon au-dessus du filet (`/prototype/ballon`, 29-09-2026), en attente de l'avis de l'utilisateur
 - [x] Réhabillage de l'administration avec le nouveau système, sobre, clair et sans animation (29-09-2026)
 - [ ] Une fiche de page validée avant chaque page publique
 

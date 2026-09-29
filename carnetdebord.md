@@ -522,3 +522,31 @@ d'administration ont basculé d'un coup, sans toucher à leur logique.
 - Vérifié : `tsc`, lint ; cinq sets mesurés sur 375 px avec les trois polices ; administration et
   accueil provisoire vus à l'écran en 1280 px.
 - Suite : cadrer puis construire le prototype de la scène du ballon, avec GSAP 3.15.0.
+
+**18:35** · **[motion] Prototype de la scène du ballon**
+
+Cadrée en une salve avec l'utilisateur : une attaque, passe haute puis smash ; un trait fin façon
+schéma de coach ; pilotée par le défilement sans bloquer la molette ; le halo révèle le motif du
+maillot dans le sillage du ballon, puis le tableau du prochain match s'allume à l'impact.
+
+GSAP 3.15.0 et `@gsap/react` 2.1.2 installés en versions exactes, après lecture des dates de
+publication (avril 2026 et janvier 2025) et vérification qu'aucun ne lance de script. Un seul point
+d'entrée, `lib/gsap.ts`. Le ballon n'utilise pas l'extension de trajectoire : il est placé à la
+main sur trois tracés, ce qui donne au passage sa position exacte pour centrer le halo.
+
+Trois défauts trouvés en regardant, dont deux qu'aucun test n'aurait vus. Le filet en perspective
+faisait traverser le ballon à son extrémité lointaine : la marge se vérifie désormais sur toute la
+largeur du panneau, par un test, et la frappe est plus haute, ce qui est d'ailleurs plus juste.
+Sur téléphone, rien ne s'animait : `gsap.matchMedia()` n'exécute sa fonction que si une condition
+au moins est vraie, et ni « grand écran » ni « mouvement réduit » ne l'étaient. Enfin, en
+mouvement réduit, la section gardait sa longue course de défilement sans rien à montrer : elle
+reprend sa hauteur naturelle.
+
+- Portée : `src/lib/gsap.ts`, `src/components/public/` (scène, géométrie et son test, tableau du
+  prochain match), `src/components/motif.tsx` (déplacé depuis la planche), `src/app/prototype/`,
+  `package.json`, `package-lock.json`, `ROADMAP.md`.
+- Vérifié : 40 tests dont la géométrie des deux cadrages, `tsc`, lint, `next build`, audit de
+  production vide. À l'écran en 1440 et 390 px : passe, sommet, frappe, smash, impact et tableau
+  allumé, retour en arrière au défilement inverse ; mouvement réduit émulé, état final immédiat et
+  section non épinglée.
+- Suite : l'utilisateur juge la scène. Puis la fiche de la page d'accueil, où elle prendra place.

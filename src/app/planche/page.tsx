@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { CSSProperties } from "react";
-import { Motif } from "./motif";
+import { Motif } from "@/components/motif";
 import { Palette } from "./palette";
 import { CANDIDATES, variablesPolices } from "./polices";
 import { FiltresSvg, Portraits } from "./portraits";

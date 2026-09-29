@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { CANDIDATES, type Candidate } from "./polices";
-import { Motif } from "./motif";
+import { Motif } from "@/components/motif";
 import styles from "./planche.module.css";
 
 function styleTitre(c: Candidate): CSSProperties {
