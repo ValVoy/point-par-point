@@ -6,11 +6,11 @@ const nextConfig: NextConfig = {
   // l'image demarre sans serveur.
   output: "standalone",
 
-  // Contrairement a ope_cdm, le lint et la verification des types restent
-  // actifs pendant le build. Le VPS Hetzner a 4 vCPU, un swap et 5 Go libres :
-  // rien a voir avec l'instance Clever Cloud plafonnee a 644 Mo qui avait
-  // impose de les desactiver la-bas. Le filet vaut mieux que les secondes
-  // gagnees.
+  // Contrairement a ope_cdm, la verification des types reste active pendant
+  // le build. Le VPS Hetzner a 4 vCPU, un swap et 5 Go libres : rien a voir
+  // avec l'instance Clever Cloud plafonnee a 644 Mo qui avait impose de la
+  // desactiver la-bas. Depuis Next 16, `next build` ne lance plus le lint :
+  // `npm run lint` se passe a part, avant chaque commit.
 
   // Le client Turso tourne cote Node : il ne doit pas etre bundle.
   serverExternalPackages: [

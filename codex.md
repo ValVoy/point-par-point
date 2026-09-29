@@ -133,3 +133,15 @@ Le numéro de maillot et le poste changent d'une année sur l'autre. Ils sont do
 table `effectif`, qui relie un joueur à une saison, et non par la table `joueur`. Sans cela,
 changer de numéro en septembre réécrirait rétroactivement toutes les feuilles de match des saisons
 passées.
+
+### Le bloc que Next écrit pour les agents vit dans `AGENTS.md`
+
+Depuis Next 16, `next dev` détecte un assistant de code et **écrit de lui-même un bloc
+d'instructions** entre les marqueurs `<!-- BEGIN:nextjs-agent-rules -->` et `END`, dans `CLAUDE.md`
+s'il n'existe pas d'`AGENTS.md`. L'effacer ne sert à rien, il revient au lancement suivant (lu dans
+`node_modules/next/dist/server/lib/generate-agent-files.js` le 29-09-2026, ce n'est pas une
+injection).
+
+Le bloc est donc placé dans `AGENTS.md`, que Next préfère dès qu'il l'y trouve. `CLAUDE.md` reste
+écrit par nous seuls. Si le bloc réapparaît dans `CLAUDE.md` après une montée de version de Next,
+c'est que son contenu a changé : le redéplacer dans `AGENTS.md`.

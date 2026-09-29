@@ -1,17 +1,15 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTypescript from "eslint-config-next/typescript";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({ baseDirectory: __dirname });
-
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+// Depuis Next 16, eslint-config-next fournit directement une configuration
+// plate : plus besoin de passer par FlatCompat.
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTypescript,
   // next-env.d.ts est genere par Next et gitignore : le linter n'a pas a
   // se prononcer sur un fichier que personne n'ecrit.
-  { ignores: [".next/**", "node_modules/**", "drizzle/**", "next-env.d.ts"] },
-];
+  globalIgnores([".next/**", "node_modules/**", "drizzle/**", "next-env.d.ts"]),
+]);
 
 export default eslintConfig;

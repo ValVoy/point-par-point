@@ -6,7 +6,7 @@
 
 **Plan validé le 19-09-2026 au soir, fondations posées dans la nuit du 19 au 20-09-2026.**
 
-Ce qui tourne et a été vérifié : Next.js 15 en TypeScript strict, 18 tables Drizzle migrées sur
+Ce qui tourne et a été vérifié : Next.js 16.3.5 et React 19.3.0 en TypeScript strict, 18 tables Drizzle migrées sur
 Turso, jeu de démonstration de 50 enregistrements et sa purge.
 
 Ce qui marche à l'écran : connexion avec limitation des tentatives, déconnexion, navigation
@@ -90,6 +90,7 @@ zéro, la logique reste.
 - [ ] Système de design : couleurs, typographie (remplacer le duo provisoire Instrument Serif et
       Inter), échelle de largeurs, espacements, grammaire du mouvement
 - [ ] Choix de la bibliothèque d'animation, versions vérifiées dans le registre
+- [x] Montée vers Next 16.3.5 et React 19.3.0 (29-09-2026), pour les View Transitions stables
 - [ ] Prototype de la scène signature : le ballon au-dessus du filet
 - [ ] Réhabillage de l'administration avec le nouveau système, sobre et sans animation
 - [ ] Une fiche de page validée avant chaque page publique

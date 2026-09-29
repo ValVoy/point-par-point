@@ -301,3 +301,30 @@ d'exécuté.
   référence encore vue à l'écran, c'est une limite assumée de cette passe.
 - Suite : ouvrir les références retenues dans le navigateur, puis trancher le système de design
   (couleurs, typographie, largeurs, grammaire du mouvement) et la montée vers Next 16.3.5.
+
+**12:40** · **[technique] Montée vers Next 16.3.5 et React 19.3.0**
+
+Décidée avec l'utilisateur avant d'écrire la moindre page publique : les transitions entre pages,
+qui porteront le passage de la carte d'un joueur à sa fiche, ne sont qu'expérimentales en 15.5 et
+stables en 16. Le code est encore petit, la montée ne coûtera jamais moins cher qu'aujourd'hui.
+
+Versions choisies sous la règle des quinze jours et lues dans le registre, pas déduites : Next
+16.3.7 était sortie le matin même, la 16.3.5 du 11-09 est la plus récente admissible. React, ses
+types et `eslint-config-next` suivent, en versions exactes. Aucun nouveau paquet ne lance de script
+à l'installation, l'audit de production est vide.
+
+Deux effets de bord de Next 16, qui valent d'être écrits. `next build` ne lance plus le lint : le
+commentaire de `next.config.ts` le promettait encore, il est corrigé et le lint se passe à part.
+Et `next dev` a écrit de lui-même un bloc d'instructions pour agents dans `CLAUDE.md`. Traité
+d'abord comme une injection possible, vérifié en lisant le code de Next : c'est un comportement
+voulu, qui réécrit le bloc à chaque lancement si on l'efface. Il est déplacé dans `AGENTS.md`, que
+Next préfère, et la convention est au codex.
+
+- Portée : `package.json`, `package-lock.json`, `eslint.config.mjs` (configuration plate native),
+  `next.config.ts`, `tsconfig.json` (ajusté par Next), `AGENTS.md` (nouveau), `codex.md`,
+  `ROADMAP.md`.
+- Vérifié : `tsc --noEmit`, `npm run lint` et `next build` sans erreur. Dans le navigateur, écrans
+  saisons et effectif affichés depuis la base, console sans erreur ni avertissement, `CLAUDE.md`
+  intact après relancement du serveur.
+- Suite : l'utilisateur parcourt les références de `veille.md` et dit ce qui lui parle, puis on
+  tranche le système de design en salves de questions.
