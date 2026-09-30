@@ -1,5 +1,8 @@
 import { PastilleResultat } from "@/components/pastille-resultat";
+import { dateLongue } from "@/lib/dates";
+import type { Resultat } from "@/lib/resultats";
 import { AfficheurLed } from "./afficheur-led";
+import { EQUIPE } from "@/lib/site";
 
 /**
  * Le dernier resultat en tableau de gymnase, frere du tableau du prochain
@@ -10,29 +13,19 @@ import { AfficheurLed } from "./afficheur-led";
  * Comme sur un vrai tableau, les locaux sont a gauche : a l'exterieur, le
  * score se lit donc adversaire d'abord. Il doit tenir jusqu'au cinquieme set,
  * le cas le plus large sur un telephone. Toute l'information en LED existe
- * aussi en texte clair, pour les lecteurs d'ecran.
+ * aussi en texte clair, pour les lecteurs d'ecran. Sans detail des sets
+ * (saisie partielle), la rangee des sets disparait, le score reste.
  */
-
-export type Resultat = {
-  adversaire: string;
-  domicile: boolean;
-  dateLisible: string;
-  /** Les points de chaque set, de notre point de vue : [nous, eux]. */
-  sets: [number, number][];
-};
 
 const NOMBRES = ["zéro", "un", "deux", "trois"];
 
-export function bilan(sets: [number, number][]) {
-  const nous = sets.filter(([n, e]) => n > e).length;
-  return { nous, eux: sets.length - nous, victoire: nous > sets.length - nous };
-}
-
 export function TableauResultat({ resultat }: { resultat: Resultat }) {
-  const { adversaire, domicile, dateLisible, sets } = resultat;
-  const { nous, eux, victoire } = bilan(sets);
-  const equipe = "VF Francheville";
-  const [gauche, droite] = domicile ? [equipe, adversaire] : [adversaire, equipe];
+  const { adversaire, domicile, sets } = resultat;
+  const nous = resultat.setsNous;
+  const eux = resultat.setsEux;
+  const victoire = nous > eux;
+  const dateLisible = dateLongue(resultat.joueLe);
+  const [gauche, droite] = domicile ? [EQUIPE, adversaire] : [adversaire, EQUIPE];
   const [setsGauche, setsDroite] = domicile ? [nous, eux] : [eux, nous];
   const oriente = (set: [number, number]) => (domicile ? set : ([set[1], set[0]] as [number, number]));
   const cinq = sets.length === 5;
@@ -46,7 +39,7 @@ export function TableauResultat({ resultat }: { resultat: Resultat }) {
         <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-jaune)] uppercase">Dernier match</p>
         <PastilleResultat victoire={victoire} className="text-lg" />
       </div>
-      <div className="titre-affiche mt-3 flex items-start justify-between gap-4 text-2xl sm:text-4xl">
+      <div className="titre-affiche mt-3 flex items-start justify-between gap-4 text-xl text-balance sm:text-4xl">
         <div>
           <p className="text-xs tracking-[0.2em] text-[var(--color-craie-douce)]">Locaux</p>
           <p className="mt-1">{gauche}</p>
@@ -58,18 +51,23 @@ export function TableauResultat({ resultat }: { resultat: Resultat }) {
       </div>
 
       <p className="sr-only">
-        {victoire ? "Victoire" : "Défaite"} {NOMBRES[nous]} sets à {NOMBRES[eux]} :{" "}
-        {sets.map(([n, e]) => `${n}-${e}`).join(", ")}. {dateLisible}.
+        {victoire ? "Victoire" : "Défaite"} {NOMBRES[nous] ?? nous} sets à {NOMBRES[eux] ?? eux}
+        {sets.length > 0 ? ` : ${sets.map(([n, e]) => `${n}-${e}`).join(", ")}` : ""}. {dateLisible}.
       </p>
-      <div aria-hidden="true" className="mt-6 flex items-center justify-center gap-4 sm:gap-8">
+      <div
+        aria-hidden="true"
+        className="mt-6 flex items-center justify-center gap-4 sm:gap-8"
+        style={{ opacity: "calc(0.25 + 0.75 * var(--allume, 1))" }}
+      >
         <AfficheurLed valeur={String(setsGauche)} className="text-7xl sm:text-9xl" />
         <AfficheurLed valeur="-" className="text-4xl sm:text-6xl" />
         <AfficheurLed valeur={String(setsDroite)} className="text-7xl sm:text-9xl" />
       </div>
 
+      {sets.length > 0 ? (
       <ol
         aria-hidden="true"
-        className={`mt-6 grid gap-1 border-t border-[var(--color-nuit-trait)] pt-4 text-center sm:gap-2 ${cinq ? "grid-cols-5" : "grid-cols-4"}`}
+        className={`mt-6 grid gap-1 pt-2 text-center sm:gap-2 ${cinq ? "grid-cols-5" : "grid-cols-4"}`}
       >
         {sets.map((set, i) => {
           const [g, d] = oriente(set);
@@ -95,7 +93,8 @@ export function TableauResultat({ resultat }: { resultat: Resultat }) {
           );
         })}
       </ol>
-      <p aria-hidden="true" className="mt-4 text-center text-sm text-[var(--color-craie-douce)]">
+      ) : null}
+      <p aria-hidden="true" className="mt-4 border-t border-[var(--color-nuit-trait)] pt-4 text-center text-sm text-[var(--color-craie-douce)] first-letter:uppercase">
         {dateLisible}
       </p>
     </div>

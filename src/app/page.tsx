@@ -1,34 +1,41 @@
-import { NOM_DU_SITE } from "@/lib/site";
+import { BlocSerie } from "@/components/public/accueil/bloc-serie";
+import { BlocTableaux } from "@/components/public/accueil/bloc-tableaux";
+import { PiedDePage } from "@/components/public/accueil/pied-de-page";
+import { Revelations } from "@/components/public/accueil/revelations";
+import { Ouverture } from "@/components/public/intro-nuit/ouverture";
+import { donneesAccueil } from "@/lib/accueil";
+import { EQUIPE } from "@/lib/site";
 
 /**
- * Page d'accueil provisoire. Sa vraie composition est decidee et documentee
- * dans PLAN.md : dernier episode et prochain match en tete, puis dernier
- * resultat, actualites et bandeau partenaires. Elle sera ecrite quand les
- * ecrans d'administration qui l'alimentent existeront.
+ * L'accueil (fiches accueil-ouverture.md et accueil.md) : l'ouverture, puis
+ * deux rendez-vous et une memoire. La serie, qu'on regarde ; les matchs, ou
+ * l'on vient ; les scores, qui disent ou en est l'equipe. Chaque bloc
+ * disparait s'il n'a rien de publie ou de a jour a montrer.
+ *
+ * Rendue a chaque visite : un score saisi doit se voir tout de suite, et le
+ * prochain match depend de l'heure. A cette echelle, une lecture en base par
+ * visite ne coute rien.
  */
-export default function Accueil() {
+export const dynamic = "force-dynamic";
+
+export default async function Accueil() {
+  const donnees = await donneesAccueil();
+
   return (
-    <main className="mx-auto flex min-h-dvh max-w-2xl flex-col justify-center px-4 py-16">
-      <p className="text-sm font-medium tracking-widest text-[var(--color-craie-tenue)] uppercase">
-        Nom provisoire
-      </p>
-
-      <h1 className="mt-3 titre-affiche text-6xl text-balance sm:text-8xl">
-        {NOM_DU_SITE}
-      </h1>
-
-      <p className="mt-6 max-w-prose text-lg leading-relaxed text-[var(--color-craie-douce)]">
-        L&apos;effectif poste par poste, le calendrier, les résultats et la
-        série. Les informations qui se consultent et qui durent, à côté de ce
-        que racontent déjà les réseaux.
-      </p>
-
-      <div className="mt-10 h-1 w-24 bg-[var(--color-jaune)]" />
-
-      <p className="mt-10 text-sm leading-relaxed text-[var(--color-craie-tenue)]">
-        Site en construction. Les fondations sont posées : base de données,
-        comptes et rôles. Les pages publiques arrivent ensuite.
-      </p>
-    </main>
+    <>
+      <Ouverture sousTitre={`L'équipe D2 masculine du ${EQUIPE}, sur le terrain et dans la série.`} />
+      <main id="contenu">
+        <Revelations>
+          {donnees.episode ? <BlocSerie episode={donnees.episode} /> : null}
+          <BlocTableaux
+            prochain={donnees.prochain}
+            dernier={donnees.dernier}
+            precedents={donnees.precedents}
+            maintenant={donnees.maintenant}
+          />
+        </Revelations>
+      </main>
+      <PiedDePage saison={donnees.saison} />
+    </>
   );
 }

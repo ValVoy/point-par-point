@@ -158,6 +158,20 @@ ailleurs.
 - **Motif du maillot** : en filigrane, un contour fin et à peine perceptible ; le halo, qui ne
   révèle le motif que sous une lumière, est réservé à la scène du ballon.
 
+### L'accueil et ses rendez-vous (30-09-2026)
+
+- **Données** : `lib/accueil.ts` lit tout en une fois, contenu publié seulement ;
+  `lib/resultats.ts` (logique pure, testée) décide ce qui est un résultat et calcule le compte à
+  rebours. Rendu dynamique à chaque visite.
+- **Agenda** : `/agenda/<slug>` renvoie le fichier `.ics` d'un match à venir (`lib/agenda.ts`,
+  RFC 5545, testé). Slug vérifié par expression avant toute requête ; tout le reste répond 404.
+- **Vidéo** : façade (`lecteur-episode.tsx`) ; YouTube ne se charge qu'au clic, en
+  `youtube-nocookie`. La miniature passe par l'optimiseur de Next, donc par notre serveur.
+- **`EQUIPE` et `CHAINE_YOUTUBE`** vivent dans `lib/site.ts`, comme le nom du site. Tant que la
+  chaîne vaut `null`, le bouton « S'abonner » ne s'affiche pas.
+- **Mouvement** : `data-revele` (un bloc monte une fois) et `data-allume` (un tableau s'allume
+  avec un seul scintillement), dans `accueil/revelations.tsx`, coupés sous mouvement réduit.
+
 ## Conventions
 
 ### Le marquage des données de démonstration

@@ -68,6 +68,16 @@ export async function rencontreParId(
   return complete ?? null;
 }
 
+/** Un match publie par son adresse publique, hors corbeille. */
+export async function rencontreParSlug(slug: string): Promise<Rencontre | null> {
+  const [rencontre] = await db()
+    .select()
+    .from(rencontres)
+    .where(and(eq(rencontres.slug, slug), isNull(rencontres.supprimeLe)))
+    .limit(1);
+  return rencontre ?? null;
+}
+
 /**
  * Un match est « a saisir » quand sa date est passee et qu'il n'a toujours
  * aucun score. C'est la relance qui fait vivre le site : sans elle, un

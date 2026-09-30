@@ -276,3 +276,22 @@ Contre-exemple : fabric London, surfaces bleu marine, qui font aussitôt thème 
 Fond bleu nuit et gris bleutés, halos sur boutons et cartes, dégradés d'accent, cartes arrondies à
 bordure translucide, accent vif partout, aplat parfait sans grain, focus absent ou bleu par défaut.
 La palette du 29-09 en cochait cinq sur six.
+
+## 12. Veille accueil, 30-09-2026 à 13:08
+
+Sept pages d'accueil ouvertes dans un navigateur. Aucune instruction injectée ; `volleyparis.fr`
+écarté (page générée, pas le site du club).
+
+| Site | Ce qu'on prend, ou ce qu'on évite |
+|---|---|
+| Wrexham AFC | Club et série documentaire ; prochain et précédent réunis dans un bloc ; la série y est noyée |
+| Toulouse FC (Awwwards 2023) | Compte à rebours « 10J : 7H : 39MIN » ; billets seulement à domicile ; contre-exemple de densité, 14 761 px |
+| Stade Toulousain | Dernier score à côté du prochain match, juste après le héros ; classement vide affiché en zéros |
+| Angel City FC | Le rendez-vous en héros ; contre-exemple : iframe YouTube en lecture automatique avant tout consentement |
+| Cadillac F1 | Mouvement mesuré ; contre-exemple : compte à rebours bloqué à 00 après la course |
+| Kings League France | Ajout à l'agenda (ECAL) ; contre-exemple : dix iframes `youtube-nocookie` chargées d'un coup |
+| Tours Volley-Ball | Adresse de la salle reléguée en pied de page |
+
+Ce qui ressort : personne n'intègre bien un épisode (façade au clic plus bouton d'abonnement), et
+personne ne met l'itinéraire à côté du prochain match. Deux places à prendre. Pages lisibles entre
+4 500 et 6 500 px.

@@ -18,10 +18,10 @@ export function TableauScore() {
       </p>
       <div className="mt-12 grid gap-8 xl:grid-cols-2">
         <TableauResultat
-          resultat={{ adversaire: "Adversaire", domicile: false, dateLisible: "Samedi 27 septembre", sets: [[25, 21], [22, 25], [25, 19], [25, 23]] }}
+          resultat={{ adversaire: "Adversaire", domicile: false, joueLe: new Date("2026-09-27T18:30:00Z"), setsNous: 3, setsEux: 1, sets: [[25, 21], [22, 25], [25, 19], [25, 23]] }}
         />
         <TableauResultat
-          resultat={{ adversaire: "Adversaire", domicile: true, dateLisible: "Samedi 20 septembre", sets: [[25, 21], [22, 25], [19, 25], [25, 23], [12, 15]] }}
+          resultat={{ adversaire: "Adversaire", domicile: true, joueLe: new Date("2026-09-20T18:30:00Z"), setsNous: 2, setsEux: 3, sets: [[25, 21], [22, 25], [19, 25], [25, 23], [12, 15]] }}
         />
       </div>
     </section>

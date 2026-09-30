@@ -1,4 +1,5 @@
-import { bilan, type Resultat } from "./tableau-resultat";
+import { dateLongue } from "@/lib/dates";
+import type { Resultat } from "@/lib/resultats";
 
 /**
  * Les matchs d'avant le dernier : une rangee de cartes qui defile a
@@ -17,10 +18,12 @@ const contour = {
 } as const;
 
 function Carte({ resultat }: { resultat: Resultat }) {
-  const { nous, eux, victoire } = bilan(resultat.sets);
+  const nous = resultat.setsNous;
+  const eux = resultat.setsEux;
+  const victoire = nous > eux;
   return (
     <li className="w-[78vw] max-w-[22rem] shrink-0 snap-start border-t-2 border-[var(--color-nuit-trait)] pt-4 sm:w-[20rem]">
-      <p className="text-sm text-[var(--color-craie-douce)] first-letter:uppercase">{resultat.dateLisible}</p>
+      <p className="text-sm text-[var(--color-craie-douce)] first-letter:uppercase">{dateLongue(resultat.joueLe)}</p>
       <p className="titre-affiche mt-1 line-clamp-2 min-h-[2em] text-2xl leading-none">
         {resultat.domicile ? "Contre" : "Chez"} {resultat.adversaire}
       </p>
@@ -31,9 +34,11 @@ function Carte({ resultat }: { resultat: Resultat }) {
         <span className={victoire ? "text-[var(--color-craie)]" : "text-[var(--color-craie-douce)]"}>
           {victoire ? "Victoire" : "Défaite"}
         </span>
-        <span className="ml-3 font-normal tracking-normal text-[var(--color-craie-tenue)] normal-case tabular-nums">
-          {resultat.sets.map(([n, e]) => `${n}-${e}`).join(" · ")}
-        </span>
+        {resultat.sets.length > 0 ? (
+          <span className="ml-3 font-normal tracking-normal text-[var(--color-craie-tenue)] normal-case tabular-nums">
+            {resultat.sets.map(([n, e]) => `${n}-${e}`).join(" · ")}
+          </span>
+        ) : null}
       </p>
     </li>
   );
@@ -49,7 +54,7 @@ export function ResultatsPrecedents({ resultats }: { resultats: Resultat[] }) {
       style={{ paddingInline: "var(--marge)" }}
     >
       {resultats.map((r) => (
-        <Carte key={`${r.dateLisible}-${r.adversaire}`} resultat={r} />
+        <Carte key={`${r.joueLe.getTime()}-${r.adversaire}`} resultat={r} />
       ))}
     </ul>
   );

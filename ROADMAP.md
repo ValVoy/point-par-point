@@ -19,7 +19,13 @@ les objets lumineux (tableau de score en LED ambre, bandeau LED, ballon). Appliq
 l'intro, à l'administration et à la planche. La version 1, papier imprimé, a été essayée et
 écartée le même matin.
 
-Ensuite : installer l'intro sur l'accueil, avec le bloc prochain match branché sur la base.
+**Accueil en ligne en local le 30-09-2026** (fiche `fiches/accueil.md`) : l'intro, le dernier
+épisode (lecteur chargé au clic seulement), le prochain match et le dernier résultat en tableaux
+LED avec « Ajouter à l'agenda » et « Itinéraire », les matchs précédents en cartes défilantes.
+Tout branché sur la base, chaque bloc disparaît s'il n'a rien à montrer.
+
+Ensuite : la page Matchs et la page d'un match (qui reprennent les tableaux), puis la série.
+À récupérer auprès de l'ami : l'adresse de la chaîne YouTube, pour le bouton « S'abonner ».
 
 **À revoir avant d'écrire les pages publiques** : la largeur de la mise en page et le motion
 design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`.

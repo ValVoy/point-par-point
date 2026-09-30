@@ -10,6 +10,15 @@
  */
 export const NOM_DU_SITE = "Projet Volley";
 
+/** L'equipe dont parle le site, telle qu'elle s'affiche sur les tableaux. */
+export const EQUIPE = "VF Francheville";
+
+/**
+ * La chaine YouTube de la serie, pour le bouton « S'abonner ». Inconnue au
+ * 30-09-2026 : tant qu'elle vaut null, le bouton ne s'affiche pas.
+ */
+export const CHAINE_YOUTUBE: string | null = null;
+
 export const DESCRIPTION_DU_SITE =
   "L'effectif, les matchs et la série. Les informations qui se consultent " +
   "et qui durent, à côté de ce que racontent les réseaux.";

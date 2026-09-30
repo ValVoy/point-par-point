@@ -830,3 +830,35 @@ sélecteur de variantes est retiré de la planche, il a rempli son rôle.
   l'équipe en accent turquoise.
 - Suite : installer l'intro sur l'accueil, avec le bloc prochain match et le dernier résultat
   branchés sur la base.
+
+**13:20** · **[page] L'accueil branché sur la base**
+
+Autonomie accordée à 13:03, avec la consigne de tenir les trois casquettes. Veille ciblée d'abord
+(`veille.md` section 12) : sept accueils de clubs ouverts dans un navigateur. Deux places à
+prendre en sont sorties, personne n'intègre bien un épisode et personne ne met l'itinéraire à
+côté du prochain match, et trois contre-exemples d'états vides ratés. Puis la fiche
+`fiches/accueil.md`, puis le code.
+
+Sous l'ouverture, deux rendez-vous et une mémoire. La série : le dernier épisode, vignette
+traitée comme les portraits, lecteur YouTube chargé au clic seulement. Les matchs : prochain
+match et dernier résultat côte à côte en tableaux LED, qui s'allument avec un scintillement
+quand on arrive devant, puis « Ajouter à l'agenda » (fichier `.ics` servi par une route à nous)
+et « Itinéraire ». Enfin les matchs précédents en cartes défilantes. Le compte à rebours tourne
+dans le navigateur et affiche « C'est parti » au coup d'envoi, la parade au compteur figé à 00
+relevé par la veille. Actualités et partenaires attendent leurs pages : une carte qui ne s'ouvre
+sur rien ferait pire que son absence.
+
+La route d'agenda est un point d'entrée public : revue adversariale à la main, onze sondes
+(slug inventé, match passé, injection d'en-tête, remontée de dossier, apostrophe, caractère de
+contrôle Unicode, slug de 300 caractères, POST). Toutes refusées proprement. Un faux départ en
+chemin : le serveur de développement avait planté après un `next build` lancé en parallèle, d'où
+des 500 sans rapport avec le code ; redémarré, tout répond.
+
+- Portée : `src/app/page.tsx`, `src/app/agenda/`, `src/components/public/accueil/`,
+  `lecteur-episode.tsx`, `compte-rebours-led.tsx`, les deux tableaux et les cartes,
+  `lib/accueil.ts`, `lib/resultats.ts`, `lib/agenda.ts` (et leurs tests), `lib/site.ts`.
+- Vérifié : 70 tests (13 nouveaux), `tsc`, lint ; à l'écran l'accueil en 1440 et 390 px avec les
+  données de démonstration (deux défauts mobiles corrigés : bouton sur deux lignes, noms coupés) ;
+  la route d'agenda sondée. Pas encore vérifiés à l'écran : les états vides (aucun épisode, aucun
+  match), couverts par la logique testée mais pas provoqués en base.
+- Suite : obtenir l'adresse de la chaîne YouTube ; puis la page Matchs et la page d'un match.

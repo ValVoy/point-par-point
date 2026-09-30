@@ -1,7 +1,8 @@
 import { Motif } from "@/components/motif";
 import { ResultatsPrecedents } from "@/components/public/resultats-precedents";
 import { TableauProchainMatch } from "@/components/public/tableau-prochain-match";
-import { TableauResultat, type Resultat } from "@/components/public/tableau-resultat";
+import { TableauResultat } from "@/components/public/tableau-resultat";
+import type { Resultat } from "@/lib/resultats";
 import styles from "./planche.module.css";
 
 /*
@@ -40,19 +41,22 @@ function Etats() {
   );
 }
 
-const DERNIER: Resultat = {
-  adversaire: "VBC Sainte-Colombe",
-  domicile: false,
-  dateLisible: "Samedi 27 septembre",
-  sets: [[25, 21], [22, 25], [25, 19], [25, 23]],
-};
+// Donnees d'exemple, au format que la base fournit a l'accueil.
+function exemple(adversaire: string, domicile: boolean, jour: string, sets: [number, number][]): Resultat {
+  const setsNous = sets.filter(([n, e]) => n > e).length;
+  return { adversaire, domicile, joueLe: new Date(`${jour}T18:30:00Z`), setsNous, setsEux: sets.length - setsNous, sets };
+}
+
+const DERNIER = exemple("VBC Sainte-Colombe", false, "2026-09-27", [[25, 21], [22, 25], [25, 19], [25, 23]]);
 
 const PRECEDENTS: Resultat[] = [
-  { adversaire: "US Chantemerle", domicile: true, dateLisible: "samedi 20 septembre", sets: [[23, 25], [25, 22], [21, 25], [25, 23], [12, 15]] },
-  { adversaire: "Volley Club des Trois Rivières", domicile: true, dateLisible: "samedi 13 septembre", sets: [[25, 16], [25, 23], [25, 19]] },
-  { adversaire: "AS Montbrison", domicile: false, dateLisible: "samedi 6 septembre", sets: [[22, 25], [25, 27], [20, 25]] },
-  { adversaire: "Entente Val-Fleury", domicile: true, dateLisible: "samedi 30 août", sets: [[25, 20], [23, 25], [25, 18], [25, 22]] },
+  exemple("US Chantemerle", true, "2026-09-20", [[23, 25], [25, 22], [21, 25], [25, 23], [12, 15]]),
+  exemple("Volley Club des Trois Rivières", true, "2026-09-13", [[25, 16], [25, 23], [25, 19]]),
+  exemple("AS Montbrison", false, "2026-09-06", [[22, 25], [25, 27], [20, 25]]),
+  { ...exemple("Entente Val-Fleury", true, "2026-08-30", []), setsNous: 3, setsEux: 1 },
 ];
+
+const MAINTENANT = new Date("2026-09-30T10:00:00Z");
 
 export function Bandeaux() {
   return (
@@ -96,13 +100,8 @@ export function Bandeaux() {
           <div className="mt-10 grid items-start gap-6 xl:grid-cols-2">
             <TableauResultat resultat={DERNIER} />
             <TableauProchainMatch
-              match={{
-                adversaire: "Adversaire",
-                domicile: true,
-                dateLisible: "Samedi 4 octobre · 20 h 30",
-                salle: "Gymnase du Bourg, Francheville",
-                compteRebours: { jours: 4, heures: 7, minutes: 12 },
-              }}
+              match={{ adversaire: "Adversaire", domicile: true, joueLe: new Date("2026-10-04T18:30:00Z"), salle: "Gymnase du Bourg" }}
+              maintenant={MAINTENANT}
             />
           </div>
           <p className="mt-16 text-xs font-semibold tracking-[0.2em] text-[var(--color-craie-douce)] uppercase">

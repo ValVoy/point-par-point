@@ -1,0 +1,73 @@
+import type { EtatRencontre } from "./db/schema";
+
+/**
+ * Ce que le site public montre d'un match joue, et le compte a rebours du
+ * prochain. Logique pure, sans base, testee a part : c'est ici que se
+ * decident les principes 3 et 4 du plan (saisie partielle, rien de perime).
+ */
+
+/** Le strict necessaire d'un match pour en tirer un resultat. */
+export type RencontreScoree = {
+  adversaire: string;
+  aDomicile: boolean;
+  joueLe: Date;
+  etat: EtatRencontre;
+  setsNous: number | null;
+  setsEux: number | null;
+  sets: { pointsNous: number | null; pointsEux: number | null }[];
+};
+
+export type Resultat = {
+  adversaire: string;
+  domicile: boolean;
+  joueLe: Date;
+  setsNous: number;
+  setsEux: number;
+  /** Le detail des sets, de notre point de vue : [nous, eux]. Peut etre vide. */
+  sets: [number, number][];
+};
+
+/**
+ * Un match devient un resultat quand il est joue et que son total en sets est
+ * connu. Le detail des sets est facultatif : un score seul s'affiche, une case
+ * vide jamais. Un set a moitie saisi est ecarte plutot que montre faux.
+ */
+export function resultatDepuis(r: RencontreScoree): Resultat | null {
+  if (r.etat !== "jouee" || r.setsNous === null || r.setsEux === null) return null;
+  const sets = r.sets.flatMap(({ pointsNous, pointsEux }) =>
+    pointsNous === null || pointsEux === null ? [] : [[pointsNous, pointsEux] as [number, number]],
+  );
+  return {
+    adversaire: r.adversaire,
+    domicile: r.aDomicile,
+    joueLe: r.joueLe,
+    setsNous: r.setsNous,
+    setsEux: r.setsEux,
+    sets,
+  };
+}
+
+/** Les resultats connus, du plus recent au plus ancien. */
+export function derniersResultats(liste: RencontreScoree[]): Resultat[] {
+  return liste
+    .map(resultatDepuis)
+    .filter((r): r is Resultat => r !== null)
+    .sort((a, b) => b.joueLe.getTime() - a.joueLe.getTime());
+}
+
+const MINUTE = 60_000;
+
+/**
+ * L'ecart jusqu'au coup d'envoi, en unites entieres. Jamais negatif : une
+ * heure depassee affiche des zeros, le temps que la page se recharge et que le
+ * match passe du cote des resultats. Les jours sont plafonnes a 99, la place
+ * de deux chiffres sur le tableau.
+ */
+export function compteRebours(joueLe: Date, maintenant: Date) {
+  const minutesRestantes = Math.max(0, Math.floor((joueLe.getTime() - maintenant.getTime()) / MINUTE));
+  return {
+    jours: Math.min(99, Math.floor(minutesRestantes / (24 * 60))),
+    heures: Math.floor(minutesRestantes / 60) % 24,
+    minutes: minutesRestantes % 60,
+  };
+}

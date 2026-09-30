@@ -15,6 +15,10 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+// Un instant fige : le prototype montre toujours le meme compte a rebours.
+const MAINTENANT_EXEMPLE = new Date("2026-09-30T08:18:00Z");
+const MATCH_EXEMPLE = new Date("2026-10-04T18:30:00Z");
+
 export default function PrototypeBallon() {
   if (process.env.NODE_ENV === "production") notFound();
 
@@ -43,10 +47,10 @@ export default function PrototypeBallon() {
           match={{
             adversaire: "Adversaire",
             domicile: true,
-            dateLisible: "Samedi 4 octobre, 20 h 30",
+            joueLe: MATCH_EXEMPLE,
             salle: "Gymnase du Bourg, Francheville",
-            compteRebours: { jours: 4, heures: 7, minutes: 12 },
           }}
+          maintenant={MAINTENANT_EXEMPLE}
         />
       </BallonFilet>
 
