@@ -28,16 +28,34 @@ export function dateLongue(date: Date | null | undefined): string {
   }).format(date);
 }
 
+/** « samedi 3 octobre à 20 h 30 » : le jour, puis l'heure a la francaise. */
 export function dateEtHeure(date: Date | null | undefined): string {
   if (!date) return "";
-  return new Intl.DateTimeFormat("fr-FR", {
+  const jour = new Intl.DateTimeFormat("fr-FR", {
     weekday: "long",
     day: "numeric",
     month: "long",
-    hour: "2-digit",
-    minute: "2-digit",
     timeZone: FUSEAU,
   }).format(date);
+  return `${jour} à ${heure(date)}`;
+}
+
+/**
+ * L'heure a la francaise, « 20 h 30 », « 15 h » pile : celle de la salle, a
+ * Paris, quel que soit le fuseau du visiteur (veille du 30-09-2026 : un
+ * calendrier au fuseau du lecteur annoncait un match a 2 h du matin).
+ */
+export function heure(date: Date | null | undefined): string {
+  if (!date) return "";
+  const morceaux = new Intl.DateTimeFormat("fr-FR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+    timeZone: FUSEAU,
+  }).formatToParts(date);
+  const h = Number(morceaux.find((m) => m.type === "hour")?.value);
+  const m = morceaux.find((m) => m.type === "minute")?.value ?? "00";
+  return m === "00" ? `${h} h` : `${h} h ${m}`;
 }
 
 /** Valeur attendue par un champ `<input type="date">` : AAAA-MM-JJ. */

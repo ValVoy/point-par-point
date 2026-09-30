@@ -19,7 +19,7 @@ import { EQUIPE } from "@/lib/site";
 
 const NOMBRES = ["zéro", "un", "deux", "trois"];
 
-export function TableauResultat({ resultat }: { resultat: Resultat }) {
+export function TableauResultat({ resultat, etiquette = "Dernier match" }: { resultat: Resultat; etiquette?: string }) {
   const { adversaire, domicile, sets } = resultat;
   const nous = resultat.setsNous;
   const eux = resultat.setsEux;
@@ -36,7 +36,7 @@ export function TableauResultat({ resultat }: { resultat: Resultat }) {
       style={{ boxShadow: "inset 0 0 0 6px var(--color-nuit)" }}
     >
       <div className="flex items-center justify-between gap-4">
-        <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-jaune)] uppercase">Dernier match</p>
+        <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-jaune)] uppercase">{etiquette}</p>
         <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase" aria-hidden="true">
           <PastilleResultat victoire={victoire} className="text-base" />
           {victoire ? "Victoire" : "Défaite"}

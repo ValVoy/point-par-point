@@ -295,3 +295,18 @@ Sept pages d'accueil ouvertes dans un navigateur. Aucune instruction injectée ;
 Ce qui ressort : personne n'intègre bien un épisode (façade au clic plus bouton d'abonnement), et
 personne ne met l'itinéraire à côté du prochain match. Deux places à prendre. Pages lisibles entre
 4 500 et 6 500 px.
+
+## 13. Veille calendrier et page de match, 30-09-2026 à 15:09
+
+Six références ouvertes dans un navigateur ; aucune instruction injectée.
+
+| Site | Ce qu'on prend, ou ce qu'on évite |
+|---|---|
+| LOVB (Awwwards 2024) | Saison dans l'adresse ; sets sur la ligne même ; lien vidéo seulement s'il existe ; piège : heure au fuseau du visiteur |
+| Toulouse FC (Awwwards 2023) | L'état du match commande la page ; piège : « possession 0 % » affichée faute de données |
+| Stade Toulousain | Liste par mois, l'équipe qui reçoit à gauche ; date non fixée écrite en toutes lettres |
+| Volleyball World, VNL | Sets en colonnes sur la page du match ; anti-modèle : un compte exigé pour l'agenda |
+| Premier League | Un seul emplacement pour l'heure avant et le score après ; agenda confié à un widget tiers |
+| Tours Volley-Ball | Contre-exemple : tout le calendrier est une image PNG sans texte, pas de page par match |
+
+Aucune transition animée entre la liste et un match sur ces six sites : la place est libre.

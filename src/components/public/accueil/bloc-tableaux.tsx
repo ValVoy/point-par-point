@@ -1,7 +1,7 @@
-import { lienGoogleAgenda } from "@/lib/agenda";
+import Link from "next/link";
 import type { Rencontre } from "@/lib/rencontres";
-import { EQUIPE } from "@/lib/site";
 import type { Resultat } from "@/lib/resultats";
+import { ActionsMatch } from "../actions-match";
 import { ResultatsPrecedents } from "../resultats-precedents";
 import { TableauProchainMatch } from "../tableau-prochain-match";
 import { TableauResultat } from "../tableau-resultat";
@@ -13,62 +13,6 @@ import { TableauResultat } from "../tableau-resultat";
  * chapitre entier aussi (principe 4). Le prochain match vient en premier : sur
  * un telephone, c'est lui qu'on voit d'abord.
  */
-
-function itineraire(match: Rencontre) {
-  if (match.salleLatitude !== null && match.salleLongitude !== null) {
-    return `https://www.google.com/maps/dir/?api=1&destination=${match.salleLatitude},${match.salleLongitude}`;
-  }
-  const adresse = [match.salleNom, match.salleAdresse].filter(Boolean).join(", ");
-  return adresse ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(adresse)}` : null;
-}
-
-const bouton =
-  "inline-flex min-h-12 items-center justify-center border-2 px-5 font-semibold whitespace-nowrap transition-colors duration-[80ms]";
-
-function Actions({ match }: { match: Rencontre }) {
-  const lien = itineraire(match);
-  const google = lienGoogleAgenda({
-    uid: `match-${match.id}`,
-    debut: match.joueLe,
-    titre: match.aDomicile ? `${EQUIPE} - ${match.adversaire}` : `${match.adversaire} - ${EQUIPE}`,
-    lieu: [match.salleNom, match.salleAdresse].filter(Boolean).join(", ") || null,
-    horodatage: match.joueLe,
-  });
-  return (
-    <div className="mt-4">
-      <div className="grid gap-3 sm:flex">
-      <a
-        href={`/agenda/${match.slug}`}
-        className={`${bouton} border-[var(--color-jaune)] bg-[var(--color-jaune)] text-[var(--color-nuit)] hover:border-[var(--color-craie)] hover:bg-[var(--color-craie)]`}
-      >
-        Ajouter à l&apos;agenda
-      </a>
-      {lien ? (
-        <a
-          href={lien}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`${bouton} border-[var(--color-craie-tenue)] hover:border-[var(--color-craie)] hover:bg-[var(--color-craie)] hover:text-[var(--color-nuit)]`}
-        >
-          Itinéraire
-          <span className="sr-only"> (ouvre Google Maps)</span>
-        </a>
-      ) : null}
-      </div>
-      <p className="mt-3 text-sm text-[var(--color-craie-douce)]">
-        Sur Google Agenda ?{" "}
-        <a
-          href={google}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-semibold text-[var(--color-craie)] underline underline-offset-4"
-        >
-          L&apos;ajouter directement
-        </a>
-      </p>
-    </div>
-  );
-}
 
 export function BlocTableaux({
   prochain,
@@ -90,9 +34,17 @@ export function BlocTableaux({
         <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-craie-douce)] uppercase">
           Les matchs
         </p>
-        <h2 id="titre-matchs" className="titre-affiche mt-3 text-6xl sm:text-8xl">
-          Au tableau
-        </h2>
+        <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
+          <h2 id="titre-matchs" className="titre-affiche text-6xl sm:text-8xl">
+            Au tableau
+          </h2>
+          <Link
+            href="/matchs"
+            className="inline-flex min-h-12 items-center font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--color-jaune)]"
+          >
+            Tout le calendrier
+          </Link>
+        </div>
         {prochain || dernier ? (
           <div className={`mt-12 grid items-start gap-10 ${prochain && dernier ? "xl:grid-cols-2 xl:gap-6" : "max-w-3xl"}`}>
             {prochain ? (
@@ -106,7 +58,7 @@ export function BlocTableaux({
                   }}
                   maintenant={maintenant}
                 />
-                <Actions match={prochain} />
+                <ActionsMatch match={prochain} />
               </div>
             ) : null}
             {dernier ? (

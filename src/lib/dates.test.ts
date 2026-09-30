@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { depuisChampDateHeure, pourChampDateHeure } from "./dates";
+import { dateEtHeure, depuisChampDateHeure, heure, pourChampDateHeure } from "./dates";
 
 describe("depuisChampDateHeure", () => {
   it("lit une heure d'ete comme heure de Paris, UTC+2", () => {
@@ -32,5 +32,20 @@ describe("depuisChampDateHeure", () => {
     assert.equal(depuisChampDateHeure("2027-03-28T02:30"), null);
     assert.equal(depuisChampDateHeure("04/10/2026 20:30"), null);
     assert.equal(depuisChampDateHeure(""), null);
+  });
+});
+
+describe("heure", () => {
+  it("ecrit l'heure a la francaise, a l'heure de Paris", () => {
+    // 18 h 30 UTC en octobre, c'est 20 h 30 a Paris (heure d'ete).
+    assert.equal(heure(new Date("2026-10-03T18:30:00Z")), "20 h 30");
+    // En hiver, une heure d'ecart seulement ; l'heure pile n'a pas de minutes.
+    assert.equal(heure(new Date("2026-12-12T14:00:00Z")), "15 h");
+  });
+});
+
+describe("dateEtHeure", () => {
+  it("donne le jour puis l'heure a la francaise", () => {
+    assert.equal(dateEtHeure(new Date("2026-10-03T18:30:00Z")), "samedi 3 octobre à 20 h 30");
   });
 });

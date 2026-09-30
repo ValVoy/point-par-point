@@ -1,3 +1,4 @@
+import { DUREE_EN_COURS } from "./calendrier";
 import type { EtatRencontre } from "./db/schema";
 
 /**
@@ -71,9 +72,6 @@ export function compteRebours(joueLe: Date, maintenant: Date) {
     minutes: minutesRestantes % 60,
   };
 }
-
-/** Duree pendant laquelle un match commence reste au tableau, « en cours ». */
-const DUREE_EN_COURS = 3 * 60 * MINUTE;
 
 /**
  * Le match du tableau « prochain match » : le premier a venir, en gardant

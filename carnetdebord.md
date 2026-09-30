@@ -925,3 +925,30 @@ touche le dépôt distant et les chemins, c'est à l'utilisateur de le décider.
   navigateur à 1,5 image par seconde.
 - Suite : décision de l'utilisateur sur le renommage du dossier et du dépôt ; la page Matchs et
   la page d'un match.
+
+**15:40** · **[page] Le calendrier et la page d'un match**
+
+Veille d'abord (`veille.md` section 13) : six calendriers et pages de match ouverts dans un
+navigateur, dont un contre-exemple parlant, un club de Ligue A qui publie tout son calendrier en
+une image sans texte. Puis la fiche `fiches/matchs.md`, puis le code.
+
+Le calendrier : le bilan collectif de la saison, le prochain match en tableau LED avec ses
+actions, et une seule liste par mois avec un filet « Aujourd'hui ». Chaque ligne suit la
+grammaire relevée chez la Premier League : un seul emplacement qui porte l'heure avant le match,
+le score après, ou l'état en toutes lettres. Les lignes restent mates, la lumière est réservée
+aux tableaux. La page d'un match : l'état commande l'ordre des blocs, et un match joué met sa
+salle et son commentaire à côté du tableau pour équilibrer le grand écran.
+
+Arbitrages faits seul : la saison passe en paramètre (`?saison=`) et non en chemin, qui serait
+entré en collision avec les adresses des matchs ; l'abonnement d'agenda à la saison, la carte
+statique et la transition animée liste → match sont reportés, notés dans la fiche. Le serveur de
+développement est tombé deux fois sur des routes dynamiques : mesure faite, il ne restait que 1,9
+Go de mémoire libre sur 32 ; redémarré, tout répond.
+
+- Portée : `src/app/matchs/`, `src/components/public/matchs/`, `entete.tsx`,
+  `actions-match.tsx` (extrait de l'accueil), `lib/calendrier.ts`, `lib/matchs-publics.ts`,
+  `lib/dates.ts` (heure à la française), `tableau-resultat.tsx` (étiquette), lien depuis l'accueil.
+- Vérifié : 82 tests, `tsc`, lint ; à l'écran le calendrier et les pages de match joué, à venir et
+  reporté (état provoqué en base de développement puis remis) en 1440 et 390 px ; 404 sur un slug
+  inconnu. Pas vus à l'écran : « score à venir » et « annulé » (logique testée).
+- Suite : critique à froid des deux pages, puis la série.

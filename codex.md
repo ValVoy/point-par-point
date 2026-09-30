@@ -172,6 +172,19 @@ ailleurs.
 - **Mouvement** : `data-apparait` (un bloc monte une fois) et `data-allume` (un tableau s'allume
   avec un seul scintillement), dans `accueil/revelations.tsx`, coupés sous mouvement réduit.
 
+### Les matchs publics (30-09-2026)
+
+- **Statut public** (`lib/calendrier.ts`, testé) : l'état saisi ne suffit pas. Un match à venir
+  dont l'heure est passée est « en cours » trois heures (`DUREE_EN_COURS`), puis « score à
+  venir ». Jamais de 0-0 inventé.
+- **Heure** : toujours celle de la salle, à Paris, écrite à la française (`heure()`,
+  `dateEtHeure()` : « samedi 3 octobre à 20 h 30 »), quel que soit le fuseau du visiteur.
+- **Adresses** : `/matchs?saison=2026-2027` (en paramètre, pour ne pas entrer en collision avec
+  `/matchs/<slug>`) et `/matchs/<slug>`.
+- **Lumière** : les lignes du calendrier sont mates ; seuls les tableaux s'allument.
+- **Composants partagés** : `ActionsMatch` (agenda, itinéraire, Google Agenda), `EnTete` pour les
+  pages hors accueil, `matchPublic` mis en cache par requête (page et métadonnées).
+
 ## Conventions
 
 ### Le marquage des données de démonstration

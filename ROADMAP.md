@@ -24,7 +24,13 @@ l'intro, à l'administration et à la planche. La version 1, papier imprimé, a 
 LED avec « Ajouter à l'agenda » et « Itinéraire », les matchs précédents en cartes défilantes.
 Tout branché sur la base, chaque bloc disparaît s'il n'a rien à montrer.
 
-Ensuite : la page Matchs et la page d'un match (qui reprennent les tableaux), puis la série.
+**Calendrier et page d'un match le 30-09-2026** (fiche `fiches/matchs.md`) : `/matchs?saison=…`
+avec le prochain match en tableau, la liste par mois et le filet « Aujourd'hui » ; `/matchs/<slug>`
+dont l'ordre des blocs suit l'état du match (à venir, en cours, joué, score à venir, reporté,
+annulé), avec l'épisode lié et les matchs voisins. En-tête publique commune.
+
+Ensuite : la série (liste des épisodes et page d'un épisode), puis l'effectif.
+Reporté : abonnement d'agenda à toute la saison, carte statique, transition animée liste → match.
 Le nom (« Point Par Point ») et la chaîne YouTube sont arrivés le 30-09-2026 et sont en place.
 
 **À revoir avant d'écrire les pages publiques** : la largeur de la mise en page et le motion
