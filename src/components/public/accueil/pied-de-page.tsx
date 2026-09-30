@@ -6,9 +6,7 @@ import { RUBRIQUES, VITRINE } from "../entete";
 /**
  * Le pied de page commun : le nom, les rubriques (le seul endroit ou toutes
  * se lisent d'un coup, meme sur un telephone), la saison courante, lue ici
- * pour etre la meme sur toutes les pages. Les mentions
- * legales et la politique de confidentialite s'y ajouteront avant la mise
- * en ligne.
+ * pour etre la meme sur toutes les pages, et les deux pages juridiques.
  */
 export async function PiedDePage() {
   const saison = (await saisonCourante())?.libelle ?? null;
@@ -32,7 +30,15 @@ export async function PiedDePage() {
             ))}
           </ul>
         </nav>
-        {saison ? <p className="sm:self-center">Saison {saison}</p> : null}
+        <div className="flex flex-wrap items-center gap-x-6 sm:self-center">
+          {saison ? <p>Saison {saison}</p> : null}
+          <Link href="/mentions-legales" className="inline-flex min-h-12 items-center hover:text-[var(--color-craie)]">
+            Mentions légales
+          </Link>
+          <Link href="/confidentialite" className="inline-flex min-h-12 items-center hover:text-[var(--color-craie)]">
+            Confidentialité
+          </Link>
+        </div>
       </div>
     </footer>
   );

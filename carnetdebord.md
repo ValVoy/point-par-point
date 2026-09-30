@@ -1260,3 +1260,30 @@ pris dans une phrase restent des liens.
   aucune action sous 44 px, aucun débordement.
 - Suite : mentions légales et politique de confidentialité, puis Umami sur le VPS, puis l'écran
   « Comptes ».
+
+## 30-09-2026
+
+**22:20** · **[page] Mentions légales et confidentialité**
+
+L'utilisateur a tranché quatre points : l'éditeur est Tom Oger, à titre de particulier, en nom
+seul comme le permet la LCEN ; toutes les demandes passent par le formulaire de contact ; les trois
+prestataires techniques sont nommés ; Umami, sans cookie, est installé au premier lot. Les raisons
+sociales et adresses de Hetzner Online GmbH, CHISELSTRIKE INC. (la société de Turso) et Cloudflare,
+Inc. ont été relevées sur leurs propres pages, pas écrites de mémoire.
+
+La politique est rangée par situation du visiteur (s'il écrit, s'il est joueur, s'il gère le site)
+plutôt que par article du RGPD. Chaque durée qu'elle annonce est tenue par le code, et la liste de
+ces durées est en tête du fichier : c'est au texte de suivre le code. Une phrase que je n'avais pas
+vérifiée, sur les garanties contractuelles des prestataires américains, a été remplacée par un
+constat factuel avant le commit.
+
+Point à garder en tête : l'anonymat de la LCEN suppose que l'hébergeur connaisse l'identité de
+l'éditeur. Ici, celui qui héberge en pratique est l'utilisateur, sur un serveur loué chez Hetzner ;
+le texte le dit ainsi (« la personne qui assure l'hébergement »), sans le nommer.
+
+- Portée : `src/app/mentions-legales/`, `src/app/confidentialite/`,
+  `components/public/page-juridique.tsx`, `pied-de-page.tsx`, `lib/site.ts` (`EDITEUR`),
+  `globals.css` (listes et intertitres de `.texte-article`), `fiches/juridique.md`, ROADMAP.
+- Vérifié : `tsc`, lint ; les deux pages en 390 et 1440 px, statut 200, aucun débordement.
+- Suite : Umami sur le VPS (le code du site, puis l'installation Coolify avec l'utilisateur), et la
+  politique mise à jour dans le même commit ; puis l'écran « Comptes ».

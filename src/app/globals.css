@@ -234,6 +234,27 @@ body {
   .texte-article strong {
     color: var(--color-craie);
   }
+  .texte-article ul {
+    margin-top: 1.1em;
+    padding-left: 1.2em;
+    list-style: disc;
+  }
+  .texte-article li + li {
+    margin-top: 0.5em;
+  }
+  .texte-article li::marker {
+    color: var(--color-turquoise);
+  }
+  .texte-article h3 {
+    margin-top: 1.4em;
+    font-weight: 700;
+    color: var(--color-craie);
+  }
+  .texte-article h3 + p,
+  .texte-article ul + p,
+  .texte-article p + ul {
+    margin-top: 0.6em;
+  }
 }
 
 /*

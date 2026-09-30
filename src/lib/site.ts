@@ -22,3 +22,10 @@ export const CHAINE_YOUTUBE: string | null = "https://www.youtube.com/@oger_tom"
 export const DESCRIPTION_DU_SITE =
   "L'effectif, les matchs et la série. Les informations qui se consultent " +
   "et qui durent, à côté de ce que racontent les réseaux.";
+
+/**
+ * L'editeur du site, pour les mentions legales : l'ami qui porte le projet, a
+ * titre de particulier (plan, 19-09-2026). Nom seul, comme le permet la LCEN a
+ * une personne physique non professionnelle (choix du 30-09-2026).
+ */
+export const EDITEUR = "Tom Oger";

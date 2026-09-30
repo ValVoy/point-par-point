@@ -47,8 +47,12 @@ texte « Venir à la salle » saisi dans l'onglet « La salle » de l'administra
 l'adresse, piège à robots, 3 envois par heure et par adresse réseau, 30 au total), écran
 « Messages » de l'administration, effacement réel des messages après un an.
 
-Ensuite : les mentions légales et la politique de confidentialité, puis l'écran « Comptes »
-(relié dans la navigation de l'administration, pas encore construit).
+**Les pages juridiques le 30-09-2026** (fiche `fiches/juridique.md`) : `/mentions-legales` (Tom
+Oger, éditeur particulier en nom seul ; Hetzner, Turso et Cloudflare nommés) et `/confidentialite`
+(chaque durée annoncée tenue par le code), reliées depuis le pied de page.
+
+Ensuite : la mesure d'audience Umami (sans cookie, sur le VPS), puis l'écran « Comptes » (relié
+dans la navigation de l'administration, pas encore construit).
 À vérifier avant la mise en ligne : l'accord de droit à l'image couvre le site ; mentions légales
 et politique de confidentialité.
 À régler avant la mise en ligne : la sauvegarde nocturne de cette base garde **30 jours** au plus, durée annoncée par la politique de confidentialité.
@@ -105,7 +109,7 @@ design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`
 - [x] Où nous voir jouer : salle, adresse, itinéraire (sans carte intégrée)
 - [x] Partenaires, contact
 - [ ] Bilan de saison calculé depuis les scores
-- [ ] Mentions légales et politique de confidentialité
+- [x] Mentions légales et politique de confidentialité (30-09-2026)
 - [ ] Compteur d'audience sans cookie
 - [ ] Favicon et identité visuelle (attend le vrai nom et les couleurs du maillot)
 
