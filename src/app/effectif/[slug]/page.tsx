@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { PastilleResultat } from "@/components/pastille-resultat";
 import { PiedDePage } from "@/components/public/accueil/pied-de-page";
+import { taille } from "@/components/public/effectif/cartes";
 import { PortraitJoueur } from "@/components/public/effectif/portrait-joueur";
 import { EnTete } from "@/components/public/entete";
 import { statutPublic } from "@/lib/calendrier";
@@ -34,12 +35,14 @@ export async function generateMetadata({ params }: Parametres): Promise<Metadata
 }
 
 const etiquette = "text-xs font-semibold tracking-[0.2em] text-[var(--color-craie-douce)] uppercase";
-const taille = (cm: number | null) => (cm ? `${Math.floor(cm / 100)},${String(cm % 100).padStart(2, "0")} m` : null);
 
 export default async function PageJoueur({ params }: Parametres) {
   const { slug } = await params;
   const donnees = await joueurPublic(slug);
-  if (!donnees && slug !== slug.toLowerCase()) permanentRedirect(`/effectif/${slug.toLowerCase()}`);
+  // Une adresse en majuscules n'est redirigee que si la version en minuscules existe.
+  if (!donnees && slug !== slug.toLowerCase() && (await joueurPublic(slug.toLowerCase()))) {
+    permanentRedirect(`/effectif/${slug.toLowerCase()}`);
+  }
   if (!donnees) notFound();
   const { maintenant, joueur, effectif, matchs } = donnees;
   const { membres } = await effectifDeLaSaison(effectif.saison.libelle, maintenant);
@@ -57,7 +60,7 @@ export default async function PageJoueur({ params }: Parametres) {
       <EnTete actif="/effectif" />
       <main id="contenu" className="colonne-large space-y-16 pt-10 pb-24 sm:pt-16">
         <p>
-          <Link href="/effectif" className="text-sm font-semibold text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
+          <Link href={effectif.saison.courante ? "/effectif" : `/effectif?saison=${encodeURIComponent(effectif.saison.libelle)}`} className="text-sm font-semibold text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
             ← Tout l&apos;effectif
           </Link>
         </p>
@@ -76,12 +79,14 @@ export default async function PageJoueur({ params }: Parametres) {
             <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">
               {LIBELLES_POSTE[effectif.poste]}
               {effectif.capitaine ? " · Capitaine" : ""}
+              {effectif.saison.courante ? "" : ` · Saison ${effectif.saison.libelle}`}
             </p>
             <h1 className="titre-affiche mt-3 text-6xl text-balance sm:text-8xl">
               {effectif.numero !== null ? (
                 <span className="mr-4 text-[var(--color-turquoise)]">
                   <span className="sr-only">Numéro </span>
                   {effectif.numero}
+                  <span className="sr-only">, </span>
                 </span>
               ) : null}
               {joueur.prenom} {joueur.nom}
@@ -116,7 +121,7 @@ export default async function PageJoueur({ params }: Parametres) {
         {joues.length > 0 ? (
           <section aria-labelledby="titre-matchs-joueur">
             <h2 id="titre-matchs-joueur" className="border-b-2 border-[var(--color-craie)] pb-2 text-xs font-semibold tracking-[0.2em] uppercase">
-              Sur le terrain en {effectif.saison.libelle} · {joues.length} match{joues.length > 1 ? "s" : ""}
+              Sur le terrain en {effectif.saison.libelle}
             </h2>
             <ul>
               {joues.map((m) => {
@@ -161,7 +166,7 @@ export default async function PageJoueur({ params }: Parametres) {
                     className="inline-flex min-h-12 items-center gap-2 border border-[var(--color-nuit-trait)] px-3 text-sm font-semibold hover:border-[var(--color-craie)] aria-[current=page]:border-[var(--color-jaune)] aria-[current=page]:text-[var(--color-jaune)]"
                   >
                     {c.numero !== null ? <span className="titre-affiche text-lg text-[var(--color-turquoise)]">{c.numero}</span> : null}
-                    {c.prenom}
+                    {c.prenom} {c.nom.charAt(0)}.
                   </Link>
                 </li>
               ))}

@@ -1049,3 +1049,27 @@ Reste à vérifier avant la mise en ligne que l'accord de droit à l'image couvr
 - Vérifié : 83 tests, `tsc`, lint ; à l'écran la grille en 1440 et 375 px (en-tête à trois
   rubriques sans débordement) et la page d'un joueur en 1440 px ; 404 sur un joueur inconnu.
 - Suite : critique à froid de l'effectif.
+
+**17:00** · **[revue] Le staff, et la critique à froid de l'effectif**
+
+L'utilisateur a relevé l'absence du staff : je l'avais renvoyé à une future page « L'équipe
+derrière ». Il ferme désormais la page de l'effectif (rôle, nom, présentation, photo si fournie),
+dans l'ordre choisi dans l'administration.
+
+La critique à froid, sans point bloquant, a surtout touché juste sur la chaleur : des groupes de
+deux ou trois joueurs sur quatre colonnes laissaient la moitié droite vide, et le premier nom
+tombait sous la ligne de flottaison. Recomposition : une grille continue dans l'ordre des postes,
+le poste écrit au-dessus de chaque nom, des portraits plus bas, le motif lisible en turquoise, une
+accroche collective ; la page passe de 3 444 à 1 549 pixels. Le reste : numéro toujours lu par les
+lecteurs d'écran, effet du survol aussi au focus, traitement photo en noir et blanc avec un filet
+turquoise (plus d'aplat teinté), compteur « 4 matchs » retiré (chiffre individuel), saison
+indiquée pour un joueur d'une saison passée, sigle de poste sans numéro, initiale du nom dans les
+raccourcis, redirection des majuscules seulement si la page existe (matchs, série, effectif).
+Point ajouté à la mise en ligne : un joueur mineur demande l'accord de ses parents.
+
+- Portée : `src/app/effectif/`, `src/components/public/effectif/` (dont `cartes.tsx`), pages de
+  match et d'épisode, `fiches/effectif.md`.
+- Vérifié : 83 tests, `tsc`, lint ; à l'écran la grille avec staff en 1440 et 390 px ; 404 sans
+  redirection pour une adresse inconnue en majuscules.
+- Suite : les actualités, puis les pages « Le projet », « Où nous voir », partenaires, contact et
+  les mentions légales.

@@ -108,7 +108,9 @@ async function MatchRaconte({ slug }: { slug: string }) {
 export default async function PageEpisode({ params }: Parametres) {
   const { slug } = await params;
   const donnees = await episodePublic(slug);
-  if (!donnees && slug !== slug.toLowerCase()) permanentRedirect(`/serie/${slug.toLowerCase()}`);
+  if (!donnees && slug !== slug.toLowerCase() && (await episodePublic(slug.toLowerCase()))) {
+    permanentRedirect(`/serie/${slug.toLowerCase()}`);
+  }
   if (!donnees) {
     const actuelle = await nouvelleAdresseEpisode(slug);
     if (actuelle) permanentRedirect(`/serie/${actuelle}`);

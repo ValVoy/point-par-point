@@ -1,31 +1,35 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PiedDePage } from "@/components/public/accueil/pied-de-page";
-import { PortraitJoueur } from "@/components/public/effectif/portrait-joueur";
+import { CarteJoueur, CarteStaff } from "@/components/public/effectif/cartes";
 import { EnTete } from "@/components/public/entete";
-import { age } from "@/lib/dates";
-import { effectifDeLaSaison, urlPhoto } from "@/lib/effectif-public";
-import { grouperParPoste, LIBELLES_POSTE, LIBELLES_POSTE_PLURIEL } from "@/lib/postes";
+import { effectifDeLaSaison } from "@/lib/effectif-public";
+import { grouperParPoste } from "@/lib/postes";
+import { membres as lireStaff } from "@/lib/projet";
 import { EQUIPE } from "@/lib/site";
 
 /**
- * L'effectif de la saison (fiche fiches/effectif.md) : un groupe par poste,
- * dans l'ordre ou l'on presente une equipe, et des cartes toutes egales. Ni
- * vedette, ni classement, ni compteur : le volley est un sport d'equipe.
+ * L'effectif de la saison (fiche fiches/effectif.md) : une accroche
+ * collective, puis toute l'equipe en une seule grille continue, dans l'ordre
+ * des postes, le poste ecrit au-dessus de chaque nom. Des cartes toutes
+ * egales, ni vedette, ni classement. Le staff ferme la page : il accompagne
+ * l'equipe, il ne la precede pas.
  */
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "L'effectif",
-  description: `Les joueurs de l'équipe D2 masculine du ${EQUIPE}, poste par poste.`,
+  description: `Les joueurs et le staff de l'équipe D2 masculine du ${EQUIPE}, poste par poste.`,
 };
-
-const taille = (cm: number | null) => (cm ? `${Math.floor(cm / 100)},${String(cm % 100).padStart(2, "0")} m` : null);
 
 export default async function PageEffectif({ searchParams }: { searchParams: Promise<{ saison?: string }> }) {
   const { saison: demandee } = await searchParams;
-  const { maintenant, saison, saisons, membres } = await effectifDeLaSaison(demandee);
-  const groupes = grouperParPoste(membres);
+  const [{ maintenant, saison, saisons, membres }, staff] = await Promise.all([
+    effectifDeLaSaison(demandee),
+    lireStaff(),
+  ]);
+  // L'ordre des postes, puis les numeros : la grille reste continue, sans trou.
+  const equipe = grouperParPoste(membres).flatMap((g) => g.membres);
 
   return (
     <>
@@ -34,6 +38,11 @@ export default async function PageEffectif({ searchParams }: { searchParams: Pro
         <section className="colonne-large pt-16 pb-12 sm:pt-24">
           <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">{EQUIPE}</p>
           <h1 className="titre-affiche mt-3 text-6xl sm:text-8xl">L&apos;effectif</h1>
+          {equipe.length > 0 ? (
+            <p className="mt-5 max-w-[46ch] text-lg leading-relaxed text-[var(--color-craie-douce)]">
+              {equipe.length} joueurs, un seul maillot{saison ? ` : la D2 masculine en ${saison.libelle}` : ""}.
+            </p>
+          ) : null}
           {saisons.length > 1 ? (
             <nav aria-label="Saisons" className="mt-8">
               <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold">
@@ -50,65 +59,35 @@ export default async function PageEffectif({ searchParams }: { searchParams: Pro
                 ))}
               </ul>
             </nav>
-          ) : saison ? (
-            <p className="mt-6 text-sm font-semibold text-[var(--color-craie-douce)]">Saison {saison.libelle}</p>
           ) : null}
         </section>
 
-        {groupes.length === 0 ? (
+        {equipe.length === 0 ? (
           <p className="colonne-large text-lg text-[var(--color-craie-douce)]">
             L&apos;effectif de cette saison n&apos;est pas encore publié.
           </p>
         ) : (
-          groupes.map((groupe) => (
-            <section key={groupe.poste} aria-labelledby={`poste-${groupe.poste}`} className="colonne-large mt-14 first-of-type:mt-0">
-              <h2
-                id={`poste-${groupe.poste}`}
-                className="border-b-2 border-[var(--color-craie)] pb-2 text-xs font-semibold tracking-[0.2em] uppercase"
-              >
-                {LIBELLES_POSTE_PLURIEL[groupe.poste]}
-              </h2>
-              <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 lg:gap-x-6">
-                {groupe.membres.map((m) => {
-                  const ans = age(m.neLe, maintenant);
-                  const photo = urlPhoto(m.photoCle);
-                  const details = [ans !== null ? `${ans} ans` : null, taille(m.tailleCm)].filter(Boolean).join(" · ");
-                  return (
-                    <li key={m.id}>
-                      <Link href={`/effectif/${m.slug}`} className="group block">
-                        <PortraitJoueur
-                          photo={photo}
-                          numero={m.numero}
-                          poste={m.poste}
-                          sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 45vw"
-                        />
-                        <span className="mt-4 flex items-baseline gap-3">
-                          {/* Sans photo, le numero est deja le portrait : on ne le repete pas. */}
-                          {m.numero !== null && photo ? (
-                            <span className="titre-affiche text-2xl text-[var(--color-turquoise)]">{m.numero}</span>
-                          ) : null}
-                          <span className="titre-affiche text-2xl leading-none text-balance group-hover:text-[var(--color-jaune)] sm:text-3xl">
-                            {m.prenom} {m.nom}
-                          </span>
-                        </span>
-                        <span className="mt-2 flex flex-wrap items-center gap-x-3 text-sm text-[var(--color-craie-douce)]">
-                          <span className="sr-only">{LIBELLES_POSTE[m.poste]}, </span>
-                          {details ? <span>{details}</span> : null}
-                          {m.capitaine ? (
-                            <span className="border border-[var(--color-craie-tenue)] px-1.5 text-xs font-semibold tracking-[0.15em] uppercase">
-                              <span aria-hidden="true">C</span>
-                              <span className="sr-only">capitaine</span>
-                            </span>
-                          ) : null}
-                        </span>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
-          ))
+          <section aria-label="Les joueurs" className="colonne-large">
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 lg:gap-x-6 xl:grid-cols-6">
+              {equipe.map((m) => (
+                <CarteJoueur key={m.id} membre={m} maintenant={maintenant} />
+              ))}
+            </ul>
+          </section>
         )}
+
+        {staff.length > 0 ? (
+          <section aria-labelledby="titre-staff" className="colonne-large mt-24">
+            <h2 id="titre-staff" className="border-b-2 border-[var(--color-craie)] pb-2 text-xs font-semibold tracking-[0.2em] uppercase">
+              Le staff
+            </h2>
+            <ul className="mt-8 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              {staff.map((s) => (
+                <CarteStaff key={s.id} membre={s} />
+              ))}
+            </ul>
+          </section>
+        ) : null}
       </main>
       <PiedDePage saison={saison?.libelle ?? null} />
     </>

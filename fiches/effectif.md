@@ -50,7 +50,8 @@ sport d'équipe (principe 1), la grille n'a ni vedette, ni classement, ni compte
 - **L'âge seulement**, calculé à l'affichage ; la date de naissance reste en base, jamais publiée.
 - **Prénom et nom complet**, décision de l'utilisateur du 30-09-2026. **À vérifier avant la mise
   en ligne** : que l'accord de droit à l'image des joueurs couvre le site, pas seulement le
-  tournage (point prévu au cadrage).
+  tournage (point prévu au cadrage). **Joueur mineur** : l'accord de ses parents est requis pour
+  publier son nom, son âge et sa photo.
 - **Joueur parti** : sa page vit tant qu'il est actif ; désactivé, elle répond 404. Une adresse
   n'est jamais réattribuée (le slug naît avec le joueur et ne change pas).
 
@@ -64,6 +65,7 @@ Aucun match joué : le bloc disparaît.
 
 - **Données** : `lib/effectif-public.ts` (effectif d'une saison, joueur avec sa ligne d'effectif
   et ses matchs, adresse de photo R2 ou rien) ; `lib/postes.ts` (regroupement par poste, testé).
-- **Staff** : hors de ce lot, il vit sur la page « L'équipe derrière ».
+- **Staff** : en fin de page de l'effectif, demandé par l'utilisateur le 30-09-2026 (rôle, nom,
+  texte, photo si fournie), dans l'ordre choisi dans l'administration.
 - **Vérification** : tests, `tsc`, lint, rendu en 390 et 1440 px, 404 sur joueur inconnu,
   critique à froid.
