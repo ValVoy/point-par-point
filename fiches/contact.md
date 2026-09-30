@@ -3,7 +3,7 @@
 ## 1. Direction artistique
 
 Intention : une page calme, la seule du site où le visiteur écrit au lieu de regarder. Pas de
-mouvement ici, hors l'apparition du titre : un formulaire qui bouge est un formulaire qui inquiète.
+mouvement ici, pas même sur le titre : un formulaire qui bouge est un formulaire qui inquiète.
 Le titre d'affiche garde l'identité, le reste est sobre, lisible, grand.
 
 Références (veille.md, sections formulaires) : les pages contact des clubs pro qui routent par

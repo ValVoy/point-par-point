@@ -1,4 +1,4 @@
-import { and, desc, eq, isNotNull, isNull, lt } from "drizzle-orm";
+import { and, count, desc, eq, isNotNull, isNull, lt } from "drizzle-orm";
 import { db } from "./db";
 import { messagesContact } from "./db/schema";
 
@@ -33,9 +33,9 @@ export function messagesALaCorbeille() {
 }
 
 export async function nombreNonLus(): Promise<number> {
-  const lignes = await db()
-    .select({ id: messagesContact.id })
+  const [ligne] = await db()
+    .select({ nombre: count() })
     .from(messagesContact)
     .where(and(eq(messagesContact.lu, false), isNull(messagesContact.supprimeLe)));
-  return lignes.length;
+  return ligne?.nombre ?? 0;
 }

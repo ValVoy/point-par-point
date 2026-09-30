@@ -26,9 +26,11 @@ const RUBRIQUES: { href: string; libelle: string; droit: Action }[] = [
 
 export function Coquille({
   utilisateur,
+  nonLus = 0,
   children,
 }: {
   utilisateur: UtilisateurConnecte;
+  nonLus?: number;
   children: React.ReactNode;
 }) {
   const rubriques = RUBRIQUES.filter((r) => peut(utilisateur, r.droit));
@@ -71,6 +73,12 @@ export function Coquille({
                   className="text-[var(--color-craie-douce)] hover:text-[var(--color-turquoise)]"
                 >
                   {rubrique.libelle}
+                  {rubrique.href === "/administration/messages" && nonLus > 0 ? (
+                    <span className="ml-1.5 rounded-full bg-[var(--color-jaune)] px-1.5 text-xs font-semibold text-[var(--color-nuit)]">
+                      {nonLus}
+                      <span className="sr-only"> non lu{nonLus > 1 ? "s" : ""}</span>
+                    </span>
+                  ) : null}
                 </Link>
               </li>
             ))}

@@ -1,4 +1,6 @@
+import { peut } from "@/lib/auth/roles";
 import { exigerConnexion } from "@/lib/auth/session-courante";
+import { nombreNonLus, purgerMessagesAnciens } from "@/lib/messages";
 import { BandeauDemo } from "./bandeau-demo";
 import { Coquille } from "./coquille";
 
@@ -7,6 +9,11 @@ import { Coquille } from "./coquille";
  * et repetee dans chaque page par `exigerConnexion` ou `exigerDroit` : un
  * layout ne doit jamais etre la seule barriere, puisqu'une action serveur
  * appelee directement ne le traverse pas.
+ *
+ * Aucun e-mail ne previent d'un message de contact (decide au cadrage) : le
+ * compteur de non lus dans la navigation en tient lieu. La purge des messages
+ * de plus d'un an passe aussi ici, pour que la promesse faite au visiteur ne
+ * depende pas d'un nouvel envoi.
  */
 export default async function InterieurLayout({
   children,
@@ -14,11 +21,16 @@ export default async function InterieurLayout({
   children: React.ReactNode;
 }) {
   const utilisateur = await exigerConnexion();
+  let nonLus = 0;
+  if (peut(utilisateur, "lireMessages")) {
+    await purgerMessagesAnciens();
+    nonLus = await nombreNonLus();
+  }
 
   return (
     <>
       <BandeauDemo />
-      <Coquille utilisateur={utilisateur}>{children}</Coquille>
+      <Coquille utilisateur={utilisateur} nonLus={nonLus}>{children}</Coquille>
     </>
   );
 }

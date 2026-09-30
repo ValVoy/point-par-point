@@ -15,7 +15,7 @@ import { envoyerMessage, type EtatContact } from "./actions";
 
 const LIBELLE = "block text-sm font-semibold tracking-[0.12em] text-[var(--color-craie-douce)] uppercase";
 const CHAMP =
-  "mt-2 block w-full border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] px-4 text-lg text-[var(--color-craie)] transition-colors duration-[80ms] hover:border-[var(--color-craie-tenue)] focus:border-[var(--color-jaune)]";
+  "mt-2 block w-full border border-[var(--color-nuit-bord)] bg-[var(--color-nuit-surface)] px-4 text-lg text-[var(--color-craie)] transition-colors duration-[80ms] hover:border-[var(--color-craie-tenue)] aria-[invalid=true]:border-[var(--color-erreur)] focus:border-[var(--color-jaune)]";
 
 const INITIAL: EtatContact = { envoye: false, erreur: null };
 
@@ -45,7 +45,7 @@ export function FormulaireContact({ sujet }: { sujet: Sujet }) {
   if (etat.envoye) {
     return (
       <div ref={confirmation} tabIndex={-1} className="border-l-4 border-[var(--color-jaune)] bg-[var(--color-nuit-surface)] px-6 py-8">
-        <p className="titre-affiche text-4xl">Message reçu</p>
+        <h2 className="titre-affiche text-4xl">Message reçu</h2>
         <p className="mt-3 text-lg leading-relaxed text-[var(--color-craie-douce)]">
           Merci. On vous répond par e-mail, dès que possible : l&apos;équipe est bénévole, la réponse peut prendre
           quelques jours.
@@ -58,13 +58,15 @@ export function FormulaireContact({ sujet }: { sujet: Sujet }) {
   }
 
   const v = etat.valeurs ?? {};
+  const fautif = (champ: string) =>
+    etat.champ === champ ? { "aria-invalid": true as const, "aria-describedby": "erreur-contact" } : {};
   return (
-    <form action={action} className="space-y-7">
+    <form key={etat.essai ?? 0} action={action} className="space-y-7">
       {etat.erreur ? (
         <p
           ref={erreur}
+          id="erreur-contact"
           tabIndex={-1}
-          role="alert"
           className="border-l-4 border-[var(--color-erreur)] bg-[var(--color-nuit-surface)] px-4 py-3 text-[var(--color-craie)]"
         >
           {etat.erreur}
@@ -89,7 +91,7 @@ export function FormulaireContact({ sujet }: { sujet: Sujet }) {
           <label htmlFor="nom" className={LIBELLE}>
             Nom
           </label>
-          <input id="nom" name="nom" required maxLength={80} autoComplete="name" defaultValue={v.nom} className={`${CHAMP} min-h-12`} />
+          <input id="nom" name="nom" required maxLength={80} autoComplete="name" defaultValue={v.nom} {...fautif("nom")} className={`${CHAMP} min-h-12`} />
         </div>
         <div>
           <label htmlFor="email" className={LIBELLE}>
@@ -104,6 +106,7 @@ export function FormulaireContact({ sujet }: { sujet: Sujet }) {
             autoComplete="email"
             inputMode="email"
             defaultValue={v.email}
+            {...fautif("email")}
             className={`${CHAMP} min-h-12`}
           />
         </div>
@@ -121,6 +124,7 @@ export function FormulaireContact({ sujet }: { sujet: Sujet }) {
           maxLength={3000}
           rows={7}
           defaultValue={v.message}
+          {...fautif("message")}
           className={`${CHAMP} py-3 leading-relaxed`}
         />
       </div>
@@ -128,14 +132,17 @@ export function FormulaireContact({ sujet }: { sujet: Sujet }) {
       {/* Le piege : hors ecran, hors tabulation, ignore des lecteurs d'ecran. */}
       <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
         <label htmlFor={CHAMP_PIEGE}>Ne pas remplir</label>
-        <input id={CHAMP_PIEGE} name={CHAMP_PIEGE} type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
+        <input id={CHAMP_PIEGE} name={CHAMP_PIEGE} type="text" tabIndex={-1} autoComplete="off" data-1p-ignore data-lpignore="true" defaultValue="" />
       </div>
 
       <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
         <Envoyer />
         <p className="max-w-[52ch] text-sm leading-relaxed text-[var(--color-craie-tenue)]">
-          Votre nom, votre e-mail et votre message servent uniquement à vous répondre. Seule l&apos;équipe du site les
-          lit ; ils sont effacés au plus tard un an après.
+          Votre nom, votre e-mail et votre message servent uniquement à vous répondre : seule l&apos;équipe du site
+          les lit, ils sont effacés un an après. Votre adresse réseau est gardée 24 heures, contre les robots.{" "}
+          <Link href="/confidentialite" className="underline underline-offset-2 hover:text-[var(--color-craie)]">
+            Confidentialité
+          </Link>
         </p>
       </div>
     </form>

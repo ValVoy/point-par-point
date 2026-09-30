@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { lireMessage, sujetInitial } from "./contact";
+import { CHAMP_PIEGE, lireMessage, sujetInitial } from "./contact";
 
 function donnees(valeurs: Record<string, string>) {
   const d = new FormData();
@@ -20,10 +20,12 @@ describe("lireMessage", () => {
   it("refuse une adresse e-mail invalide", () => {
     const lu = lireMessage(donnees({ ...VALIDE, email: "pas-une-adresse" }));
     assert.equal(lu.ok, false);
+    if (!lu.ok) assert.equal(lu.champ, "email");
   });
 
   it("refuse un message trop court ou trop long", () => {
     assert.equal(lireMessage(donnees({ ...VALIDE, message: "Salut" })).ok, false);
+    assert.equal(lireMessage(donnees({ ...VALIDE, message: " ".repeat(12) })).ok, false);
     assert.equal(lireMessage(donnees({ ...VALIDE, message: "a".repeat(3001) })).ok, false);
   });
 
@@ -34,7 +36,7 @@ describe("lireMessage", () => {
   });
 
   it("signale un robot quand le champ piege est rempli", () => {
-    const lu = lireMessage(donnees({ ...VALIDE, site_web: "http://spam.example" }));
+    const lu = lireMessage(donnees({ ...VALIDE, [CHAMP_PIEGE]: "http://spam.example" }));
     assert.equal(lu.ok, false);
     if (!lu.ok) assert.equal(lu.robot, true);
   });

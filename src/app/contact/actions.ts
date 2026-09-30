@@ -2,20 +2,34 @@
 
 import { headers } from "next/headers";
 import { lireIp } from "@/lib/auth/tentatives";
-import { lireMessage } from "@/lib/contact";
+import { lireMessage, type ChampContact } from "@/lib/contact";
 import { db } from "@/lib/db";
 import { messagesContact } from "@/lib/db/schema";
-import { envoiAutorise, noterEnvoi } from "@/lib/envois-contact";
+import { reserverEnvoi } from "@/lib/envois-contact";
 import { purgerMessagesAnciens } from "@/lib/messages";
 
 /**
  * L'envoi du formulaire de contact (fiche fiches/contact.md). Aucun e-mail
  * n'est envoye, decide au cadrage : le message est range en base et se lit
  * dans l'administration. Un robot pris au piege recoit la meme reponse
- * qu'un humain, pour ne pas lui apprendre a contourner le piege.
+ * qu'un humain, pour ne pas lui apprendre a contourner le piege ; le rejet
+ * est journalise, sans rien du message, pour verifier que le piege n'attrape
+ * pas d'humains.
  */
 
-export type EtatContact = { envoye: boolean; erreur: string | null; valeurs?: Record<string, string> };
+export type EtatContact = {
+  envoye: boolean;
+  erreur: string | null;
+  champ?: ChampContact;
+  valeurs?: Record<string, string>;
+  /** Change a chaque refus : remonte le formulaire, pour que la liste des sujets reprenne la saisie. */
+  essai?: number;
+};
+
+const REFUS_DEBIT = {
+  adresse: "Plusieurs messages sont déjà partis d'ici dans l'heure : réessayez un peu plus tard.",
+  global: "Le formulaire reçoit beaucoup de messages en ce moment : réessayez un peu plus tard.",
+} as const;
 
 function valeurs(donnees: FormData): Record<string, string> {
   const garder = ["nom", "email", "sujet", "message"];
@@ -24,20 +38,19 @@ function valeurs(donnees: FormData): Record<string, string> {
 
 export async function envoyerMessage(_precedent: EtatContact, donnees: FormData): Promise<EtatContact> {
   const lu = lireMessage(donnees);
-  if (!lu.ok && lu.robot) return { envoye: true, erreur: null };
-  if (!lu.ok) return { envoye: false, erreur: lu.erreur, valeurs: valeurs(donnees) };
+  if (!lu.ok && lu.robot) {
+    console.info("[contact] envoi ecarte par le champ piege");
+    return { envoye: true, erreur: null };
+  }
+  if (!lu.ok) return { envoye: false, erreur: lu.erreur, champ: lu.champ, valeurs: valeurs(donnees), essai: Date.now() };
 
-  const ip = lireIp(await headers());
-  if (!(await envoiAutorise(ip))) {
-    return {
-      envoye: false,
-      erreur: "Beaucoup de messages en peu de temps : réessayez dans une heure.",
-      valeurs: valeurs(donnees),
-    };
+  const debit = await reserverEnvoi(lireIp(await headers()));
+  if (debit !== "autorise") {
+    if (debit === "global") console.warn("[contact] plafond global atteint");
+    return { envoye: false, erreur: REFUS_DEBIT[debit], valeurs: valeurs(donnees), essai: Date.now() };
   }
 
   await db().insert(messagesContact).values(lu.message);
-  await noterEnvoi(ip);
   await purgerMessagesAnciens();
   return { envoye: true, erreur: null };
 }

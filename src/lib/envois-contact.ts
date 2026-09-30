@@ -9,8 +9,10 @@ import { envoisContact } from "./db/schema";
  *  - global, contre une attaque repartie sur beaucoup d'adresses, qui
  *    remplirait la base de messages.
  *
- * L'adresse reseau vient de x-forwarded-for, donc du client : elle ne sert
- * qu'a ralentir. Le plafond global, lui, ne depend d'aucun en-tete.
+ * L'envoi est note **avant** d'etre compte : compter puis noter laissait
+ * passer une salve de requetes simultanees, toutes controlees avant la
+ * premiere ecriture. Un envoi refuse compte donc aussi, ce qui est le but :
+ * un robot qui insiste prolonge lui-meme son attente.
  */
 
 const FENETRE_MS = 60 * 60 * 1000;
@@ -18,20 +20,20 @@ const CONSERVATION_MS = 24 * 60 * 60 * 1000;
 export const PLAFOND_PAR_IP = 3;
 export const PLAFOND_GLOBAL = 30;
 
-export async function envoiAutorise(ip: string | null): Promise<boolean> {
-  const depuis = new Date(Date.now() - FENETRE_MS);
+export type Debit = "autorise" | "adresse" | "global";
+
+export async function reserverEnvoi(ip: string | null): Promise<Debit> {
+  const maintenant = Date.now();
+  await db().insert(envoisContact).values({ ip, survenuLe: new Date(maintenant) });
+  await db().delete(envoisContact).where(lt(envoisContact.survenuLe, new Date(maintenant - CONSERVATION_MS)));
+
+  const depuis = new Date(maintenant - FENETRE_MS);
   const [global] = await db().select({ nombre: count() }).from(envoisContact).where(gt(envoisContact.survenuLe, depuis));
-  if ((global?.nombre ?? 0) >= PLAFOND_GLOBAL) return false;
-  if (!ip) return true;
+  if ((global?.nombre ?? 0) > PLAFOND_GLOBAL) return "global";
+  if (!ip) return "autorise";
   const [parIp] = await db()
     .select({ nombre: count() })
     .from(envoisContact)
     .where(and(eq(envoisContact.ip, ip), gt(envoisContact.survenuLe, depuis)));
-  return (parIp?.nombre ?? 0) < PLAFOND_PAR_IP;
-}
-
-/** Note un envoi, et purge les lignes de plus de vingt-quatre heures. */
-export async function noterEnvoi(ip: string | null): Promise<void> {
-  await db().insert(envoisContact).values({ ip });
-  await db().delete(envoisContact).where(lt(envoisContact.survenuLe, new Date(Date.now() - CONSERVATION_MS)));
+  return (parIp?.nombre ?? 0) > PLAFOND_PAR_IP ? "adresse" : "autorise";
 }

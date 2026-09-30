@@ -1211,3 +1211,33 @@ absente.
   de la base de développement ensuite.
 - Suite : critique à froid du contact, puis mentions légales et politique de confidentialité,
   puis l'écran « Comptes ».
+
+**18:05** · **[correctif] La critique à froid du contact**
+
+Un agent qui n'avait pas construit la page l'a relue : sept défauts, deux mineurs, trois
+propositions de composition. Tous les défauts sont corrigés ; les propositions attendent l'avis de
+l'utilisateur.
+
+Le plus important : l'ami n'aurait jamais su qu'un message l'attendait, puisque rien ne part par
+e-mail. Un compteur jaune de non lus s'affiche désormais à côté de « Messages » dans la
+navigation de l'administration, et la purge d'un an y passe aussi, pour que la promesse faite au
+visiteur ne dépende plus d'un nouvel envoi.
+
+La limite de débit comptait avant d'écrire : une salve simultanée passait. L'envoi est
+maintenant réservé d'abord, compté ensuite. Le refus pour plafond global ne dit plus au visiteur
+qu'il a trop écrit. Le champ piège s'appelait `site_web`, un nom que les navigateurs remplissent
+d'eux-mêmes, au risque d'écarter un humain en silence ; il porte un nom sans sens, et chaque
+rejet est journalisé sans contenu. Le sujet choisi est gardé après un refus, le champ fautif est
+marqué pour les lecteurs d'écran, la bordure des champs passe à 3,6:1 (nouveau jeton
+`--color-nuit-bord`), un sujet « Une idée pour la série » rejoint la liste, et la phrase de
+confidentialité mentionne l'adresse réseau gardée 24 heures.
+
+- Portée : `src/app/contact/`, `src/lib/contact.ts` et son test, `src/lib/envois-contact.ts`,
+  `src/lib/messages.ts`, `administration/(interieur)/layout.tsx`, `coquille.tsx`, `messages/`,
+  `globals.css`, `fiches/contact.md`, ROADMAP.
+- Vérifié : 91 tests, `tsc`, lint ; à 390 px un e-mail `a@b` refusé par le serveur garde le
+  sujet choisi et marque le champ ; trois envois reçus, le quatrième refusé avec le nouveau
+  texte ; compteur « 3 non lus » dans la navigation. Essais retirés de la base ensuite.
+- Suite : mentions légales et politique de confidentialité (éditeur en nom seul, anonymat LCEN ;
+  demandes par le formulaire ; Hetzner, Turso et R2 nommés), puis Umami sur le VPS, puis l'écran
+  « Comptes ».

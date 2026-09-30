@@ -1,7 +1,7 @@
 import { exigerDroit } from "@/lib/auth/session-courante";
 import { SUJETS, type Sujet } from "@/lib/contact";
 import { dateCourte, heure } from "@/lib/dates";
-import { messagesActifs, messagesALaCorbeille, purgerMessagesAnciens } from "@/lib/messages";
+import { messagesActifs, messagesALaCorbeille } from "@/lib/messages";
 import { basculerLu, mettreMessageALaCorbeille, restaurerMessage } from "./actions";
 
 export const metadata = { title: "Messages" };
@@ -20,7 +20,6 @@ function lienReponse(email: string, sujet: string | null) {
 
 export default async function PageMessages() {
   await exigerDroit("lireMessages");
-  await purgerMessagesAnciens();
   const [liste, corbeille] = await Promise.all([messagesActifs(), messagesALaCorbeille()]);
   const nonLus = liste.filter((m) => !m.lu).length;
 

@@ -51,6 +51,7 @@ Ensuite : les mentions légales et la politique de confidentialité, puis l'écr
 (relié dans la navigation de l'administration, pas encore construit).
 À vérifier avant la mise en ligne : l'accord de droit à l'image couvre le site ; mentions légales
 et politique de confidentialité.
+À régler avant la mise en ligne : la sauvegarde nocturne de cette base garde **30 jours** au plus, durée annoncée par la politique de confidentialité.
 À préparer pour la mise en ligne : appliquer en production les migrations 0002 à 0006
 (anciennes adresses, réglages), avec l'accord de l'utilisateur.
 Reporté : abonnement d'agenda à toute la saison, carte statique, transition animée liste → match.

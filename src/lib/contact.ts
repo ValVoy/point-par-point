@@ -12,6 +12,7 @@ export const SUJETS = {
   partenariat: "Devenir partenaire",
   presse: "Presse ou média",
   rejoindre: "Rejoindre l'équipe",
+  serie: "Une idée pour la série",
   autre: "Autre chose",
 } as const;
 
@@ -24,8 +25,13 @@ export function sujetInitial(valeur: string | undefined): Sujet {
   return estSujet(valeur) ? valeur : "question";
 }
 
-/** Le nom du champ piege : invisible et hors du parcours clavier, seul un robot le remplit. */
-export const CHAMP_PIEGE = "site_web";
+/**
+ * Le nom du champ piege : invisible et hors du parcours clavier, seul un robot
+ * le remplit. Volontairement sans sens : un nom comme « site_web » attirerait
+ * le remplissage automatique des navigateurs, et un vrai visiteur serait
+ * ecarte en silence.
+ */
+export const CHAMP_PIEGE = "zq_ref";
 
 const schema = z.object({
   nom: z.string().trim().min(1, "Indiquez votre nom.").max(80, "Le nom dépasse 80 caractères."),
@@ -43,16 +49,24 @@ const schema = z.object({
 
 export type MessageLu = { nom: string; email: string; sujet: Sujet; message: string };
 
+export type ChampContact = "nom" | "email" | "message";
+
 export function lireMessage(
   donnees: FormData,
-): { ok: true; message: MessageLu } | { ok: false; robot: boolean; erreur: string } {
+): { ok: true; message: MessageLu } | { ok: false; robot: boolean; erreur: string; champ?: ChampContact } {
   if ((donnees.get(CHAMP_PIEGE) ?? "").toString() !== "") {
     return { ok: false, robot: true, erreur: "" };
   }
   const texte = (cle: string) => (donnees.get(cle) ?? "").toString();
   const analyse = schema.safeParse({ nom: texte("nom"), email: texte("email"), message: texte("message") });
   if (!analyse.success) {
-    return { ok: false, robot: false, erreur: analyse.error.issues[0]?.message ?? "Message invalide." };
+    const probleme = analyse.error.issues[0];
+    return {
+      ok: false,
+      robot: false,
+      erreur: probleme?.message ?? "Message invalide.",
+      champ: probleme?.path[0] as ChampContact | undefined,
+    };
   }
   const sujet = texte("sujet");
   return { ok: true, message: { ...analyse.data, sujet: estSujet(sujet) ? sujet : "autre" } };
