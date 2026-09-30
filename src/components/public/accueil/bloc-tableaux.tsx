@@ -19,7 +19,9 @@ export function BlocTableaux({
   dernier,
   precedents,
   maintenant,
+  rang,
 }: {
+  rang: { rang: number; total: number; intitule: string | null } | null;
   prochain: Rencontre | null;
   dernier: Resultat | null;
   precedents: Resultat[];
@@ -45,6 +47,19 @@ export function BlocTableaux({
             Tout le calendrier
           </Link>
         </div>
+        {rang ? (
+          <p className="mt-4 text-lg text-[var(--color-craie-douce)]">
+            <Link href="/matchs#titre-classement" className="group inline-flex flex-wrap items-baseline gap-x-2 hover:text-[var(--color-craie)]">
+              <span className="titre-affiche text-4xl text-[var(--color-jaune)]">
+                {rang.rang}
+                {rang.rang === 1 ? "er" : "e"}
+              </span>
+              <span>
+                sur {rang.total} au classement{rang.intitule ? `, ${rang.intitule}` : ""}
+              </span>
+            </Link>
+          </p>
+        ) : null}
         {prochain || dernier ? (
           <div className={`mt-12 grid items-start gap-10 ${prochain && dernier ? "xl:grid-cols-2 xl:gap-6" : "max-w-3xl"}`}>
             {prochain ? (

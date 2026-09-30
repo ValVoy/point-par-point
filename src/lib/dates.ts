@@ -17,27 +17,26 @@ export function dateCourte(date: Date | null | undefined): string {
   }).format(date);
 }
 
+/**
+ * Un jour ecrit en toutes lettres, avec « 1er » pour le premier du mois :
+ * Intl ecrit « 1 octobre », la typographie francaise veut « 1er octobre ».
+ */
+function jourEnLettres(date: Date, options: Intl.DateTimeFormatOptions): string {
+  return new Intl.DateTimeFormat("fr-FR", { ...options, timeZone: FUSEAU })
+    .formatToParts(date)
+    .map((morceau) => (morceau.type === "day" && morceau.value === "1" ? "1er" : morceau.value))
+    .join("");
+}
+
 export function dateLongue(date: Date | null | undefined): string {
   if (!date) return "";
-  return new Intl.DateTimeFormat("fr-FR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: FUSEAU,
-  }).format(date);
+  return jourEnLettres(date, { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 }
 
 /** « samedi 3 octobre à 20 h 30 » : le jour, puis l'heure a la francaise. */
 export function dateEtHeure(date: Date | null | undefined): string {
   if (!date) return "";
-  const jour = new Intl.DateTimeFormat("fr-FR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    timeZone: FUSEAU,
-  }).format(date);
-  return `${jour} à ${heure(date)}`;
+  return `${jourEnLettres(date, { weekday: "long", day: "numeric", month: "long" })} à ${heure(date)}`;
 }
 
 /**

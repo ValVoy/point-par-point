@@ -1444,3 +1444,30 @@ fichier de validation, elle y aurait embarqué zod.
   `/effectif` et sur la page du joueur ; fiche et effectif à 390 px sans débordement. Joueur de
   démonstration remis en état, fichiers d'essai effacés.
 - Suite : le classement de la poule, puis le bilan de saison.
+
+**00:10** · **[fonction] Le classement de la poule**
+
+Trois choix de l'utilisateur : le tableau complet sur la page Matchs et le rang sur l'accueil ;
+une grille préremplie plutôt qu'un copier-coller depuis la FFVB, dont le format n'est pas
+vérifié ; une disparition après 30 jours sans mise à jour.
+
+La grille reprend la dernière version : chaque semaine, seuls les chiffres et l'ordre changent, le
+rang étant la position. Contrôles : une seule équipe « Nous », pas de doublon, des entiers, pas plus
+de victoires et de défaites que de matchs. Les lignes sont remplacées en un lot atomique. Côté
+public, un vrai tableau avec notre ligne en jaune ; la saison courante se périme à 30 jours, une
+saison passée affiche son classement final.
+
+En vérifiant, « jeudi 1 octobre » est apparu : `Intl` n'écrit pas « 1er ». Corrigé une fois dans
+`dates.ts`, pour tout le site. Deux défauts de la grille aussi : pas d'intitulés de colonnes en
+grand écran, et des chiffres écrits trop petit.
+
+- Portée : `src/lib/classement.ts`, `classement-base.ts` et le test, `lib/accueil.ts`,
+  `lib/dates.ts` et son test, `administration/(interieur)/matchs/classement/`, écran des matchs,
+  `components/public/matchs/tableau-classement.tsx`, `app/matchs/page.tsx`,
+  `accueil/bloc-tableaux.tsx`, `app/page.tsx`, fiche, codex, ROADMAP.
+- Vérifié : 125 tests, `tsc`, lint ; à l'écran : grille préremplie (8 équipes), déplacement et
+  enregistrement, tableau public à jour, « 1er sur 8 » puis rang de démonstration rétabli sur
+  l'accueil, intitulés alignés au pixel près, 390 px sans débordement. Démonstration remise en
+  cohérence.
+- Suite : décider du bilan de saison (la page Matchs dit déjà victoires et défaites), puis la
+  liste « Avant la mise en ligne ».

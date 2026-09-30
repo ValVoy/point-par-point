@@ -33,6 +33,7 @@ export default async function Accueil() {
             dernier={donnees.dernier}
             precedents={donnees.precedents}
             maintenant={donnees.maintenant}
+            rang={donnees.rang}
           />
           <BlocActualites actualites={donnees.actualites} maintenant={donnees.maintenant} />
         </Revelations>

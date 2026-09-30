@@ -1,5 +1,6 @@
 import { and, desc, eq, isNull } from "drizzle-orm";
 import { actualitesPubliees } from "./actualites-publiques";
+import { classementPublic } from "./classement-base";
 import { db } from "./db";
 import { episodes } from "./db/schema";
 import { rencontresDeLaSaison } from "./rencontres";
@@ -29,7 +30,9 @@ async function dernierEpisode() {
 
 export async function donneesAccueil(maintenant = new Date()) {
   const [saison, episode, actualites] = await Promise.all([saisonCourante(), dernierEpisode(), actualitesPubliees(3)]);
-  const matchs = saison ? await rencontresDeLaSaison(saison.id) : [];
+  const [matchs, classement] = saison
+    ? await Promise.all([rencontresDeLaSaison(saison.id), classementPublic(saison.id, maintenant)])
+    : [[], null];
 
   const resultats = derniersResultats(matchs);
   return {
@@ -42,6 +45,8 @@ export async function donneesAccueil(maintenant = new Date()) {
     precedents: resultats.slice(1, 1 + NOMBRE_PRECEDENTS),
     episode,
     actualites,
+    // Le rang de l'equipe, seulement si le classement est tenu (30 jours).
+    rang: classement?.nous ? { rang: classement.nous.rang, total: classement.lignes.length, intitule: classement.intitule } : null,
   };
 }
 

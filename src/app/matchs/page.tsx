@@ -4,8 +4,10 @@ import { ActionsMatch } from "@/components/public/actions-match";
 import { PiedDePage } from "@/components/public/accueil/pied-de-page";
 import { EnTete } from "@/components/public/entete";
 import { LigneCalendrier } from "@/components/public/matchs/ligne-calendrier";
+import { TableauClassement } from "@/components/public/matchs/tableau-classement";
 import { TableauProchainMatch } from "@/components/public/tableau-prochain-match";
 import { DUREE_EN_COURS, grouperParMois } from "@/lib/calendrier";
+import { classementDeLaSaison, classementPublic } from "@/lib/classement-base";
 import { calendrierDeLaSaison } from "@/lib/matchs-publics";
 import { matchDuTableau } from "@/lib/resultats";
 import { EQUIPE } from "@/lib/site";
@@ -54,6 +56,13 @@ export default async function PageMatchs({ searchParams }: { searchParams: Promi
   const victoires = joues.filter((m) => m.setsNous! > m.setsEux!).length;
   // Le filet « Aujourd'hui » se pose avant le premier match qui n'est pas encore derriere nous.
   const premierAVenir = matchs.find((m) => m.joueLe.getTime() >= maintenant.getTime() - DUREE_EN_COURS)?.id;
+  // Saison courante : le classement disparait s'il n'est plus tenu (principe 4).
+  // Saison passee : c'est le classement final, il ne se perime pas.
+  const classement = !saison
+    ? null
+    : saison.courante
+      ? await classementPublic(saison.id, maintenant)
+      : await classementDeLaSaison(saison.id);
 
   return (
     <>
@@ -141,6 +150,15 @@ export default async function PageMatchs({ searchParams }: { searchParams: Promi
             })
           )}
         </section>
+
+        {classement && classement.lignes.length > 0 ? (
+          <TableauClassement
+            intitule={classement.intitule}
+            misAJourLe={classement.misAJourLe}
+            lignes={classement.lignes}
+            final={!saison?.courante}
+          />
+        ) : null}
       </main>
       <PiedDePage />
     </>

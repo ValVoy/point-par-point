@@ -102,6 +102,12 @@ export default async function PageMatchs({
         >
           Saisir le calendrier
         </Link>
+        <Link
+          href="/administration/matchs/classement"
+          className="rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] inline-flex min-h-11 items-center px-3 text-sm text-[var(--color-craie-douce)] hover:border-[var(--color-turquoise)]"
+        >
+          Classement
+        </Link>
       </div>
 
       <p className="mt-2 max-w-prose text-sm text-[var(--color-craie-douce)]">

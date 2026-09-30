@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { dateEtHeure, depuisChampDateHeure, heure, pourChampDateHeure } from "./dates";
+import { dateEtHeure, dateLongue, depuisChampDateHeure, heure, pourChampDateHeure } from "./dates";
 
 describe("depuisChampDateHeure", () => {
   it("lit une heure d'ete comme heure de Paris, UTC+2", () => {
@@ -47,5 +47,13 @@ describe("heure", () => {
 describe("dateEtHeure", () => {
   it("donne le jour puis l'heure a la francaise", () => {
     assert.equal(dateEtHeure(new Date("2026-10-03T18:30:00Z")), "samedi 3 octobre à 20 h 30");
+  });
+});
+
+describe("le premier du mois", () => {
+  it("s'ecrit 1er, pas 1", () => {
+    assert.equal(dateLongue(new Date("2026-10-01T10:00:00Z")), "jeudi 1er octobre 2026");
+    assert.equal(dateEtHeure(new Date("2026-11-01T19:30:00Z")), "dimanche 1er novembre à 20 h 30");
+    assert.equal(dateLongue(new Date("2026-10-11T10:00:00Z")), "dimanche 11 octobre 2026");
   });
 });

@@ -347,3 +347,15 @@ L'ancien objet s'efface **après** l'enregistrement en base, l'objet neuf **si**
 l'effacement ne fait jamais échouer une action. En développement sans R2, les photos vont dans
 `.stockage-local/` ; en production sans R2, l'envoi est refusé, le disque d'un conteneur
 s'effaçant à chaque déploiement.
+
+### Le classement se recopie, et se périme
+
+Saisi à la main sur une grille préremplie (`src/lib/classement.ts`) : le rang est la position dans
+la grille, une seule vérité. Au-delà de 30 jours sans mise à jour, il disparaît du site courant,
+page Matchs comme accueil (`classementAJour`) ; le classement d'une saison passée est final et ne
+se périme pas. Un chiffre non renseigné s'écrit « – », jamais 0.
+
+### Le premier du mois s'écrit « 1er »
+
+`Intl` écrit « jeudi 1 octobre » ; `dateLongue` et `dateEtHeure` passent par `jourEnLettres`,
+qui écrit « 1er ». Toute nouvelle date au mois en toutes lettres doit passer par là.
