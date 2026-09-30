@@ -60,7 +60,10 @@ se fait au déploiement du site, voir « Avant la mise en ligne ».
 **Les comptes le 30-09-2026** (fiche `fiches/comptes.md`) : écran « Comptes » (mot de passe
 provisoire affiché une fois, rôles, désactivation) et « Mon compte » pour changer le sien.
 
-Ensuite : relire la liste « Avant la mise en ligne » ; le lot 1 public est complet.
+Ensuite, ce qui reste à construire du lot 1 (relu le 30-09-2026, contrairement à ce que disait
+l'entrée précédente) : l'envoi des photos vers R2, sans lequel aucune photo de joueur, de staff ni
+logo ne peut être ajouté ; la fiche joueur détaillée ; le classement de la poule ; le bilan de
+saison. Puis la liste « Avant la mise en ligne ».
 À vérifier avant la mise en ligne : l'accord de droit à l'image couvre le site ; mentions légales
 et politique de confidentialité.
 À régler avant la mise en ligne : la sauvegarde nocturne de cette base garde **30 jours** au plus, durée annoncée par la politique de confidentialité.
@@ -118,7 +121,7 @@ design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`
 - [x] Partenaires, contact
 - [ ] Bilan de saison calculé depuis les scores
 - [x] Mentions légales et politique de confidentialité (30-09-2026)
-- [ ] Compteur d'audience sans cookie
+- [x] Compteur d'audience sans cookie : Umami (30-09-2026)
 - [ ] Favicon et identité visuelle (attend le vrai nom et les couleurs du maillot)
 
 ### Direction artistique , à revoir (demandé le 20-09-2026)

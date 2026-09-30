@@ -1354,3 +1354,16 @@ l'aurait envoyé au navigateur : la valeur passe désormais par la page serveur.
   reconnexion ; 390 px sans débordement. Compte d'essai supprimé de la base ensuite.
 - Suite : relire la liste « Avant la mise en ligne » avec l'utilisateur ; passe de sécurité
   complète avant déploiement.
+
+**23:40** · **[rectificatif] Le lot 1 n'est pas terminé**
+
+L'entrée précédente, et mon message à l'utilisateur, disaient que tout le lot 1 était construit.
+C'est faux : relue ligne à ligne, la ROADMAP garde quatre chantiers ouverts, dont un bloquant.
+L'envoi des photos vers R2 n'existe pas, donc aucune photo de joueur, de staff ni logo de
+partenaire ne peut être ajouté depuis l'administration. Restent aussi la fiche joueur détaillée,
+le classement de la poule et le bilan de saison. La ROADMAP est corrigée, et la case du compteur
+d'audience cochée.
+
+- Portée : ROADMAP.
+- Vérifié : relecture complète de la ROADMAP.
+- Suite : l'envoi des photos vers R2, puis la fiche joueur détaillée, le classement et le bilan.
