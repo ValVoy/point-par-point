@@ -1,8 +1,8 @@
 import { cache } from "react";
 import { and, desc, eq, inArray, isNull } from "drizzle-orm";
 import { db } from "./db";
-import { episodes, rencontres } from "./db/schema";
-import { rencontreParId, rencontresDeLaSaison } from "./rencontres";
+import { anciensSlugsRencontre, episodes, rencontres } from "./db/schema";
+import { rencontresDeLaSaison } from "./rencontres";
 import { saisonsActives } from "./saisons";
 
 /**
@@ -43,7 +43,23 @@ export async function calendrierDeLaSaison(libelle?: string | null, maintenant =
  * cache le temps d'une requete : la page et ses metadonnees le lisent toutes
  * deux, la base ne l'est qu'une fois.
  */
+// Meme forme que les slugs produits par lib/slug.ts : rien d'autre n'atteint la base.
+export const FORME_SLUG = /^[a-z0-9-]{1,120}$/;
+
+/** L'adresse actuelle d'un match dont on a recu une ancienne adresse, ou null. */
+export async function nouvelleAdresse(ancien: string): Promise<string | null> {
+  if (!FORME_SLUG.test(ancien)) return null;
+  const [ligne] = await db()
+    .select({ slug: rencontres.slug })
+    .from(anciensSlugsRencontre)
+    .innerJoin(rencontres, eq(anciensSlugsRencontre.rencontreId, rencontres.id))
+    .where(and(eq(anciensSlugsRencontre.slug, ancien), isNull(rencontres.supprimeLe)))
+    .limit(1);
+  return ligne?.slug ?? null;
+}
+
 export const matchPublic = cache(async (slug: string) => {
+  if (!FORME_SLUG.test(slug)) return null;
   const [ligne] = await db()
     .select({ id: rencontres.id, saisonId: rencontres.saisonId })
     .from(rencontres)
@@ -51,8 +67,7 @@ export const matchPublic = cache(async (slug: string) => {
     .limit(1);
   if (!ligne) return null;
 
-  const [match, [episode], saison] = await Promise.all([
-    rencontreParId(ligne.id),
+  const [[episode], saison] = await Promise.all([
     db()
       .select()
       .from(episodes)
@@ -61,9 +76,10 @@ export const matchPublic = cache(async (slug: string) => {
       .limit(1),
     rencontresDeLaSaison(ligne.saisonId),
   ]);
+  const rang = saison.findIndex((m) => m.id === ligne.id);
+  const match = saison[rang];
   if (!match) return null;
 
-  const rang = saison.findIndex((m) => m.id === match.id);
   const voisin = (m: (typeof saison)[number] | undefined) =>
     m ? { slug: m.slug, adversaire: m.adversaire, aDomicile: m.aDomicile, joueLe: m.joueLe } : null;
   return {

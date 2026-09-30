@@ -24,9 +24,9 @@ export function BandeauEtat({ titre, texte }: { titre: string; texte: string }) 
   );
 }
 
-export function BlocSalle({ match }: { match: Rencontre }) {
+export function BlocSalle({ match, avecItineraire = true }: { match: Rencontre; avecItineraire?: boolean }) {
   if (!match.salleNom && !match.salleAdresse) return null;
-  const itineraire = lienItineraire(match);
+  const itineraire = avecItineraire ? lienItineraire(match) : null;
   return (
     <section aria-labelledby="titre-salle">
       <h2 id="titre-salle" className={etiquette}>
@@ -49,7 +49,7 @@ export function BlocSalle({ match }: { match: Rencontre }) {
   );
 }
 
-export function BlocEpisode({ episode }: { episode: Episode }) {
+export function BlocEpisode({ episode, prioritaire = false }: { episode: Episode; prioritaire?: boolean }) {
   return (
     <section aria-labelledby="titre-episode" className="grid items-end gap-6 lg:grid-cols-12">
       <div className="relative aspect-video overflow-hidden bg-[var(--color-nuit-surface)] lg:col-span-7">
@@ -58,6 +58,7 @@ export function BlocEpisode({ episode }: { episode: Episode }) {
             src={miniatureYoutube(episode.youtubeId)}
             alt=""
             fill
+            priority={prioritaire}
             sizes="(min-width: 1024px) 58vw, 100vw"
             className="object-cover grayscale transition-[filter] duration-[var(--duree)] group-hover:grayscale-0"
           />

@@ -19,7 +19,15 @@ import { EQUIPE } from "@/lib/site";
 
 const NOMBRES = ["zéro", "un", "deux", "trois"];
 
-export function TableauResultat({ resultat, etiquette = "Dernier match" }: { resultat: Resultat; etiquette?: string }) {
+export function TableauResultat({
+  resultat,
+  etiquette = "Dernier match",
+  avecDate = true,
+}: {
+  resultat: Resultat;
+  etiquette?: string;
+  avecDate?: boolean;
+}) {
   const { adversaire, domicile, sets } = resultat;
   const nous = resultat.setsNous;
   const eux = resultat.setsEux;
@@ -97,9 +105,11 @@ export function TableauResultat({ resultat, etiquette = "Dernier match" }: { res
         })}
       </ol>
       ) : null}
-      <p aria-hidden="true" className="mt-4 border-t border-[var(--color-nuit-trait)] pt-4 text-center text-sm text-[var(--color-craie-douce)] first-letter:uppercase">
-        {dateLisible}
-      </p>
+      {avecDate ? (
+        <p aria-hidden="true" className="mt-4 border-t border-[var(--color-nuit-trait)] pt-4 text-center text-sm text-[var(--color-craie-douce)] first-letter:uppercase">
+          {dateLisible}
+        </p>
+      ) : null}
     </div>
   );
 }

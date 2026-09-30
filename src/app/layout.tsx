@@ -19,7 +19,7 @@ const archivo = Archivo({
 export const metadata: Metadata = {
   title: {
     default: NOM_DU_SITE,
-    template: `%s , ${NOM_DU_SITE}`,
+    template: `%s · ${NOM_DU_SITE}`,
   },
   description: DESCRIPTION_DU_SITE,
   metadataBase: process.env.NEXT_PUBLIC_SITE_URL
@@ -34,7 +34,15 @@ export default function RacineLayout({
     // L'intro de l'accueil pose une classe sur <html> avant l'hydratation (voir
     // components/public/intro-nuit/script-intro.ts) : l'ecart est voulu.
     <html lang="fr" className={archivo.variable} suppressHydrationWarning>
-      <body className="min-h-dvh antialiased">{children}</body>
+      <body className="min-h-dvh antialiased">
+        <a
+          href="#contenu"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-[var(--color-jaune)] focus:px-4 focus:py-3 focus:font-semibold focus:text-[var(--color-nuit)]"
+        >
+          Aller au contenu
+        </a>
+        {children}
+      </body>
     </html>
   );
 }

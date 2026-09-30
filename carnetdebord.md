@@ -952,3 +952,28 @@ Go de mémoire libre sur 32 ; redémarré, tout répond.
   reporté (état provoqué en base de développement puis remis) en 1440 et 390 px ; 404 sur un slug
   inconnu. Pas vus à l'écran : « score à venir » et « annulé » (logique testée).
 - Suite : critique à froid des deux pages, puis la série.
+
+**16:00** · **[revue] Critique à froid des matchs, et ses corrections**
+
+Rien de bloquant, mais un défaut qui aurait coûté cher le jour venu : l'administration recalcule
+l'adresse d'un match à chaque modification, pour qu'une faute corrigée ne reste pas dans l'URL,
+si bien qu'un match reporté changeait d'adresse et que les liens déjà partagés tombaient en 404.
+Plutôt que figer l'adresse, une table `anciens_slugs_rencontre` (migration additive
+`0002_anciens-slugs`, appliquée en développement) garde les anciennes adresses et la page redirige
+en 308. Testé par une ancienne adresse insérée puis retirée.
+
+L'ordre du score opposait les deux critiques : l'utilisateur a tranché, notre score d'abord dans
+les listes (calendrier et cartes de l'accueil), l'ordre du gymnase dans les tableaux, où les noms
+sont écrits au-dessus des chiffres. Le reste : l'épisode remonte sous le tableau, le tableau prend
+la largeur quand rien ne l'accompagne, le filet « Aujourd'hui » devient un vrai séparateur entre
+les mois, la salle a son bloc pour un match à venir, date en double retirée, lien « Aller au
+contenu », titre d'onglet corrigé, adresse vérifiée par expression avant la base, une requête de
+moins, miniature prioritaire, et l'allumage des tableaux sans délai. Le semis de démonstration
+prend la date de Paris et une heure réaliste (20 h 30) ; démonstration purgée puis ressemée.
+
+- Portée : `lib/db/schema/sportif.ts`, `drizzle/0002_anciens-slugs.sql`, `lib/demo.ts`, l'action
+  de modification d'un match, `lib/matchs-publics.ts`, les deux pages de matchs, les composants de
+  matchs et de résultats, `layout.tsx`, `revelations.tsx`, `scripts/semer-demo.ts`.
+- Vérifié : 82 tests, `tsc`, lint ; redirection 308, 404 sur une adresse inconnue ou mal formée ;
+  à l'écran le calendrier en 390 px et un match joué avec épisode en 1440 px.
+- Suite : la série, liste des épisodes et page d'un épisode.

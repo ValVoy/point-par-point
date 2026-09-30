@@ -33,6 +33,18 @@ function Bilan({ victoires, defaites }: { victoires: number; defaites: number })
   );
 }
 
+/** Le filet entre ce qui est joue et ce qui vient, hors des listes : un vrai separateur. */
+function Aujourdhui() {
+  return (
+    <div role="separator" aria-label="Aujourd'hui" className="flex items-center gap-3 py-4">
+      <span aria-hidden="true" className="text-xs font-semibold tracking-[0.2em] text-[var(--color-jaune)] uppercase">
+        Aujourd&apos;hui
+      </span>
+      <span aria-hidden="true" className="h-0.5 flex-1 bg-[var(--color-jaune)]" />
+    </div>
+  );
+}
+
 export default async function PageMatchs({ searchParams }: { searchParams: Promise<{ saison?: string }> }) {
   const { saison: demandee } = await searchParams;
   const { maintenant, saison, saisons, matchs, racontes } = await calendrierDeLaSaison(demandee);
@@ -100,26 +112,33 @@ export default async function PageMatchs({ searchParams }: { searchParams: Promi
               Le calendrier de cette saison n&apos;est pas encore publié.
             </p>
           ) : (
-            grouperParMois(matchs).map((groupe) => (
-              <div key={groupe.cle} className="mt-10 first:mt-0">
-                <h3 className="border-b-2 border-[var(--color-craie)] pb-2 text-xs font-semibold tracking-[0.2em] uppercase">
-                  {groupe.libelle}
-                </h3>
+            grouperParMois(matchs).map((groupe) => {
+              const coupe = groupe.matchs.findIndex((m) => m.id === premierAVenir && m !== matchs[0]);
+              const lignes = (liste: typeof groupe.matchs) => (
                 <ul>
-                  {groupe.matchs.map((m) => [
-                    m.id === premierAVenir && m !== matchs[0] ? (
-                      <li key={`aujourdhui-${m.id}`} className="flex items-center gap-3 py-3" aria-label="Aujourd'hui">
-                        <span className="text-xs font-semibold tracking-[0.2em] text-[var(--color-jaune)] uppercase">
-                          Aujourd&apos;hui
-                        </span>
-                        <span aria-hidden="true" className="h-0.5 flex-1 bg-[var(--color-jaune)]" />
-                      </li>
-                    ) : null,
-                    <LigneCalendrier key={m.id} match={m} maintenant={maintenant} raconte={racontes.has(m.id)} />,
-                  ])}
+                  {liste.map((m) => (
+                    <LigneCalendrier key={m.id} match={m} maintenant={maintenant} raconte={racontes.has(m.id)} />
+                  ))}
                 </ul>
-              </div>
-            ))
+              );
+              return (
+                <div key={groupe.cle} className="mt-10 first:mt-0">
+                  {coupe === 0 ? <Aujourdhui /> : null}
+                  <h3 className="border-b-2 border-[var(--color-craie)] pb-2 text-xs font-semibold tracking-[0.2em] uppercase">
+                    {groupe.libelle}
+                  </h3>
+                  {coupe > 0 ? (
+                    <>
+                      {lignes(groupe.matchs.slice(0, coupe))}
+                      <Aujourdhui />
+                      {lignes(groupe.matchs.slice(coupe))}
+                    </>
+                  ) : (
+                    lignes(groupe.matchs)
+                  )}
+                </div>
+              );
+            })
           )}
         </section>
       </main>

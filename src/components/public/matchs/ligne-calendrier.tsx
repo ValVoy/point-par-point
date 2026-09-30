@@ -10,6 +10,10 @@ import type { RencontreAvecSets } from "@/lib/rencontres";
  * match, le score apres, ou l'etat en toutes lettres. Mate, en chiffres
  * d'affiche : la lumiere est reservee aux tableaux. Toute la ligne mene a la
  * page du match, et son nom accessible dit tout d'une traite.
+ *
+ * Dans une liste, notre score vient toujours en premier (decision du
+ * 30-09-2026) : « Chez X 0-3 » se lit d'un coup comme une defaite. Les
+ * tableaux LED, eux, gardent l'ordre du gymnase, locaux a gauche.
  */
 
 const FUSEAU = "Europe/Paris";
@@ -29,11 +33,10 @@ function Emplacement({ match, statut }: { match: RencontreAvecSets; statut: Stat
   }
   if (statut === "jouee" && match.setsNous !== null && match.setsEux !== null) {
     const victoire = match.setsNous > match.setsEux;
-    const [g, d] = match.aDomicile ? [match.setsNous, match.setsEux] : [match.setsEux, match.setsNous];
     return (
       <span className="flex items-center gap-3">
         <span className={`titre-affiche text-3xl sm:text-4xl ${victoire ? "" : "font-normal text-[var(--color-craie-douce)]"}`}>
-          {g}-{d}
+          {match.setsNous}-{match.setsEux}
         </span>
         <PastilleResultat victoire={victoire} className="text-base" />
       </span>

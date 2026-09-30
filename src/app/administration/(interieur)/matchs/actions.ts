@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { ETATS_RENCONTRE, rencontres, setsRencontre } from "@/lib/db/schema";
+import { ETATS_RENCONTRE, anciensSlugsRencontre, rencontres, setsRencontre } from "@/lib/db/schema";
 import { exigerDroit } from "@/lib/auth/session-courante";
 import { depuisChampDateHeure } from "@/lib/dates";
 import { slugRencontreLibre } from "@/lib/rencontres";
@@ -209,13 +209,20 @@ export async function modifierMatch(
     return { erreurs: ["Le commentaire dépasse 2 000 caractères."] };
   }
 
+  // L'adresse suit la date et l'adversaire : une faute de frappe corrigee ne
+  // doit pas rester gravee dans l'URL du match. L'ancienne est gardee pour
+  // rediriger les liens deja partages (table anciens_slugs_rencontre).
+  const [avant] = await db().select({ slug: rencontres.slug }).from(rencontres).where(eq(rencontres.id, id)).limit(1);
+  const slug = await slugRencontreLibre(joueLe, analyse.data.adversaire, { sauf: id });
+  if (avant && avant.slug !== slug) {
+    await db().insert(anciensSlugsRencontre).values({ slug: avant.slug, rencontreId: id }).onConflictDoNothing();
+  }
+
   const [rencontre] = await db()
     .update(rencontres)
     .set({
       ...colonnes(analyse.data, joueLe),
-      // L'adresse suit la date et l'adversaire : une faute de frappe corrigee
-      // ne doit pas rester gravee dans l'URL du match.
-      slug: await slugRencontreLibre(joueLe, analyse.data.adversaire, { sauf: id }),
+      slug,
       etat: etat.data,
       commentaire: ouNull(commentaire),
       modifieLe: new Date(),

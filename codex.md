@@ -182,6 +182,10 @@ ailleurs.
 - **Adresses** : `/matchs?saison=2026-2027` (en paramètre, pour ne pas entrer en collision avec
   `/matchs/<slug>`) et `/matchs/<slug>`.
 - **Lumière** : les lignes du calendrier sont mates ; seuls les tableaux s'allument.
+- **Ordre du score** (décision de l'utilisateur, 30-09-2026) : notre score d'abord dans les listes
+  (calendrier, cartes de l'accueil) ; locaux d'abord dans les tableaux LED, où les noms sont écrits.
+- **Anciennes adresses** : quand l'administration change le slug d'un match, l'ancien va dans
+  `anciens_slugs_rencontre` et `/matchs/<ancien>` redirige en 308. Un lien partagé survit à un report.
 - **Composants partagés** : `ActionsMatch` (agenda, itinéraire, Google Agenda), `EnTete` pour les
   pages hors accueil, `matchPublic` mis en cache par requête (page et métadonnées).
 

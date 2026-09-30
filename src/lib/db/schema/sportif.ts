@@ -129,6 +129,25 @@ export const rencontres = sqliteTable(
   ],
 );
 
+/**
+ * Les anciennes adresses d'un match. L'adresse suit la date et l'adversaire
+ * (une faute corrigee ne reste pas gravee dans l'URL), mais un lien deja
+ * partage, sur Instagram ou dans un message, doit survivre a un report : il
+ * redirige vers l'adresse du moment (critique du 30-09-2026).
+ */
+export const anciensSlugsRencontre = sqliteTable(
+  "anciens_slugs_rencontre",
+  {
+    id: identifiant(),
+    slug: text("slug").notNull(),
+    rencontreId: integer("rencontre_id")
+      .notNull()
+      .references(() => rencontres.id),
+    ...horodatage,
+  },
+  (table) => [uniqueIndex("anciens_slugs_rencontre_slug_unique").on(table.slug)],
+);
+
 export const setsRencontre = sqliteTable(
   "sets_rencontre",
   {

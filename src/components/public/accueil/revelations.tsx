@@ -56,7 +56,7 @@ export function Revelations({ children }: { children: ReactNode }) {
         for (const tableau of gsap.utils.toArray<HTMLElement>("[data-allume]", noeud)) {
           gsap.set(tableau, { "--allume": 0 });
           gsap
-            .timeline({ scrollTrigger: { trigger: tableau, start: "top 75%", once: true }, delay: 0.25 })
+            .timeline({ scrollTrigger: { trigger: tableau, start: "top 75%", once: true } })
             .to(tableau, { "--allume": 1, duration: 0.05, ease: "none" })
             .to(tableau, { "--allume": 0.35, duration: 0.06, ease: "none" })
             .to(tableau, { "--allume": 1, duration: 0.12, ease: "none" });

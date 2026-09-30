@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { ActionsMatch, titreMatch } from "@/components/public/actions-match";
 import { PiedDePage } from "@/components/public/accueil/pied-de-page";
 import { Revelations } from "@/components/public/accueil/revelations";
@@ -16,7 +16,7 @@ import { TableauProchainMatch } from "@/components/public/tableau-prochain-match
 import { TableauResultat } from "@/components/public/tableau-resultat";
 import { statutPublic } from "@/lib/calendrier";
 import { dateEtHeure, dateLongue } from "@/lib/dates";
-import { matchPublic } from "@/lib/matchs-publics";
+import { matchPublic, nouvelleAdresse } from "@/lib/matchs-publics";
 import { resultatDepuis } from "@/lib/resultats";
 
 /**
@@ -44,13 +44,20 @@ export async function generateMetadata({ params }: Parametres): Promise<Metadata
 export default async function PageMatch({ params }: Parametres) {
   const { slug } = await params;
   const donnees = await matchPublic(slug);
-  if (!donnees) notFound();
+  if (!donnees) {
+    // Un lien partage avant un report ou une correction : redirection 308.
+    const actuelle = await nouvelleAdresse(slug);
+    if (actuelle) permanentRedirect(`/matchs/${actuelle}`);
+    notFound();
+  }
   const { maintenant, match, episode, precedent, suivant } = donnees;
 
   const statut = statutPublic(match, maintenant);
   const resultat = resultatDepuis(match);
   const quand = dateEtHeure(match.joueLe);
   const salle = [match.salleNom, match.salleAdresse].filter(Boolean).join(", ") || null;
+  // Salle ou commentaire a mettre a cote du score ; sinon le tableau prend la largeur.
+  const aCote = Boolean(match.commentaire?.trim() || salle);
 
   return (
     <>
@@ -85,14 +92,14 @@ export default async function PageMatch({ params }: Parametres) {
 
         {statut === "jouee" && resultat ? (
           <div className="grid items-start gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-7">
+            <div className={aCote ? "lg:col-span-7" : "max-w-4xl lg:col-span-12"}>
               <Revelations>
                 <div data-allume>
-                  <TableauResultat resultat={resultat} etiquette="Score final" />
+                  <TableauResultat resultat={resultat} etiquette="Score final" avecDate={false} />
                 </div>
               </Revelations>
             </div>
-            {match.commentaire?.trim() || match.salleNom || match.salleAdresse ? (
+            {aCote ? (
               <div className="space-y-12 lg:col-span-5">
                 <BlocCommentaire texte={match.commentaire} />
                 <BlocSalle match={match} />
@@ -100,6 +107,8 @@ export default async function PageMatch({ params }: Parametres) {
             ) : null}
           </div>
         ) : null}
+
+        {statut === "jouee" && episode ? <BlocEpisode episode={episode} prioritaire /> : null}
 
         {statut === "score_a_venir" ? (
           <BandeauEtat titre="Score bientôt en ligne" texte="Le match est joué, le résultat arrive dès qu'il est saisi." />
@@ -109,9 +118,9 @@ export default async function PageMatch({ params }: Parametres) {
         ) : null}
         {statut === "annulee" ? <BandeauEtat titre="Match annulé" texte="Cette rencontre n'aura pas lieu." /> : null}
 
-        {episode ? <BlocEpisode episode={episode} /> : null}
+        {statut !== "jouee" && episode ? <BlocEpisode episode={episode} /> : null}
         {statut !== "jouee" ? <BlocCommentaire texte={match.commentaire} /> : null}
-        {statut !== "a_venir" && statut !== "jouee" ? <BlocSalle match={match} /> : null}
+        {statut !== "jouee" ? <BlocSalle match={match} avecItineraire={statut !== "a_venir"} /> : null}
         <Voisins precedent={precedent} suivant={suivant} />
       </main>
       <PiedDePage saison={null} />

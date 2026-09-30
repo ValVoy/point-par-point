@@ -18,6 +18,7 @@ import {
   setsRencontre,
   type Poste,
 } from "../src/lib/db/schema";
+import { depuisChampDateHeure, pourChampDate } from "../src/lib/dates";
 import { slugifier } from "../src/lib/slug";
 
 /**
@@ -167,7 +168,11 @@ async function principal() {
 
   const idsRencontresJouees: number[] = [];
   for (const match of MATCHS) {
-    const joueLe = new Date(MAINTENANT + match.jours * JOUR);
+    // Un match se joue le soir, a 20 h 30 a Paris ; l'adresse prend la date
+    // de Paris, comme dans l'administration (critique du 30-09-2026 : en UTC,
+    // l'adresse avait un jour de retard sur la page).
+    const jourDuMatch = pourChampDate(new Date(MAINTENANT + match.jours * JOUR));
+    const joueLe = depuisChampDateHeure(`${jourDuMatch}T20:30`)!;
     const jouee = match.jours < 0 && match.sets;
     const setsNous = jouee
       ? match.sets!.filter(([n, e]) => (n ?? 0) > (e ?? 0)).length
@@ -181,7 +186,7 @@ async function principal() {
       .values({
         saisonId: saison.id,
         slug: slugifier(
-          `${joueLe.toISOString().slice(0, 10)}-${match.adversaire}`,
+          `${pourChampDate(joueLe)}-${match.adversaire}`,
         ),
         joueLe,
         adversaire: match.adversaire,
