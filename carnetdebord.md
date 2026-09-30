@@ -1491,3 +1491,35 @@ Avec ce bilan, les fonctions du lot 1 sont toutes construites.
   3-0 à domicile, 0-2 à l'extérieur, aucune série affichée puisque les deux derniers matchs
   diffèrent ; aucun débordement.
 - Suite : la liste « Avant la mise en ligne », à commencer par la passe de sécurité complète.
+
+**01:11** · **[audit] Le groupe d'audit, huit regards, premier passage**
+
+Premier audit complet, demandé par l'utilisateur en élargissant la passe de sécurité prévue. Quatre
+relectures à froid en parallèle, en lecture seule, puis chaque constat élevé revérifié à la main
+avant correction : 97 constats, aucun critique, 15 élevés. Rapport :
+`audits/2026-10-01-audit-groupe.md`.
+
+Le plus grave était invisible à l'usage : un texte d'actualité piégé de 20 000 caractères
+bloquait le serveur 40 secondes, parce que le motif du gras revenait sur ses pas à chaque
+position. L'analyse est devenue linéaire. Ensuite, un inconnu pouvait bloquer le compte de Tom
+avec cinq essais, une seule adresse pouvait fermer le formulaire de contact à tout le monde, et
+un titre long ou un nom polonais rendait une page introuvable alors qu'elle était listée.
+
+66 constats corrigés en trois lots vérifiés : sécurité, fiabilité et intégrité (pages d'erreur,
+sonde de santé, purge commune, bascules idempotentes, égalité de sets refusée), accessibilité et
+rédaction (identifiants uniques, bords lisibles, navigation au téléphone, tableau de bord qui
+voit le classement et les messages). Migration additive 0008. Les dépendances sont épinglées en
+version exacte.
+
+Restent quatre élevés qui ne sont pas du code sûr : l'effacement définitif promis par la
+politique (R1, R2), à trancher, et les sauvegardes de la base et des photos (F3, F4), réglages
+du serveur avant la mise en ligne.
+
+- Portée : 3 commits (`324c333`, `6bd129f`, `576031b`), environ 70 fichiers, migration 0008,
+  rapport, ROADMAP.
+- Vérifié : 143 tests, `tsc`, lint ; sondes : 20 000 caractères piégés en moins de 0,5 s ;
+  blocage de connexion depuis l'attaquant et connexion réussie d'ailleurs ; `/sante`,
+  `robots.txt`, plan du site (37 adresses), agenda vers la page du match, page introuvable ;
+  0 champ sans étiquette sur le projet, 0 cible sous 44 px dans l'en-tête à 390 px. Comptes et
+  tentatives d'essai supprimés.
+- Suite : les questions d'arbitrage de l'audit, puis les démarches « Avant la mise en ligne ».
