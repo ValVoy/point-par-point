@@ -11,8 +11,9 @@ consultent et qui durent : l'effectif poste par poste, les âges, les résultats
 
 **Le nom est « Point Par Point »**, celui de la série, donné par l'utilisateur le 30-09-2026. Il
 remplace « Projet Volley », nom de travail du 19-09-2026, dans le site (`lib/site.ts`) et dans les
-tracés du titre de l'intro (`scripts/titre-en-traces.py`). Le dossier `ProjetVolley` et le dépôt
-`ValVoy/projet-volley` gardent l'ancien nom tant que l'utilisateur n'a pas décidé de les renommer.
+tracés du titre de l'intro (`scripts/titre-en-traces.py`). Le dépôt est devenu
+`ValVoy/point-par-point` le 30-09-2026 ; le dossier local garde le nom `ProjetVolley`, par choix de
+l'utilisateur.
 La chaîne YouTube de la série : `https://www.youtube.com/@oger_tom`.
 
 Projet coup de coeur, mené en aide à un ami. Cela ne change rien aux exigences techniques, mais
