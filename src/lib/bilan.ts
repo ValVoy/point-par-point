@@ -20,7 +20,8 @@ export type Bilan = {
 
 export function bilanDeLaSaison(matchs: Match[]): Bilan | null {
   const joues = matchs
-    .filter((m) => m.etat === "jouee" && m.setsNous !== null && m.setsEux !== null)
+    // Une egalite n'est pas un resultat de volley : ecartee plutot que comptee en defaite.
+    .filter((m) => m.etat === "jouee" && m.setsNous !== null && m.setsEux !== null && m.setsNous !== m.setsEux)
     .sort((a, b) => a.joueLe.getTime() - b.joueLe.getTime());
   if (joues.length === 0) return null;
 

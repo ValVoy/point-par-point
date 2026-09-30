@@ -72,6 +72,7 @@ export default async function PageActualite({
               className="rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-4"
             >
               <input type="hidden" name="id" value={actualite.id} />
+              <input type="hidden" name="vers" value={actualite.etat === "brouillon" ? "publie" : "brouillon"} />
               <p className="text-xs text-[var(--color-craie-tenue)]">
                 {brouillon
                   ? "Publier rend l'actualité visible sur le site, datée d'aujourd'hui. Les modifications non enregistrées ci-contre ne partent pas."

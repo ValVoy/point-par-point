@@ -1,6 +1,7 @@
 import { evenementAgenda } from "@/lib/agenda";
 import { rencontreParSlug } from "@/lib/rencontres";
 import { EQUIPE } from "@/lib/site";
+import { FORME_SLUG } from "@/lib/slug";
 
 /**
  * Le fichier d'agenda d'un match a venir, pour le bouton « Ajouter a
@@ -12,7 +13,6 @@ import { EQUIPE } from "@/lib/site";
 
 // Meme forme que les slugs produits par lib/slug.ts : minuscules, chiffres,
 // tirets. Rien d'autre n'atteint la base ni l'en-tete du fichier.
-const FORME_SLUG = /^[a-z0-9-]{1,120}$/;
 
 function introuvable() {
   return new Response("Match introuvable.", {
@@ -43,7 +43,8 @@ export async function GET(_requete: Request, { params }: { params: Promise<{ slu
     titre,
     lieu: lieu || null,
     description: rencontre.competition ?? null,
-    url: site ? new URL("/", site).toString() : null,
+    // La page du match, pas l'accueil (audit T6).
+    url: site ? new URL(`/matchs/${rencontre.slug}`, site).toString() : null,
     horodatage: maintenant,
   });
 

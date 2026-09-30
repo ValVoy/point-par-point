@@ -1,5 +1,11 @@
 import sharp from "sharp";
 
+// Une image a la fois, sans cache (audit F9) : une photo de 40 millions de
+// pixels se deplie en quelque 160 Mo, deux envois simultanes ne doivent pas
+// faire depasser le plafond memoire du conteneur.
+sharp.concurrency(1);
+sharp.cache(false);
+
 /**
  * Le traitement des images envoyees (fiche fiches/photos.md). Tout ce qui
  * entre ici vient d'un fichier choisi par quelqu'un : le format se lit dans

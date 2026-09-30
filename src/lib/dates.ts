@@ -137,10 +137,16 @@ export function depuisChampDateHeure(valeur: string): Date | null {
 /** Age en annees revolues, ou null si la date de naissance est inconnue. */
 export function age(neLe: Date | null | undefined, maintenant = new Date()): number | null {
   if (!neLe) return null;
-  let annees = maintenant.getFullYear() - neLe.getFullYear();
-  const mois = maintenant.getMonth() - neLe.getMonth();
-  if (mois < 0 || (mois === 0 && maintenant.getDate() < neLe.getDate())) {
-    annees -= 1;
-  }
+  // Le jour d'aujourd'hui a Paris, pas au fuseau du serveur (audit T7) : le
+  // VPS vit en heure universelle, et l'anniversaire tombait deux heures trop
+  // tard. La date de naissance, elle, est un jour civil stocke en UTC.
+  const morceaux = new Intl.DateTimeFormat("en-CA", { timeZone: FUSEAU, year: "numeric", month: "2-digit", day: "2-digit" })
+    .format(maintenant)
+    .split("-")
+    .map(Number);
+  const [annee = 0, mois = 1, jour = 1] = morceaux;
+  let annees = annee - neLe.getUTCFullYear();
+  const ecartMois = mois - 1 - neLe.getUTCMonth();
+  if (ecartMois < 0 || (ecartMois === 0 && jour < neLe.getUTCDate())) annees -= 1;
   return annees;
 }

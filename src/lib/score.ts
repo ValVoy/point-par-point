@@ -108,6 +108,12 @@ export function analyserSets(saisis: SetSaisi[]): AnalyseScore {
     }
   }
 
+  // Un match joue a toujours un vainqueur (audit D3) : une egalite de sets
+  // enregistree passait pour une defaite dans le bilan.
+  if (erreurs.length === 0 && sets.length > 0 && setsNous === setsEux) {
+    erreurs.push(`Égalité ${setsNous}-${setsEux} : un match se termine toujours avec un vainqueur. Complétez les sets.`);
+  }
+
   return { sets, setsNous, setsEux, erreurs, alertes };
 }
 

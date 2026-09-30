@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { desc, eq, isNull } from "drizzle-orm";
 import { db } from "./db";
 import { saisons } from "./db/schema";
@@ -8,14 +9,15 @@ import { saisons } from "./db/schema";
  * adresse joignable depuis le navigateur.
  */
 
-export async function saisonCourante() {
+/** Lue une fois par requete (audit F11) : la page et le pied de page la demandent tous deux. */
+export const saisonCourante = cache(async () => {
   const [courante] = await db()
     .select()
     .from(saisons)
     .where(eq(saisons.courante, true))
     .limit(1);
   return courante ?? null;
-}
+});
 
 export async function saisonsActives() {
   return db()

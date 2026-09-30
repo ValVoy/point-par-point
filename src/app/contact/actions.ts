@@ -6,7 +6,7 @@ import { lireMessage, type ChampContact } from "@/lib/contact";
 import { db } from "@/lib/db";
 import { messagesContact } from "@/lib/db/schema";
 import { reserverEnvoi } from "@/lib/envois-contact";
-import { purgerMessagesAnciens } from "@/lib/messages";
+import { purgerDonneesEchues } from "@/lib/purges";
 
 /**
  * L'envoi du formulaire de contact (fiche fiches/contact.md). Aucun e-mail
@@ -51,6 +51,8 @@ export async function envoyerMessage(_precedent: EtatContact, donnees: FormData)
   }
 
   await db().insert(messagesContact).values(lu.message);
-  await purgerMessagesAnciens();
+  // Apres l'insertion, et sans jamais faire echouer l'envoi (audit F6) : le
+  // visiteur ne renvoie pas un message deja recu.
+  await purgerDonneesEchues();
   return { envoye: true, erreur: null };
 }

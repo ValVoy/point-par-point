@@ -32,3 +32,11 @@ export function configurationUmami(): { script: string; site: string } | null {
     return null;
   }
 }
+
+/**
+ * La meme regle, ecrite pour le navigateur : le filtre qu'Umami appelle avant
+ * chaque envoi. Teste en l'executant (audit D7) : c'est lui qui tourne
+ * vraiment, pas `pageComptee`.
+ */
+export const SCRIPT_FILTRE = `window.pppAvantEnvoi=function(t,p){try{var s=new URL(p.url,location.origin).pathname.split("/")[1]||"";if(${JSON.stringify(SEGMENTS_NON_COMPTES)}.indexOf(s)>=0)return false}catch(e){return false}return p};`;
+

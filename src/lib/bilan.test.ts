@@ -39,3 +39,10 @@ describe("bilanDeLaSaison", () => {
     assert.equal(bilanDeLaSaison([m(3, 3, 0), m(10, 3, 0, true, "annulee")])?.victoires, 1);
   });
 });
+
+describe("bilan et egalite (audit D3)", () => {
+  it("n'en fait pas une defaite", () => {
+    assert.equal(bilanDeLaSaison([m(3, 1, 1)]), null);
+  });
+});
+

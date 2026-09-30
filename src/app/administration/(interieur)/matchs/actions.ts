@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { ETATS_RENCONTRE, anciensSlugsRencontre, rencontres, setsRencontre } from "@/lib/db/schema";
@@ -254,6 +254,15 @@ export async function enregistrerScore(
   if (!id) return { erreurs: ["Match inconnu."], alertes: [], enregistre: false };
 
   const base = db();
+  // Un match a la corbeille ne recoit pas de score (audit D4) : sinon il
+  // reapparaissait, joue, sans que personne ne l'ait restaure.
+  const [match] = await base
+    .select({ id: rencontres.id })
+    .from(rencontres)
+    .where(and(eq(rencontres.id, id), isNull(rencontres.supprimeLe)))
+    .limit(1);
+  if (!match) return { erreurs: ["Ce match est introuvable ou à la corbeille."], alertes: [], enregistre: false };
+
   const effacerSets = base.delete(setsRencontre).where(eq(setsRencontre.rencontreId, id));
   const marquerJoue = (setsNous: number, setsEux: number) =>
     base

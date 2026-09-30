@@ -152,7 +152,9 @@ export async function basculerPublicationActualite(donnees: FormData): Promise<v
     .limit(1);
   if (!actualite) return;
 
-  const publier = actualite.etat === "brouillon";
+  // L'etat voulu vient du formulaire (audit D2) : relire puis inverser faisait
+  // qu'un double clic ou un onglet reste ouvert defaisait l'action.
+  const publier = donnees.get("vers") === "publie";
   await db()
     .update(actualites)
     .set({

@@ -6,27 +6,16 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { effectifs, joueurs, POSTES } from "@/lib/db/schema";
 import { exigerDroit } from "@/lib/auth/session-courante";
-import { slugifier } from "@/lib/slug";
+import { lireFicheJoueur } from "@/lib/fiche-joueur";
+import { slugOuSecours } from "@/lib/slug";
 
 export type EtatJoueur = { erreur: string | null };
 
 const schemaJoueur = z.object({
-  prenom: z.string().trim().min(1, "Le prénom est obligatoire.").max(60),
-  nom: z.string().trim().min(1, "Le nom est obligatoire.").max(60),
-  neLe: z.string().optional(),
-  tailleCm: z.string().optional(),
-  presentation: z.string().trim().max(1000).optional(),
-  parcours: z.string().trim().max(1000).optional(),
   numero: z.string().optional(),
-  poste: z.enum(POSTES),
+  poste: z.enum(POSTES, "Choisissez un poste."),
   saisonId: z.string(),
 });
-
-function versDate(valeur: string | undefined): Date | null {
-  if (!valeur) return null;
-  const date = new Date(valeur);
-  return Number.isNaN(date.getTime()) ? null : date;
-}
 
 function versEntier(valeur: string | undefined): number | null {
   if (!valeur) return null;
@@ -40,7 +29,7 @@ function versEntier(valeur: string | undefined): number | null {
  * n'ait a y penser au moment de la saisie.
  */
 async function slugLibre(prenom: string, nom: string): Promise<string> {
-  const base = slugifier(`${prenom} ${nom}`);
+  const base = slugOuSecours(`${prenom} ${nom}`, "joueur");
   const existants = await db()
     .select({ slug: joueurs.slug })
     .from(joueurs);
@@ -59,12 +48,6 @@ export async function ajouterJoueur(
   await exigerDroit("gererEffectif");
 
   const analyse = schemaJoueur.safeParse({
-    prenom: donnees.get("prenom"),
-    nom: donnees.get("nom"),
-    neLe: donnees.get("neLe")?.toString(),
-    tailleCm: donnees.get("tailleCm")?.toString(),
-    presentation: donnees.get("presentation")?.toString(),
-    parcours: donnees.get("parcours")?.toString(),
     numero: donnees.get("numero")?.toString(),
     poste: donnees.get("poste"),
     saisonId: donnees.get("saisonId")?.toString(),
@@ -77,7 +60,13 @@ export async function ajouterJoueur(
   const saisonId = versEntier(analyse.data.saisonId);
   if (!saisonId) return { erreur: "Saison inconnue." };
 
+  // Memes regles que la fiche joueur (audit D5) : une date de naissance en 3000
+  // ou une taille de 5 cm passaient ici, alors que la fiche les refusait.
+  const fiche = lireFicheJoueur(donnees, new Date());
+  if (!fiche.ok) return { erreur: fiche.erreur };
+
   const numero = versEntier(analyse.data.numero);
+  if (numero !== null && (numero < 0 || numero > 99)) return { erreur: "Le numéro va de 0 à 99." };
   if (numero !== null) {
     const conflit = await numeroDejaPris(saisonId, numero, null);
     if (conflit) return { erreur: `Le numéro ${numero} est déjà porté par ${conflit}.` };
@@ -87,13 +76,13 @@ export async function ajouterJoueur(
   const [joueur] = await base
     .insert(joueurs)
     .values({
-      prenom: analyse.data.prenom,
-      nom: analyse.data.nom,
-      slug: await slugLibre(analyse.data.prenom, analyse.data.nom),
-      neLe: versDate(analyse.data.neLe),
-      tailleCm: versEntier(analyse.data.tailleCm),
-      presentation: analyse.data.presentation || null,
-      parcours: analyse.data.parcours || null,
+      prenom: fiche.fiche.prenom,
+      nom: fiche.fiche.nom,
+      slug: await slugLibre(fiche.fiche.prenom, fiche.fiche.nom),
+      neLe: fiche.fiche.neLe,
+      tailleCm: fiche.fiche.tailleCm,
+      presentation: fiche.fiche.presentation,
+      parcours: fiche.fiche.parcours,
     })
     .returning();
 
@@ -163,7 +152,13 @@ export async function modifierLigneEffectif(
     .limit(1);
   if (!ligne) return { erreur: "Ligne inconnue." };
 
+  // Memes regles que la fiche joueur (audit D5) : une date de naissance en 3000
+  // ou une taille de 5 cm passaient ici, alors que la fiche les refusait.
+  const fiche = lireFicheJoueur(donnees, new Date());
+  if (!fiche.ok) return { erreur: fiche.erreur };
+
   const numero = versEntier(analyse.data.numero);
+  if (numero !== null && (numero < 0 || numero > 99)) return { erreur: "Le numéro va de 0 à 99." };
   if (numero !== null) {
     const conflit = await numeroDejaPris(ligne.saisonId, numero, effectifId);
     if (conflit) return { erreur: `Le numéro ${numero} est déjà porté par ${conflit}.` };

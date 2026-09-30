@@ -7,7 +7,8 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { utilisateurs } from "@/lib/db/schema";
 import { HACHAGE_FACTICE, verifier } from "@/lib/auth/mots-de-passe";
-import { NOM_COOKIE, optionsCookie, ouvrirSession, purgerSessionsExpirees } from "@/lib/auth/sessions";
+import { NOM_COOKIE, optionsCookie, ouvrirSession } from "@/lib/auth/sessions";
+import { purgerDonneesEchues } from "@/lib/purges";
 import { confirmerTentative, lireIp, oublierTentatives, reserverTentative } from "@/lib/auth/tentatives";
 
 const schema = z.object({
@@ -88,8 +89,8 @@ export async function connecter(
 
   await confirmerTentative(tentative);
   await oublierTentatives(analyse.data.email);
-  // Les sessions expirees ne servent plus a rien : menage a chaque connexion (audit S12).
-  await purgerSessionsExpirees();
+  // Sessions expirees et autres donnees echues : menage a chaque connexion (audit S12, R4).
+  await purgerDonneesEchues();
 
   const magasin = await cookies();
   magasin.set(NOM_COOKIE, jeton, optionsCookie(expireLe));

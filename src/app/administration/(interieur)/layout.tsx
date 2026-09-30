@@ -1,6 +1,7 @@
 import { peut } from "@/lib/auth/roles";
 import { exigerConnexion } from "@/lib/auth/session-courante";
-import { nombreNonLus, purgerMessagesAnciens } from "@/lib/messages";
+import { nombreNonLus } from "@/lib/messages";
+import { purgerDonneesEchues } from "@/lib/purges";
 import { BandeauDemo } from "./bandeau-demo";
 import { Coquille } from "./coquille";
 
@@ -21,10 +22,11 @@ export default async function InterieurLayout({
   children: React.ReactNode;
 }) {
   const utilisateur = await exigerConnexion();
+  // Purge des donnees echues, qui ne peut pas faire tomber l'administration (audit F6).
+  await purgerDonneesEchues();
   let nonLus = 0;
   if (peut(utilisateur, "lireMessages")) {
-    await purgerMessagesAnciens();
-    nonLus = await nombreNonLus();
+    nonLus = await nombreNonLus().catch(() => 0);
   }
 
   return (

@@ -4,6 +4,7 @@ import { db } from "./db";
 import { anciensSlugsRencontre, episodes, rencontres } from "./db/schema";
 import { rencontresDeLaSaison } from "./rencontres";
 import { saisonsActives } from "./saisons";
+import { FORME_SLUG } from "./slug";
 
 /**
  * Lectures des pages publiques des matchs (fiche fiches/matchs.md). Seul ce
@@ -43,8 +44,6 @@ export async function calendrierDeLaSaison(libelle?: string | null, maintenant =
  * cache le temps d'une requete : la page et ses metadonnees le lisent toutes
  * deux, la base ne l'est qu'une fois.
  */
-// Meme forme que les slugs produits par lib/slug.ts : rien d'autre n'atteint la base.
-export const FORME_SLUG = /^[a-z0-9-]{1,120}$/;
 
 /** L'adresse actuelle d'un match dont on a recu une ancienne adresse, ou null. */
 export async function nouvelleAdresse(ancien: string): Promise<string | null> {

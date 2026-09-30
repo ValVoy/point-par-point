@@ -44,12 +44,3 @@ export function peut(
   if (!utilisateur) return false;
   return DROITS[utilisateur.role].includes(action);
 }
-
-/**
- * Principe 6 du codex : rien ne disparait par accident. La suppression envoie
- * en corbeille et tout le monde peut le faire ; seul l'admin peut vider la
- * corbeille, c'est-a-dire effacer pour de bon.
- */
-export function estAdmin(utilisateur: UtilisateurConnecte | null): boolean {
-  return utilisateur?.role === "admin";
-}

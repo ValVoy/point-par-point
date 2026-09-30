@@ -1,4 +1,4 @@
-import { and, count, eq, inArray, isNull, sql } from "drizzle-orm";
+import { and, count, eq, inArray, isNull } from "drizzle-orm";
 import { db } from "./db";
 import {
   actualites,
@@ -174,9 +174,4 @@ export async function purgerDemo(): Promise<number> {
   }
 
   return effaces;
-}
-
-/** Remet les compteurs d'auto-incrementation a plat apres une purge. */
-export async function tasserIdentifiants(): Promise<void> {
-  await db().run(sql`vacuum`);
 }

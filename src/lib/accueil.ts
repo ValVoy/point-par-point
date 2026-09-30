@@ -49,5 +49,3 @@ export async function donneesAccueil(maintenant = new Date()) {
     rang: classement?.nous ? { rang: classement.nous.rang, total: classement.lignes.length, intitule: classement.intitule } : null,
   };
 }
-
-export type DonneesAccueil = Awaited<ReturnType<typeof donneesAccueil>>;

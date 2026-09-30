@@ -69,6 +69,7 @@ export default async function PageActualites() {
                 {peutPublier ? (
                   <form action={basculerPublicationActualite}>
                     <input type="hidden" name="id" value={actualite.id} />
+                    <input type="hidden" name="vers" value={actualite.etat === "brouillon" ? "publie" : "brouillon"} />
                     <button
                       type="submit"
                       className={

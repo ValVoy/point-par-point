@@ -1,4 +1,4 @@
-import { and, count, eq, gt, lt } from "drizzle-orm";
+import { and, count, eq, gt } from "drizzle-orm";
 import { db } from "./db";
 import { envoisContact } from "./db/schema";
 
@@ -19,7 +19,6 @@ import { envoisContact } from "./db/schema";
  */
 
 const FENETRE_MS = 60 * 60 * 1000;
-const CONSERVATION_MS = 24 * 60 * 60 * 1000;
 export const PLAFOND_PAR_IP = 3;
 export const PLAFOND_GLOBAL = 30;
 
@@ -32,7 +31,6 @@ export async function reserverEnvoi(ip: string | null): Promise<Debit> {
     .insert(envoisContact)
     .values({ ip, survenuLe: new Date(maintenant) })
     .returning({ id: envoisContact.id });
-  await base.delete(envoisContact).where(lt(envoisContact.survenuLe, new Date(maintenant - CONSERVATION_MS)));
   const refuser = async (raison: Exclude<Debit, "autorise">) => {
     if (ligne) await base.update(envoisContact).set({ refuse: true }).where(eq(envoisContact.id, ligne.id));
     return raison;

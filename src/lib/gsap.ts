@@ -25,23 +25,4 @@ if (process.env.NODE_ENV !== "production" && typeof window !== "undefined") {
   (window as unknown as { __gsap: typeof gsap }).__gsap = gsap;
 }
 
-/**
- * Les durees et courbes du systeme de design, lues dans globals.css pour que
- * GSAP et le CSS bougent au meme rythme. Valeurs de repli si la lecture
- * echoue (rendu serveur, test).
- */
-export function jetonsMouvement() {
-  const lire = (nom: string, repli: number) => {
-    if (typeof window === "undefined") return repli;
-    const valeur = getComputedStyle(document.documentElement).getPropertyValue(nom);
-    const ms = Number.parseFloat(valeur);
-    return Number.isFinite(ms) ? ms / 1000 : repli;
-  };
-  return {
-    breve: lire("--duree-breve", 0.16),
-    normale: lire("--duree", 0.28),
-    appuyee: lire("--duree-appuyee", 0.42),
-  };
-}
-
 export { gsap, ScrollTrigger, useGSAP };

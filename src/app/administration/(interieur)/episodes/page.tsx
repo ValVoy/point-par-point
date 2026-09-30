@@ -86,6 +86,7 @@ export default async function PageEpisodes() {
                     {peutPublier ? (
                       <form action={basculerPublication}>
                         <input type="hidden" name="id" value={episode.id} />
+                        <input type="hidden" name="vers" value={episode.etat === "brouillon" ? "publie" : "brouillon"} />
                         <button
                           type="submit"
                           className={

@@ -14,7 +14,9 @@ import { RUBRIQUES, VITRINE } from "../entete";
  * tiers dans l'origine de l'administration (audit S9).
  */
 export async function PiedDePage() {
-  const saison = (await saisonCourante())?.libelle ?? null;
+  // Tolerant (audit F2) : une base injoignable ne doit pas emporter les pages
+  // juridiques ni le contact, qui n'en dependent pas autrement.
+  const saison = (await saisonCourante().catch(() => null))?.libelle ?? null;
   return (
     <footer className="border-t border-[var(--color-nuit-trait)]">
       <div className="colonne-large flex flex-wrap items-start justify-between gap-x-10 gap-y-6 py-10 text-sm text-[var(--color-craie-douce)]">

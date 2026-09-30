@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { eq, isNull, ne } from "drizzle-orm";
+import { and, eq, isNull, ne } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { saisons } from "@/lib/db/schema";
@@ -108,14 +108,22 @@ export async function definirCourante(donnees: FormData): Promise<void> {
   await exigerDroit("gererSaisons");
 
   const id = Number(donnees.get("id"));
-  if (!Number.isInteger(id)) return;
+  if (!Number.isInteger(id) || id <= 0) return;
 
+  // Une saison inconnue ou a la corbeille ne devient jamais courante, et les
+  // deux ecritures partent en un seul lot (audit D4) : sans cela, un identifiant
+  // faux laissait le site sans saison courante.
   const base = db();
-  await base.update(saisons).set({ courante: false }).where(ne(saisons.id, id));
-  await base
-    .update(saisons)
-    .set({ courante: true, modifieLe: new Date() })
-    .where(eq(saisons.id, id));
+  const [cible] = await base
+    .select({ id: saisons.id })
+    .from(saisons)
+    .where(and(eq(saisons.id, id), isNull(saisons.supprimeLe)))
+    .limit(1);
+  if (!cible) return;
+  await base.batch([
+    base.update(saisons).set({ courante: false }).where(ne(saisons.id, id)),
+    base.update(saisons).set({ courante: true, modifieLe: new Date() }).where(eq(saisons.id, id)),
+  ]);
 
   revalidatePath("/administration/saisons");
   revalidatePath("/administration/effectif");

@@ -87,3 +87,11 @@ describe("analyserScoreFinal", () => {
     assert.ok("erreur" in analyserScoreFinal("3", ""));
   });
 });
+
+describe("un match a toujours un vainqueur (audit D3)", () => {
+  it("refuse une egalite de sets saisie set par set", () => {
+    const a = analyserSets([{ nous: "25", eux: "20" }, { nous: "20", eux: "25" }]);
+    assert.equal(a.erreurs.length, 1);
+  });
+});
+

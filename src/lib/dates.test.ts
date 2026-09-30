@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { dateEtHeure, dateLongue, depuisChampDateHeure, heure, pourChampDateHeure } from "./dates";
+import { age, dateEtHeure, dateLongue, depuisChampDateHeure, heure, pourChampDateHeure } from "./dates";
 
 describe("depuisChampDateHeure", () => {
   it("lit une heure d'ete comme heure de Paris, UTC+2", () => {
@@ -57,3 +57,17 @@ describe("le premier du mois", () => {
     assert.equal(dateLongue(new Date("2026-10-11T10:00:00Z")), "dimanche 11 octobre 2026");
   });
 });
+
+describe("age a l'heure de Paris (audit T7)", () => {
+  it("prend un an le jour de l'anniversaire des minuit a Paris", () => {
+    const ne = new Date("2000-10-01T12:00:00Z");
+    // 00 h 30 le 1er octobre a Paris, encore le 30 septembre en UTC.
+    assert.equal(age(ne, new Date("2026-09-30T22:30:00Z")), 26);
+    assert.equal(age(ne, new Date("2026-09-30T21:30:00Z")), 25);
+  });
+
+  it("lit aussi les dates anciennes stockees a minuit UTC", () => {
+    assert.equal(age(new Date("2000-10-01T00:00:00Z"), new Date("2026-09-30T22:30:00Z")), 26);
+  });
+});
+

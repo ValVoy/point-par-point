@@ -2,6 +2,7 @@ import { cache } from "react";
 import { and, desc, eq, isNull } from "drizzle-orm";
 import { db } from "./db";
 import { anciensSlugsEpisode, episodes, rencontres } from "./db/schema";
+import { FORME_SLUG } from "./slug";
 
 /**
  * Lectures publiques de la serie (fiche fiches/serie.md). Seuls les episodes
@@ -10,7 +11,6 @@ import { anciensSlugsEpisode, episodes, rencontres } from "./db/schema";
  */
 
 // Meme forme que les slugs produits par lib/slug.ts : rien d'autre n'atteint la base.
-const FORME_SLUG = /^[a-z0-9-]{1,120}$/;
 
 const colonnesMatch = {
   slug: rencontres.slug,

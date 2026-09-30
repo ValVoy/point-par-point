@@ -52,6 +52,7 @@ export default async function PagePartenaires() {
                 actions={
                   <form action={basculerPartenaire}>
                     <input type="hidden" name="id" value={partenaire.id} />
+                    <input type="hidden" name="vers" value={partenaire.actif ? "inactif" : "actif"} />
                     <button type="submit" className="text-[var(--color-craie-douce)] action-admin">
                       {partenaire.actif ? "Mettre en pause" : "Réafficher"}
                     </button>

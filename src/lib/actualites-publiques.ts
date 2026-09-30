@@ -2,6 +2,7 @@ import { cache } from "react";
 import { and, desc, eq, isNull } from "drizzle-orm";
 import { db } from "./db";
 import { actualites, anciensSlugsActualite } from "./db/schema";
+import { FORME_SLUG } from "./slug";
 
 /**
  * Lectures publiques des actualites (fiche fiches/actualites.md). Seules les
@@ -9,7 +10,6 @@ import { actualites, anciensSlugsActualite } from "./db/schema";
  */
 
 // Meme forme que les slugs produits par lib/slug.ts : rien d'autre n'atteint la base.
-const FORME_SLUG = /^[a-z0-9-]{1,120}$/;
 
 const publiees = and(eq(actualites.etat, "publie"), isNull(actualites.supprimeLe));
 

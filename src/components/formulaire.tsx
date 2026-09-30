@@ -125,28 +125,6 @@ export function ZoneTexte({
   );
 }
 
-export function CaseACocher({
-  nom,
-  libelle,
-  coche,
-}: {
-  nom: string;
-  libelle: string;
-  coche?: boolean;
-}) {
-  return (
-    <label className="flex items-center gap-2 text-sm text-[var(--color-craie-douce)]">
-      <input
-        type="checkbox"
-        name={nom}
-        defaultChecked={coche}
-        className="size-4 rounded border-[var(--color-nuit-trait)]"
-      />
-      {libelle}
-    </label>
-  );
-}
-
 /**
  * Bouton de soumission. Il se desactive pendant l'envoi : sans cela, un double
  * clic cree deux fois la meme saison, et personne ne comprend pourquoi.

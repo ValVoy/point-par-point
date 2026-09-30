@@ -128,7 +128,8 @@ export async function basculerEtape(donnees: FormData): Promise<void> {
   if (!etape) return;
   await db()
     .update(etapesProjet)
-    .set({ etat: etape.etat === "brouillon" ? "publie" : "brouillon", modifieLe: new Date() })
+    // Etat voulu envoye par le formulaire (audit D2), jamais l'inverse de l'etat lu.
+    .set({ etat: donnees.get("vers") === "publie" ? "publie" : "brouillon", modifieLe: new Date() })
     .where(eq(etapesProjet.id, id));
   revalidatePath(CHEMIN);
 }
@@ -238,7 +239,7 @@ export async function basculerPartenaire(donnees: FormData): Promise<void> {
   if (!partenaire) return;
   await db()
     .update(partenaires)
-    .set({ actif: !partenaire.actif, modifieLe: new Date() })
+    .set({ actif: donnees.get("vers") === "actif", modifieLe: new Date() })
     .where(eq(partenaires.id, id));
   revalidatePath(`${CHEMIN}/partenaires`);
 }

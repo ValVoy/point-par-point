@@ -47,6 +47,7 @@ export default async function PageChronologie() {
                 actions={
                   <form action={basculerEtape}>
                     <input type="hidden" name="id" value={etape.id} />
+                    <input type="hidden" name="vers" value={etape.etat === "brouillon" ? "publie" : "brouillon"} />
                     <button
                       type="submit"
                       className={

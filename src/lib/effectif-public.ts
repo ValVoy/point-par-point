@@ -4,6 +4,7 @@ import { db } from "./db";
 import { effectifs, feuillesRencontre, joueurs, rencontres, saisons } from "./db/schema";
 import { saisonsActives } from "./saisons";
 import { cleValide, modeStockage } from "./stockage";
+import { FORME_SLUG } from "./slug";
 
 /**
  * Lectures publiques de l'effectif (fiche fiches/effectif.md). Seuls les
@@ -13,7 +14,6 @@ import { cleValide, modeStockage } from "./stockage";
  */
 
 // Meme forme que les slugs produits par lib/slug.ts : rien d'autre n'atteint la base.
-const FORME_SLUG = /^[a-z0-9-]{1,120}$/;
 
 /**
  * L'adresse publique d'une photo du bucket R2, ou null tant que le bucket

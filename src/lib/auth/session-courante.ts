@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { lireSession, NOM_COOKIE, type UtilisateurConnecte } from "./sessions";
@@ -8,10 +9,11 @@ import { peut, type Action } from "./roles";
  * ou une action serveur. Tout passe par ici : aucun autre fichier ne lit le
  * cookie de session directement.
  */
-export async function utilisateurCourant(): Promise<UtilisateurConnecte | null> {
+export const utilisateurCourant = cache(async (): Promise<UtilisateurConnecte | null> => {
+  // Lue une fois par requete (audit D8) : le layout et la page la demandent tous deux.
   const magasin = await cookies();
   return lireSession(magasin.get(NOM_COOKIE)?.value);
-}
+});
 
 /**
  * Garde pour toute page ou action de l'administration. Renvoie vers la

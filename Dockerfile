@@ -21,7 +21,15 @@ COPY --from=dependances /app/node_modules ./node_modules
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 # Aucune variable de base n'est necessaire ici : le client Turso est instancie
-# paresseusement, le build ne s'y connecte jamais.
+# paresseusement, le build ne s'y connecte jamais. Deux variables, en
+# revanche, sont lues a la compilation (audit F5) : le domaine public R2, qui
+# autorise les photos dans next/image, et l'adresse publique du site, figee
+# dans les metadonnees et les fichiers d'agenda. A poser dans Coolify en
+# variables de build.
+ARG R2_DOMAINE_PUBLIC
+ARG NEXT_PUBLIC_SITE_URL
+ENV R2_DOMAINE_PUBLIC=$R2_DOMAINE_PUBLIC
+ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 RUN npm run build
 
 # --- Execution -------------------------------------------------------------
@@ -41,5 +49,9 @@ COPY --from=compilation --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 EXPOSE 3000
+
+# Sante (audit F7) : serveur et base, pour que Coolify ne bascule pas vers un
+# conteneur qui ne repond pas. wget est fourni par l'image alpine.
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3   CMD wget -q -O /dev/null http://127.0.0.1:3000/sante || exit 1
 
 CMD ["node", "server.js"]
