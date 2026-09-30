@@ -9,6 +9,7 @@ import { NOM_DU_SITE } from "@/lib/site";
 
 const RUBRIQUES = [
   { href: "/matchs", nom: "Matchs" },
+  { href: "/effectif", nom: "Effectif" },
   { href: "/serie", nom: "La série" },
 ];
 

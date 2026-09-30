@@ -206,6 +206,15 @@ La règle globale `:focus-visible` vit dans `@layer base` : hors couche, elle é
 classe utilitaire. Sur un bouton qui porte une image positionnée (façade vidéo), l'anneau se
 dessine sur un calque au-dessus de l'image, sinon elle le recouvre.
 
+### L'effectif public (30-09-2026)
+
+- **Grille** : par poste (`grouperParPoste`), cartes égales, jamais de tri par statistique ni de
+  compteur. Le capitaine porte un « C » discret, pas une carte plus grande.
+- **Portrait** (`PortraitJoueur`) : photo en surimpression turquoise, sinon le numéro géant sur le
+  motif, sinon le poste. Photos : `urlPhoto()` renvoie l'adresse R2 ou rien.
+- **Vie privée** : l'âge seulement, jamais la date de naissance ; prénom et nom complet (décision
+  de l'utilisateur). Le slug d'un joueur naît avec lui et n'est jamais réattribué.
+
 ## Conventions
 
 ### Le marquage des données de démonstration

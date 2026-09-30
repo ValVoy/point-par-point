@@ -325,3 +325,19 @@ Six références ouvertes dans un navigateur ; aucune instruction injectée.
 | The Immortals (Awwwards 2026) | Grand numéro, titre-récit, deux données sèches |
 
 Ce qui ressort : aucun site ne relie un épisode au match qu'il raconte. C'est notre avantage.
+
+## 15. Veille effectif, 30-09-2026 à 16:16
+
+Six clubs ouverts dans un navigateur ; aucune instruction injectée.
+
+| Site | Ce qu'on prend, ou ce qu'on évite |
+|---|---|
+| LOVB Houston | Tableau par numéro, staff à part ; vides laissés sans traitement |
+| Sir Safety Perugia | Numéro en tête, année de naissance seule ; 1 082 partenaires au consentement |
+| Trentino Volley | Saison dans l'adresse, parcours jusqu'au premier match au club ; date de naissance complète, compteurs de la saison passée sous l'en-tête de la nouvelle |
+| Tours Volley-Ball | Postes à la française, liste des coéquipiers sur la fiche ; l'adresse d'un ancien joueur affiche un nouveau |
+| Toulouse FC (Awwwards 2023) | Numéro géant en tête ; « Top buteurs », âge contradictoire, bio derrière une connexion |
+| Stade Toulousain | Intertitres par poste, âge visible ; date complète, chiffres contradictoires |
+
+Ce qui ressort : aucun site ne traite l'absence de photo, et trois publient la date de naissance
+complète, à éviter pour des amateurs.

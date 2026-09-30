@@ -136,9 +136,8 @@ export function depuisChampDateHeure(valeur: string): Date | null {
 }
 
 /** Age en annees revolues, ou null si la date de naissance est inconnue. */
-export function age(neLe: Date | null | undefined): number | null {
+export function age(neLe: Date | null | undefined, maintenant = new Date()): number | null {
   if (!neLe) return null;
-  const maintenant = new Date();
   let annees = maintenant.getFullYear() - neLe.getFullYear();
   const mois = maintenant.getMonth() - neLe.getMonth();
   if (mois < 0 || (mois === 0 && maintenant.getDate() < neLe.getDate())) {

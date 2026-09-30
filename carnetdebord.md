@@ -1026,3 +1026,26 @@ dates, noms de liens explicites, surtitres harmonisés, redirection des adresses
 - Vérifié : 82 tests, `tsc`, lint ; au navigateur l'anneau au clavier, la vignette HD, la balise
   `og:image`, la page d'épisode en 1440 px.
 - Suite : l'effectif, grille par poste et page d'un joueur.
+
+**16:45** · **[page] L'effectif**
+
+Veille d'abord (`veille.md` section 15) : six clubs ouverts, dont trois qui publient la date de
+naissance complète de leurs joueurs, et un club de Ligue A dont l'adresse d'un ancien joueur
+affiche un nouveau. Aucun ne traite l'absence de photo. Puis la fiche `fiches/effectif.md`, puis
+le code.
+
+La grille : un groupe par poste dans l'ordre de présentation d'une équipe, des cartes toutes
+égales, ni vedette ni compteur, un « C » discret pour le capitaine. Sans photo, le grand numéro
+sur le motif du maillot fait portrait ; avec une photo, elle se posera en surimpression turquoise
+(aucune gestion de photo n'existe encore, le composant est prêt). La page d'un joueur : identité,
+âge et taille, présentation, parcours, les matchs de la saison où il était sur le terrain avec le
+résultat de l'équipe, puis l'effectif par numéro. Aucun chiffre individuel au premier lot.
+
+L'utilisateur a tranché : prénom et nom complet. L'âge seulement, jamais la date de naissance.
+Reste à vérifier avant la mise en ligne que l'accord de droit à l'image couvre le site.
+
+- Portée : `src/app/effectif/`, `src/components/public/effectif/`, `lib/effectif-public.ts`,
+  `lib/postes.ts` (regroupement testé), `lib/dates.ts` (âge à instant donné), `entete.tsx`.
+- Vérifié : 83 tests, `tsc`, lint ; à l'écran la grille en 1440 et 375 px (en-tête à trois
+  rubriques sans débordement) et la page d'un joueur en 1440 px ; 404 sur un joueur inconnu.
+- Suite : critique à froid de l'effectif.

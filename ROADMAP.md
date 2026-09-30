@@ -33,7 +33,13 @@ annulé), avec l'épisode lié et les matchs voisins. En-tête publique commune.
 numérotée avec le match de chaque épisode ; `/serie/<slug>`, lecteur au clic, match raconté en
 tableau LED relié à sa page, abonnement, épisodes voisins. Lien réciproque match ↔ épisode.
 
-Ensuite : l'effectif (grille par poste, page d'un joueur).
+**L'effectif le 30-09-2026** (fiche `fiches/effectif.md`) : `/effectif`, grille par poste aux
+cartes égales, numéro géant en guise de portrait ; `/effectif/<slug>`, identité, âge et taille,
+présentation, parcours, ses matchs de la saison, coéquipiers par numéro.
+
+Ensuite : les actualités, puis les pages « Le projet », « Où nous voir », partenaires et contact.
+À vérifier avant la mise en ligne : l'accord de droit à l'image couvre le site ; mentions légales
+et politique de confidentialité.
 À préparer pour la mise en ligne : appliquer en production les migrations 0002 et 0003 (tables
 des anciennes adresses), avec l'accord de l'utilisateur.
 Reporté : abonnement d'agenda à toute la saison, carte statique, transition animée liste → match.
