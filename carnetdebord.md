@@ -1367,3 +1367,23 @@ d'audience cochée.
 - Portée : ROADMAP.
 - Vérifié : relecture complète de la ROADMAP.
 - Suite : l'envoi des photos vers R2, puis la fiche joueur détaillée, le classement et le bilan.
+
+## 01-10-2026
+
+**00:05** · **[sécurité] sharp ramené à une version de plus de quinze jours**
+
+En préparant l'envoi des photos, la date de `sharp` a été relue dans le registre : la montée vers
+Next 16.3.5 du 29-09 avait tiré `sharp` 0.35.5 et ses binaires natifs, publiés le 27-09, deux
+jours plus tôt. Next et React, eux, avaient 18 à 20 jours ce jour-là, conformes.
+
+Les contrôles de la règle ont été faits dans l'ordre, tous propres : aucun script d'installation
+dans `sharp` (le « install » de son `package.json` est un dossier livré), aucun crochet inattendu
+dans les réglages Claude, aucun dépôt créé sur le compte GitHub depuis le 26-09. `sharp` est
+épinglé sur 0.35.4 (26-08) avec un `overrides` pour que Next prenne le même, et `aws4fetch`
+1.0.20 (2024, déjà en service sur le CRM) est ajouté pour R2. Seuls ces paquets ont bougé dans
+le verrou.
+
+- Portée : `package.json`, `package-lock.json`.
+- Vérifié : dates lues dans le registre ; diff du verrou limité à la famille `sharp` et à
+  `aws4fetch` ; `sharp` 0.35.4 se charge.
+- Suite : l'envoi des photos vers R2.
