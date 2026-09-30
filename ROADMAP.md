@@ -60,9 +60,11 @@ se fait au déploiement du site, voir « Avant la mise en ligne ».
 **Les comptes le 30-09-2026** (fiche `fiches/comptes.md`) : écran « Comptes » (mot de passe
 provisoire affiché une fois, rôles, désactivation) et « Mon compte » pour changer le sien.
 
-Ensuite, ce qui reste à construire du lot 1 (relu le 30-09-2026, contrairement à ce que disait
-l'entrée précédente) : ~~l'envoi des photos~~ et ~~la fiche joueur~~ faits le 01-10-2026 ; restent
-~~le classement~~ fait le 01-10-2026 ; reste le bilan de saison (la page Matchs dit déjà victoires et défaites, à compléter ou à clore). Puis la liste « Avant la mise en ligne ».
+**L'envoi des photos, la fiche joueur et le classement le 01-10-2026** (fiches `photos.md`,
+`fiche-joueur.md`, `classement.md`).
+
+Ensuite : décider du bilan de saison (la page Matchs dit déjà victoires et défaites, à compléter
+ou à clore), puis la liste « Avant la mise en ligne ».
 À vérifier avant la mise en ligne : l'accord de droit à l'image couvre le site ; mentions légales
 et politique de confidentialité.
 À régler avant la mise en ligne : la sauvegarde nocturne de cette base garde **30 jours** au plus, durée annoncée par la politique de confidentialité.
