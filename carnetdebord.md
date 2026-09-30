@@ -1115,3 +1115,24 @@ composition se propose d'abord.
 - Vérifié : `tsc`, lint ; la page en 1440 px.
 - Suite : critique à froid des actualités (en cours), puis « Le projet », « Où nous voir »,
   partenaires, contact, mentions légales.
+
+**17:55** · **[revue] Critique à froid des actualités, et ses corrections**
+
+Rien de bloquant, et rien qui touche à un choix d'identité : tout est corrigé sans détour, selon
+la règle posée une heure plus tôt. Le plus sérieux : sur ordinateur, « Partager » ouvrait la
+feuille de partage de Windows au lieu de copier le lien, sans repli en cas d'erreur ; le partage
+natif est désormais réservé aux écrans tactiles, la copie a son message d'échec. La colonne de
+lecture comptait 69 à 74 caractères pour une cible de 60 à 68 : 31 em, environ 65. Le pied de
+page lit lui-même la saison courante, identique sur toutes les pages. Le reste : hiérarchie des
+titres en haut de la liste, dates balisées, titres de liste en `h3`, flèches muettes pour les
+lecteurs d'écran, mots longs coupés, liens vers le site lui-même dans le même onglet, ancienne
+adresse en majuscules redirigée, plus de corps d'article chargé pour une simple liste.
+
+Effet de bord signalé à l'utilisateur : le test du partage par l'agent critique a écrit une
+adresse dans le presse-papiers de la machine.
+
+- Portée : pages et composants des actualités, `pied-de-page.tsx` (et ses neuf usages),
+  `texte-leger.tsx`, `lib/actualites-publiques.ts`, `globals.css`.
+- Vérifié : 83 tests, `tsc`, lint ; pied de page et colonne mesurés sur un article ; aucun
+  débordement à 375 px.
+- Suite : « Le projet », « Où nous voir », partenaires, contact, puis mentions légales.

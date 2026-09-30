@@ -29,17 +29,19 @@ export function BlocActualites({ actualites, maintenant }: { actualites: Actuali
           Toutes les actualités
         </Link>
       </div>
-      <ul className="grid lg:grid-cols-3 lg:gap-8">
+      <ul className="grid lg:grid-cols-[repeat(auto-fit,minmax(18rem,1fr))] lg:gap-8">
         {actualites.map((a) => (
           <li key={a.id}>
             <Link
               href={`/actualites/${a.slug}`}
               className="group block border-b border-[var(--color-nuit-trait)] py-6 lg:border-b-0"
             >
-              <span className="text-sm text-[var(--color-craie-tenue)]">
-                {a.publieLe ? `Publié le ${dateLongue(a.publieLe)}` : null}
-              </span>
-              <span className="titre-affiche mt-2 block text-3xl text-balance group-hover:text-[var(--color-jaune)] group-focus-visible:text-[var(--color-jaune)]">
+              {a.publieLe ? (
+                <span className="text-sm text-[var(--color-craie-tenue)]">
+                  Publié le <time dateTime={a.publieLe.toISOString()}>{dateLongue(a.publieLe)}</time>
+                </span>
+              ) : null}
+              <span className="titre-affiche mt-2 block hyphens-auto text-3xl text-balance break-words group-hover:text-[var(--color-jaune)] group-focus-visible:text-[var(--color-jaune)]">
                 {a.titre}
               </span>
               {a.chapo ? <span className="mt-2 line-clamp-3 block text-[var(--color-craie-douce)]">{a.chapo}</span> : null}
@@ -47,6 +49,12 @@ export function BlocActualites({ actualites, maintenant }: { actualites: Actuali
           </li>
         ))}
       </ul>
+      <Link
+        href="/actualites"
+        className="mt-4 inline-flex min-h-12 items-center font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--color-jaune)] lg:hidden"
+      >
+        Toutes les actualités
+      </Link>
     </section>
   );
 }

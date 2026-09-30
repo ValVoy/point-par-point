@@ -98,7 +98,7 @@ export default async function PageEffectif({ searchParams }: { searchParams: Pro
           </section>
         ) : null}
       </main>
-      <PiedDePage saison={saison?.libelle ?? null} />
+      <PiedDePage />
     </>
   );
 }

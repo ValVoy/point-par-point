@@ -126,7 +126,7 @@ export default async function PageMatch({ params }: Parametres) {
         {statut !== "jouee" ? <BlocSalle match={match} avecItineraire={statut !== "a_venir"} /> : null}
         <Voisins precedent={precedent} suivant={suivant} />
       </main>
-      <PiedDePage saison={null} />
+      <PiedDePage />
     </>
   );
 }

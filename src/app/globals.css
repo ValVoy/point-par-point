@@ -177,13 +177,13 @@ body {
 
 /*
  * Le corps d'un article (fiche fiches/actualites.md) : lire sur fond sombre
- * demande une colonne etroite (34 em, 60 a 68 caracteres), un corps de 18 px
+ * demande une colonne etroite (31 em, 60 a 68 caracteres mesures), un corps de 18 px
  * et un interlignage plus ample que sur fond clair. Le condense reste aux
  * intertitres ; les liens sont soulignes, en turquoise clair (9,4 pour 1).
  */
 @layer components {
   .texte-article {
-    max-width: 34em;
+    max-width: 31em;
     font-size: 1.125rem;
     line-height: 1.7;
     color: var(--color-craie-lecture);

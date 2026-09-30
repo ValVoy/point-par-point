@@ -21,7 +21,14 @@ export const metadata: Metadata = {
   description: `Les nouvelles de l'équipe D2 masculine du ${EQUIPE}.`,
 };
 
-const publie = (d: Date | null) => (d ? `Publié le ${dateLongue(d)}` : null);
+function Publie({ date }: { date: Date | null }) {
+  if (!date) return null;
+  return (
+    <span className="text-sm text-[var(--color-craie-tenue)]">
+      Publié le <time dateTime={date.toISOString()}>{dateLongue(date)}</time>
+    </span>
+  );
+}
 
 export default async function PageActualites() {
   const [une, ...autres] = await actualitesPubliees();
@@ -58,10 +65,10 @@ export default async function PageActualites() {
                   </span>
                 ) : null}
                 <span className={image ? "block lg:col-span-5" : "block lg:col-span-10"}>
-                  <span className="text-sm text-[var(--color-craie-tenue)]">{publie(une.publieLe)}</span>
+                  <Publie date={une.publieLe} />
                   <h2
                     className={`titre-affiche mt-3 hyphens-auto text-balance break-words group-hover:text-[var(--color-jaune)] group-focus-visible:text-[var(--color-jaune)] ${
-                      image ? "text-4xl sm:text-6xl" : "text-5xl sm:text-8xl"
+                      image ? "text-4xl sm:text-6xl" : "text-5xl sm:text-7xl"
                     }`}
                   >
                     {une.titre}
@@ -83,12 +90,12 @@ export default async function PageActualites() {
                     <li key={a.id}>
                       <Link
                         href={`/actualites/${a.slug}`}
-                        className="group block border-b border-[var(--color-nuit-trait)] py-6 transition-colors duration-[80ms] hover:bg-[var(--color-nuit-surface)] sm:px-3"
+                        className="group block border-b border-[var(--color-nuit-trait)] py-6 transition-colors duration-[80ms] hover:bg-[var(--color-nuit-surface)]"
                       >
-                        <span className="text-sm text-[var(--color-craie-tenue)]">{publie(a.publieLe)}</span>
-                        <span className="titre-affiche mt-2 block hyphens-auto text-3xl text-balance break-words group-hover:text-[var(--color-jaune)] group-focus-visible:text-[var(--color-jaune)] sm:text-4xl">
+                        <Publie date={a.publieLe} />
+                        <h3 className="titre-affiche mt-2 hyphens-auto text-3xl text-balance break-words group-hover:text-[var(--color-jaune)] group-focus-visible:text-[var(--color-jaune)] sm:text-4xl">
                           {a.titre}
-                        </span>
+                        </h3>
                         {a.chapo ? (
                           <span className="mt-2 line-clamp-2 block max-w-[34em] text-[var(--color-craie-douce)]">{a.chapo}</span>
                         ) : null}
@@ -101,7 +108,7 @@ export default async function PageActualites() {
           </>
         )}
       </main>
-      <PiedDePage saison={null} />
+      <PiedDePage />
     </>
   );
 }

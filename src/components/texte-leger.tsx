@@ -27,7 +27,9 @@ function Morceaux({ contenu }: { contenu: Enligne[] }) {
           </em>
         );
       case "lien": {
-        const externe = morceau.href.startsWith("http");
+        // Un lien vers le site lui-meme reste dans l'onglet ; seul un site tiers en ouvre un nouveau.
+        const site = process.env.NEXT_PUBLIC_SITE_URL;
+        const externe = morceau.href.startsWith("http") && !(site && morceau.href.startsWith(site));
         return (
           <a
             key={index}

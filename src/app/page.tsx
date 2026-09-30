@@ -37,7 +37,7 @@ export default async function Accueil() {
           <BlocActualites actualites={donnees.actualites} maintenant={donnees.maintenant} />
         </Revelations>
       </main>
-      <PiedDePage saison={donnees.saison} />
+      <PiedDePage />
     </>
   );
 }

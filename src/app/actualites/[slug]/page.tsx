@@ -44,11 +44,21 @@ type Voisine = { slug: string; titre: string; publieLe: Date | null } | null;
 function LienVoisine({ actualite, sens }: { actualite: Voisine; sens: "précédente" | "suivante" }) {
   if (!actualite) return <span />;
   return (
-    <Link href={`/actualites/${actualite.slug}`} className={`group block min-h-16 py-4 ${sens === "suivante" ? "text-right" : ""}`}>
+    <Link href={`/actualites/${actualite.slug}`} className={`group block min-h-16 py-4 ${sens === "suivante" ? "sm:text-right" : ""}`}>
       <span className="text-xs font-semibold tracking-[0.2em] text-[var(--color-craie-douce)] uppercase">
-        {sens === "précédente" ? "← Plus ancienne" : "Plus récente →"}
+        {sens === "précédente" ? (
+          <>
+            <span aria-hidden="true">← </span>Plus ancienne
+          </>
+        ) : (
+          <>
+            Plus récente<span aria-hidden="true"> →</span>
+          </>
+        )}
       </span>
-      <span className="titre-affiche mt-2 block text-2xl text-balance group-hover:text-[var(--color-jaune)]">{actualite.titre}</span>
+      <span className="titre-affiche mt-2 block hyphens-auto text-2xl text-balance break-words group-hover:text-[var(--color-jaune)] group-focus-visible:text-[var(--color-jaune)]">
+        {actualite.titre}
+      </span>
     </Link>
   );
 }
@@ -60,7 +70,7 @@ export default async function PageActualite({ params }: Parametres) {
     permanentRedirect(`/actualites/${slug.toLowerCase()}`);
   }
   if (!donnees) {
-    const actuelle = await nouvelleAdresseActualite(slug);
+    const actuelle = await nouvelleAdresseActualite(slug.toLowerCase());
     if (actuelle) permanentRedirect(`/actualites/${actuelle}`);
     notFound();
   }
@@ -73,7 +83,7 @@ export default async function PageActualite({ params }: Parametres) {
       <main id="contenu" className="colonne-large pt-10 pb-24 sm:pt-16">
         <p>
           <Link href="/actualites" className="text-sm font-semibold text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
-            ← Toutes les actualités
+            <span aria-hidden="true">← </span>Toutes les actualités
           </Link>
         </p>
 
@@ -110,7 +120,7 @@ export default async function PageActualite({ params }: Parametres) {
           </nav>
         ) : null}
       </main>
-      <PiedDePage saison={null} />
+      <PiedDePage />
     </>
   );
 }

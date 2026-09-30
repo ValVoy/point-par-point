@@ -157,7 +157,7 @@ export default async function PageEpisode({ params }: Parametres) {
           <LienVoisin episode={suivant} sens="suivant" />
         </nav>
       </main>
-      <PiedDePage saison={null} />
+      <PiedDePage />
     </>
   );
 }

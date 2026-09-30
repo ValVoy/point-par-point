@@ -129,7 +129,7 @@ export default async function PageSerie() {
           </>
         )}
       </main>
-      <PiedDePage saison={null} />
+      <PiedDePage />
     </>
   );
 }

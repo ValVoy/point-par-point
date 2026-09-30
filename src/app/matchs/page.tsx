@@ -142,7 +142,7 @@ export default async function PageMatchs({ searchParams }: { searchParams: Promi
           )}
         </section>
       </main>
-      <PiedDePage saison={saison?.libelle ?? null} />
+      <PiedDePage />
     </>
   );
 }

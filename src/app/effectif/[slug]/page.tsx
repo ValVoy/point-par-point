@@ -174,7 +174,7 @@ export default async function PageJoueur({ params }: Parametres) {
           </nav>
         ) : null}
       </main>
-      <PiedDePage saison={effectif.saison.libelle} />
+      <PiedDePage />
     </>
   );
 }

@@ -13,9 +13,19 @@ const FORME_SLUG = /^[a-z0-9-]{1,120}$/;
 
 const publiees = and(eq(actualites.etat, "publie"), isNull(actualites.supprimeLe));
 
-/** Toutes les actualites publiees, la plus recente d'abord. */
+// Ce qu'il faut pour une liste ou un lien : jamais le corps, qui peut etre long.
+const enListe = {
+  id: actualites.id,
+  slug: actualites.slug,
+  titre: actualites.titre,
+  chapo: actualites.chapo,
+  imageCle: actualites.imageCle,
+  publieLe: actualites.publieLe,
+};
+
+/** Les actualites publiees, la plus recente d'abord, sans leur corps. */
 export async function actualitesPubliees(limite?: number) {
-  const requete = db().select().from(actualites).where(publiees).orderBy(desc(actualites.publieLe), desc(actualites.id));
+  const requete = db().select(enListe).from(actualites).where(publiees).orderBy(desc(actualites.publieLe), desc(actualites.id));
   return limite ? requete.limit(limite) : requete;
 }
 
@@ -27,7 +37,9 @@ export const actualitePublique = cache(async (slug: string) => {
   if (!FORME_SLUG.test(slug)) return null;
   const liste = await actualitesPubliees();
   const rang = liste.findIndex((a) => a.slug === slug);
-  const actualite = liste[rang];
+  if (rang === -1) return null;
+  // Le corps n'est lu que pour l'article affiche.
+  const [actualite] = await db().select().from(actualites).where(and(eq(actualites.slug, slug), publiees)).limit(1);
   if (!actualite) return null;
   // La liste va de la plus recente a la plus ancienne : la precedente est plus bas.
   return {
