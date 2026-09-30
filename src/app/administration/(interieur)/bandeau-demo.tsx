@@ -15,17 +15,17 @@ export async function BandeauDemo() {
   return (
     <div
       role="status"
-      className="border-b border-amber-300 bg-amber-50 px-4 py-3 text-amber-950"
+      className="border-b border-l-8 border-[var(--color-trait)] border-l-[var(--color-jaune)] bg-[var(--color-papier-creuse)] px-4 py-3 text-[var(--color-encre)]"
     >
       <div className="mx-auto max-w-5xl">
         <p className="text-sm font-semibold">
           Ce site contient encore {total} {total > 1 ? "éléments" : "élément"} de
           démonstration.
         </p>
-        <p className="mt-1 text-sm text-amber-900">
+        <p className="mt-1 text-sm text-[var(--color-encre-douce)]">
           {detail.map((ligne) => `${ligne.nombre} ${ligne.libelle}`).join(", ")}.
           À retirer avant la mise en ligne, avec la commande{" "}
-          <code className="rounded bg-amber-100 px-1.5 py-0.5 font-mono text-xs">
+          <code className="rounded bg-[var(--color-champ)] px-1.5 py-0.5 font-mono text-xs">
             npm run db:purge-demo
           </code>
           .

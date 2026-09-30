@@ -45,7 +45,7 @@ export default async function PageActualite({
       {creee ? (
         <p
           role="status"
-          className="mt-4 max-w-3xl rounded-lg bg-[var(--color-victoire)]/10 px-3 py-2 text-sm text-[var(--color-victoire)]"
+          className="mt-4 max-w-3xl rounded-lg bg-[var(--color-accent-sourd)] px-3 py-2 text-sm text-[var(--color-accent)]"
         >
           Brouillon enregistré. Relisez-le avec l&apos;aperçu, puis publiez-le.
         </p>

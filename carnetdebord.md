@@ -727,3 +727,32 @@ changement se fera en une fois.
 - Suite : cadrer la palette en salve de questions (fond clair ou sombre, couleurs du maillot
   gardées ou non, références qui ne ressemblent pas à un site généré), puis la décliner dans
   `globals.css`.
+
+**10:25** · **[design] La palette devient un programme de match imprimé**
+
+Première séance consacrée à la palette jugée « trop site IA ». Deux salves de questions ont fixé
+le cap : fond papier clair, teintes réelles du maillot sans les raviver, jaune du ballon en
+accent, univers d'imprimé sportif, encre violette pour le texte, grain très léger,
+administration sur les mêmes jetons sans matière.
+
+L'utilisateur m'a arrêté avant l'application : la méthode des trois casquettes n'avait pas été
+suivie, je proposais des teintes sans veille ni fiche. Rattrapé par trois veilles parallèles
+(imprimé sportif, sites actuels à fond clair, codes du volley), triées dans `veille.md` section
+10, puis une fiche `fiches/palette.md` validée. La veille a corrigé trois choses : un papier moins
+jaune pour éviter le sépia, un ocre pour le jaune en petit, et l'abandon du vert et du rouge des
+résultats, remplacés par une pastille pleine ou en contour. L'utilisateur a ajouté une fonction
+par couleur (turquoise l'équipe, violet les matchs, jaune le direct).
+
+L'intro validée n'est pas perdue : étiquette `intro-nuit-v1`, dossier `intro-nuit/`, et une
+classe `.palette-nuit` qui lui garde ses couleurs. Deux écarts assumés à la fiche : un jeton
+`erreur` pour les erreurs de saisie de l'administration, et un jeton `champ`, papier presque
+blanc, pour les champs qui étaient en blanc pur. Une lecture de la veille a renvoyé une phrase
+adressée à un agent (site de Perugia) : ignorée, référence écartée.
+
+- Portée : `globals.css`, `fiches/palette.md`, `veille.md`, planche réécrite, tableau du prochain
+  match, `pastille-resultat.tsx`, administration (messages, champs, bandeau de démonstration),
+  intro déplacée dans `intro-nuit/`.
+- Vérifié : 57 tests, `tsc`, lint, `next build` ; à l'écran la planche en 1440 et 390 px (aucun
+  défilement horizontal), l'accueil et les matchs de l'administration en 390 px.
+- Suite : l'utilisateur juge la planche à l'écran (la pastille de résultat sur le violet est à
+  trancher). Puis la fiche de la nouvelle intro, salle dessinée à l'encre sur papier.

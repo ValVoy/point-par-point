@@ -1,36 +1,12 @@
 /*
- * Jetons de la planche de style. Ils ne remplacent pas encore ceux de
- * globals.css : ils y monteront une fois la planche validee.
- *
- * Teintes mesurees le 29-09-2026 sur une photo d'equipe du club (mediane des
- * pixels par famille) : turquoise #64979d, turquoise fonce #406466, violet
- * #66486b. L'eclairage de gymnase les ternit ; les teintes d'ecran en sont
- * des versions ravivees, meme teinte, plus de saturation.
+ * La planche de la palette du 30-09-2026 (fiche fiches/palette.md). Elle ne
+ * porte aucune couleur propre : tout vient des jetons de globals.css, pour
+ * que la planche montre exactement ce que le site affichera.
  */
 .planche {
-  --nuit: #0a0d1a;
-  --nuit-surface: #11162a;
-  --nuit-releve: #1a2140;
-  --trait: #262e4d;
-  --turquoise: #3ec5cc;
-  --turquoise-fonce: #1b7a82;
-  --turquoise-clair: #bff1f3;
-  --violet: #5e3f98;
-  --craie: #eef2f4;
-  --craie-douce: #a3adc0;
-
-  --ressort: cubic-bezier(0.2, 0.9, 0.25, 1.15);
-
-  background: var(--nuit);
-  color: var(--craie);
-  font-family: var(--police-hanken), ui-sans-serif, system-ui, sans-serif;
+  background: var(--color-papier);
+  color: var(--color-encre);
   min-height: 100dvh;
-  color-scheme: dark;
-}
-
-.planche :focus-visible {
-  outline: 2px solid var(--turquoise);
-  outline-offset: 3px;
 }
 
 /* Le libelle de section, repete partout : petit, espace, en capitales. */
@@ -39,30 +15,7 @@
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--turquoise);
-}
-
-/* --- Motif du maillot --------------------------------------------------- */
-
-/*
- * Filigrane : le motif a la limite du perceptible. On le devine plus qu'on
- * ne le voit, et il s'evanouit vers les bords pour ne jamais faire cadre.
- */
-.filigrane {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.06;
-  mask-image: radial-gradient(ellipse 80% 70% at 70% 30%, #000 0%, transparent 75%);
-}
-
-/* Le halo : le motif n'apparait que dans une lumiere, comme sous un projecteur. */
-.halo {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.16;
-  mask-image: radial-gradient(circle 16rem at 75% 20%, #000 0%, transparent 100%);
+  color: var(--color-encre-tenue);
 }
 
 /* --- Portraits ---------------------------------------------------------- */
@@ -71,7 +24,7 @@
   position: relative;
   overflow: hidden;
   aspect-ratio: 4 / 5;
-  background: var(--nuit-releve);
+  background: var(--color-papier-creuse);
 }
 
 /*
@@ -89,16 +42,6 @@
   transform: translate(calc(var(--fx) * -100%), calc(var(--fy) * -100%));
 }
 
-.couleurReelle {
-  opacity: 0;
-  transition: opacity 220ms var(--ressort);
-}
-
-.carte:hover .couleurReelle,
-.carte:focus-within .couleurReelle {
-  opacity: 1;
-}
-
 .numeroGeant {
   position: absolute;
   right: 0.25rem;
@@ -106,46 +49,6 @@
   font-size: clamp(6rem, 14vw, 10rem);
   line-height: 1;
   color: transparent;
-  -webkit-text-stroke: 1.5px var(--turquoise);
+  -webkit-text-stroke: 1.5px var(--color-papier);
   pointer-events: none;
-}
-
-/* --- Tableau de score --------------------------------------------------- */
-
-.tableau {
-  background:
-    radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.05) 1px, transparent 0)
-      0 0 / 6px 6px,
-    #05060c;
-  border: 1px solid var(--trait);
-  border-radius: 6px;
-  box-shadow:
-    inset 0 0 0 6px #0d101c,
-    0 30px 80px -30px rgb(62 197 204 / 0.25);
-}
-
-.chiffre {
-  font-variant-numeric: tabular-nums;
-  color: var(--turquoise);
-  text-shadow:
-    0 0 12px rgb(62 197 204 / 0.55),
-    0 0 2px rgb(191 241 243 / 0.9);
-  line-height: 0.85;
-}
-
-.chiffreEteint {
-  color: rgb(62 197 204 / 0.12);
-  text-shadow: none;
-}
-
-.voyant {
-  width: 0.6rem;
-  height: 0.6rem;
-  border-radius: 999px;
-  background: rgb(62 197 204 / 0.15);
-}
-
-.voyantAllume {
-  background: var(--turquoise);
-  box-shadow: 0 0 10px var(--turquoise);
 }

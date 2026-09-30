@@ -9,7 +9,7 @@ import { useFormStatus } from "react-dom";
  */
 
 const CLASSE_CHAMP =
-  "mt-1.5 w-full rounded-lg border border-[var(--color-trait)] bg-white px-3 py-2 text-[var(--color-encre)] outline-none focus:border-[var(--color-accent)]";
+  "mt-1.5 w-full rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-3 py-2 text-[var(--color-encre)] outline-none focus:border-[var(--color-accent)]";
 
 const CLASSE_LABEL = "block text-sm font-medium text-[var(--color-encre-douce)]";
 
@@ -162,7 +162,7 @@ export function BoutonEnvoi({
   const classes =
     variante === "principal"
       ? "bg-[var(--color-encre)] text-[var(--color-papier)]"
-      : "border border-[var(--color-trait)] bg-white text-[var(--color-encre-douce)]";
+      : "border border-[var(--color-trait)] bg-[var(--color-champ)] text-[var(--color-encre-douce)]";
 
   return (
     <button
@@ -180,7 +180,7 @@ export function Erreur({ message }: { message: string | null }) {
   return (
     <p
       role="alert"
-      className="rounded-lg bg-[var(--color-defaite)]/10 px-3 py-2 text-sm text-[var(--color-defaite)]"
+      className="rounded-lg bg-[var(--color-erreur)]/10 px-3 py-2 text-sm text-[var(--color-erreur)]"
     >
       {message}
     </p>

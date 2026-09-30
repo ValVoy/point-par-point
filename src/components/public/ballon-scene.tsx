@@ -16,6 +16,10 @@ import { segments, type Geometrie } from "./ballon-geometrie";
  * Le rendu serveur est l'etat de depart du geste : ballon a la passe, traces
  * masques (pathLength a 1, donc masquables sans mesurer leur longueur). Rien
  * ne clignote avant que l'animation prenne la main.
+ *
+ * Dessinee pour la palette de nuit : elle ne s'affiche que sous la classe
+ * .palette-nuit (intro validee, prototype du ballon), qui porte ses couleurs.
+ * Sa version a l'encre viendra avec la nouvelle intro.
  */
 
 export type Variante = "grand" | "portrait";

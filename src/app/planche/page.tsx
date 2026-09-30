@@ -1,20 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import type { CSSProperties } from "react";
 import { Motif } from "@/components/motif";
+import { Bandeaux } from "./bandeaux";
 import { Palette } from "./palette";
-import { CANDIDATES, variablesPolices } from "./polices";
 import { FiltresSvg, Portraits } from "./portraits";
-import { SelecteurPolice } from "./selecteur-police";
-import { Specimens } from "./specimens";
 import { TableauScore } from "./tableau-score";
 import styles from "./planche.module.css";
 
 /*
- * Planche de style du systeme de design, decidee au cadrage du 29-09-2026.
- * Outil de travail, pas une page du site : elle n'existe qu'en developpement
- * et n'est jamais indexee. Ses decisions monteront dans globals.css une fois
- * tranchees, puis la route sera supprimee.
+ * Planche de la palette du 30-09-2026 (fiche fiches/palette.md). Outil de
+ * travail, pas une page du site : elle n'existe qu'en developpement et n'est
+ * jamais indexee. Elle ne porte aucune couleur propre, tout vient des jetons
+ * de globals.css : ce qu'elle montre est ce que le site affichera.
  */
 
 export const metadata: Metadata = {
@@ -24,41 +21,26 @@ export const metadata: Metadata = {
 
 function MotifSection() {
   return (
-    <section className="border-t border-[var(--trait)] px-4 py-20 sm:px-10 lg:px-16">
-      <p className={styles.etiquette}>04 · Motif</p>
-      <h2 className="mt-3 max-w-[24ch] text-3xl font-semibold text-balance sm:text-4xl">
-        Les losanges du maillot, en filigrane
-      </h2>
-      <p className="mt-4 max-w-[62ch] leading-relaxed text-[var(--craie-douce)]">
-        À peine perceptible : on le devine plus qu&apos;on ne le voit. Trois
-        façons de le cacher. Le motif franc, comme sur le maillot, ne
-        servirait qu&apos;au volet de transition de la scène du ballon, le
-        temps d&apos;un passage.
-      </p>
-
-      <div className="mt-12 grid gap-6 md:grid-cols-3">
+    <section className="colonne-large border-t border-[var(--color-trait)] py-20">
+      <p className={styles.etiquette}>05 · Motif</p>
+      <h2 className="titre-affiche mt-3 text-5xl sm:text-7xl">Le maillot, deux façons</h2>
+      <div className="mt-12 grid gap-6 md:grid-cols-2">
         <figure>
-          <div className="relative h-72 overflow-hidden rounded-sm bg-[var(--nuit-surface)]">
-            <Motif className={styles.filigrane} fond="transparent" contour />
+          <div className="relative h-72 overflow-hidden bg-[var(--color-papier-creuse)]">
+            <div className="absolute inset-0 opacity-[0.08]">
+              <Motif contour sombre="var(--color-encre)" />
+            </div>
           </div>
-          <figcaption className="mt-3 text-sm text-[var(--craie-douce)]">
-            Contour : un trait fin, qui s&apos;efface vers les bords
+          <figcaption className="mt-3 text-sm text-[var(--color-encre-douce)]">
+            Filigrane : un contour d&apos;encre à peine perceptible, sur le papier
           </figcaption>
         </figure>
         <figure>
-          <div className="relative h-72 overflow-hidden rounded-sm bg-[var(--nuit)]">
-            <Motif fond="transparent" sombre="#0c0f1f" clair="var(--nuit)" taille={20} />
+          <div className="relative h-72 overflow-hidden">
+            <Motif fond="var(--color-turquoise)" sombre="var(--color-violet)" clair="var(--color-turquoise)" taille={28} />
           </div>
-          <figcaption className="mt-3 text-sm text-[var(--craie-douce)]">
-            Ton sur ton : deux noirs presque identiques
-          </figcaption>
-        </figure>
-        <figure>
-          <div className="relative h-72 overflow-hidden rounded-sm bg-[var(--nuit-surface)]">
-            <Motif className={styles.halo} fond="transparent" contour />
-          </div>
-          <figcaption className="mt-3 text-sm text-[var(--craie-douce)]">
-            Halo : visible seulement sous une lumière, comme un projecteur
+          <figcaption className="mt-3 text-sm text-[var(--color-encre-douce)]">
+            Plein : le tissu du maillot, pour un bandeau ou un volet de transition
           </figcaption>
         </figure>
       </div>
@@ -69,39 +51,27 @@ function MotifSection() {
 export default function Planche() {
   if (process.env.NODE_ENV === "production") notFound();
 
-  const policeParDefaut = {
-    "--titre": CANDIDATES[0]?.famille,
-    "--titre-largeur": "100%",
-  } as CSSProperties;
-
   return (
-    <div data-planche className={`${styles.planche} ${variablesPolices}`} style={policeParDefaut}>
+    <div className={styles.planche}>
       <FiltresSvg />
 
-      <header className="relative overflow-hidden px-4 pt-24 pb-16 sm:px-10 lg:px-16">
-        <Motif className={styles.filigrane} fond="transparent" contour />
-        <p className={`relative ${styles.etiquette}`}>Planche de style · 29-09-2026</p>
-        <h1
-          className="relative mt-4 text-[clamp(3.5rem,11vw,9rem)] uppercase"
-          style={{ fontFamily: "var(--titre)", fontWeight: 800, fontStretch: "var(--titre-largeur)", lineHeight: 0.86 }}
-        >
-          Projet Volley
-        </h1>
-        <p className="relative mt-6 max-w-[62ch] text-lg leading-relaxed text-[var(--craie-douce)]">
-          Fond nuit, une seule couleur vive tirée du maillot, une condensée
-          pour les titres et les chiffres. Le bouton en bas à droite bascule
-          la police des cartes et du tableau de score entre les trois
-          candidates.
-        </p>
+      <header className="grain relative">
+        <div className="colonne-large relative pt-24 pb-16">
+          <p className={styles.etiquette}>Planche de style · palette du 30-09-2026</p>
+          <h1 className="titre-affiche mt-4 text-[clamp(3.5rem,11vw,9rem)]">Projet Volley</h1>
+          <p className="mt-6 max-w-[62ch] text-lg leading-relaxed text-[var(--color-encre-douce)]">
+            Un programme de match imprimé : un papier clair, les couleurs réelles du maillot, et le
+            jaune du ballon là où il se passe quelque chose.
+          </p>
+          <div aria-hidden="true" className="mt-10 h-1 w-24 bg-[var(--color-jaune)]" />
+        </div>
       </header>
 
       <Palette />
-      <Specimens />
+      <Bandeaux />
       <Portraits />
-      <MotifSection />
       <TableauScore />
-
-      <SelecteurPolice candidates={CANDIDATES} />
+      <MotifSection />
     </div>
   );
 }

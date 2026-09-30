@@ -68,7 +68,7 @@ export default async function PageEpisodes() {
                       <span
                         className={
                           episode.etat === "publie"
-                            ? "rounded bg-[var(--color-victoire)]/10 px-1.5 py-0.5 text-[var(--color-victoire)]"
+                            ? "rounded bg-[var(--color-accent-sourd)] px-1.5 py-0.5 text-[var(--color-accent)]"
                             : "rounded bg-[var(--color-papier-creuse)] px-1.5 py-0.5 text-[var(--color-encre-douce)]"
                         }
                       >

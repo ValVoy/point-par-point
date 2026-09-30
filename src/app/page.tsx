@@ -23,7 +23,7 @@ export default function Accueil() {
         que racontent déjà les réseaux.
       </p>
 
-      <div className="accent-degrade mt-10 h-px w-24" />
+      <div className="mt-10 h-1 w-24 bg-[var(--color-jaune)]" />
 
       <p className="mt-10 text-sm leading-relaxed text-[var(--color-encre-tenue)]">
         Site en construction. Les fondations sont posées : base de données,

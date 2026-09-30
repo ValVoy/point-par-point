@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { dateEtHeure } from "@/lib/dates";
+import { PastilleResultat } from "@/components/pastille-resultat";
 import { LIBELLES_ETAT } from "@/lib/etats-rencontre";
 import { scoreASaisir, type RencontreAvecSets } from "@/lib/rencontres";
 
@@ -13,16 +14,13 @@ function Score({ rencontre }: { rencontre: RencontreAvecSets }) {
   const victoire = rencontre.setsNous > rencontre.setsEux;
 
   return (
-    <p className="text-sm">
-      <span
-        className={`font-semibold tabular-nums ${
-          victoire ? "text-[var(--color-victoire)]" : "text-[var(--color-defaite)]"
-        }`}
-      >
-        {victoire ? "Victoire" : "Défaite"} {rencontre.setsNous}-{rencontre.setsEux}
+    <p className="mt-1 flex flex-wrap items-center gap-x-2 text-sm">
+      <PastilleResultat victoire={victoire} />
+      <span className={`tabular-nums ${victoire ? "font-bold" : "font-normal"}`}>
+        {rencontre.setsNous}-{rencontre.setsEux}
       </span>
       {rencontre.sets.length > 0 ? (
-        <span className="ml-2 text-xs text-[var(--color-encre-tenue)] tabular-nums">
+        <span className="text-xs text-[var(--color-encre-tenue)] tabular-nums">
           {rencontre.sets
             .map((set) => `${set.pointsNous ?? "?"}-${set.pointsEux ?? "?"}`)
             .join(" · ")}
@@ -52,7 +50,7 @@ export function LigneMatch({ rencontre }: { rencontre: RencontreAvecSets }) {
             {rencontre.aDomicile ? "domicile" : "extérieur"}
           </span>
           {rencontre.etat === "annulee" || rencontre.etat === "reportee" ? (
-            <span className="ml-1.5 rounded bg-[var(--color-defaite)]/10 px-1.5 py-0.5 text-xs font-normal text-[var(--color-defaite)]">
+            <span className="ml-1.5 rounded border border-[var(--color-encre-tenue)] px-1.5 py-px text-xs font-normal text-[var(--color-encre-douce)]">
               {LIBELLES_ETAT[rencontre.etat].toLowerCase()}
             </span>
           ) : null}
@@ -66,7 +64,7 @@ export function LigneMatch({ rencontre }: { rencontre: RencontreAvecSets }) {
             href={`/administration/matchs/${rencontre.id}/score`}
             className={
               aSaisir
-                ? "rounded-lg bg-[var(--color-accent)] px-3 py-1.5 font-medium text-white"
+                ? "rounded-lg bg-[var(--color-accent)] px-3 py-1.5 font-medium text-[var(--color-papier)]"
                 : "text-[var(--color-accent)] hover:underline"
             }
           >

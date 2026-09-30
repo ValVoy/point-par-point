@@ -37,7 +37,7 @@ export function FormulaireConnexion() {
         autoComplete="username"
         defaultValue={etat.email}
         required
-        className="mt-2 w-full rounded-lg border border-[var(--color-trait)] bg-white px-3 py-2.5 text-[var(--color-encre)] outline-none focus:border-[var(--color-accent)]"
+        className="mt-2 w-full rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-3 py-2.5 text-[var(--color-encre)] outline-none focus:border-[var(--color-accent)]"
       />
 
       <label
@@ -52,13 +52,13 @@ export function FormulaireConnexion() {
         type="password"
         autoComplete="current-password"
         required
-        className="mt-2 w-full rounded-lg border border-[var(--color-trait)] bg-white px-3 py-2.5 text-[var(--color-encre)] outline-none focus:border-[var(--color-accent)]"
+        className="mt-2 w-full rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-3 py-2.5 text-[var(--color-encre)] outline-none focus:border-[var(--color-accent)]"
       />
 
       {etat.erreur ? (
         <p
           role="alert"
-          className="mt-5 rounded-lg bg-[var(--color-defaite)]/10 px-3 py-2.5 text-sm text-[var(--color-defaite)]"
+          className="mt-5 rounded-lg bg-[var(--color-erreur)]/10 px-3 py-2.5 text-sm text-[var(--color-erreur)]"
         >
           {etat.erreur}
         </p>

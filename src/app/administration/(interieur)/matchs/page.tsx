@@ -98,7 +98,7 @@ export default async function PageMatchs({
         </nav>
         <Link
           href={`/administration/matchs/calendrier?saison=${saison.id}`}
-          className="ml-auto rounded-lg border border-[var(--color-trait)] bg-white px-3 py-1.5 text-sm text-[var(--color-encre-douce)] hover:border-[var(--color-accent)]"
+          className="ml-auto rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-3 py-1.5 text-sm text-[var(--color-encre-douce)] hover:border-[var(--color-accent)]"
         >
           Saisir le calendrier
         </Link>
@@ -112,7 +112,7 @@ export default async function PageMatchs({
       {Number.isInteger(ajoutes) && ajoutes > 0 ? (
         <p
           role="status"
-          className="mt-4 rounded-lg bg-[var(--color-victoire)]/10 px-3 py-2 text-sm text-[var(--color-victoire)]"
+          className="mt-4 rounded-lg bg-[var(--color-accent-sourd)] px-3 py-2 text-sm text-[var(--color-accent)]"
         >
           {ajoutes} {ajoutes > 1 ? "matchs ajoutés" : "match ajouté"} au calendrier.
         </p>

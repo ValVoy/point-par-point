@@ -19,7 +19,7 @@ export default function PrototypeBallon() {
   if (process.env.NODE_ENV === "production") notFound();
 
   return (
-    <div className="min-h-dvh bg-[var(--color-nuit)] text-[var(--color-craie)] [color-scheme:dark]">
+    <div className="palette-nuit min-h-dvh bg-[var(--color-nuit)] text-[var(--color-craie)]">
       <header className="relative flex min-h-[80svh] flex-col justify-end overflow-hidden pb-16">
         <div aria-hidden="true" className="absolute inset-0 opacity-[0.06] [mask-image:radial-gradient(ellipse_80%_70%_at_70%_30%,#000,transparent_75%)]">
           <Motif contour fond="transparent" />

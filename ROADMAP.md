@@ -13,12 +13,13 @@ Ce qui marche à l'écran : connexion avec limitation des tentatives, déconnexi
 réduite selon le rôle, bandeau de démonstration, gestion des saisons et de l'effectif.
 **Aucune page publique réelle**, l'accueil est encore provisoire.
 
-**Première chose à cadrer à la prochaine séance (demandé le 30-09-2026) : la palette.**
-L'utilisateur la trouve « beaucoup trop site IA » : fond nuit bleuté et turquoise lumineux, le
-réflexe générique du site sombre à néon. À revoir avant toute autre chose, en salve de questions,
-puisqu'elle touche tout (site public, intro, administration, planche).
+**Palette refaite le 30-09-2026** (fiche `fiches/palette.md`) : un programme de match imprimé,
+papier clair, turquoise et violet réels du maillot, jaune du ballon en accent. Appliquée au site,
+à l'administration et à la planche. L'intro de nuit validée est gardée intacte dans
+`components/public/intro-nuit/` (étiquette git `intro-nuit-v1`).
 
-Ensuite : installer l'intro validée sur l'accueil, avec le bloc prochain match branché sur la base.
+Ensuite : la fiche de la nouvelle intro, la salle dessinée à l'encre sur papier, puis son
+installation sur l'accueil avec le bloc prochain match branché sur la base.
 
 **À revoir avant d'écrire les pages publiques** : la largeur de la mise en page et le motion
 design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`.

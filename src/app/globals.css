@@ -1,46 +1,48 @@
 @import "tailwindcss";
 
 /*
- * Systeme de design, tranche le 29-09-2026 sur la planche de style (voir
- * veille.md, sections 7 a 9). Tout passe par ces jetons : changer une teinte
- * ou une duree est une modification d'une ligne, ici et nulle part ailleurs.
+ * Systeme de design. Palette refaite le 30-09-2026 (fiche fiches/palette.md,
+ * veille.md section 10) : la nuit et le turquoise ravive faisaient « site
+ * genere ». Tout passe par ces jetons : changer une teinte est une
+ * modification d'une ligne, ici et nulle part ailleurs.
  *
- * Teintes tirees du maillot de l'equipe, mesurees sur photo (turquoise
- * #64979d, violet #66486b) puis ravivees pour l'ecran.
+ * Un programme de match imprime : un papier clair, trois encres, et le jaune
+ * du ballon la ou il se passe quelque chose. Les couleurs du maillot sont
+ * celles mesurees sur photo, sourdes, telles quelles.
  *
- * Deux ambiances sur les memes teintes :
- * - le site public, de nuit, avec le turquoise vif pour seule couleur forte ;
- * - l'administration, claire, parce qu'on y saisit des scores en plein jour et
- *   qu'on y ecrit des textes longs. Le turquoise vif sur blanc tomberait a un
- *   contraste d'environ 2 pour 1 : l'administration prend le turquoise fonce.
+ * Une fonction par couleur : turquoise pour l'equipe, violet pour les matchs,
+ * jaune pour ce qui est en direct ou nouveau. Environ 70 % de papier, 25 % de
+ * maillot, moins de 5 % de jaune. Ni halo, ni degrade, ni ombre floue.
+ *
+ * Contrastes sur le papier (WCAG, 4,5 pour 1 exige pour le texte courant) :
+ * encre 16,0 ; encre-douce 8,9 ; encre-tenue 5,4 ; accent 6,5 ; violet 7,1 ;
+ * ocre 5,7. Le turquoise (3,0) et le jaune (1,6) ne portent jamais de texte :
+ * aplats seulement, avec l'encre dessus (5,4 et 10,3), ou le papier sur le
+ * violet (7,1).
  */
 @theme {
-  /* --- Le site public, de nuit ------------------------------------------ */
-  --color-nuit: #0a0d1a;
-  --color-nuit-surface: #11162a;
-  --color-nuit-releve: #1a2140;
-  --color-nuit-trait: #262e4d;
-  --color-turquoise: #3ec5cc;
-  --color-turquoise-fonce: #1b7a82;
-  --color-turquoise-clair: #bff1f3;
-  --color-violet: #5e3f98;
-  --color-craie: #eef2f4;
-  --color-craie-douce: #a3adc0;
+  /* --- Le papier et l'encre --------------------------------------------- */
+  --color-papier: #f8f4ea;
+  --color-papier-creuse: #efe9dc;
+  /* Les champs de saisie, un cran plus clairs que la page, jamais blanc pur. */
+  --color-champ: #fdfbf6;
+  --color-encre: #1f1622;
+  --color-encre-douce: #4b404e;
+  --color-encre-tenue: #6b6070;
+  --color-trait: #ddd5c6;
 
-  /* --- L'administration, claire ------------------------------------------ */
-  --color-papier: #fbfcfc;
-  --color-papier-creuse: #eef2f3;
-  --color-encre: #0a0d1a;
-  --color-encre-douce: #434a5e;
-  --color-encre-tenue: #6f7688;
-  --color-trait: #dde3e6;
+  /* --- Les couleurs du maillot ------------------------------------------ */
+  --color-turquoise: #64979d;
+  --color-accent: #2d5f65;
+  --color-accent-sourd: #e1e6de;
+  --color-violet: #66486b;
 
-  --color-accent: #1b7a82;
-  --color-accent-clair: #3ec5cc;
-  --color-accent-sourd: #e2f5f6;
+  /* --- Le ballon --------------------------------------------------------- */
+  --color-jaune: #f2bf2e;
+  --color-ocre: #7a5c00;
 
-  --color-victoire: #17794a;
-  --color-defaite: #a8324a;
+  /* --- Le seul signal hors palette : l'erreur de saisie ------------------ */
+  --color-erreur: #a1303f;
 
   /* --- Typographie : une seule famille, Archivo --------------------------- */
   --font-titre: var(--police-archivo), ui-sans-serif, system-ui, sans-serif;
@@ -125,19 +127,55 @@ body {
   padding-inline: var(--marge);
 }
 
-/* Le degrade d'accent, utilise avec parcimonie : titres de section et etats. */
-.accent-degrade {
-  background-image: linear-gradient(100deg, var(--color-accent), var(--color-accent-clair));
+/*
+ * Le grain du papier : un bruit fixe, a la limite du perceptible, pose en
+ * multiplication comme une encre. Site public seulement, jamais anime, jamais
+ * sur l'administration. L'element qui le porte doit etre positionne.
+ */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.12 0 0 0 0 0.09 0 0 0 0 0.13 0 0 0 1.6 -0.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/*
+ * La palette de nuit du 29-09-2026, gardee pour l'intro validee (dossier
+ * components/public/intro-nuit, etiquette git intro-nuit-v1) et la scene du
+ * ballon, en attendant leur version a l'encre. Ces variables ne sont pas des
+ * jetons du theme : elles n'existent que sous la classe, qui les impose a
+ * tout ce qu'elle contient. Ne rien construire de neuf dessus.
+ */
+.palette-nuit {
+  --color-nuit: #0a0d1a;
+  --color-nuit-surface: #11162a;
+  --color-nuit-releve: #1a2140;
+  --color-nuit-trait: #262e4d;
+  --color-turquoise: #3ec5cc;
+  --color-turquoise-clair: #bff1f3;
+  --color-violet: #5e3f98;
+  --color-craie: #eef2f4;
+  --color-craie-douce: #a3adc0;
+  color-scheme: dark;
 }
 
 /*
  * Anneau de focus visible partout. Un site consulte au telephone dans un
  * gymnase se navigue aussi au clavier sur un ordinateur, et le focus par
- * defaut de Tailwind disparait des qu'on touche aux couleurs.
+ * defaut de Tailwind disparait des qu'on touche aux couleurs. A l'encre, parce
+ * que c'est la seule teinte lisible sur toutes les surfaces du site.
  */
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-encre);
   outline-offset: 2px;
+}
+
+/* Sur un aplat violet, l'encre tombe a 2,3 pour 1 : le focus passe au papier. */
+[data-surface="violet"] :focus-visible {
+  outline-color: var(--color-papier);
 }
 
 /*

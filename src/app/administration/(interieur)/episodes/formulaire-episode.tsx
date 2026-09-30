@@ -15,7 +15,7 @@ import { creerEpisode, modifierEpisode, type EtatEpisode } from "./actions";
 const ETAT_INITIAL: EtatEpisode = { erreur: null };
 
 const CLASSE_CHAMP =
-  "mt-1.5 w-full rounded-lg border border-[var(--color-trait)] bg-white px-3 py-2 text-[var(--color-encre)] outline-none focus:border-[var(--color-accent)]";
+  "mt-1.5 w-full rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-3 py-2 text-[var(--color-encre)] outline-none focus:border-[var(--color-accent)]";
 const CLASSE_LABEL = "block text-sm font-medium text-[var(--color-encre-douce)]";
 
 function Facultatif() {
@@ -98,7 +98,7 @@ export function FormulaireEpisode({
           className={CLASSE_CHAMP}
         />
         {champs.adresse && !idVideo ? (
-          <p className="mt-1 text-xs text-[var(--color-defaite)]">
+          <p className="mt-1 text-xs text-[var(--color-erreur)]">
             Adresse non reconnue : collez le lien de partage de la vidéo.
           </p>
         ) : null}
@@ -202,7 +202,7 @@ export function FormulaireEpisode({
 
       <Erreur message={etat.erreur} />
       {etat.enregistre && !episode ? (
-        <p role="status" className="rounded-lg bg-[var(--color-victoire)]/10 px-3 py-2 text-sm text-[var(--color-victoire)]">
+        <p role="status" className="rounded-lg bg-[var(--color-accent-sourd)] px-3 py-2 text-sm text-[var(--color-accent)]">
           Épisode ajouté en brouillon. Publiez-le depuis la liste quand il est prêt.
         </p>
       ) : null}

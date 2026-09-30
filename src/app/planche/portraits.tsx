@@ -11,13 +11,15 @@ const PHOTO = "/_local/wa-17.20.40-1024x768.jpeg";
 
 type Filtre = { id: string; nom: string; teintes: string[] };
 
+/*
+ * Encre sur la couleur de fonction (fiche fiches/palette.md) : les ombres
+ * prennent l'encre, les tons moyens la couleur, les lumieres le papier. La
+ * variante sans papier est plus dense, comme une vraie bichromie.
+ */
 const FILTRES: Filtre[] = [
-  { id: "bichromie", nom: "Bichromie nuit et turquoise", teintes: ["#0a0d1a", "#3ec5cc"] },
-  {
-    id: "trichromie",
-    nom: "Trichromie nuit, violet, turquoise clair",
-    teintes: ["#0a0d1a", "#5e3f98", "#bff1f3"],
-  },
+  { id: "effectif", nom: "Effectif : encre, turquoise, papier", teintes: ["#1f1622", "#64979d", "#f8f4ea"] },
+  { id: "effectif-dense", nom: "Effectif dense : encre et turquoise", teintes: ["#1f1622", "#64979d"] },
+  { id: "matchs", nom: "Matchs : encre, violet, papier", teintes: ["#1f1622", "#66486b", "#f8f4ea"] },
 ];
 
 /* Convertit une suite de teintes en tables de transfert, canal par canal. */
@@ -82,7 +84,7 @@ function Carte({ joueur, filtre }: { joueur: Joueur; filtre: string }) {
   } as CSSProperties;
 
   return (
-    <li className={`${styles.carte} group`}>
+    <li>
       <div className={styles.cadre}>
         <Image
           src={PHOTO}
@@ -93,28 +95,16 @@ function Carte({ joueur, filtre }: { joueur: Joueur; filtre: string }) {
           className={styles.recadree}
           style={{ ...position, filter: `url(#${filtre})` }}
         />
-        <Image
-          src={PHOTO}
-          alt=""
-          width={1024}
-          height={768}
-          sizes={`(min-width: 1024px) ${ZOOM * 25}vw, ${ZOOM * 50}vw`}
-          className={`${styles.recadree} ${styles.couleurReelle}`}
-          style={position}
-        />
-        <span aria-hidden="true" className={styles.numeroGeant} style={{ fontFamily: "var(--titre)", fontWeight: 800, fontStretch: "var(--titre-largeur)" }}>
+        <span aria-hidden="true" className={`titre-affiche ${styles.numeroGeant}`}>
           {joueur.numero}
         </span>
       </div>
       <div className="pt-4">
         <p className={styles.etiquette}>{joueur.poste}</p>
-        <h3
-          className="mt-1 text-4xl uppercase"
-          style={{ fontFamily: "var(--titre)", fontWeight: 800, fontStretch: "var(--titre-largeur)", lineHeight: 0.9 }}
-        >
+        <h3 className="titre-affiche mt-1 text-4xl">
           Prénom Nom
         </h3>
-        <p className="mt-2 text-sm text-[var(--craie-douce)]">
+        <p className="mt-2 text-sm text-[var(--color-encre-douce)]">
           N° {joueur.numero} · 24 ans · 1,88 m
         </p>
         {joueur.phrase ? <p className="mt-3 text-sm leading-relaxed">{joueur.phrase}</p> : null}
@@ -125,19 +115,17 @@ function Carte({ joueur, filtre }: { joueur: Joueur; filtre: string }) {
 
 export function Portraits() {
   return (
-    <section className="border-t border-[var(--trait)] px-4 py-20 sm:px-10 lg:px-16">
+    <section className="colonne-large border-t border-[var(--color-trait)] py-20">
       <p className={styles.etiquette}>03 · Portraits</p>
-      <h2 className="mt-3 max-w-[24ch] text-3xl font-semibold text-balance sm:text-4xl">
-        Des photos inégales, un traitement unique
-      </h2>
-      <p className="mt-4 max-w-[62ch] leading-relaxed text-[var(--craie-douce)]">
+      <h2 className="titre-affiche mt-3 text-5xl sm:text-7xl">Encre sur la couleur de l&apos;équipe</h2>
+      <p className="mt-4 max-w-[62ch] leading-relaxed text-[var(--color-encre-douce)]">
         Photo de remplacement, prise sur le site du club, en attendant une
         photo de la D2. Les cartes sont toutes découpées dans cette seule
         photo de groupe, par un point de visage : c&apos;est le pire cas, et
-        il tient. Survole une carte pour voir la couleur réelle.
+        il tient.
       </p>
 
-      <ul className="mt-12 grid gap-6 md:grid-cols-3">
+      <ul className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
         {[{ id: "", nom: "Photo d'origine" }, ...FILTRES].map((f) => (
           <li key={f.nom}>
             <Image
@@ -149,7 +137,7 @@ export function Portraits() {
               className="h-auto w-full rounded-sm"
               style={f.id ? { filter: `url(#${f.id})` } : undefined}
             />
-            <p className="mt-3 text-sm text-[var(--craie-douce)]">{f.nom}</p>
+            <p className="mt-3 text-sm text-[var(--color-encre-douce)]">{f.nom}</p>
           </li>
         ))}
       </ul>

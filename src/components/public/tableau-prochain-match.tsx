@@ -1,13 +1,15 @@
 import type { CSSProperties } from "react";
 
 /**
- * Le prochain match en tableau d'affichage de gymnase. Composant de
- * presentation pur : il recoit ce qu'il affiche, sans lire la base.
+ * Le prochain match en affiche de programme : un aplat violet, la couleur des
+ * matchs, les chiffres en reserve de papier et le jaune du ballon pour seul
+ * eclat (fiche fiches/palette.md). Composant de presentation pur : il recoit
+ * ce qu'il affiche, sans lire la base.
  *
- * Il s'allume par la variable CSS `--allume`, de 0 a 1, que la scene du
+ * L'encre se pose par la variable CSS `--allume`, de 0 a 1, que la scene du
  * ballon fait monter a l'impact. Sans elle (JavaScript absent, mouvement
  * reduit), la valeur par defaut est 1 : le tableau est lisible d'emblee.
- * Toute information en chiffres lumineux existe aussi en texte clair.
+ * Tout ce qui est en gros chiffres existe aussi en texte clair.
  */
 
 export type ProchainMatch = {
@@ -18,11 +20,8 @@ export type ProchainMatch = {
   compteRebours: { jours: number; heures: number; minutes: number };
 };
 
-const lueur: CSSProperties = {
-  color: "var(--color-turquoise)",
+const encrage: CSSProperties = {
   opacity: "calc(0.18 + 0.82 * var(--allume, 1))",
-  textShadow:
-    "0 0 calc(14px * var(--allume, 1)) rgb(62 197 204 / 0.55), 0 0 2px rgb(191 241 243 / calc(0.9 * var(--allume, 1)))",
 };
 
 const deux = (n: number) => String(Math.max(0, n)).padStart(2, "0");
@@ -40,23 +39,19 @@ export function TableauProchainMatch({ match }: { match: ProchainMatch }) {
   return (
     <div
       data-tableau
-      className="rounded-md border border-[var(--color-nuit-trait)] p-5 sm:p-8"
-      style={{
-        background:
-          "radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.05) 1px, transparent 0) 0 0 / 6px 6px, #05060c",
-        boxShadow: "inset 0 0 0 6px #0d101c",
-      }}
+      data-surface="violet"
+      className="bg-[var(--color-violet)] p-5 text-[var(--color-papier)] sm:p-8"
     >
-      <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">
+      <p className="inline-block bg-[var(--color-jaune)] px-2 py-1 text-xs font-semibold tracking-[0.2em] text-[var(--color-encre)] uppercase">
         Prochain match
       </p>
       <div className="titre-affiche mt-3 flex items-start justify-between gap-4 text-2xl sm:text-4xl">
         <div>
-          <p className="text-xs tracking-[0.2em] text-[var(--color-craie-douce)]">Locaux</p>
+          <p className="text-xs tracking-[0.2em] text-[var(--color-papier)]/80">Locaux</p>
           <p className="mt-1">{gauche}</p>
         </div>
         <div className="text-right">
-          <p className="text-xs tracking-[0.2em] text-[var(--color-craie-douce)]">Visiteurs</p>
+          <p className="text-xs tracking-[0.2em] text-[var(--color-papier)]/80">Visiteurs</p>
           <p className="mt-1">{droite}</p>
         </div>
       </div>
@@ -68,15 +63,15 @@ export function TableauProchainMatch({ match }: { match: ProchainMatch }) {
         {unites.map((unite, index) => (
           <div key={unite.nom} className="flex items-end gap-3 sm:gap-6">
             {index > 0 ? (
-              <span className="titre-affiche text-5xl sm:text-7xl" style={lueur}>
+              <span className="titre-affiche text-5xl sm:text-7xl" style={encrage}>
                 :
               </span>
             ) : null}
             <div className="text-center">
-              <span className="titre-affiche block text-6xl sm:text-8xl" style={lueur}>
+              <span className="titre-affiche block text-6xl sm:text-8xl" style={encrage}>
                 {unite.valeur}
               </span>
-              <span className="mt-1 block text-[0.65rem] tracking-[0.2em] text-[var(--color-craie-douce)] uppercase">
+              <span className="mt-1 block text-[0.65rem] tracking-[0.2em] text-[var(--color-papier)]/80 uppercase">
                 {unite.nom}
               </span>
             </div>
@@ -84,7 +79,7 @@ export function TableauProchainMatch({ match }: { match: ProchainMatch }) {
         ))}
       </div>
 
-      <p className="mt-5 border-t border-[var(--color-nuit-trait)] pt-4 text-center text-sm">
+      <p className="mt-5 border-t border-[var(--color-papier)]/30 pt-4 text-center text-sm">
         {match.dateLisible} · {match.salle}
       </p>
     </div>

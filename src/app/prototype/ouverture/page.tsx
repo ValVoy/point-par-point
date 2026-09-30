@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Ouverture } from "@/components/public/intro/ouverture";
+import { Ouverture } from "@/components/public/intro-nuit/ouverture";
 import { RejouerIntro } from "./rejouer";
 
 /*
@@ -18,7 +18,7 @@ export default function PrototypeOuverture() {
   if (process.env.NODE_ENV === "production") notFound();
 
   return (
-    <div className="min-h-dvh bg-[var(--color-nuit)] text-[var(--color-craie)] [color-scheme:dark]">
+    <div className="palette-nuit min-h-dvh bg-[var(--color-nuit)] text-[var(--color-craie)]">
       <Ouverture sousTitre="L'équipe D2 masculine du VF Francheville, sur le terrain et dans la série." />
       <section className="colonne-large py-32">
         <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">

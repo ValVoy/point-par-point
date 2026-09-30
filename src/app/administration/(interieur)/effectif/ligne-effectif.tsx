@@ -60,7 +60,7 @@ export function LigneEffectifModifiable({ ligne }: { ligne: LigneEffectif }) {
           max={99}
           aria-label={`Numéro de ${ligne.nomComplet}`}
           defaultValue={ligne.numero ?? ""}
-          className="w-full rounded-lg border border-[var(--color-trait)] bg-white px-2 py-1.5 text-center font-medium outline-none focus:border-[var(--color-accent)]"
+          className="w-full rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-2 py-1.5 text-center font-medium outline-none focus:border-[var(--color-accent)]"
         />
 
         <div className="min-w-0">
@@ -82,7 +82,7 @@ export function LigneEffectifModifiable({ ligne }: { ligne: LigneEffectif }) {
           name="poste"
           aria-label={`Poste de ${ligne.nomComplet}`}
           defaultValue={ligne.poste}
-          className="col-span-2 w-full rounded-lg border border-[var(--color-trait)] bg-white px-2 py-1.5 outline-none focus:border-[var(--color-accent)] sm:col-span-1"
+          className="col-span-2 w-full rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-2 py-1.5 outline-none focus:border-[var(--color-accent)] sm:col-span-1"
         >
           {Object.entries(LIBELLES_POSTE).map(([valeur, libelle]) => (
             <option key={valeur} value={valeur}>

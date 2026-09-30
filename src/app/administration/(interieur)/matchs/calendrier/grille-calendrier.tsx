@@ -32,7 +32,7 @@ function ligneVide(lieu: Ligne["lieu"] = "domicile"): Ligne {
 const ETAT_INITIAL: EtatMatch = { erreurs: [] };
 
 const CLASSE =
-  "w-full rounded-lg border border-[var(--color-trait)] bg-white px-2.5 py-2 text-sm outline-none focus:border-[var(--color-accent)]";
+  "w-full rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-2.5 py-2 text-sm outline-none focus:border-[var(--color-accent)]";
 
 export function GrilleCalendrier({ saisonId }: { saisonId: number }) {
   const [etat, action] = useActionState(creerCalendrier, ETAT_INITIAL);
@@ -94,7 +94,7 @@ export function GrilleCalendrier({ saisonId }: { saisonId: number }) {
       {etat.erreurs.length > 0 ? (
         <ul
           role="alert"
-          className="space-y-1 rounded-lg bg-[var(--color-defaite)]/10 px-3 py-2 text-sm text-[var(--color-defaite)]"
+          className="space-y-1 rounded-lg bg-[var(--color-erreur)]/10 px-3 py-2 text-sm text-[var(--color-erreur)]"
         >
           {etat.erreurs.map((erreur) => (
             <li key={erreur}>{erreur}</li>
@@ -180,7 +180,7 @@ export function GrilleCalendrier({ saisonId }: { saisonId: number }) {
               ),
             ])
           }
-          className="rounded-lg border border-[var(--color-trait)] bg-white px-4 py-2 text-sm text-[var(--color-encre-douce)]"
+          className="rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-4 py-2 text-sm text-[var(--color-encre-douce)]"
         >
           Ajouter {LIGNES_AJOUTEES} lignes
         </button>

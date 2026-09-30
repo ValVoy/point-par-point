@@ -45,7 +45,7 @@ function moitieSombre(orientation: number, x: number, y: number, t: number) {
 
 export function Motif({
   taille = 24,
-  fond = "var(--color-nuit)",
+  fond = "transparent",
   sombre = "var(--color-turquoise)",
   clair = "transparent",
   contour = false,

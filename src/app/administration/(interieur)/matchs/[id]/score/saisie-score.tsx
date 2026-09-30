@@ -18,7 +18,7 @@ type Mode = "sets" | "final";
 const ETAT_INITIAL: EtatScore = { erreurs: [], alertes: [], enregistre: false };
 
 const CLASSE_POINTS =
-  "h-16 w-full rounded-xl border border-[var(--color-trait)] bg-white text-center text-3xl font-semibold tabular-nums outline-none focus:border-[var(--color-accent)]";
+  "h-16 w-full rounded-xl border border-[var(--color-trait)] bg-[var(--color-champ)] text-center text-3xl font-semibold tabular-nums outline-none focus:border-[var(--color-accent)]";
 
 /** Deux chiffres tapes : on passe au champ suivant, sans lever le pouce. */
 function avancer(evenement: ChangeEvent<HTMLInputElement>) {
@@ -89,7 +89,7 @@ export function SaisieScore({
             type="button"
             aria-pressed={mode === valeur}
             onClick={() => setMode(valeur)}
-            className="rounded-lg py-2.5 font-medium text-[var(--color-encre-douce)] aria-pressed:bg-white aria-pressed:text-[var(--color-encre)] aria-pressed:shadow-sm"
+            className="rounded-lg py-2.5 font-medium text-[var(--color-encre-douce)] aria-pressed:bg-[var(--color-champ)] aria-pressed:text-[var(--color-encre)] aria-pressed:shadow-sm"
           >
             {valeur === "sets" ? "Set par set" : "Score final seul"}
           </button>
@@ -165,7 +165,7 @@ export function SaisieScore({
       ) : null}
 
       {erreurs.length > 0 ? (
-        <ul role="alert" className="space-y-1 rounded-lg bg-[var(--color-defaite)]/10 px-3 py-2 text-sm text-[var(--color-defaite)]">
+        <ul role="alert" className="space-y-1 rounded-lg bg-[var(--color-erreur)]/10 px-3 py-2 text-sm text-[var(--color-erreur)]">
           {erreurs.map((m) => (
             <li key={m}>{m}</li>
           ))}
@@ -181,7 +181,7 @@ export function SaisieScore({
       ) : null}
 
       {etat.enregistre ? (
-        <p role="status" className="rounded-lg bg-[var(--color-victoire)]/10 px-3 py-2 text-sm text-[var(--color-victoire)]">
+        <p role="status" className="rounded-lg bg-[var(--color-accent-sourd)] px-3 py-2 text-sm text-[var(--color-accent)]">
           Score enregistré.{" "}
           <Link href="/administration/matchs" className="underline">
             Retour aux matchs

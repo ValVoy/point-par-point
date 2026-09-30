@@ -183,3 +183,57 @@ Choix de l'utilisateur à l'écran, sur `/planche`.
   la scène du ballon, où il devient mouvement : la lumière suit le ballon et révèle le motif.
 - **Tableau de score** validé, avec le cas du cinquième set (tie-break en 15) : scores jamais
   coupés, tailles réduites d'un cran sur téléphone, « Set 5 » en mobile et « Tie-break » au-delà.
+
+## 10. Veille palette, 30-09-2026 à 10:06
+
+Relancée après le verdict « beaucoup trop site IA » sur la palette nuit et turquoise. Trois
+recherches parallèles : l'imprimé sportif, les sites actuels à fond clair, les codes couleur du
+volley. Les hexadécimaux de la deuxième ont été **lus dans le CSS calculé**, ceux des deux autres
+sont des **estimations** à recaler à l'œil.
+
+**Incident noté** : la lecture de `sirsafetyperugia.it` a renvoyé une phrase adressée à un agent.
+Injection ou artefact de l'outil, non tranché ; ignorée, rien d'exécuté, référence écartée.
+
+### L'imprimé sportif
+
+| Référence | Ce qu'on prend |
+|---|---|
+| Rodina FC, programmes 2024-25 (Zhigarev) | Palette constante, c'est le contenu qui fait varier la page |
+| Ipswich Town, affiches de match 2024-25 (Call Me Ted) | Un match = une affiche : modèle de la carte prochain match |
+| Ajax, identité 2025 (Smörgåsbord) | Le haut de gamme par l'éditorial et les archives, pas par les codes télé ; blanc cassé chaud |
+| Veikkausliiga, 2025 (Bond) | L'écharpe comme motif : la bande pleine largeur est un textile, pas un décor |
+| Eastbourne Town FC (Alex Brown) | Un club amateur, un graphiste, peu de couleurs, la typographie fait le travail |
+| Munich 1972 (Otl Aicher) | La palette est une règle écrite, avec ses exclusions ; photos en aplats superposés |
+| Red Star FC, 2025-26 | Une saison = une édition, avec son millésime |
+
+### Les sites à fond clair (valeurs relevées)
+
+| Site | Ce qu'on prend |
+|---|---|
+| Lando Norris, Site of the Year 2025 | Chaque couleur vive en deux versions, pure pour les aplats, assourdie pour le papier ; couleur qui répond en 80 ms, volume en 240-320 ms |
+| Roland-Garros | Les tableaux de données vivent dans des tons proches du fond ; survol = un cran plus foncé, même teinte |
+| Wimbledon | Deux couleurs de club comme nous (vert, violet) ; états en voiles neutres translucides, identiques sur toutes les couleurs |
+| Mailchimp | Le jaune n'est jamais un texte : fond de bouton, fond de lien au survol ; encre brun-noir, jamais noir pur |
+| Aesop | Le texte sur aplat sombre est le papier lui-même ; deux tons de papier suffisent, sans filet ni ombre |
+| Tracksmith | Boutons carrés en contour fin, remplis pour l'action principale |
+
+Contre-exemple : WC26 Data Portraits (Awwwards 2026), fond nuit, arc-en-ciel et halos.
+
+### Les codes du volley
+
+- Ballon de référence en France : **Mikasa V200W**, jaune et bleu roi. Aucun code officiel publié.
+- **Pas de bleu roi, nulle part** : avec le jaune, c'est le ballon (et deux drapeaux).
+- **Pas de quatrième couleur tirée des sols** (bleu ou orange) ; les lignes blanches de 5 cm
+  peuvent devenir un filet ivoire.
+- La LNV a dévoilé VOLSTAR le 02-09-2026 (agence 4uatre), charte pas encore publiée : à consulter
+  dès sa sortie pour ne pas lui ressembler par hasard.
+
+### Ce que les trois recherches disent ensemble
+
+1. Environ 70 % de papier, 25 % de maillot, moins de 5 % de jaune.
+2. Le jaune est un événement (ballon, point, élément actif), jamais un fond de section ni un texte.
+3. Une quatrième teinte casse l'imprimé : les états se codent en forme, en graisse ou en encre
+   contre réserve.
+4. Le texte sur aplat est le papier ou l'encre, jamais du blanc pur ni du gris.
+5. Pas de dégradé, pas de halo, pas d'ombre floue : de la surimpression et des aplats.
+6. Piège du crème : trop jaune, il vire au sépia sur les longues pages. Rester près du blanc.

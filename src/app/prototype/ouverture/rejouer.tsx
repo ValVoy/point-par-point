@@ -1,6 +1,6 @@
 "use client";
 
-import { CLE_INTRO } from "@/components/public/intro/script-intro";
+import { CLE_INTRO } from "@/components/public/intro-nuit/script-intro";
 
 /** Outil du prototype : efface la memoire de visite et recharge la page. */
 export function RejouerIntro() {
