@@ -158,7 +158,7 @@ zéro, la logique reste.
 - [x] Intro de l'accueil, prototype validé le 30-09-2026 (`/prototype/ouverture`, fiche
       `fiches/accueil-ouverture.md`) : 3,9 s, une fois par visite, passable, état final rendu par
       le serveur
-- [ ] Installer l'intro sur l'accueil, avec le bloc prochain match branché sur la base (et la
+- [x] Installer l'intro sur l'accueil (30-09-2026), avec le bloc prochain match branché sur la base (et la
       décision : que révèle l'accueil quand il n'y a pas de prochain match)
 - [ ] Pistes d'amélioration de l'intro, notées le 30-09-2026 :
       - motif du bandeau plus irrégulier, pour retrouver les flèches du maillot
