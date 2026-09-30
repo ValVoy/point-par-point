@@ -37,7 +37,10 @@ export function TableauResultat({ resultat }: { resultat: Resultat }) {
     >
       <div className="flex items-center justify-between gap-4">
         <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-jaune)] uppercase">Dernier match</p>
-        <PastilleResultat victoire={victoire} className="text-lg" />
+        <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase" aria-hidden="true">
+          <PastilleResultat victoire={victoire} className="text-base" />
+          {victoire ? "Victoire" : "Défaite"}
+        </p>
       </div>
       <div className="titre-affiche mt-3 flex items-start justify-between gap-4 text-xl text-balance sm:text-4xl">
         <div>

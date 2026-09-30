@@ -45,9 +45,6 @@ export function TableauProchainMatch({ match, maintenant }: { match: ProchainMat
         </div>
       </div>
 
-      <p className="sr-only">
-        Dans {initial.jours} jours, {initial.heures} heures et {initial.minutes} minutes.
-      </p>
       <div className="mt-6" style={{ opacity: "calc(0.25 + 0.75 * var(--allume, 1))" }}>
         <CompteReboursLed cible={match.joueLe.toISOString()} initial={initial} />
       </div>

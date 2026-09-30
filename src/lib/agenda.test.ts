@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { echapperTexte, evenementAgenda, plierLigne } from "./agenda";
+import { echapperTexte, evenementAgenda, lienGoogleAgenda, plierLigne } from "./agenda";
 
 const BASE = {
   uid: "match-42@projet-volley",
@@ -45,5 +45,16 @@ describe("evenementAgenda", () => {
     const ics = evenementAgenda({ ...BASE, lieu: "Gymnase du Bourg, 12 rue du Stade" });
     assert.match(ics, /\r\nLOCATION:Gymnase du Bourg\\, 12 rue du Stade\r\n/);
     assert.doesNotMatch(ics, /DESCRIPTION|URL:/);
+  });
+});
+
+describe("lienGoogleAgenda", () => {
+  it("encode le titre, le lieu et les dates en UTC", () => {
+    const lien = new URL(lienGoogleAgenda({ ...BASE, lieu: "Gymnase du Bourg, Francheville" }));
+    assert.equal(lien.hostname, "calendar.google.com");
+    assert.equal(lien.searchParams.get("action"), "TEMPLATE");
+    assert.equal(lien.searchParams.get("text"), BASE.titre);
+    assert.equal(lien.searchParams.get("dates"), "20261004T183000Z/20261004T203000Z");
+    assert.equal(lien.searchParams.get("location"), "Gymnase du Bourg, Francheville");
   });
 });

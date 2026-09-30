@@ -169,7 +169,7 @@ ailleurs.
   `youtube-nocookie`. La miniature passe par l'optimiseur de Next, donc par notre serveur.
 - **`EQUIPE` et `CHAINE_YOUTUBE`** vivent dans `lib/site.ts`, comme le nom du site. Tant que la
   chaîne vaut `null`, le bouton « S'abonner » ne s'affiche pas.
-- **Mouvement** : `data-revele` (un bloc monte une fois) et `data-allume` (un tableau s'allume
+- **Mouvement** : `data-apparait` (un bloc monte une fois) et `data-allume` (un tableau s'allume
   avec un seul scintillement), dans `accueil/revelations.tsx`, coupés sous mouvement réduit.
 
 ## Conventions

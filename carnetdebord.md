@@ -862,3 +862,38 @@ des 500 sans rapport avec le code ; redémarré, tout répond.
   la route d'agenda sondée. Pas encore vérifiés à l'écran : les états vides (aucun épisode, aucun
   match), couverts par la logique testée mais pas provoqués en base.
 - Suite : obtenir l'adresse de la chaîne YouTube ; puis la page Matchs et la page d'un match.
+
+**13:30** · **[revue] Critique à froid de l'accueil, et ses corrections**
+
+Un agent qui n'avait pas construit la page l'a critiquée à trois casquettes, au navigateur, au
+clavier et en mouvement réduit. Il a trouvé un défaut bloquant que je n'avais pas vu : les
+révélations au défilement passaient les blocs en `visibility: hidden`, si bien qu'au chargement
+la touche Tab n'atteignait aucun lien et qu'un lecteur d'écran ne lisait rien. Corrigé : on
+n'anime plus que l'opacité et la position, et un bloc qui reçoit le focus se révèle aussitôt.
+Mesuré ensuite : les six éléments interactifs sont joignables, chaque bloc apparaît au focus.
+
+En corrigeant, deux pièges de plus. La scène du ballon de l'intro portait déjà un attribut
+`data-revele` : mon composant l'attrapait aussi, au risque de dérégler l'intro validée ; mes blocs
+prennent `data-apparait`, cherché dans la seule zone de l'accueil. Et tuer un déclencheur de
+défilement dans GSAP tue l'animation qu'il pilote, sauf `kill(false, true)`. Un faux positif
+aussi : le navigateur partagé était resté en mouvement réduit après les sondes de l'agent.
+
+Le reste de la critique, appliqué : une seule règle de lecture des scores (locaux d'abord, comme
+au gymnase) avec Victoire ou Défaite en toutes lettres ; le match reste trois heures au tableau
+après le coup d'envoi, « Match en cours » ; la vignette de l'épisode perd son aplat turquoise ;
+« Voir sur YouTube » passe en jaune tant que la chaîne manque ; contours des boutons secondaires
+à 5,8 pour 1 ; focus donné au lecteur après le clic ; plus de téléchargement forcé pour l'agenda,
+et un lien Google Agenda en secours ; texte lu du compte à rebours qui suit les chiffres ; icône
+d'onglet ; route d'agenda non indexée.
+
+Laissé pour plus tard : le vide en haut de l'ouverture à l'état final (intro validée, à ne pas
+retoucher sans l'utilisateur), l'heure et le slug des données de démonstration (le semis
+n'utilise pas le fuseau de Paris), la mesure de performance sur un vrai build et un téléphone
+d'entrée de gamme.
+
+- Portée : `accueil/revelations.tsx`, les tableaux, les cartes, `bloc-serie.tsx`,
+  `bloc-tableaux.tsx`, `lecteur-episode.tsx`, `lib/resultats.ts`, `lib/agenda.ts`,
+  `lib/accueil.ts`, la route d'agenda, `app/icon.svg`.
+- Vérifié : 74 tests, `tsc`, lint ; au navigateur, le parcours clavier et l'état des blocs avant
+  et après focus, le rendu du chapitre des matchs en 1440 px.
+- Suite : l'adresse de la chaîne YouTube ; puis la page Matchs et la page d'un match.

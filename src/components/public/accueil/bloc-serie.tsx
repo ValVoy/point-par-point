@@ -12,13 +12,13 @@ import { LecteurEpisode } from "../lecteur-episode";
  *
  * La miniature passe par l'optimiseur de Next, donc par notre serveur : le
  * navigateur du visiteur ne contacte pas YouTube avant d'avoir clique. Elle
- * est traitee comme les portraits, la nuit sur le turquoise, et retrouve ses
- * couleurs au survol.
+ * passe en niveaux de gris sur la nuit, et retrouve ses couleurs au survol :
+ * pas d'aplat turquoise, qui salissait l'image (critique du 30-09-2026).
  */
 export function BlocSerie({ episode }: { episode: Episode }) {
   const titre = episode.titre;
   return (
-    <section aria-labelledby="titre-serie" data-revele className="colonne-large py-24 sm:py-32">
+    <section aria-labelledby="titre-serie" data-apparait className="colonne-large py-24 sm:py-32">
       <div className="grid items-end gap-8 lg:grid-cols-12 lg:gap-12">
         <div className="relative aspect-video overflow-hidden bg-[var(--color-nuit-surface)] lg:col-span-7">
           <LecteurEpisode youtubeId={episode.youtubeId} titre={titre}>
@@ -31,7 +31,7 @@ export function BlocSerie({ episode }: { episode: Episode }) {
             />
             <span
               aria-hidden="true"
-              className="absolute inset-0 bg-[var(--color-turquoise)] mix-blend-multiply transition-opacity duration-[var(--duree)] group-hover:opacity-0"
+              className="absolute inset-0 bg-[var(--color-nuit)] opacity-25 transition-opacity duration-[var(--duree)] group-hover:opacity-0"
             />
           </LecteurEpisode>
         </div>
@@ -57,7 +57,11 @@ export function BlocSerie({ episode }: { episode: Episode }) {
             ) : null}
             <a
               href={lienYoutube(episode.youtubeId)}
-              className="inline-flex min-h-12 items-center border-2 border-[var(--color-nuit-trait)] px-6 font-semibold transition-colors duration-[80ms] hover:border-[var(--color-craie)] hover:bg-[var(--color-craie)] hover:text-[var(--color-nuit)]"
+              className={
+                CHAINE_YOUTUBE
+                  ? "inline-flex min-h-12 items-center border-2 border-[var(--color-craie-tenue)] px-6 font-semibold transition-colors duration-[80ms] hover:border-[var(--color-craie)] hover:bg-[var(--color-craie)] hover:text-[var(--color-nuit)]"
+                  : "inline-flex min-h-12 items-center bg-[var(--color-jaune)] px-6 font-semibold text-[var(--color-nuit)] transition-colors duration-[80ms] hover:bg-[var(--color-craie)]"
+              }
             >
               Voir sur YouTube
             </a>

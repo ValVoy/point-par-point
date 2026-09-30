@@ -71,3 +71,20 @@ export function compteRebours(joueLe: Date, maintenant: Date) {
     minutes: minutesRestantes % 60,
   };
 }
+
+/** Duree pendant laquelle un match commence reste au tableau, « en cours ». */
+const DUREE_EN_COURS = 3 * 60 * MINUTE;
+
+/**
+ * Le match du tableau « prochain match » : le premier a venir, en gardant
+ * trois heures celui qui vient de commencer. Sans cela, au moment ou
+ * l'interet est le plus fort, le tableau sauterait au match suivant avant
+ * que le score soit saisi. Liste deja triee par date.
+ */
+export function matchDuTableau<T extends Pick<RencontreScoree, "etat" | "joueLe">>(
+  liste: T[],
+  maintenant: Date,
+): T | undefined {
+  const limite = maintenant.getTime() - DUREE_EN_COURS;
+  return liste.find((r) => r.etat === "a_venir" && r.joueLe.getTime() >= limite);
+}

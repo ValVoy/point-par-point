@@ -89,7 +89,7 @@ sous `prefers-reduced-motion` : les tableaux sont alors allumés d'emblée.
 - **Itinéraire** : lien sortant vers Google Maps avec l'adresse, sans script ni carte chargée.
 - **Vidéo** : façade serveur (miniature par l'optimiseur de Next, donc aucun appel du navigateur
   à Google) et composant client minimal pour le clic.
-- **Mouvement** : GSAP et ScrollTrigger déjà enregistrés ; une révélation par bloc, l'allumage des
+- **Mouvement** : GSAP et ScrollTrigger déjà enregistrés ; une révélation par bloc (opacité et position seulement, jamais la visibilité : critique du 30-09), l'allumage des
   tableaux par la variable `--allume`, tout sous `gsap.matchMedia()`.
 - **Vérification** : tests, `tsc`, lint, `next build`, rendu à l'écran en 390 et 1440 px avec les
   données de démonstration, puis chaque état vide provoqué à la main.

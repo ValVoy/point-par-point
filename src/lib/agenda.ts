@@ -78,3 +78,18 @@ export function evenementAgenda(e: EvenementAgenda): string {
   ];
   return lignes.map(plierLigne).join(CRLF) + CRLF;
 }
+
+/**
+ * Le meme evenement en lien Google Agenda, en secours du fichier .ics : un
+ * navigateur integre (Instagram, par exemple) ouvre mal un telechargement.
+ */
+export function lienGoogleAgenda(e: EvenementAgenda): string {
+  const fin = new Date(e.debut.getTime() + (e.duree ?? 120) * 60_000);
+  const lien = new URL("https://calendar.google.com/calendar/render");
+  lien.searchParams.set("action", "TEMPLATE");
+  lien.searchParams.set("text", e.titre);
+  lien.searchParams.set("dates", `${dateUtc(e.debut)}/${dateUtc(fin)}`);
+  if (e.lieu) lien.searchParams.set("location", e.lieu);
+  if (e.description) lien.searchParams.set("details", e.description);
+  return lien.toString();
+}

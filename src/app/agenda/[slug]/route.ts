@@ -52,6 +52,7 @@ export async function GET(_requete: Request, { params }: { params: Promise<{ slu
       "Content-Type": "text/calendar; charset=utf-8",
       "Content-Disposition": `attachment; filename="match-${slug}.ics"`,
       "Cache-Control": "no-store",
+      "X-Robots-Tag": "noindex",
     },
   });
 }

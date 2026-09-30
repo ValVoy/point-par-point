@@ -1,8 +1,8 @@
 import { and, desc, eq, isNull } from "drizzle-orm";
 import { db } from "./db";
 import { episodes } from "./db/schema";
-import { prochainMatch, rencontresDeLaSaison } from "./rencontres";
-import { derniersResultats } from "./resultats";
+import { rencontresDeLaSaison } from "./rencontres";
+import { derniersResultats, matchDuTableau } from "./resultats";
 import { saisonCourante } from "./saisons";
 
 /**
@@ -28,11 +28,8 @@ async function dernierEpisode() {
 }
 
 export async function donneesAccueil(maintenant = new Date()) {
-  const saison = await saisonCourante();
-  const [matchs, episode] = await Promise.all([
-    saison ? rencontresDeLaSaison(saison.id) : Promise.resolve([]),
-    dernierEpisode(),
-  ]);
+  const [saison, episode] = await Promise.all([saisonCourante(), dernierEpisode()]);
+  const matchs = saison ? await rencontresDeLaSaison(saison.id) : [];
 
   const resultats = derniersResultats(matchs);
   return {
@@ -40,7 +37,7 @@ export async function donneesAccueil(maintenant = new Date()) {
     // pur, et le compte a rebours part de la meme seconde que le reste.
     maintenant,
     saison: saison?.libelle ?? null,
-    prochain: prochainMatch(matchs, maintenant) ?? null,
+    prochain: matchDuTableau(matchs, maintenant) ?? null,
     dernier: resultats[0] ?? null,
     precedents: resultats.slice(1, 1 + NOMBRE_PRECEDENTS),
     episode,

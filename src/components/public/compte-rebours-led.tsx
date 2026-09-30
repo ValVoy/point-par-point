@@ -12,8 +12,10 @@ import { AfficheurLed } from "./afficheur-led";
  * quinze secondes, sans reveiller la page pour rien.
  *
  * Au coup d'envoi, les chiffres restent a zero et une legende le dit : un
- * compte a rebours fige a 00 sans explication a l'air casse. Au prochain
- * chargement, le match quitte le tableau pour les resultats.
+ * compte a rebours fige a 00 sans explication a l'air casse. Le match reste
+ * trois heures au tableau (lib/resultats.ts), puis laisse la place.
+ *
+ * Le texte pour les lecteurs d'ecran suit la meme valeur que les chiffres.
  */
 
 type Valeurs = ReturnType<typeof compteRebours>;
@@ -41,6 +43,11 @@ export function CompteReboursLed({ cible, initial }: { cible: string; initial: V
 
   return (
     <div>
+      <p className="sr-only">
+        {commence
+          ? "Match en cours."
+          : `Dans ${valeurs.jours} jours, ${valeurs.heures} heures et ${valeurs.minutes} minutes.`}
+      </p>
       <div aria-hidden="true" className="flex items-end justify-center gap-3 sm:gap-6">
         {unites.map((unite, index) => (
           <div key={unite.nom} className="flex items-end gap-3 sm:gap-6">
@@ -55,8 +62,11 @@ export function CompteReboursLed({ cible, initial }: { cible: string; initial: V
         ))}
       </div>
       {commence ? (
-        <p className="mt-4 text-center text-xs font-semibold tracking-[0.2em] text-[var(--color-jaune)] uppercase">
-          C&apos;est parti
+        <p
+          aria-hidden="true"
+          className="mt-4 text-center text-xs font-semibold tracking-[0.2em] text-[var(--color-jaune)] uppercase"
+        >
+          Match en cours
         </p>
       ) : null}
     </div>

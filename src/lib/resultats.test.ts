@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { compteRebours, derniersResultats, resultatDepuis, type RencontreScoree } from "./resultats";
+import { compteRebours, derniersResultats, matchDuTableau, resultatDepuis, type RencontreScoree } from "./resultats";
 
 const MINUTE = 60_000;
 const JOUR = 24 * 60 * MINUTE;
@@ -86,5 +86,26 @@ describe("derniersResultats", () => {
       derniersResultats(liste).map((r) => r.adversaire),
       ["B", "E", "A"],
     );
+  });
+});
+
+describe("matchDuTableau", () => {
+  const maintenant = new Date("2026-10-03T19:00:00Z");
+  const a = (heure: string, etat: RencontreScoree["etat"] = "a_venir") =>
+    rencontre({ adversaire: heure, joueLe: new Date(heure), etat, setsNous: null, setsEux: null });
+
+  it("garde un match commence depuis moins de trois heures : il est en cours", () => {
+    const liste = [a("2026-10-03T18:00:00Z"), a("2026-10-10T18:00:00Z")];
+    assert.equal(matchDuTableau(liste, maintenant)?.adversaire, "2026-10-03T18:00:00Z");
+  });
+
+  it("passe au suivant au-dela de trois heures", () => {
+    const liste = [a("2026-10-03T15:30:00Z"), a("2026-10-10T18:00:00Z")];
+    assert.equal(matchDuTableau(liste, maintenant)?.adversaire, "2026-10-10T18:00:00Z");
+  });
+
+  it("ignore un match annule ou reporte", () => {
+    const liste = [a("2026-10-04T18:00:00Z", "annulee"), a("2026-10-05T18:00:00Z", "reportee")];
+    assert.equal(matchDuTableau(liste, maintenant), undefined);
   });
 });

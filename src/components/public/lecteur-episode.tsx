@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
  * La facade du dernier episode (fiche fiches/accueil.md) : tant que personne
@@ -21,15 +21,22 @@ export function LecteurEpisode({
   children: ReactNode;
 }) {
   const [lance, setLance] = useState(false);
+  const lecteur = useRef<HTMLIFrameElement>(null);
+
+  // Le bouton disparait au profit du lecteur : le focus le suit, sans quoi il
+  // retomberait au debut de la page pour qui navigue au clavier.
+  useEffect(() => {
+    if (lance) lecteur.current?.focus();
+  }, [lance]);
 
   if (lance) {
     return (
       <iframe
+        ref={lecteur}
         className="absolute inset-0 size-full"
         src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0`}
         title={titre}
         allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-        allowFullScreen
       />
     );
   }

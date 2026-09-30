@@ -5,10 +5,15 @@ import { gsap, useGSAP } from "@/lib/gsap";
 
 /**
  * Le mouvement de l'accueil sous l'ouverture (fiche fiches/accueil.md). Deux
- * gestes, et pas un de plus : chaque bloc marque `data-revele` monte une fois
+ * gestes, et pas un de plus : chaque bloc marque `data-apparait` monte une fois
  * en entrant dans l'ecran, et chaque tableau marque `data-allume` s'allume
  * quand on arrive devant, avec un seul scintillement, comme un vrai tableau
  * qu'on met sous tension. Rien ne bouge pendant la lecture.
+ *
+ * La revelation ne touche que l'opacite et la position, jamais la visibilite :
+ * un bloc pas encore revele reste dans l'arbre d'accessibilite et joignable
+ * au clavier (critique du 30-09-2026). Et s'il recoit le focus avant d'avoir
+ * ete atteint au defilement, il se revele aussitot.
  *
  * Sous `prefers-reduced-motion`, rien ne s'execute : les blocs sont la, les
  * tableaux allumes (leur valeur par defaut de `--allume` est 1).
@@ -20,17 +25,35 @@ export function Revelations({ children }: { children: ReactNode }) {
     () => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        for (const bloc of gsap.utils.toArray<HTMLElement>("[data-revele]")) {
-          gsap.from(bloc, {
-            autoAlpha: 0,
-            y: 48,
-            duration: 0.9,
-            ease: "expo.out",
-            scrollTrigger: { trigger: bloc, start: "top 85%", once: true },
-          });
+        const noeud = racine.current;
+        if (!noeud) return;
+        const revelations = new Map<Element, gsap.core.Tween>();
+        for (const bloc of gsap.utils.toArray<HTMLElement>("[data-apparait]", noeud)) {
+          revelations.set(
+            bloc,
+            gsap.from(bloc, {
+              opacity: 0,
+              y: 48,
+              duration: 0.9,
+              ease: "expo.out",
+              scrollTrigger: { trigger: bloc, start: "top 85%", once: true },
+            }),
+          );
         }
 
-        for (const tableau of gsap.utils.toArray<HTMLElement>("[data-allume]")) {
+        const auFocus = (evenement: FocusEvent) => {
+          const bloc = (evenement.target as Element | null)?.closest("[data-apparait]");
+          const revelation = bloc ? revelations.get(bloc) : undefined;
+          if (revelation && revelation.progress() < 1) {
+            // kill(false, true) : on retire le declencheur sans tuer
+            // l'animation, qu'on amene ensuite a son etat final.
+            revelation.scrollTrigger?.kill(false, true);
+            revelation.progress(1);
+          }
+        };
+        noeud.addEventListener("focusin", auFocus);
+
+        for (const tableau of gsap.utils.toArray<HTMLElement>("[data-allume]", noeud)) {
           gsap.set(tableau, { "--allume": 0 });
           gsap
             .timeline({ scrollTrigger: { trigger: tableau, start: "top 75%", once: true }, delay: 0.25 })
@@ -38,6 +61,8 @@ export function Revelations({ children }: { children: ReactNode }) {
             .to(tableau, { "--allume": 0.35, duration: 0.06, ease: "none" })
             .to(tableau, { "--allume": 1, duration: 0.12, ease: "none" });
         }
+
+        return () => noeud.removeEventListener("focusin", auFocus);
       });
     },
     { scope: racine },
