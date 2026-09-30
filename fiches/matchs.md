@@ -87,3 +87,12 @@ annoncé.
   lien « Itinéraire » suffit au premier lot.
 - **Transition animée liste → match** (le tableau qui glisse) : belle place à prendre, mais le
   support navigateur est à vérifier avant d'en faire une promesse.
+
+## Complément du 01-10-2026 : le bilan de saison
+
+Choisi par l'utilisateur : enrichir le « victoires · défaites » sans rien demander de plus à
+l'ami. En tête de page, la grammaire des chiffres de la page joueur : bilan (V et D), sets gagnés
+et perdus, à domicile, à l'extérieur, puis la série en cours à partir de deux matchs (« 3
+victoires de suite », en jaune). Pas de pourcentage : sur huit matchs, il donnerait une précision
+qu'il n'a pas. Un match sans score saisi ne compte pas. Calcul pur dans `src/lib/bilan.ts`.
+

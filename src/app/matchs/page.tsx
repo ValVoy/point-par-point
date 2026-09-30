@@ -4,8 +4,10 @@ import { ActionsMatch } from "@/components/public/actions-match";
 import { PiedDePage } from "@/components/public/accueil/pied-de-page";
 import { EnTete } from "@/components/public/entete";
 import { LigneCalendrier } from "@/components/public/matchs/ligne-calendrier";
+import { BilanSaison } from "@/components/public/matchs/bilan-saison";
 import { TableauClassement } from "@/components/public/matchs/tableau-classement";
 import { TableauProchainMatch } from "@/components/public/tableau-prochain-match";
+import { bilanDeLaSaison } from "@/lib/bilan";
 import { DUREE_EN_COURS, grouperParMois } from "@/lib/calendrier";
 import { classementDeLaSaison, classementPublic } from "@/lib/classement-base";
 import { calendrierDeLaSaison } from "@/lib/matchs-publics";
@@ -25,15 +27,6 @@ export const metadata: Metadata = {
   description: `Le calendrier et les résultats de l'équipe D2 masculine du ${EQUIPE}.`,
 };
 
-function Bilan({ victoires, defaites }: { victoires: number; defaites: number }) {
-  if (victoires + defaites === 0) return null;
-  const pluriel = (n: number, mot: string) => `${n} ${mot}${n > 1 ? "s" : ""}`;
-  return (
-    <p className="mt-4 text-lg text-[var(--color-craie-douce)]">
-      {pluriel(victoires, "victoire")} · {pluriel(defaites, "défaite")}
-    </p>
-  );
-}
 
 /** Le filet entre ce qui est joue et ce qui vient, hors des listes : un vrai separateur. */
 function Aujourdhui() {
@@ -52,8 +45,7 @@ export default async function PageMatchs({ searchParams }: { searchParams: Promi
   const { maintenant, saison, saisons, matchs, racontes } = await calendrierDeLaSaison(demandee);
 
   const prochain = saison?.courante ? matchDuTableau(matchs, maintenant) : undefined;
-  const joues = matchs.filter((m) => m.etat === "jouee" && m.setsNous !== null && m.setsEux !== null);
-  const victoires = joues.filter((m) => m.setsNous! > m.setsEux!).length;
+  const bilan = bilanDeLaSaison(matchs);
   // Le filet « Aujourd'hui » se pose avant le premier match qui n'est pas encore derriere nous.
   const premierAVenir = matchs.find((m) => m.joueLe.getTime() >= maintenant.getTime() - DUREE_EN_COURS)?.id;
   // Saison courante : le classement disparait s'il n'est plus tenu (principe 4).
@@ -73,7 +65,7 @@ export default async function PageMatchs({ searchParams }: { searchParams: Promi
             {EQUIPE}
           </p>
           <h1 className="titre-affiche mt-3 text-6xl sm:text-8xl">Les matchs</h1>
-          <Bilan victoires={victoires} defaites={joues.length - victoires} />
+          <BilanSaison bilan={bilan} />
           {saisons.length > 1 ? (
             <nav aria-label="Saisons" className="mt-8">
               <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold">

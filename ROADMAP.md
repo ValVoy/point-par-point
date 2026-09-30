@@ -63,8 +63,10 @@ provisoire affiché une fois, rôles, désactivation) et « Mon compte » pour c
 **L'envoi des photos, la fiche joueur et le classement le 01-10-2026** (fiches `photos.md`,
 `fiche-joueur.md`, `classement.md`).
 
-Ensuite : décider du bilan de saison (la page Matchs dit déjà victoires et défaites, à compléter
-ou à clore), puis la liste « Avant la mise en ligne ».
+**Le bilan de saison le 01-10-2026**, enrichi à la demande de l'utilisateur : le lot 1 est
+construit.
+
+Ensuite : la liste « Avant la mise en ligne », dont la passe de sécurité complète.
 À vérifier avant la mise en ligne : l'accord de droit à l'image couvre le site ; mentions légales
 et politique de confidentialité.
 À régler avant la mise en ligne : la sauvegarde nocturne de cette base garde **30 jours** au plus, durée annoncée par la politique de confidentialité.
@@ -120,7 +122,7 @@ design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`
 - [x] Le projet et sa chronologie, l'équipe derrière
 - [x] Où nous voir jouer : salle, adresse, itinéraire (sans carte intégrée)
 - [x] Partenaires, contact
-- [ ] Bilan de saison calculé depuis les scores
+- [x] Bilan de saison calculé depuis les scores : victoires et défaites, sets, domicile et extérieur, série en cours (01-10-2026)
 - [x] Mentions légales et politique de confidentialité (30-09-2026)
 - [x] Compteur d'audience sans cookie : Umami (30-09-2026)
 - [ ] Favicon et identité visuelle (attend le vrai nom et les couleurs du maillot)

@@ -1471,3 +1471,23 @@ grand écran, et des chiffres écrits trop petit.
   cohérence.
 - Suite : décider du bilan de saison (la page Matchs dit déjà victoires et défaites), puis la
   liste « Avant la mise en ligne ».
+
+**00:19** · **[fonction] Le bilan de saison**
+
+L'utilisateur a d'abord demandé de quels scores il s'agissait : ceux que l'ami saisit après chaque
+match, aujourd'hui ceux des faux matchs de démonstration. Réponse ensuite : enrichir légèrement.
+
+En tête de la page Matchs, avec la grammaire des chiffres de la page joueur : bilan en victoires
+et défaites, sets gagnés et perdus, à domicile, à l'extérieur, et la série en cours à partir de
+deux matchs. Tout se calcule depuis les scores déjà saisis (principe 2), rien n'est stocké, un
+match sans score ne compte pas. La série se lit dans l'ordre des dates, pas dans celui de la
+saisie, testé.
+
+Avec ce bilan, les fonctions du lot 1 sont toutes construites.
+
+- Portée : `src/lib/bilan.ts` et son test, `components/public/matchs/bilan-saison.tsx`,
+  `app/matchs/page.tsx`, `fiches/matchs.md`, ROADMAP.
+- Vérifié : 129 tests, `tsc`, lint ; à l'écran en 1440 et 390 px : 3 V 2 D, 11 sets à 7,
+  3-0 à domicile, 0-2 à l'extérieur, aucune série affichée puisque les deux derniers matchs
+  diffèrent ; aucun débordement.
+- Suite : la liste « Avant la mise en ligne », à commencer par la passe de sécurité complète.
