@@ -1136,3 +1136,16 @@ adresse dans le presse-papiers de la machine.
 - Vérifié : 83 tests, `tsc`, lint ; pied de page et colonne mesurés sur un article ; aucun
   débordement à 375 px.
 - Suite : « Le projet », « Où nous voir », partenaires, contact, puis mentions légales.
+
+**18:00** · **[rectificatif] Le partage, corrigé pour de bon**
+
+L'entrée de 17:55 et le commit `79e1282` annonçaient le bouton « Partager » corrigé ; ce n'était
+pas vrai, le script de corrections ne touchait pas ce fichier. Relevé en relisant, corrigé
+maintenant : partage natif sur écran tactile seulement, copie du lien sinon, repli sur la copie
+si le partage échoue autrement que par une annulation, message « Copie impossible » en cas
+d'échec. Vérifié au navigateur avec une copie simulée, sans toucher au presse-papiers réel.
+
+- Portée : `src/components/public/actualites/partager.tsx`.
+- Vérifié : `tsc`, lint ; clic en 1440 px : copie appelée, partage natif non appelé, « Lien
+  copié. » annoncé.
+- Suite : « Le projet », « Où nous voir », partenaires, contact, puis mentions légales.

@@ -3,35 +3,47 @@
 import { useState } from "react";
 
 /**
- * Partager un article : le partage natif du telephone quand il existe
- * (Instagram, WhatsApp, messages), sinon la copie du lien. Aucun bouton de
- * reseau social, donc aucun script tiers ni pistage.
+ * Partager un article. Sur un ecran tactile, le partage natif du telephone
+ * (Instagram, WhatsApp, messages) ; sur un ordinateur, la copie du lien, que
+ * Windows et macOS exposent aussi navigator.share mais ouvrent une feuille
+ * peu utile. Si le partage natif echoue pour une autre raison qu'une
+ * annulation, on se rabat sur la copie. Aucun bouton de reseau social, donc
+ * aucun script tiers ni pistage.
  */
 export function Partager({ titre }: { titre: string }) {
-  const [copie, setCopie] = useState(false);
+  const [message, setMessage] = useState("");
 
-  async function partager() {
-    const url = window.location.href;
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: titre, url });
-        return;
-      } catch {
-        // Partage annule par le visiteur : rien a faire.
-        return;
-      }
-    }
+  function annoncer(texte: string) {
+    setMessage(texte);
+    window.setTimeout(() => setMessage(""), 2500);
+  }
+
+  async function copier(url: string) {
     try {
       await navigator.clipboard.writeText(url);
-      setCopie(true);
-      window.setTimeout(() => setCopie(false), 2500);
+      annoncer("Lien copié.");
     } catch {
-      // Presse-papiers refuse : le lien reste dans la barre d'adresse.
+      annoncer("Copie impossible : le lien est dans la barre d'adresse.");
     }
   }
 
+  async function partager() {
+    const url = window.location.href;
+    const tactile = window.matchMedia("(pointer: coarse)").matches;
+    if (tactile && navigator.share) {
+      try {
+        await navigator.share({ title: titre, url });
+        return;
+      } catch (erreur) {
+        // Le visiteur a ferme la feuille de partage : rien a faire.
+        if (erreur instanceof DOMException && erreur.name === "AbortError") return;
+      }
+    }
+    await copier(url);
+  }
+
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex flex-wrap items-center gap-4">
       <button
         type="button"
         onClick={partager}
@@ -40,7 +52,7 @@ export function Partager({ titre }: { titre: string }) {
         Partager l&apos;article
       </button>
       <p role="status" className="text-sm text-[var(--color-craie-douce)]">
-        {copie ? "Lien copié." : ""}
+        {message}
       </p>
     </div>
   );
