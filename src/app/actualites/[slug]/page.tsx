@@ -102,7 +102,7 @@ export default async function PageActualite({ params }: Parametres) {
 
           {image ? (
             <div className="relative mt-12 aspect-[3/2] max-w-5xl overflow-hidden bg-[var(--color-nuit-surface)]">
-              <Image src={image} alt="" fill priority sizes="(min-width: 1024px) 64rem, 100vw" className="object-cover" />
+              <Image src={image} alt={actualite.imageDescription ?? ""} fill priority sizes="(min-width: 1024px) 64rem, 100vw" className="object-cover" />
             </div>
           ) : null}
 

@@ -18,6 +18,7 @@ export function ChampImage({
   aide,
   forme = "portrait",
   position,
+  description,
 }: {
   nom: string;
   libelle: string;
@@ -26,6 +27,12 @@ export function ChampImage({
   forme?: "portrait" | "paysage" | "logo";
   /** `object-position` de la photo en place (point de visage d'un joueur). */
   position?: string;
+  /**
+   * Propose un champ « Ce que montre l'image » (`<nom>_description`), lu aux
+   * lecteurs d'ecran (audit U9). Absent pour les photos de personnes, dont le
+   * nom est deja dit a cote.
+   */
+  description?: { valeur: string | null };
 }) {
   const [apercu, setApercu] = useState<string | null>(null);
   const [trop, setTrop] = useState(false);
@@ -108,6 +115,19 @@ export function ChampImage({
             <p role="alert" className="text-xs text-[var(--color-erreur)]">
               Cette photo dépasse 12 Mo : elle sera refusée. Choisissez une version plus légère.
             </p>
+          ) : null}
+          {description ? (
+            <label className="block text-sm text-[var(--color-craie-douce)]">
+              Ce que montre l&apos;image{" "}
+              <span className="text-xs text-[var(--color-craie-tenue)]">(facultatif, lu aux personnes aveugles)</span>
+              <input
+                name={`${nom}_description`}
+                defaultValue={description.valeur ?? ""}
+                maxLength={200}
+                placeholder="L'équipe célèbre le point de la victoire"
+                className="mt-1.5 block w-full rounded-lg border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] px-3 py-2 text-base text-[var(--color-craie)] focus:border-[var(--color-turquoise)]"
+              />
+            </label>
           ) : null}
           {actuelle && !apercu ? (
             <label className="inline-flex min-h-11 items-center gap-2 text-sm text-[var(--color-craie-douce)]">

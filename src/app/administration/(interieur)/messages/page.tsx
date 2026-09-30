@@ -1,8 +1,10 @@
+import { EffacerDefinitivement } from "@/components/effacer-definitivement";
+import { peut } from "@/lib/auth/roles";
 import { exigerDroit } from "@/lib/auth/session-courante";
 import { SUJETS, type Sujet } from "@/lib/contact";
 import { dateCourte, heure } from "@/lib/dates";
 import { messagesActifs, messagesALaCorbeille } from "@/lib/messages";
-import { basculerLu, mettreMessageALaCorbeille, restaurerMessage } from "./actions";
+import { basculerLu, effacerMessageDefinitivement, mettreMessageALaCorbeille, restaurerMessage } from "./actions";
 
 export const metadata = { title: "Messages" };
 
@@ -19,7 +21,8 @@ function lienReponse(email: string, sujet: string | null) {
 }
 
 export default async function PageMessages() {
-  await exigerDroit("lireMessages");
+  const utilisateur = await exigerDroit("lireMessages");
+  const peutEffacer = peut(utilisateur, "viderCorbeille");
   const [liste, corbeille] = await Promise.all([messagesActifs(), messagesALaCorbeille()]);
   const nonLus = liste.filter((m) => !m.lu).length;
 
@@ -96,11 +99,18 @@ export default async function PageMessages() {
             {corbeille.map((m) => (
               <li
                 key={m.id}
-                className="flex items-center gap-4 rounded-lg border border-dashed border-[var(--color-nuit-trait)] px-4 py-2.5 text-sm"
+                className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg border border-dashed border-[var(--color-nuit-trait)] px-4 py-2.5 text-sm"
               >
                 <span className="min-w-0 truncate text-[var(--color-craie-tenue)]">
                   {m.nom}, {dateCourte(m.creeLe)}
                 </span>
+                {peutEffacer ? (
+                  <EffacerDefinitivement
+                    action={effacerMessageDefinitivement}
+                    champs={{ id: m.id }}
+                    explication="Je comprends que c'est définitif"
+                  />
+                ) : null}
                 <form action={restaurerMessage} className="ml-auto">
                   <input type="hidden" name="id" value={m.id} />
                   <button type="submit" className="text-[var(--color-turquoise)] action-admin">

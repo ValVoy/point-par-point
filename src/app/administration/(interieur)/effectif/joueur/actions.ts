@@ -7,6 +7,8 @@ import { db } from "@/lib/db";
 import { joueurs } from "@/lib/db/schema";
 import { lireImageDuFormulaire } from "@/lib/envoi-image";
 import { lireFicheJoueur } from "@/lib/fiche-joueur";
+import { effacerJoueur } from "@/lib/effacement";
+import { redirect } from "next/navigation";
 
 /**
  * La fiche d'un joueur (fiche fiches/fiche-joueur.md). L'adresse publique ne
@@ -57,4 +59,22 @@ export async function enregistrerFicheJoueur(_precedent: EtatFiche, donnees: For
   revalidatePath("/effectif");
   revalidatePath(`/effectif/${joueur.slug}`);
   return { erreur: null, enregistre: true };
+}
+
+/**
+ * Effacement definitif d'un joueur (audit R1, R2) : sa fiche, ses lignes
+ * d'effectif de toutes les saisons, ses feuilles de match et sa photo. Pour
+ * une demande de retrait ; un depart se gere en le retirant de l'effectif.
+ */
+export async function effacerJoueurDefinitivement(donnees: FormData): Promise<void> {
+  await exigerDroit("viderCorbeille");
+  if (donnees.get("confirme") !== "1") return;
+  const id = Number(donnees.get("id"));
+  if (!Number.isInteger(id) || id <= 0) return;
+  if (await effacerJoueur(id)) {
+    revalidatePath("/administration/effectif");
+    revalidatePath("/effectif");
+    revalidatePath("/matchs");
+    redirect("/administration/effectif");
+  }
 }

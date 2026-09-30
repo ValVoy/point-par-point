@@ -10,6 +10,7 @@ import { exigerDroit } from "@/lib/auth/session-courante";
 import { deplacer, ordreSuivant, tableOrdonnee, type ListeOrdonnee } from "@/lib/ordre";
 import { adresseSure } from "@/lib/texte-leger";
 import { lireImageDuFormulaire, type IssueImage } from "@/lib/envoi-image";
+import { effacerElementProjet, type ListeEffacable } from "@/lib/effacement";
 
 /**
  * La vitrine du projet : chronologie, equipe derriere, partenaires. Reservee
@@ -66,12 +67,13 @@ const schemaEtape = z.object({
   texte: texteFacultatif(2000, "Le texte"),
   survenuLe: z.string().regex(/^(\d{4}-\d{2}-\d{2})?$/, "Date invalide.").optional(),
   dateLibre: texteFacultatif(40, "La période"),
+  image_description: texteFacultatif(200, "La description de l'image"),
 });
 
 function colonnesEtape(donnees: FormData) {
   const analyse = schemaEtape.safeParse(valeurs(donnees));
   if (!analyse.success) return { erreur: analyse.error.issues[0]?.message ?? "Saisie invalide." };
-  const { titre, texte, survenuLe, dateLibre } = analyse.data;
+  const { titre, texte, survenuLe, dateLibre, image_description: imageDescription } = analyse.data;
   if (!survenuLe && !dateLibre) {
     return { erreur: "Donnez une date, ou une période comme « printemps 2026 »." };
   }
@@ -82,6 +84,7 @@ function colonnesEtape(donnees: FormData) {
       // Une date seule, a midi en heure universelle : aucun fuseau ne la fait changer de jour.
       survenuLe: survenuLe ? new Date(`${survenuLe}T12:00:00Z`) : null,
       dateLibre: dateLibre || null,
+      imageDescription: imageDescription || null,
     },
   };
 }
@@ -301,4 +304,22 @@ export async function enregistrerVenirALaSalle(_precedent: EtatProjet, donnees: 
 
   revalidatePath(`${CHEMIN}/salle`);
   return { erreur: null, valeurs: { texte, enregistre: "1" } };
+}
+
+/**
+ * Effacement definitif d'un element deja a la corbeille, image comprise
+ * (audit R1, R2). Reserve a `viderCorbeille`, confirme a l'ecran.
+ */
+export async function effacerElementDefinitivement(donnees: FormData): Promise<void> {
+  await exigerDroit("viderCorbeille");
+  if (donnees.get("confirme") !== "1") return;
+  const liste = lireListe(donnees);
+  const id = lireIdentifiant(donnees);
+  if (!liste || !id) return;
+  if (await effacerElementProjet(liste as ListeEffacable, id)) {
+    revalidatePath(CHEMINS[liste]);
+    revalidatePath("/le-projet");
+    revalidatePath("/partenaires");
+    revalidatePath("/effectif");
+  }
 }

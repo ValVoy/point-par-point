@@ -69,6 +69,7 @@ export default async function PageChronologie() {
                     dateLibre: etape.dateLibre ?? "",
                     texte: etape.texte ?? "",
                     imageActuelle: urlPhoto(etape.imageCle) ?? "",
+                    image_description: etape.imageDescription ?? "",
                   }}
                 />
               </LigneElement>

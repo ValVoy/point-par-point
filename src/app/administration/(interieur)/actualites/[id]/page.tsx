@@ -61,6 +61,7 @@ export default async function PageActualite({
               chapo: actualite.chapo ?? "",
               corps: actualite.corps,
               image: urlPhoto(actualite.imageCle),
+              imageDescription: actualite.imageDescription,
             }}
           />
         </div>

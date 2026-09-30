@@ -38,6 +38,12 @@ function lireIdentifiant(valeur: FormDataEntryValue | null) {
   return Number.isInteger(nombre) && nombre > 0 ? nombre : null;
 }
 
+/** Ce que montre l'illustration (audit U9), 200 caracteres au plus. */
+function lireDescription(donnees: FormData): string | null {
+  const brut = (donnees.get("image_description") ?? "").toString().trim().slice(0, 200);
+  return brut || null;
+}
+
 function lire(donnees: FormData) {
   return schema.safeParse({
     titre: donnees.get("titre")?.toString(),
@@ -71,6 +77,7 @@ export async function creerActualite(
         slug: await slugActualiteLibre(analyse.data.titre),
         etat: "brouillon",
         imageCle: image.cle ?? null,
+        imageDescription: lireDescription(donnees),
       })
       .returning({ id: actualites.id });
   } catch (erreur) {
@@ -125,6 +132,7 @@ export async function modifierActualite(
         corps: analyse.data.corps,
         slug,
         ...(image.cle === undefined ? {} : { imageCle: image.cle }),
+        imageDescription: lireDescription(donnees),
         modifieLe: new Date(),
       })
       .where(eq(actualites.id, id));

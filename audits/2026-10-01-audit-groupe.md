@@ -18,15 +18,15 @@ RELU, PLAUSIBLE.
 | Gravité | Nombre | Corrigés en séance |
 |---|---|---|
 | Critique | 0 | 0 |
-| Élevée | 15 | 11 (dont F2 partiel) ; 4 restent (R1, R2, F3, F4) |
-| Moyenne | 37 | 24 |
-| Faible | 35 | 23 |
-| Amélioration | 10 | 8 |
-| **Total** | **97** | **66** |
+| Élevée | 15 | 13 (dont F2 partiel) ; 2 restent (F3, F4) |
+| Moyenne | 37 | 28 |
+| Faible | 35 | 24 |
+| Amélioration | 10 | 10 |
+| **Total** | **97** | **75** |
 
-Les quatre élevés restants ne sont pas du code sûr à corriger seul : l'effacement définitif
-(R1, R2) est une fonction à trancher, les sauvegardes de la base et des photos (F3, F4) sont des
-réglages de l'utilisateur sur son serveur, **à faire avant la mise en ligne**.
+Après les arbitrages du 01-10-2026, les deux élevés restants sont les sauvegardes de la base et
+des photos (F3, F4) : des réglages sur le serveur, **à faire avant la mise en ligne**. Le reste
+ouvert est une démarche (accords, registre, mentions) ou une petite dette listée « À FAIRE ».
 
 ## `secu`, DevSecOps
 
@@ -41,10 +41,10 @@ Recension : 13 fichiers d'actions serveur, 47 fonctions, 44 d'administration tou
 | S4 | moyenne | Blocage à distance du compte par 5 essais | CORRIGÉ : 5 par couple adresse et réseau, 30 par adresse, 50 par réseau | PROUVÉ (bloqué depuis l'attaquant, connexion d'ailleurs réussie) |
 | S5 | faible | Rafale simultanée avant le premier échec noté | CORRIGÉ : tentative réservée avant bcrypt | RELU |
 | S6 | faible | Confiance dans `X-Forwarded-For` selon l'infrastructure | À VÉRIFIER au déploiement (port non exposé hors Traefik) | PLAUSIBLE |
-| S7 | faible | Corps de 13 Mo accepté par toutes les actions | À ARBITRER (limite Traefik) | RELU |
-| S8 | faible | Pas de CSP, `X-Powered-By` exposé | PARTIEL : en-tête retiré ; CSP À ARBITRER | PROUVÉ |
+| S7 | faible | Corps de 13 Mo accepté par toutes les actions | DÉCIDÉ : limites Traefik posées au déploiement (ROADMAP) | RELU |
+| S8 | faible | Pas de CSP, `X-Powered-By` exposé | CORRIGÉ : en-tête retiré, CSP de base (0 violation sur 15 pages) | PROUVÉ |
 | S9 | faible | Script Umami exécuté dans l'administration | CORRIGÉ : porté par le pied de page public | PROUVÉ |
-| S10 | faible | Next 16.3.5 visé par un avis (`next/og`, non utilisé) | À ARBITRER : 16.3.6 éligible le 07-10 | RELU |
+| S10 | faible | Next 16.3.5 visé par un avis (`next/og`, non utilisé) | DÉCIDÉ : 16.3.6 le 07-10 (ROADMAP) | RELU |
 | S11 | faible | Clé de stockage : `.` non échappé | CORRIGÉ, test ajouté | PROUVÉ |
 | S12 | faible | Sessions expirées jamais purgées, pas d'échéance absolue | CORRIGÉ : purge commune, 90 jours absolus | PROUVÉ |
 | S13 | amélioration | bcrypt tronque à 72 octets sans le dire | CORRIGÉ | RELU |
@@ -52,7 +52,7 @@ Recension : 13 fichiers d'actions serveur, 47 fonctions, 44 d'administration tou
 | S15 | amélioration | `changerRole` valide avant la garde | CORRIGÉ | PROUVÉ |
 | S16 | amélioration | Dépendances en `^` | CORRIGÉ : versions exactes, verrou inchangé | RELU |
 | S17 | amélioration | `.dockerignore` sans photos locales | CORRIGÉ | RELU |
-| S18 | amélioration | iframe sans `referrerPolicy`, nom de base dans `.env.example`, HSTS `preload` | PARTIEL : deux premiers corrigés ; `preload` À ARBITRER | RELU |
+| S18 | amélioration | iframe sans `referrerPolicy`, nom de base dans `.env.example`, HSTS `preload` | CORRIGÉ : `preload` retiré jusqu'au choix du domaine | RELU |
 
 ## `dev`, développeur senior
 
@@ -87,15 +87,15 @@ Recension : 13 fichiers d'actions serveur, 47 fonctions, 44 d'administration tou
 
 | Id | Gravité | Constat | Statut | Vérif. |
 |---|---|---|---|---|
-| R1 | élevée | Effacement promis, impossible depuis l'administration | À ARBITRER | PROUVÉ |
-| R2 | élevée | Photo d'un élément à la corbeille toujours en ligne sur R2 | À ARBITRER (avec R1) | RELU |
-| R3 | moyenne | Durées tenues seulement si un événement suit | CORRIGÉ au passage (`purges.ts`) ; tâche nocturne À ARBITRER | PROUVÉ |
+| R1 | élevée | Effacement promis, impossible depuis l'administration | CORRIGÉ : effacement définitif confirmé (joueur, staff, partenaire, étape, message) | PROUVÉ |
+| R2 | élevée | Photo d'un élément à la corbeille toujours en ligne sur R2 | CORRIGÉ : l'objet est effacé avec la ligne | PROUVÉ |
+| R3 | moyenne | Durées tenues seulement si un événement suit | CORRIGÉ : `purges.ts` au passage, et `POST /taches/purge` protégé pour la tâche nocturne | PROUVÉ |
 | R4 | faible | Sessions expirées accumulées | CORRIGÉ | PROUVÉ |
 | R5 | moyenne | Sauvegarde décrite au présent, survie dans les sauvegardes non dite | PARTIEL : phrase ajoutée ; sauvegarde À VÉRIFIER avant la mise en ligne | RELU |
 | R6 | moyenne | Aucune durée pour Umami | À VÉRIFIER (purge à 25 mois sur le serveur, puis la page) | RELU |
 | R7 | moyenne | L'hébergeur nommé ne connaît pas l'éditeur ; article 6 à revérifier (loi SREN) | À VÉRIFIER (Valentin et Tom) | PLAUSIBLE |
 | R8 | moyenne | Sous-traitance Tom-Valentin non écrite, DPA et transferts non vérifiés | À VÉRIFIER | RELU |
-| R9 | moyenne | Consentement des joueurs non démontrable, mineurs | À VÉRIFIER (accords écrits) ; champs dans le code À ARBITRER | RELU |
+| R9 | moyenne | Consentement des joueurs non démontrable, mineurs | À VÉRIFIER : accords écrits tenus par Tom (pas de champ dans le site, décision du 01-10) | RELU |
 | R10 | faible | Pas de registre, portabilité à la main | À VÉRIFIER (Tom) | RELU |
 | R11 | faible | Rien ne dit que le clic charge YouTube | CORRIGÉ | RELU |
 | R12 | amélioration | Pas de sujet « Mes données » | CORRIGÉ | RELU |
@@ -130,8 +130,8 @@ Recension : 13 fichiers d'actions serveur, 47 fonctions, 44 d'administration tou
 | G6 | faible | Saison coupée au trait d'union | CORRIGÉ | PROUVÉ |
 | G7 | faible | Séparateurs de score différents | CORRIGÉ (trait d'union partout) | PROUVÉ |
 | G8 | faible | Onglets du projet sur deux lignes, 36 px | CORRIGÉ | PROUVÉ |
-| G9 | amélioration, composition | Six espacements de capitales, cinq rayons | À ARBITRER | RELU |
-| G10 | amélioration, composition | Aides en 12 px | À ARBITRER | RELU |
+| G9 | amélioration, composition | Six espacements de capitales, cinq rayons | CORRIGÉ dans l'administration : deux espacements, deux rayons | PROUVÉ |
+| G10 | amélioration, composition | Aides en 12 px | CORRIGÉ : aides sous les champs en 14 px | RELU |
 
 ## `ux`
 
@@ -145,12 +145,12 @@ Recension : 13 fichiers d'actions serveur, 47 fonctions, 44 d'administration tou
 | U6 | moyenne | Tableau de bord aveugle au classement et aux messages | CORRIGÉ | PROUVÉ |
 | U7 | moyenne | Saisie perdue en quittant | PARTIEL : classement et actualités ; calendrier et effectif À FAIRE | RELU |
 | U8 | moyenne | Aides non reliées, « Compétitionfacultatif » | CORRIGÉ | PROUVÉ |
-| U9 | moyenne | Aucune description d'image possible | À ARBITRER | PROUVÉ |
+| U9 | moyenne | Aucune description d'image possible | CORRIGÉ : champ facultatif, actualités et chronologie (migration 0009) | PROUVÉ |
 | U10 | faible | « ... » pendant l'envoi | CORRIGÉ | PROUVÉ |
 | U11 | faible | Boutons corbeille indistincts | CORRIGÉ | RELU |
-| U12 | faible | Navigations sans nom, même h1 sur trois pages | PARTIEL : noms posés ; h1 À ARBITRER | PROUVÉ |
-| U13 | moyenne, composition | Vitrine absente de l'en-tête en grand écran | À ARBITRER | RELU |
-| U14 | moyenne, composition | Le staff se modifie loin de l'effectif | À ARBITRER | RELU |
+| U12 | faible | Navigations sans nom, même h1 sur trois pages | CORRIGÉ : « La série », « Le projet » | PROUVÉ |
+| U13 | moyenne, composition | Vitrine absente de l'en-tête en grand écran | CORRIGÉ à partir de 1024 px | RELU |
+| U14 | moyenne, composition | Le staff se modifie loin de l'effectif | CORRIGÉ : lien depuis l'effectif | RELU |
 | U15 | amélioration, composition | Classement caché derrière un bouton secondaire | CORRIGÉ par U6 (carte du tableau de bord) | RELU |
 
 ## `redaction`
@@ -178,8 +178,9 @@ Recension : 13 fichiers d'actions serveur, 47 fonctions, 44 d'administration tou
    revérifiée sur Légifrance (R7) ; note de sous-traitance d'une page, DPA Turso et Cloudflare
    (R8) ; registre des traitements (R10).
 5. Accords écrits des joueurs couvrant le site, accord parental des mineurs (R9).
-6. Coolify : vérification de santé sur `/sante`, variables de build `R2_DOMAINE_PUBLIC` et
-   `NEXT_PUBLIC_SITE_URL`, migrations 0002 à 0008 **avant** le déploiement (F5, F7, F10).
+6. Coolify : vérification de santé sur `/sante` ; variables de build `R2_DOMAINE_PUBLIC`,
+   `NEXT_PUBLIC_SITE_URL` et `UMAMI_URL` (lues par la CSP) ; `PURGE_JETON` et la tâche nocturne ;
+   limites Traefik ; migrations 0002 à 0009 **avant** le déploiement (F5, F7, F10, R3, S7).
 7. Une fiche « que faire si » de dix lignes pour Tom (F12).
 
 ## Pour le prochain passage

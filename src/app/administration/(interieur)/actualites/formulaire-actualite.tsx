@@ -22,6 +22,7 @@ export type ActualiteModifiable = {
   corps: string;
   /** Adresse de l'illustration en place, calculee par la page. */
   image: string | null;
+  imageDescription: string | null;
 };
 
 export function FormulaireActualite({ actualite }: { actualite?: ActualiteModifiable }) {
@@ -85,6 +86,7 @@ export function FormulaireActualite({ actualite }: { actualite?: ActualiteModifi
         libelle="Illustration"
         actuelle={actualite?.image ?? null}
         forme="paysage"
+        description={{ valeur: actualite?.imageDescription ?? null }}
         aide="En tête de l'article et dans la liste. JPEG, PNG, WebP ou AVIF, 12 Mo au plus. À choisir de nouveau si l'enregistrement est refusé."
       />
 

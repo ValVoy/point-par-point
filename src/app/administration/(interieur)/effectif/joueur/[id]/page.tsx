@@ -6,7 +6,9 @@ import { pourChampDate } from "@/lib/dates";
 import { db } from "@/lib/db";
 import { joueurs } from "@/lib/db/schema";
 import { urlPhoto } from "@/lib/effectif-public";
+import { EffacerDefinitivement } from "@/components/effacer-definitivement";
 import { FormulaireFiche } from "../formulaire-fiche";
+import { effacerJoueurDefinitivement } from "../actions";
 
 export const metadata = { title: "Fiche joueur" };
 
@@ -52,6 +54,24 @@ export default async function PageFicheJoueur({ params }: { params: Promise<{ id
           visageY: j.visageY,
         }}
       />
+
+      {/* Pour une demande de retrait (politique de confidentialite, audit R1). */}
+      <section className="mt-12 max-w-3xl rounded-xl border border-[var(--color-erreur)]/60 p-5">
+        <h2 className="font-semibold">Effacer ce joueur</h2>
+        <p className="mt-1 max-w-prose text-sm text-[var(--color-craie-douce)]">
+          À faire seulement s&apos;il demande le retrait de ses données : sa fiche, sa photo, sa présence dans les
+          effectifs de toutes les saisons et ses feuilles de match disparaissent pour de bon. S&apos;il quitte
+          simplement l&apos;équipe, retirez-le plutôt de l&apos;effectif de la saison.
+        </p>
+        <div className="mt-4">
+          <EffacerDefinitivement
+            action={effacerJoueurDefinitivement}
+            champs={{ id: j.id }}
+            libelle={`Effacer ${j.prenom} ${j.nom}`}
+            explication="Je comprends que c'est définitif"
+          />
+        </div>
+      </section>
     </>
   );
 }

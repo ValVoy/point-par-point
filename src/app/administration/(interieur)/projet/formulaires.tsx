@@ -47,7 +47,13 @@ export function FormulaireEtape({ initiales = {} }: { initiales?: Valeurs }) {
         />
       </div>
       <ZoneTexte nom="texte" libelle="Récit" valeur={valeur("texte")} lignes={4} max={2000} />
-      <ChampImage nom="image" libelle="Illustration" actuelle={initiales.imageActuelle || null} forme="paysage" />
+      <ChampImage
+        nom="image"
+        libelle="Illustration"
+        actuelle={initiales.imageActuelle || null}
+        forme="paysage"
+        description={{ valeur: valeur("image_description") || null }}
+      />
       <Erreur message={etat.erreur} />
       <BoutonEnvoi>{initiales.id ? "Enregistrer" : "Ajouter en brouillon"}</BoutonEnvoi>
     </form>

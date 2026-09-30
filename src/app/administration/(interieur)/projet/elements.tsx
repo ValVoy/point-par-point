@@ -1,5 +1,6 @@
 import type { ListeOrdonnee } from "@/lib/ordre";
-import { corbeilleElement, deplacerElement } from "./actions";
+import { EffacerDefinitivement } from "@/components/effacer-definitivement";
+import { corbeilleElement, deplacerElement, effacerElementDefinitivement } from "./actions";
 
 /**
  * Briques partagees par les trois listes de la vitrine : une ligne qui se
@@ -107,14 +108,22 @@ export function Corbeille({
   return (
     <section className="mt-8">
       <h2 className="text-sm font-semibold text-[var(--color-craie-douce)]">Corbeille</h2>
-      <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">Rien n&apos;est effacé : ces éléments peuvent revenir.</p>
+      <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">
+        Ces éléments peuvent revenir. Pour retirer pour de bon une personne ou une photo, sur demande par exemple,
+        effacez-les définitivement.
+      </p>
       <ul className="mt-3 space-y-2">
         {elements.map((element) => (
           <li
             key={element.id}
-            className="flex items-center gap-4 rounded-lg border border-dashed border-[var(--color-nuit-trait)] px-4 py-2.5 text-sm"
+            className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg border border-dashed border-[var(--color-nuit-trait)] px-4 py-2.5 text-sm"
           >
             <span className="text-[var(--color-craie-tenue)]">{element.libelle}</span>
+            <EffacerDefinitivement
+              action={effacerElementDefinitivement}
+              champs={{ liste, id: element.id }}
+              explication="Je comprends que c'est définitif"
+            />
             <form action={corbeilleElement} className="ml-auto">
               <input type="hidden" name="liste" value={liste} />
               <input type="hidden" name="id" value={element.id} />

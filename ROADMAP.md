@@ -70,7 +70,7 @@ Ensuite : la liste « Avant la mise en ligne », dont la passe de sécurité com
 À vérifier avant la mise en ligne : l'accord de droit à l'image couvre le site ; mentions légales
 et politique de confidentialité.
 À régler avant la mise en ligne : la sauvegarde nocturne de cette base garde **30 jours** au plus, durée annoncée par la politique de confidentialité.
-À préparer pour la mise en ligne : appliquer en production les migrations 0002 à 0008
+À préparer pour la mise en ligne : appliquer en production les migrations 0002 à 0009
 (anciennes adresses, réglages), avec l'accord de l'utilisateur.
 Reporté : abonnement d'agenda à toute la saison, carte statique, transition animée liste → match.
 Le nom (« Point Par Point ») et la chaîne YouTube sont arrivés le 30-09-2026 et sont en place.
@@ -179,14 +179,17 @@ zéro, la logique reste.
 - [ ] Déploiement Coolify depuis `main`
 - [ ] Sonde Todai sur le domaine
 - [ ] Sauvegarde nocturne de la base Turso, **30 jours** au plus (durée annoncée par la politique de confidentialité)
-- [ ] Migrations 0002 à 0008 appliquées en production, **avant** le déploiement du code, avec l'accord de l'utilisateur
+- [ ] Migrations 0002 à 0009 appliquées en production, **avant** le déploiement du code, avec l'accord de l'utilisateur
 - [ ] Umami : poser `UMAMI_URL=https://stats.valentincheron.fr` et
   `UMAMI_SITE_ID=15868b64-5057-4ce2-bc1a-0bc7adbc6eaa` en variables d'**exécution** (relire
   `is_buildtime` par l'API, Coolify coche Buildtime par défaut) ; renseigner le domaine du site
   dans Umami ; mettre en place la sauvegarde de la base d'Umami ; vérifier qu'une visite apparaît
   (un bloqueur de publicité peut arrêter `script.js`)
 - [ ] Accord de droit à l'image couvrant le site, accord parental pour les mineurs (audit R9)
-- [ ] Coolify : vérification de santé sur `/sante`, variables de build `R2_DOMAINE_PUBLIC` et `NEXT_PUBLIC_SITE_URL` (audit F5, F7)
+- [ ] Coolify : vérification de santé sur `/sante` ; variables de build `R2_DOMAINE_PUBLIC`, `NEXT_PUBLIC_SITE_URL` et `UMAMI_URL` (la CSP les fige à la compilation) (audit F5, F7, S8)
+- [ ] Purge nocturne : `PURGE_JETON` (32 caractères au moins) en variable d'exécution, et une tâche planifiée Coolify qui lance `wget -q -O - --post-data="" --header="Authorization: Bearer $PURGE_JETON" http://127.0.0.1:3000/taches/purge` (audit R3)
+- [ ] Traefik : 64 Ko de corps hors administration, limite de débit sur `/contact` et la connexion (audit S7)
+- [ ] Le 07-10-2026 au plus tôt : Next 16.3.6 (correctif de sécurité, règle des 15 jours), contrôle des dépendances tirées (audit S10)
 - [ ] Copie nocturne des photos R2, restauration testée avec la base (audit F3) ; seconde copie vérifiée de la clé `age` (F4)
 - [ ] Umami : purge au-delà de 25 mois, puis la durée dans la politique (audit R6)
 - [ ] Mentions légales : coordonnées de Tom chez l'hébergeur réel, article 6 revérifié ; note de sous-traitance ; registre (audit R7, R8, R10)

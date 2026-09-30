@@ -9,7 +9,7 @@ import type { MetadataRoute } from "next";
 export default function robots(): MetadataRoute.Robots {
   const site = process.env.NEXT_PUBLIC_SITE_URL;
   return {
-    rules: { userAgent: "*", allow: "/", disallow: ["/administration", "/planche", "/prototype", "/fichiers-locaux", "/sante", "/agenda"] },
+    rules: { userAgent: "*", allow: "/", disallow: ["/administration", "/planche", "/prototype", "/fichiers-locaux", "/sante", "/agenda", "/taches"] },
     ...(site ? { sitemap: new URL("/sitemap.xml", site).toString() } : {}),
   };
 }

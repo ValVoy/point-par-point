@@ -1523,3 +1523,30 @@ du serveur avant la mise en ligne.
   0 champ sans étiquette sur le projet, 0 cible sous 44 px dans l'en-tête à 390 px. Comptes et
   tentatives d'essai supprimés.
 - Suite : les questions d'arbitrage de l'audit, puis les démarches « Avant la mise en ligne ».
+
+
+**01:29** · **[audit] Les arbitrages de l'audit**
+
+L'utilisateur a tranché les questions de l'audit en trois salves. Réalisé dans la foulée :
+- l'effacement définitif, confirmé par une case, réservé à l'administrateur : un joueur (fiche,
+  effectifs, feuilles de match, photo), un élément du projet ou un message à la corbeille ; la
+  promesse de la politique de confidentialité devient vraie ;
+- une description d'image facultative, lue aux lecteurs d'écran (migration additive 0009) ;
+- une CSP de base, vérifiée sans violation sur quinze pages, lecteur YouTube compris ;
+- HSTS sans `preload`, expliqué d'abord : l'inscription engagerait un domaine qui n'est ni
+  acheté ni attribué ;
+- la purge nocturne, route protégée par un jeton comparé en temps constant, pour une tâche Coolify ;
+- la vitrine dans l'en-tête en grand écran, les titres « La série » et « Le projet », un lien
+  vers le staff depuis l'effectif, l'administration harmonisée.
+
+Pas de champ d'accord des joueurs dans le site : les accords papier de Tom suffisent. Next 16.3.6
+attendra le 07-10, et les limites Traefik se poseront au déploiement.
+
+- Portée : `src/lib/effacement.ts`, `components/effacer-definitivement.tsx`, `app/taches/purge`,
+  `next.config.ts`, Dockerfile, schéma et migration 0009, écrans du projet, des messages, de la
+  fiche joueur et des actualités, en-tête public, rapport d'audit, ROADMAP.
+- Vérifié : 143 tests, `tsc`, lint ; CSP sur 15 pages sans violation ; purge 401, 401, 204 et 405 ;
+  joueur jetable avec photo effacé (base et disque vides ensuite), membre du staff effacé depuis
+  la corbeille, description lue en texte alternatif ; données d'essai retirées.
+- Suite : les démarches « Avant la mise en ligne » (sauvegardes, Coolify, accords, mentions),
+  puis le déploiement.

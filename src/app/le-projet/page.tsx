@@ -62,7 +62,7 @@ export default async function PageProjet() {
                   ) : null}
                   {image ? (
                     <div className="relative mt-6 aspect-[3/2] max-w-2xl overflow-hidden bg-[var(--color-nuit-surface)]">
-                      <Image src={image} alt="" fill sizes="(min-width: 768px) 42rem, 100vw" className="object-cover" />
+                      <Image src={image} alt={e.imageDescription ?? ""} fill sizes="(min-width: 768px) 42rem, 100vw" className="object-cover" />
                     </div>
                   ) : null}
                 </li>

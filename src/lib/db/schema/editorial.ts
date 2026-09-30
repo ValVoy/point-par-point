@@ -64,6 +64,8 @@ export const actualites = sqliteTable(
     chapo: text("chapo"),
     corps: text("corps").notNull(),
     imageCle: text("image_cle"),
+    /** Ce que montre l'image, lu aux lecteurs d'ecran ; vide, l'image est decorative (audit U9). */
+    imageDescription: text("image_description"),
     publieLe: integer("publie_le", { mode: "timestamp_ms" }),
     etat: etatPublication(),
     ...communes,
@@ -105,6 +107,8 @@ export const etapesProjet = sqliteTable("etapes_projet", {
   titre: text("titre").notNull(),
   texte: text("texte"),
   imageCle: text("image_cle"),
+  /** Ce que montre l'image, lu aux lecteurs d'ecran ; vide, l'image est decorative (audit U9). */
+  imageDescription: text("image_description"),
   ordre: integer("ordre").notNull().default(0),
   etat: etatPublication(),
   ...communes,

@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { messagesContact } from "@/lib/db/schema";
 import { exigerDroit } from "@/lib/auth/session-courante";
+import { effacerMessage } from "@/lib/effacement";
 
 /** Lire, ranger et restaurer les messages du formulaire de contact (droit `lireMessages`). */
 
@@ -36,4 +37,12 @@ export async function mettreMessageALaCorbeille(donnees: FormData): Promise<void
 
 export async function restaurerMessage(donnees: FormData): Promise<void> {
   await modifier(donnees, { supprimeLe: null });
+}
+
+/** Effacement definitif d'un message deja a la corbeille (audit R1), sur demande de son auteur par exemple. */
+export async function effacerMessageDefinitivement(donnees: FormData): Promise<void> {
+  await exigerDroit("viderCorbeille");
+  if (donnees.get("confirme") !== "1") return;
+  const id = lireIdentifiant(donnees);
+  if (id && (await effacerMessage(id))) revalidatePath(CHEMIN);
 }
