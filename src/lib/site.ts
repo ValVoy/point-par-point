@@ -1,23 +1,23 @@
 /**
- * « Projet Volley » est un nom de travail pose le 19-09-2026, faute de mieux.
- * Le vrai nom du concept est a recuperer aupres de l'ami, et le dossier comme
- * le depot seront renommes a ce moment-la. Le nom est centralise ici pour que
- * ce remplacement reste une ligne a changer.
+ * Le nom du site est celui de la serie, « Point Par Point », donne par
+ * l'utilisateur le 30-09-2026 ; il remplace « Projet Volley », nom de travail
+ * du 19-09-2026. Il est centralise ici, et les traces du titre de l'intro se
+ * regenerent avec scripts/titre-en-traces.py.
  *
  * Regle de redaction : les commentaires du code se passent d'accents, jamais
  * les chaines affichees. Tout ce qui est lu par un visiteur est du francais
  * correct, accents compris.
  */
-export const NOM_DU_SITE = "Projet Volley";
+export const NOM_DU_SITE = "Point Par Point";
 
 /** L'equipe dont parle le site, telle qu'elle s'affiche sur les tableaux. */
 export const EQUIPE = "VF Francheville";
 
 /**
- * La chaine YouTube de la serie, pour le bouton « S'abonner ». Inconnue au
- * 30-09-2026 : tant qu'elle vaut null, le bouton ne s'affiche pas.
+ * La chaine YouTube de la serie, pour le bouton « S'abonner ». Si elle
+ * redevient null, le bouton disparait et « Voir sur YouTube » prend le relais.
  */
-export const CHAINE_YOUTUBE: string | null = null;
+export const CHAINE_YOUTUBE: string | null = "https://www.youtube.com/@oger_tom";
 
 export const DESCRIPTION_DU_SITE =
   "L'effectif, les matchs et la série. Les informations qui se consultent " +

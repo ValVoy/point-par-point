@@ -5,7 +5,8 @@ site (Archivo, largeur 62, graisse 800 : le style `titre-affiche`).
 Pourquoi : l'intro de l'accueil transforme les lignes du terrain en lettres
 (MorphSVG), ce qui demande les contours de chaque lettre. Le resultat est un
 fichier TypeScript genere, versionne ; ce script n'est relance que si le titre
-change, par exemple le jour ou le vrai nom du projet remplace « Projet Volley ».
+change : il a servi pour « Projet Volley », puis pour « Point Par Point » le
+30-09-2026, quand le vrai nom de la serie est arrive.
 
 Outil : fontTools, en version epinglee (4.65.0, regle des quinze jours), dans
 un environnement Python isole. Aucune dependance npm.
@@ -27,7 +28,7 @@ from fontTools.pens.transformPen import TransformPen
 from fontTools.ttLib import TTFont
 from fontTools.varLib import instancer
 
-TITRE = "Projet Volley"
+TITRE = "Point Par Point"
 AXES = {"wght": 800, "wdth": 62}
 INTERLIGNE = 0.86  # celui de `titre-affiche`, en fraction de la taille
 SORTIE = Path(__file__).resolve().parent.parent / "src/components/public/titre-traces.ts"

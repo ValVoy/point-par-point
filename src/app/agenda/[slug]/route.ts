@@ -38,7 +38,7 @@ export async function GET(_requete: Request, { params }: { params: Promise<{ slu
   const site = process.env.NEXT_PUBLIC_SITE_URL;
 
   const ics = evenementAgenda({
-    uid: `match-${rencontre.id}@projet-volley`,
+    uid: `match-${rencontre.id}@point-par-point`,
     debut: rencontre.joueLe,
     titre,
     lieu: lieu || null,

@@ -247,7 +247,7 @@ async function principal() {
 
   const EQUIPES = [
     "Entente Val-Fleury",
-    "Projet Volley (démonstration)",
+    "Point Par Point (démonstration)",
     "AS Montbrison",
     "VBC Sainte-Colombe",
     "US Chantemerle",

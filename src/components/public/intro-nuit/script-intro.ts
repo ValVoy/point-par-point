@@ -11,7 +11,7 @@
  * qui a deja vu l'intro ne la voit donc jamais, meme un dixieme de seconde.
  */
 
-export const CLE_INTRO = "projet-volley:intro-vue";
+export const CLE_INTRO = "point-par-point:intro-vue";
 export const CLASSE_INTRO = "intro-a-jouer";
 
 /**

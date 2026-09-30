@@ -3,7 +3,7 @@ import { describe, it } from "node:test";
 import { echapperTexte, evenementAgenda, lienGoogleAgenda, plierLigne } from "./agenda";
 
 const BASE = {
-  uid: "match-42@projet-volley",
+  uid: "match-42@point-par-point",
   debut: new Date("2026-10-04T18:30:00Z"),
   titre: "VF Francheville - AS Montbrison",
   horodatage: new Date("2026-09-30T11:00:00Z"),
@@ -38,7 +38,7 @@ describe("evenementAgenda", () => {
     assert.match(ics, /\r\nDTSTART:20261004T183000Z\r\n/);
     assert.match(ics, /\r\nDTEND:20261004T203000Z\r\n/);
     assert.match(ics, /\r\nDTSTAMP:20260930T110000Z\r\n/);
-    assert.match(ics, /\r\nUID:match-42@projet-volley\r\n/);
+    assert.match(ics, /\r\nUID:match-42@point-par-point\r\n/);
   });
 
   it("echappe le lieu et omet les champs absents", () => {

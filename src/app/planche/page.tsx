@@ -58,7 +58,7 @@ export default function Planche() {
       <header className="grain relative">
         <div className="colonne-large relative pt-24 pb-16">
           <p className={styles.etiquette}>Planche de style · palette du 30-09-2026</p>
-          <h1 className="titre-affiche mt-4 text-[clamp(3.5rem,11vw,9rem)]">Projet Volley</h1>
+          <h1 className="titre-affiche mt-4 text-[clamp(3.5rem,11vw,9rem)]">Point Par Point</h1>
           <p className="mt-6 max-w-[62ch] text-lg leading-relaxed text-[var(--color-craie-douce)]">
             Le gymnase le soir : un noir tiré du maillot, ses couleurs telles qu&apos;elles sont, et
             de la lumière seulement sur ce qui éclaire vraiment.

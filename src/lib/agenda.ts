@@ -61,7 +61,7 @@ export function evenementAgenda(e: EvenementAgenda): string {
   const lignes = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Projet Volley//Agenda//FR",
+    "PRODID:-//Point Par Point//Agenda//FR",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
     "BEGIN:VEVENT",

@@ -1,4 +1,4 @@
-# ROADMAP , Projet Volley
+# ROADMAP , Point Par Point
 
 > Plan vivant. Consulter avant chaque tâche, mettre à jour à chaque jalon.
 
@@ -25,7 +25,7 @@ LED avec « Ajouter à l'agenda » et « Itinéraire », les matchs précédents
 Tout branché sur la base, chaque bloc disparaît s'il n'a rien à montrer.
 
 Ensuite : la page Matchs et la page d'un match (qui reprennent les tableaux), puis la série.
-À récupérer auprès de l'ami : l'adresse de la chaîne YouTube, pour le bouton « S'abonner ».
+Le nom (« Point Par Point ») et la chaîne YouTube sont arrivés le 30-09-2026 et sont en place.
 
 **À revoir avant d'écrire les pages publiques** : la largeur de la mise en page et le motion
 design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`.

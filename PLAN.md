@@ -1,4 +1,4 @@
-# Plan , Projet Volley
+# Plan , Point Par Point
 
 > Issu du cadrage du 19-09-2026, 40 questions en neuf salves. Ce document dit **ce qu'on construit
 > et pourquoi**. La `ROADMAP.md` dit où on en est, le `codex.md` garde les concepts, le

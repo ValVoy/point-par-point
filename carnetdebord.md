@@ -897,3 +897,31 @@ d'entrée de gamme.
 - Vérifié : 74 tests, `tsc`, lint ; au navigateur, le parcours clavier et l'état des blocs avant
   et après focus, le rendu du chapitre des matchs en 1440 px.
 - Suite : l'adresse de la chaîne YouTube ; puis la page Matchs et la page d'un match.
+
+**14:55** · **[identité] Le site s'appelle Point Par Point**
+
+L'utilisateur a donné le vrai nom, celui de la série : « Point Par Point », et l'adresse de la
+chaîne YouTube. Le nom est posé dans `lib/site.ts`, et les tracés du titre de l'intro sont
+régénérés par le script prévu pour ce jour-là (fontTools 4.65.0, déjà vérifié à la première
+génération, dans un environnement isolé du dossier temporaire ; police Archivo du dépôt Google
+Fonts). Treize lettres par mise en page, sur trois lignes au téléphone. Le bouton « S'abonner »
+apparaît. La mémoire de l'intro change de clé : chacun la reverra une fois avec le nouveau titre.
+
+En vérifiant, le titre restait invisible à la fin de l'intro. L'enquête a montré que le
+navigateur de test tournait à 3 images en 2 secondes (fenêtre masquée, machine à court de
+mémoire) : GSAP ralentit alors l'intro plutôt que de sauter des images, et le filet de sécurité
+CSS affichait la fin avec des lettres encore sous leur forme de départ. Pas un défaut du nouveau
+titre, mais un vrai trou pour un appareil saturé : une garde en temps réel fait désormais sauter
+l'intro à sa fin après 6 secondes, comme le bouton « Passer ». Vérifié dans ce navigateur bridé :
+titre complet sans intervention.
+
+Le dossier `ProjetVolley` et le dépôt `ValVoy/projet-volley` gardent leur nom : les renommer
+touche le dépôt distant et les chemins, c'est à l'utilisateur de le décider.
+
+- Portée : `lib/site.ts`, `titre-traces.ts` (régénéré), `scripts/titre-en-traces.py`,
+  `intro-nuit/script-intro.ts` et `animation-ouverture.tsx`, `lib/agenda.ts`, la route d'agenda,
+  planche, prototype, semis de démonstration, `CLAUDE.md`, `ROADMAP.md`, `PLAN.md`.
+- Vérifié : 74 tests, `tsc`, lint ; titre à l'écran en 1440 et 390 px ; garde vérifiée dans un
+  navigateur à 1,5 image par seconde.
+- Suite : décision de l'utilisateur sur le renommage du dossier et du dépôt ; la page Matchs et
+  la page d'un match.

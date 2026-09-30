@@ -94,6 +94,7 @@ export function AnimationOuverture({ children }: { children: ReactNode }) {
           gsap.set(apparitions, { opacity: 0, y: 12 });
 
           const fin = () => {
+            window.clearTimeout(garde);
             observateur.disconnect();
             retirerEcoute();
             terminerIntro();
@@ -161,6 +162,13 @@ export function AnimationOuverture({ children }: { children: ReactNode }) {
           document.addEventListener("visibilitychange", surVisibilite);
           const bouton = racine.current?.querySelector<HTMLButtonElement>("[data-intro-passer]");
           bouton?.addEventListener("click", passer);
+          // Garde en temps reel, jumelle du filet de securite de globals.css : si
+          // les images arrivent au compte-gouttes (appareil sature, fenetre
+          // masquee), GSAP ralentit l'intro au lieu de sauter des images, et le
+          // CSS montrerait a 6 s un titre encore sous sa forme de depart,
+          // invisible. Constate le 30-09-2026 a 3 images par seconde. On saute
+          // alors a la fin, comme avec le bouton.
+          const garde = window.setTimeout(passer, 6000);
           function retirerEcoute() {
             evenements.forEach((nom) => window.removeEventListener(nom, passer));
             window.removeEventListener("keydown", surTouche);
@@ -169,6 +177,7 @@ export function AnimationOuverture({ children }: { children: ReactNode }) {
           }
 
           return () => {
+            window.clearTimeout(garde);
             retirerEcoute();
             observateur.disconnect();
             // Quoi qu'il arrive a l'animation, le titre retrouve ses vrais contours.

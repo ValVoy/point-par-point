@@ -4,13 +4,16 @@ Guide pour Claude Code sur ce dépôt.
 
 ## Contexte du projet
 
-Site de **Projet Volley**, le concept monté par un ami de l'utilisateur autour d'une équipe de
+Site de **Point Par Point**, le concept monté par un ami de l'utilisateur autour d'une équipe de
 volley. Le concept vit déjà en contenu : Instagram, et **une série YouTube lancée pour accompagner
 le projet**. Le site vient donner ce que les réseaux ne savent pas faire, des informations qui se
 consultent et qui durent : l'effectif poste par poste, les âges, les résultats de matchs.
 
-**`Projet Volley` est un nom provisoire**, posé le 19-09-2026 faute de mieux. Le vrai nom du concept
-est à récupérer auprès de l'ami, et le dossier comme le dépôt seront renommés à ce moment-là.
+**Le nom est « Point Par Point »**, celui de la série, donné par l'utilisateur le 30-09-2026. Il
+remplace « Projet Volley », nom de travail du 19-09-2026, dans le site (`lib/site.ts`) et dans les
+tracés du titre de l'intro (`scripts/titre-en-traces.py`). Le dossier `ProjetVolley` et le dépôt
+`ValVoy/projet-volley` gardent l'ancien nom tant que l'utilisateur n'a pas décidé de les renommer.
+La chaîne YouTube de la série : `https://www.youtube.com/@oger_tom`.
 
 Projet coup de coeur, mené en aide à un ami. Cela ne change rien aux exigences techniques, mais
 beaucoup à ce qu'on promet dans la durée : voir la question de la maintenance au cadrage.

@@ -32,7 +32,7 @@ export default function PrototypeBallon() {
           <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">
             Prototype · scène du ballon
           </p>
-          <h1 className="titre-affiche mt-4 text-[clamp(4rem,13vw,11rem)]">Projet Volley</h1>
+          <h1 className="titre-affiche mt-4 text-[clamp(4rem,13vw,11rem)]">Point Par Point</h1>
           <p className="mt-6 max-w-[62ch] text-lg leading-relaxed text-[var(--color-craie-douce)]">
             Faites défiler : dès que la scène est à l&apos;écran, la passe part,
             l&apos;attaquant frappe, le ballon passe le filet, rebondit et sort
