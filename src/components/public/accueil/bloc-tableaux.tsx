@@ -52,7 +52,8 @@ export function BlocTableaux({
             <Link href="/matchs#titre-classement" className="group inline-flex flex-wrap items-baseline gap-x-2 hover:text-[var(--color-craie)]">
               <span className="titre-affiche text-4xl text-[var(--color-jaune)]">
                 {rang.rang}
-                {rang.rang === 1 ? "er" : "e"}
+                {/* Suffixe hors des capitales de l'affiche : « 2e », pas « 2E » (audit G5). */}
+                <sup className="ml-0.5 font-sans text-base font-semibold normal-case">{rang.rang === 1 ? "er" : "e"}</sup>
               </span>
               <span>
                 sur {rang.total} au classement{rang.intitule ? `, ${rang.intitule}` : ""}

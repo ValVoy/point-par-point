@@ -115,7 +115,7 @@ export default async function PageOuNousVoir() {
                     <span className="titre-affiche text-2xl group-hover:text-[var(--color-jaune)] group-focus-visible:text-[var(--color-jaune)]">
                       Contre {m.adversaire}
                     </span>
-                    <span className="text-[var(--color-craie-douce)] first-letter:uppercase">{dateEtHeure(m.joueLe)}</span>
+                    <span className="inline-block text-[var(--color-craie-douce)] first-letter:uppercase">{dateEtHeure(m.joueLe)}</span>
                   </Link>
                 </li>
               ))}

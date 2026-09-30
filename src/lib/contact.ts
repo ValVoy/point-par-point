@@ -13,6 +13,7 @@ export const SUJETS = {
   presse: "Presse ou média",
   rejoindre: "Rejoindre l'équipe",
   serie: "Une idée pour la série",
+  donnees: "Mes données personnelles",
   autre: "Autre chose",
 } as const;
 

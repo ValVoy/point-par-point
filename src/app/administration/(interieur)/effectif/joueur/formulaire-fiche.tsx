@@ -48,8 +48,8 @@ export function FormulaireFiche({ fiche: f }: { fiche: FicheModifiable }) {
       />
       {f.photo ? <ChoixVisage photo={f.photo} x={f.visageX} y={f.visageY} /> : null}
 
-      <ZoneTexte nom="presentation" libelle="Présentation" valeur={f.presentation} lignes={4} aide="Ce qu'il dit de lui, en quelques phrases. 1 000 caractères au plus." />
-      <ZoneTexte nom="parcours" libelle="Parcours" valeur={f.parcours} lignes={4} aide="Ses clubs, ses saisons. 1 000 caractères au plus." />
+      <ZoneTexte nom="presentation" libelle="Présentation" valeur={f.presentation} lignes={4} max={1000} aide="Ce qu'il dit de lui, en quelques phrases. 1 000 caractères au plus." />
+      <ZoneTexte nom="parcours" libelle="Parcours" valeur={f.parcours} lignes={4} max={1000} aide="Ses clubs, ses saisons. 1 000 caractères au plus." />
 
       <div className="flex flex-wrap items-center gap-4">
         <BoutonEnvoi>Enregistrer la fiche</BoutonEnvoi>

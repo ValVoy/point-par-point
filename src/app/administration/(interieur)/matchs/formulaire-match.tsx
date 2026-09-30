@@ -100,6 +100,7 @@ export function FormulaireMatch({
           <ZoneTexte
             nom="commentaire"
             libelle="Commentaire d'après-match"
+            max={2000}
             valeur={match.commentaire}
             aide="Quelques lignes, affichées sur la page du match."
           />

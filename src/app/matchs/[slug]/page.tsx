@@ -67,7 +67,7 @@ export default async function PageMatch({ params }: Parametres) {
       <EnTete actif="/matchs" />
       <main id="contenu" className="colonne-large space-y-16 pt-10 pb-24 sm:space-y-20 sm:pt-16">
         <div>
-          <Link href="/matchs" className="text-sm font-semibold text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
+          <Link href="/matchs" className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
             ← Tous les matchs
           </Link>
           <p className="mt-8 text-xs font-semibold tracking-[0.2em] text-[var(--color-craie-douce)] uppercase">

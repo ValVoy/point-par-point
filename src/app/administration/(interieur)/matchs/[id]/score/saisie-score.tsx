@@ -18,7 +18,7 @@ type Mode = "sets" | "final";
 const ETAT_INITIAL: EtatScore = { erreurs: [], alertes: [], enregistre: false };
 
 const CLASSE_POINTS =
-  "h-16 w-full rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] text-center text-3xl font-semibold tabular-nums outline-none focus:border-[var(--color-turquoise)]";
+  "h-16 w-full rounded-xl border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] text-center text-3xl font-semibold tabular-nums focus:border-[var(--color-turquoise)]";
 
 /** Deux chiffres tapes : on passe au champ suivant, sans lever le pouce. */
 function avancer(evenement: ChangeEvent<HTMLInputElement>) {
@@ -89,7 +89,7 @@ export function SaisieScore({
             type="button"
             aria-pressed={mode === valeur}
             onClick={() => setMode(valeur)}
-            className="rounded-lg py-2.5 font-medium text-[var(--color-craie-douce)] aria-pressed:bg-[var(--color-nuit)] aria-pressed:text-[var(--color-craie)] aria-pressed:shadow-sm"
+            className="min-h-11 rounded-lg py-2.5 font-medium text-[var(--color-craie-douce)] aria-pressed:bg-[var(--color-turquoise-sourd)] aria-pressed:text-[var(--color-craie)] aria-pressed:ring-1 aria-pressed:ring-[var(--color-turquoise)]"
           >
             {valeur === "sets" ? "Set par set" : "Score final seul"}
           </button>
@@ -159,7 +159,7 @@ export function SaisieScore({
         <p className="text-center text-sm text-[var(--color-craie-douce)]">
           Total{" "}
           <span className="text-2xl font-semibold text-[var(--color-craie)] tabular-nums">
-            {analyse.setsNous} - {analyse.setsEux}
+            {analyse.setsNous}-{analyse.setsEux}
           </span>
         </p>
       ) : null}

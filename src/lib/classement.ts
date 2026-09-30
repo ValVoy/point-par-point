@@ -75,3 +75,25 @@ export function classementAJour(misAJourLe: Date | null, maintenant: Date): bool
 export function rangEnToutesLettres(rang: number, total: number): string {
   return `${rang}${rang === 1 ? "er" : "e"} sur ${total}`;
 }
+
+/** Au-dela, le tableau de bord rappelle le classement, avant qu'il ne disparaisse du site. */
+export const RAPPEL_CLASSEMENT_JOURS = 21;
+
+/**
+ * Pourquoi le classement est a revoir, ou null (audit U6) : absent alors qu'un
+ * match a ete joue, plus ancien que le dernier match joue, ou vieux de trois
+ * semaines.
+ */
+export function raisonDeRevoirLeClassement(
+  misAJourLe: Date | null,
+  dernierMatchJoue: Date | null,
+  maintenant: Date,
+): string | null {
+  if (!misAJourLe) return dernierMatchJoue ? "Pas encore de classement pour cette saison." : null;
+  if (dernierMatchJoue && dernierMatchJoue > misAJourLe) return "Un match a été joué depuis la dernière mise à jour.";
+  if (maintenant.getTime() - misAJourLe.getTime() > RAPPEL_CLASSEMENT_JOURS * 24 * 60 * 60 * 1000) {
+    return `Il a plus de trois semaines : il disparaîtra du site à ${PEREMPTION_CLASSEMENT_JOURS} jours.`;
+  }
+  return null;
+}
+

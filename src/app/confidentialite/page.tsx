@@ -98,7 +98,8 @@ export default function PageConfidentialite() {
         Le serveur est en Allemagne (Hetzner), la base de données en Irlande (Turso), les photos chez Cloudflare.
         Turso et Cloudflare sont des sociétés américaines : même stockées en Europe, les données peuvent donc
         relever aussi du droit des États-Unis. La base est sauvegardée chaque nuit, chiffrée, et chaque sauvegarde est
-        effacée au bout de 30 jours. Le détail des prestataires est dans les{" "}
+        effacée au bout de 30 jours : une donnée effacée du site peut donc y subsister jusqu&apos;à 30 jours, sans
+        être consultée. Le détail des prestataires est dans les{" "}
         <Link href="/mentions-legales">mentions légales</Link>.
       </p>
       <p>Aucune donnée n&apos;est vendue, louée ni transmise à qui que ce soit d&apos;autre.</p>
@@ -107,7 +108,8 @@ export default function PageConfidentialite() {
       <p>
         Vous pouvez demander à consulter, corriger ou effacer les données qui vous concernent, vous opposer à leur
         utilisation, en limiter l&apos;usage, ou les recevoir dans un format lisible. Il suffit d&apos;écrire par le{" "}
-        <Link href="/contact">formulaire de contact</Link>, en précisant votre demande. Réponse sous un mois au
+        <Link href="/contact?sujet=donnees">formulaire de contact</Link>, sujet « Mes données personnelles », en
+        précisant votre demande. Réponse sous un mois au
         plus.
       </p>
       <p>

@@ -44,7 +44,7 @@ export function BilanSaison({ bilan: b }: { bilan: Bilan | null }) {
           <dd className="titre-affiche mt-1 text-5xl">
             <span aria-hidden="true">
               {b.setsPour}
-              <span className="mx-1.5 text-[var(--color-craie-douce)]">–</span>
+              <span className="mx-1 text-[var(--color-craie-douce)]">-</span>
               {b.setsContre}
             </span>
             <span className="sr-only">

@@ -25,7 +25,7 @@ export default async function PageEpisodes() {
     <>
       <h1 className="titre-admin text-3xl">Épisodes</h1>
       <p className="mt-2 max-w-prose text-sm text-[var(--color-craie-douce)]">
-        La série, épisode par épisode. On colle l&apos;adresse de la vidéo, le
+        La série, épisode par épisode. Collez l&apos;adresse de la vidéo : le
         site affiche la miniature et le lecteur. Un nouvel épisode reste en
         brouillon, invisible sur le site, jusqu&apos;à sa publication.
         {brouillons > 0

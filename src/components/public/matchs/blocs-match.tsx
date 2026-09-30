@@ -5,6 +5,7 @@ import type { Rencontre } from "@/lib/rencontres";
 import { lienItineraire } from "../actions-match";
 import { LecteurEpisode } from "../lecteur-episode";
 import { MiniatureEpisode } from "../miniature-episode";
+import { titreSansNumero } from "@/lib/titre-episode";
 
 /**
  * Les blocs de la page d'un match (fiche fiches/matchs.md), chacun absent
@@ -59,7 +60,7 @@ export function BlocEpisode({ episode, prioritaire = false }: { episode: Episode
   return (
     <section aria-labelledby="titre-episode" className="grid items-end gap-6 lg:grid-cols-12">
       <div className="relative aspect-video overflow-hidden bg-[var(--color-nuit-surface)] lg:col-span-7">
-        <LecteurEpisode youtubeId={episode.youtubeId} titre={episode.titre}>
+        <LecteurEpisode youtubeId={episode.youtubeId} titre={titreSansNumero(episode)}>
           <MiniatureEpisode youtubeId={episode.youtubeId} sizes="(min-width: 1024px) 58vw, 100vw" prioritaire={prioritaire} />
         </LecteurEpisode>
       </div>
@@ -68,7 +69,7 @@ export function BlocEpisode({ episode, prioritaire = false }: { episode: Episode
           Le match dans la série{episode.numero ? ` · épisode ${episode.numero}` : ""}
         </p>
         <h2 id="titre-episode" className="titre-affiche mt-3 text-4xl text-balance">
-          {episode.titre}
+          {titreSansNumero(episode)}
         </h2>
         {episode.resume ? <p className="mt-4 leading-relaxed text-[var(--color-craie-douce)]">{episode.resume}</p> : null}
         <Link
@@ -76,7 +77,7 @@ export function BlocEpisode({ episode, prioritaire = false }: { episode: Episode
           className="mt-5 inline-flex min-h-12 items-center font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--color-jaune)]"
         >
           {episode.numero ? `Épisode ${episode.numero} : ` : ""}
-          {episode.titre}
+          {titreSansNumero(episode)}
         </Link>
       </div>
     </section>

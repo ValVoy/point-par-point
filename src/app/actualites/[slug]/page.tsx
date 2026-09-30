@@ -82,7 +82,7 @@ export default async function PageActualite({ params }: Parametres) {
       <EnTete actif="/actualites" />
       <main id="contenu" className="colonne-large pt-10 pb-24 sm:pt-16">
         <p>
-          <Link href="/actualites" className="text-sm font-semibold text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
+          <Link href="/actualites" className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
             <span aria-hidden="true">← </span>Toutes les actualités
           </Link>
         </p>

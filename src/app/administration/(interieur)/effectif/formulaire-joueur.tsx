@@ -56,9 +56,10 @@ export function FormulaireJoueur({ saisonId }: { saisonId: number }) {
         nom="presentation"
         libelle="Présentation"
         lignes={3}
+        max={1000}
         aide="Deux ou trois lignes, affichées sur sa page."
       />
-      <ZoneTexte nom="parcours" libelle="Parcours" lignes={3} />
+      <ZoneTexte nom="parcours" libelle="Parcours" lignes={3} max={1000} />
 
       <Erreur message={etat.erreur} />
 

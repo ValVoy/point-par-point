@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { classementAJour, lireClassement, rangEnToutesLettres } from "./classement";
+import { classementAJour, lireClassement, raisonDeRevoirLeClassement, rangEnToutesLettres } from "./classement";
 
 function grille(lignes: string[][], nous: number, extra: Record<string, string> = {}) {
   const d = new FormData();
@@ -64,3 +64,17 @@ describe("rangEnToutesLettres", () => {
     assert.equal(rangEnToutesLettres(3, 10), "3e sur 10");
   });
 });
+
+describe("raisonDeRevoirLeClassement", () => {
+  const maintenant = new Date("2026-10-20T12:00:00Z");
+  it("rappelle un classement absent seulement s'il y a eu un match", () => {
+    assert.equal(raisonDeRevoirLeClassement(null, null, maintenant), null);
+    assert.ok(raisonDeRevoirLeClassement(null, new Date("2026-10-03T18:00:00Z"), maintenant));
+  });
+  it("rappelle apres un match joue depuis la mise a jour, ou a trois semaines", () => {
+    assert.ok(raisonDeRevoirLeClassement(new Date("2026-10-10T12:00:00Z"), new Date("2026-10-17T18:00:00Z"), maintenant));
+    assert.equal(raisonDeRevoirLeClassement(new Date("2026-10-18T12:00:00Z"), new Date("2026-10-17T18:00:00Z"), maintenant), null);
+    assert.ok(raisonDeRevoirLeClassement(new Date("2026-09-20T12:00:00Z"), null, maintenant));
+  });
+});
+

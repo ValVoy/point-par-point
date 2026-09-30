@@ -180,7 +180,7 @@ export async function enregistrerMembre(_p: EtatProjet, donnees: FormData): Prom
 
 const schemaPartenaire = z.object({
   nom: z.string().trim().min(1, "Le nom est obligatoire.").max(80, "Le nom dépasse 80 caractères."),
-  lien: z.string().trim().max(300).optional(),
+  lien: z.string().trim().max(300, "Le lien dépasse 300 caractères.").optional(),
 });
 
 export async function enregistrerPartenaire(

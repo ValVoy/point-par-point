@@ -46,7 +46,7 @@ export function FormulaireEtape({ initiales = {} }: { initiales?: Valeurs }) {
           placeholder="Printemps 2026"
         />
       </div>
-      <ZoneTexte nom="texte" libelle="Récit" valeur={valeur("texte")} lignes={4} />
+      <ZoneTexte nom="texte" libelle="Récit" valeur={valeur("texte")} lignes={4} max={2000} />
       <ChampImage nom="image" libelle="Illustration" actuelle={initiales.imageActuelle || null} forme="paysage" />
       <Erreur message={etat.erreur} />
       <BoutonEnvoi>{initiales.id ? "Enregistrer" : "Ajouter en brouillon"}</BoutonEnvoi>
@@ -66,9 +66,9 @@ export function FormulaireMembre({ initiales = {} }: { initiales?: Valeurs }) {
         valeur={valeur("role")}
         requis
         maxLength={80}
-        placeholder="Entraîneur, image et montage..."
+        placeholder="Entraîneur, image et montage…"
       />
-      <ZoneTexte nom="texte" libelle="Présentation" valeur={valeur("texte")} lignes={3} />
+      <ZoneTexte nom="texte" libelle="Présentation" valeur={valeur("texte")} lignes={3} max={1000} />
       <ChampImage nom="photo" libelle="Photo" actuelle={initiales.imageActuelle || null} />
       <Erreur message={etat.erreur} />
       <BoutonEnvoi>{initiales.id ? "Enregistrer" : "Ajouter"}</BoutonEnvoi>
@@ -95,7 +95,7 @@ export function FormulairePartenaire({ initiales = {} }: { initiales?: Valeurs }
         libelle="Logo"
         actuelle={initiales.imageActuelle || null}
         forme="logo"
-        aide="PNG sur fond transparent de préférence. Le site l'affiche en blanc, en couleur au survol."
+        aide="PNG sur fond transparent de préférence. Le site l'affiche en blanc, et en couleur quand on le pointe."
       />
       <Erreur message={etat.erreur} />
       <BoutonEnvoi>{initiales.id ? "Enregistrer" : "Ajouter"}</BoutonEnvoi>

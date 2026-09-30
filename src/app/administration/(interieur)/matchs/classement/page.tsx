@@ -41,7 +41,7 @@ export default async function PageClassement() {
       <Link href="/administration/matchs" className="inline-flex min-h-11 items-center text-sm text-[var(--color-turquoise)] hover:underline">
         Retour aux matchs
       </Link>
-      <h1 className="titre-admin mt-2 text-3xl">Classement, saison {saison.libelle}</h1>
+      <h1 className="titre-admin mt-2 text-3xl">Classement, saison <span className="whitespace-nowrap">{saison.libelle}</span></h1>
       <p className="mt-2 max-w-prose text-sm text-[var(--color-craie-douce)]">
         Recopiez le classement de la poule après chaque journée : les équipes restent, changez les chiffres et
         l&apos;ordre. Le rang est la position dans la liste. Sans mise à jour pendant {PEREMPTION_CLASSEMENT_JOURS}{" "}

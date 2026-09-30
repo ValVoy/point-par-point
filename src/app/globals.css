@@ -31,7 +31,7 @@
   --color-nuit-releve: #221e27;
   --color-nuit-violet: #1b1320;
   --color-nuit-trait: #2e2a35;
-  /* Bord d'un champ de saisie au repos : 3,6:1 sur la nuit, le minimum WCAG d'un composant. */
+  /* Bord d'un champ de saisie au repos : 3,5:1 sur la nuit, le minimum WCAG d'un composant. */
   --color-nuit-bord: #6b6675;
 
   /* --- Le texte, un blanc d'ecran ----------------------------------------- */

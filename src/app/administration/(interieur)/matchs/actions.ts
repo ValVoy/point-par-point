@@ -36,9 +36,9 @@ const schemaMatch = z.object({
     .min(1, "L'adversaire est obligatoire.")
     .max(80, "Le nom de l'adversaire dépasse 80 caractères."),
   lieu: z.enum(LIEUX, "Précisez domicile ou extérieur."),
-  competition: z.string().trim().max(80).optional(),
-  salleNom: z.string().trim().max(80).optional(),
-  salleAdresse: z.string().trim().max(160).optional(),
+  competition: z.string().trim().max(80, "La compétition dépasse 80 caractères.").optional(),
+  salleNom: z.string().trim().max(80, "Le nom de la salle dépasse 80 caractères.").optional(),
+  salleAdresse: z.string().trim().max(160, "L'adresse de la salle dépasse 160 caractères.").optional(),
 });
 
 type ChampsMatch = z.infer<typeof schemaMatch>;

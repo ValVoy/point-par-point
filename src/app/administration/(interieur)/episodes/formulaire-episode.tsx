@@ -15,7 +15,7 @@ import { creerEpisode, modifierEpisode, type EtatEpisode } from "./actions";
 const ETAT_INITIAL: EtatEpisode = { erreur: null };
 
 const CLASSE_CHAMP =
-  "mt-1.5 w-full rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-3 py-2 text-[var(--color-craie)] outline-none focus:border-[var(--color-turquoise)]";
+  "mt-1.5 w-full rounded-lg border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] px-3 py-2 text-[var(--color-craie)] focus:border-[var(--color-turquoise)]";
 const CLASSE_LABEL = "block text-sm font-medium text-[var(--color-craie-douce)]";
 
 function Facultatif() {
@@ -92,7 +92,7 @@ export function FormulaireEpisode({
           name="adresse"
           required
           inputMode="url"
-          placeholder="https://youtu.be/..."
+          placeholder="https://youtu.be/…"
           value={champs.adresse}
           onChange={(e) => modifier("adresse", e.target.value)}
           className={CLASSE_CHAMP}
@@ -117,7 +117,7 @@ export function FormulaireEpisode({
       <div className="grid grid-cols-[5rem_1fr] gap-4">
         <div>
           <label htmlFor="numero" className={CLASSE_LABEL}>
-            N°
+            Numéro
           </label>
           <input
             id="numero"

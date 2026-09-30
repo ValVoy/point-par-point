@@ -9,12 +9,8 @@ const FUSEAU = "Europe/Paris";
 
 export function dateCourte(date: Date | null | undefined): string {
   if (!date) return "";
-  return new Intl.DateTimeFormat("fr-FR", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: FUSEAU,
-  }).format(date);
+  // « 1er août 2026 », comme les dates longues (audit W6).
+  return jourEnLettres(date, { day: "numeric", month: "short", year: "numeric" });
 }
 
 /**

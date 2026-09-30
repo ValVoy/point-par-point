@@ -12,6 +12,7 @@ import {
 import { dateLongue } from "@/lib/dates";
 import { serieComplete } from "@/lib/serie";
 import { EQUIPE, NOM_DU_SITE } from "@/lib/site";
+import { titreSansNumero } from "@/lib/titre-episode";
 
 /**
  * La serie (fiche fiches/serie.md) : l'accroche et l'abonnement, l'episode le
@@ -77,7 +78,7 @@ export default async function PageSerie() {
                     ) : null}
                   </span>
                   <h2 className="titre-affiche mt-4 text-5xl text-balance group-hover:text-[var(--color-jaune)] sm:text-6xl">
-                    {vedette.episode.titre}
+                    {titreSansNumero(vedette.episode)}
                   </h2>
                   {vedette.episode.resume ? (
                     <span className="mt-4 block leading-relaxed text-[var(--color-craie-douce)]">{vedette.episode.resume}</span>
@@ -100,14 +101,14 @@ export default async function PageSerie() {
                     <li key={episode.id}>
                       <Link
                         href={`/serie/${episode.slug}`}
-                        aria-label={[libelle(episode.numero), episode.titre, publie(episode.publieLe)].filter(Boolean).join(", ")}
+                        aria-label={[libelle(episode.numero), titreSansNumero(episode), publie(episode.publieLe)].filter(Boolean).join(", ")}
                         className="group grid grid-cols-[4rem_1fr] gap-4 border-b border-[var(--color-nuit-trait)] py-6 transition-colors duration-[80ms] hover:bg-[var(--color-nuit-surface)] sm:grid-cols-[7rem_1fr] sm:gap-8 sm:px-3"
                       >
                         <span aria-hidden="true" className="titre-affiche text-5xl text-[var(--color-craie-tenue)] group-hover:text-[var(--color-jaune)] sm:text-7xl">
                           {grandNumero(episode.numero)}
                         </span>
                         <span className="min-w-0">
-                          <span className="titre-affiche block text-2xl text-balance sm:text-4xl">{episode.titre}</span>
+                          <span className="titre-affiche block text-2xl text-balance sm:text-4xl">{titreSansNumero(episode)}</span>
                           {episode.resume ? (
                             <span className="mt-2 line-clamp-2 block max-w-[62ch] text-[var(--color-craie-douce)]">{episode.resume}</span>
                           ) : null}

@@ -14,7 +14,7 @@ function Bouton() {
       disabled={pending}
       className="mt-6 w-full rounded-lg bg-[var(--color-craie)] px-4 py-3 text-sm font-medium text-[var(--color-nuit-surface)] transition-opacity hover:opacity-90 disabled:opacity-50"
     >
-      {pending ? "Connexion..." : "Se connecter"}
+      {pending ? "Connexion…" : "Se connecter"}
     </button>
   );
 }
@@ -37,7 +37,7 @@ export function FormulaireConnexion() {
         autoComplete="username"
         defaultValue={etat.email}
         required
-        className="mt-2 w-full rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-3 py-2.5 text-[var(--color-craie)] outline-none focus:border-[var(--color-turquoise)]"
+        className="mt-2 w-full rounded-lg border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] px-3 py-2.5 text-[var(--color-craie)] focus:border-[var(--color-turquoise)]"
       />
 
       <label
@@ -52,7 +52,7 @@ export function FormulaireConnexion() {
         type="password"
         autoComplete="current-password"
         required
-        className="mt-2 w-full rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-3 py-2.5 text-[var(--color-craie)] outline-none focus:border-[var(--color-turquoise)]"
+        className="mt-2 w-full rounded-lg border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] px-3 py-2.5 text-[var(--color-craie)] focus:border-[var(--color-turquoise)]"
       />
 
       {etat.erreur ? (

@@ -24,11 +24,7 @@ export async function BandeauDemo() {
         </p>
         <p className="mt-1 text-sm text-[var(--color-craie-douce)]">
           {detail.map((ligne) => `${ligne.nombre} ${ligne.libelle}`).join(", ")}.
-          À retirer avant la mise en ligne, avec la commande{" "}
-          <code className="rounded bg-[var(--color-nuit)] px-1.5 py-0.5 font-mono text-xs">
-            npm run db:purge-demo
-          </code>
-          .
+          À retirer avant la mise en ligne : Valentin s&apos;en charge le jour venu.
         </p>
       </div>
     </div>

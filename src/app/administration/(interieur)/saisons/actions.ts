@@ -14,7 +14,7 @@ import { exigerDroit } from "@/lib/auth/session-courante";
  */
 
 const schema = z.object({
-  libelle: z.string().trim().min(1, "Le libellé est obligatoire.").max(40),
+  libelle: z.string().trim().min(1, "Le libellé est obligatoire.").max(40, "Le libellé dépasse 40 caractères."),
   debuteLe: z.string().optional(),
   finitLe: z.string().optional(),
 });

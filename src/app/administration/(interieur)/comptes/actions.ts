@@ -29,7 +29,7 @@ export type EtatCompte = {
 
 const schemaCreation = z.object({
   nom: z.string().trim().min(1, "Le nom est obligatoire.").max(80, "Le nom dépasse 80 caractères."),
-  email: z.email("Cette adresse e-mail n'est pas valide.").max(160),
+  email: z.email("Cette adresse e-mail n'est pas valide.").max(160, "L'adresse dépasse 160 caractères."),
   role: z.enum(ROLES, "Rôle inconnu."),
 });
 

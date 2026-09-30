@@ -35,7 +35,7 @@ export default async function PageFicheJoueur({ params }: { params: Promise<{ id
         <Link href={`/effectif/${j.slug}`} className="text-[var(--color-turquoise)] underline underline-offset-2">
           /effectif/{j.slug}
         </Link>
-        . Tout est facultatif sauf le nom : une fiche à moitié remplie s&apos;affiche proprement. Le numéro et le
+        . Tout est facultatif sauf le prénom et le nom : une fiche à moitié remplie s&apos;affiche proprement. Le numéro et le
         poste se changent dans l&apos;effectif de la saison.
       </p>
       <FormulaireFiche

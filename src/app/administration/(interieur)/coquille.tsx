@@ -3,6 +3,7 @@ import type { UtilisateurConnecte } from "@/lib/auth/sessions";
 import { peut, type Action } from "@/lib/auth/roles";
 import { NOM_DU_SITE } from "@/lib/site";
 import { deconnecter } from "../connexion/actions";
+import { NavAdministration } from "./nav-administration";
 
 /**
  * Navigation de l'administration. Chaque entree porte le droit qu'elle exige :
@@ -39,25 +40,28 @@ export function Coquille({
     <div className="min-h-dvh bg-[var(--color-nuit)]">
       <header className="border-b border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)]">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
-          <Link href="/" className="text-sm font-semibold">
+          <Link href="/" className="inline-flex min-h-11 items-center text-sm font-semibold">
             {NOM_DU_SITE}
           </Link>
           <span className="text-xs text-[var(--color-craie-tenue)]">
             Administration
           </span>
 
-          <div className="ml-auto flex items-center gap-3">
-            <Link href="/administration/compte" className="text-xs text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
+          <div className="ml-auto flex items-center gap-6">
+            <Link
+              href="/administration/compte"
+              className="inline-flex min-h-11 items-center gap-1.5 text-sm text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]"
+            >
               {utilisateur.nom}
-              <span className="ml-1.5 rounded bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]">
-                {utilisateur.role}
+              <span className="rounded bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-xs text-[var(--color-turquoise-clair)]">
+                {utilisateur.role === "admin" ? "administrateur" : "rédacteur"}
               </span>
               <span className="sr-only"> : mon compte</span>
             </Link>
-            <form action={deconnecter}>
+            <form action={deconnecter} className="border-l border-[var(--color-nuit-trait)] pl-6">
               <button
                 type="submit"
-                className="text-xs text-[var(--color-craie-douce)] underline underline-offset-2 hover:text-[var(--color-craie)]"
+                className="inline-flex min-h-11 items-center text-sm text-[var(--color-craie-douce)] underline underline-offset-2 hover:text-[var(--color-craie)]"
               >
                 Se déconnecter
               </button>
@@ -65,29 +69,12 @@ export function Coquille({
           </div>
         </div>
 
-        <nav className="mx-auto max-w-5xl overflow-x-auto px-4">
-          <ul className="flex gap-4 pb-2 text-sm whitespace-nowrap">
-            {rubriques.map((rubrique) => (
-              <li key={rubrique.href}>
-                <Link
-                  href={rubrique.href}
-                  className="text-[var(--color-craie-douce)] hover:text-[var(--color-turquoise)]"
-                >
-                  {rubrique.libelle}
-                  {rubrique.href === "/administration/messages" && nonLus > 0 ? (
-                    <span className="ml-1.5 rounded-full bg-[var(--color-jaune)] px-1.5 text-xs font-semibold text-[var(--color-nuit)]">
-                      {nonLus}
-                      <span className="sr-only"> non lu{nonLus > 1 ? "s" : ""}</span>
-                    </span>
-                  ) : null}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <NavAdministration rubriques={rubriques.map(({ href, libelle }) => ({ href, libelle }))} nonLus={nonLus} />
       </header>
 
-      <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>
+      <main id="contenu" className="mx-auto max-w-5xl px-4 py-8">
+        {children}
+      </main>
     </div>
   );
 }

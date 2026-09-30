@@ -87,7 +87,7 @@ export function LigneElement({
         </summary>
         <div className="space-y-4 px-4 pb-4">
           {children}
-          <Bouton liste={liste} id={id} action={corbeilleElement} libelle="Mettre à la corbeille">
+          <Bouton liste={liste} id={id} action={corbeilleElement} libelle={`Mettre « ${titre} » à la corbeille`}>
             <span className="text-xs text-[var(--color-craie-tenue)] underline">Mettre à la corbeille</span>
           </Bouton>
         </div>

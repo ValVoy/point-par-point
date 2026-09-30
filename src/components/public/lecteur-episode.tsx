@@ -47,9 +47,17 @@ export function LecteurEpisode({
       type="button"
       onClick={() => setLance(true)}
       className="group absolute inset-0 size-full cursor-pointer focus-visible:outline-none"
-      aria-label={`Lire l'épisode : ${titre}`}
+      aria-label={`Lire l'épisode : ${titre} (la vidéo se charge depuis YouTube)`}
     >
       {children}
+      {/* Dit avant le clic ce que le clic charge (audit R11) : rien ne part vers
+          YouTube tant qu'on n'a pas choisi de lire. */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute right-2 bottom-2 z-10 bg-[var(--color-boitier)]/80 px-2 py-1 text-xs text-[var(--color-craie-douce)]"
+      >
+        Lecture via YouTube
+      </span>
       {/* Le cadre de focus, sur un calque au-dessus de la vignette : un contour
           du bouton serait peint sous elle, puisqu'elle est positionnee, et le
           cadre parent le rognerait vers l'exterieur. */}

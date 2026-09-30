@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { ChampImage } from "@/components/champ-image";
+import { useAvertirAvantDeQuitter } from "@/components/avertir-avant-de-quitter";
 import { BoutonEnvoi, Erreur } from "@/components/formulaire";
 import { EditeurTexteLeger } from "@/components/editeur-texte-leger";
 import { creerActualite, modifierActualite, type EtatActualite } from "./actions";
@@ -11,7 +12,7 @@ import { creerActualite, modifierActualite, type EtatActualite } from "./actions
 const ETAT_INITIAL: EtatActualite = { erreur: null };
 
 const CLASSE_CHAMP =
-  "mt-1.5 w-full rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-3 py-2 text-[var(--color-craie)] outline-none focus:border-[var(--color-turquoise)]";
+  "mt-1.5 w-full rounded-lg border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] px-3 py-2 text-[var(--color-craie)] focus:border-[var(--color-turquoise)]";
 const CLASSE_LABEL = "block text-sm font-medium text-[var(--color-craie-douce)]";
 
 export type ActualiteModifiable = {
@@ -31,6 +32,10 @@ export function FormulaireActualite({ actualite }: { actualite?: ActualiteModifi
   const [titre, setTitre] = useState(actualite?.titre ?? "");
   const [chapo, setChapo] = useState(actualite?.chapo ?? "");
   const [corps, setCorps] = useState(actualite?.corps ?? "");
+  // Un article en cours d'ecriture se signale avant de quitter la page (audit U7).
+  useAvertirAvantDeQuitter(
+    titre !== (actualite?.titre ?? "") || chapo !== (actualite?.chapo ?? "") || corps !== (actualite?.corps ?? ""),
+  );
 
   return (
     <form action={action} className="space-y-5">

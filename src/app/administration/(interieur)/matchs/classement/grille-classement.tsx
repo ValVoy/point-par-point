@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { useAvertirAvantDeQuitter } from "@/components/avertir-avant-de-quitter";
 import { BoutonEnvoi, Erreur } from "@/components/formulaire";
 import { enregistrerClassement, type EtatClassement } from "./actions";
 
@@ -25,7 +26,7 @@ export type LigneInitiale = Omit<Ligne, "cle">;
 
 const INITIAL: EtatClassement = { erreur: null };
 const CHAMP =
-  "min-h-11 w-full rounded-lg border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] px-3 text-[var(--color-craie)] outline-none focus:border-[var(--color-turquoise)]";
+  "min-h-11 w-full rounded-lg border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] px-3 text-[var(--color-craie)] focus:border-[var(--color-turquoise)]";
 const CHIFFRES = [
   { cle: "points", court: "Pts", long: "Points" },
   { cle: "joues", court: "J", long: "Matchs joués" },
@@ -49,6 +50,17 @@ export function GrilleClassement({
   const [lignes, setLignes] = useState<Ligne[]>(() =>
     initiales.length > 0 ? initiales.map((l) => ({ ...l, cle: prochaineCle++ })) : Array.from({ length: 8 }, vide),
   );
+
+  // Une saisie non enregistree se signale avant de quitter la page (audit U7).
+  // La reference suit le dernier enregistrement reussi.
+  const empreinte = JSON.stringify(lignes.map((l) => [l.equipe, l.points, l.joues, l.gagnes, l.perdus, l.estNous]));
+  const [reference, setReference] = useState(empreinte);
+  const [dernierEtat, setDernierEtat] = useState(etat);
+  if (etat !== dernierEtat) {
+    setDernierEtat(etat);
+    if (etat.enregistre) setReference(empreinte);
+  }
+  useAvertirAvantDeQuitter(empreinte !== reference);
 
   const changer = (cle: number, champ: keyof Ligne, valeur: string | boolean) =>
     setLignes((avant) =>
@@ -125,16 +137,16 @@ export function GrilleClassement({
             </div>
             <div className="col-span-2 flex flex-wrap items-center gap-2 lg:contents">
               <label className="inline-flex min-h-11 items-center gap-2 pr-2 text-sm text-[var(--color-craie-douce)]">
-                <input type="radio" name="nous" value={i} checked={l.estNous} onChange={() => changer(l.cle, "estNous", true)} />
+                <input type="radio" name="nous" value={i} checked={l.estNous} onChange={() => changer(l.cle, "estNous", true)} className="size-5 accent-[var(--color-jaune)]" />
                 Nous
               </label>
               <span className="flex gap-2">
-                <button type="button" className="action-admin" aria-label={`Monter l'équipe du rang ${i + 1}`} disabled={i === 0} onClick={() => deplacer(i, -1)}>
+                <button type="button" className="action-admin min-w-11 justify-center" aria-label={`Monter l'équipe du rang ${i + 1}`} disabled={i === 0} onClick={() => deplacer(i, -1)}>
                   ▲
                 </button>
                 <button
                   type="button"
-                  className="action-admin"
+                  className="action-admin min-w-11 justify-center"
                   aria-label={`Descendre l'équipe du rang ${i + 1}`}
                   disabled={i === lignes.length - 1}
                   onClick={() => deplacer(i, 1)}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 /**
  * Champ photo de l'administration (fiche fiches/photos.md) : la photo
@@ -32,6 +32,9 @@ export function ChampImage({
   const [retirer, setRetirer] = useState(false);
 
   const champ = useRef<HTMLInputElement>(null);
+  // Un identifiant par instance (audit U1) : une page porte souvent plusieurs
+  // formulaires avec un champ « photo ».
+  const id = `${nom}-${useId().replace(/[^a-zA-Z0-9]/g, "")}`;
 
   useEffect(() => () => {
     if (apercu) URL.revokeObjectURL(apercu);
@@ -57,9 +60,9 @@ export function ChampImage({
 
   return (
     <div>
-      <label htmlFor={nom} className="block text-sm font-medium text-[var(--color-craie-douce)]">
-        {libelle}
-        <span className="ml-1.5 text-xs font-normal text-[var(--color-craie-tenue)]">facultatif</span>
+      <label htmlFor={id} className="block text-sm font-medium text-[var(--color-craie-douce)]">
+        {libelle}{" "}
+        <span className="ml-1 text-xs font-normal text-[var(--color-craie-tenue)]">(facultatif)</span>
       </label>
       <div className="mt-1.5 flex flex-wrap items-start gap-4">
         <div
@@ -81,8 +84,9 @@ export function ChampImage({
         <div className="min-w-0 flex-1 space-y-2">
           <input
             ref={champ}
-            id={nom}
+            id={id}
             name={nom}
+            aria-describedby={`${id}-aide`}
             type="file"
             accept="image/jpeg,image/png,image/webp,image/avif"
             className="block w-full text-sm text-[var(--color-craie-douce)] file:mr-3 file:min-h-11 file:rounded-lg file:border file:border-[var(--color-nuit-trait)] file:bg-[var(--color-nuit)] file:px-4 file:text-[var(--color-craie)]"
@@ -97,7 +101,7 @@ export function ChampImage({
               if (fichier) setRetirer(false);
             }}
           />
-          <p className="text-xs text-[var(--color-craie-tenue)]">
+          <p id={`${id}-aide`} className="text-xs text-[var(--color-craie-tenue)]">
             {aide ?? "JPEG, PNG, WebP ou AVIF, 12 Mo au plus. Le site la redimensionne et retire la position GPS."}
           </p>
           {trop ? (

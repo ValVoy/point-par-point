@@ -95,14 +95,14 @@ export function EditeurTexteLeger({
         <label htmlFor={nom} className="block text-sm font-medium text-[var(--color-craie-douce)]">
           {libelle}
         </label>
-        <div className="flex flex-wrap gap-1 text-xs">
+        <div className="flex flex-wrap gap-1.5 text-sm">
           {BOUTONS.map((bouton) => (
             <button
               key={bouton.action}
               type="button"
               disabled={apercu}
               onClick={() => surBouton(bouton.action)}
-              className={`rounded-md border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-2 py-1 text-[var(--color-craie-douce)] disabled:opacity-40 ${bouton.classe}`}
+              className={`inline-flex min-h-11 items-center rounded-md border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] px-3 text-[var(--color-craie-douce)] disabled:opacity-40 ${bouton.classe}`}
             >
               {bouton.libelle}
             </button>
@@ -111,7 +111,7 @@ export function EditeurTexteLeger({
             type="button"
             aria-pressed={apercu}
             onClick={() => setApercu((actuel) => !actuel)}
-            className="rounded-md border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-2 py-1 text-[var(--color-turquoise)] aria-pressed:bg-[var(--color-turquoise)] aria-pressed:text-[var(--color-nuit-surface)]"
+            className="inline-flex min-h-11 items-center rounded-md border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] px-3 text-[var(--color-turquoise)] aria-pressed:bg-[var(--color-turquoise)] aria-pressed:text-[var(--color-nuit-surface)]"
           >
             Aperçu
           </button>
@@ -129,7 +129,7 @@ export function EditeurTexteLeger({
         value={valeur}
         onChange={(e) => onChange(e.target.value)}
         hidden={apercu}
-        className="mt-1.5 w-full rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-3 py-2 font-mono text-sm leading-relaxed text-[var(--color-craie)] outline-none focus:border-[var(--color-turquoise)]"
+        className="mt-1.5 w-full rounded-lg border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] px-3 py-2 font-mono text-base leading-relaxed text-[var(--color-craie)] focus:border-[var(--color-turquoise)]"
       />
       {apercu ? (
         <div className="mt-1.5 min-h-40 rounded-lg border border-dashed border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-4 py-3">

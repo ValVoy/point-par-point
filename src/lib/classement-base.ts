@@ -1,5 +1,5 @@
 import { and, asc, eq, isNull } from "drizzle-orm";
-import { classementAJour } from "./classement";
+import { classementAJour, raisonDeRevoirLeClassement } from "./classement";
 import { db } from "./db";
 import { classements, lignesClassement } from "./db/schema";
 
@@ -27,3 +27,10 @@ export async function classementPublic(saisonId: number, maintenant: Date) {
   const nous = classement.lignes.find((l) => l.estNous) ?? null;
   return { ...classement, nous };
 }
+
+/** Pour le tableau de bord : pourquoi le classement de la saison est a revoir, ou null. */
+export async function classementARevoir(saisonId: number, dernierMatchJoue: Date | null, maintenant = new Date()) {
+  const classement = await classementDeLaSaison(saisonId);
+  return raisonDeRevoirLeClassement(classement?.misAJourLe ?? null, dernierMatchJoue, maintenant);
+}
+

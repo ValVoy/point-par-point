@@ -32,7 +32,7 @@ function ligneVide(lieu: Ligne["lieu"] = "domicile"): Ligne {
 const ETAT_INITIAL: EtatMatch = { erreurs: [] };
 
 const CLASSE =
-  "w-full rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-2.5 py-2 text-sm outline-none focus:border-[var(--color-turquoise)]";
+  "w-full rounded-lg border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] px-2.5 py-2 text-base focus:border-[var(--color-turquoise)]";
 
 export function GrilleCalendrier({ saisonId }: { saisonId: number }) {
   const [etat, action] = useActionState(creerCalendrier, ETAT_INITIAL);

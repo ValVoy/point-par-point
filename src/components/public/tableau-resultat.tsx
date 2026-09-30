@@ -63,7 +63,7 @@ export function TableauResultat({
 
       <p className="sr-only">
         {victoire ? "Victoire" : "Défaite"} {NOMBRES[nous] ?? nous} sets à {NOMBRES[eux] ?? eux}
-        {sets.length > 0 ? ` : ${sets.map(([n, e]) => `${n}-${e}`).join(", ")}` : ""}. {dateLisible}.
+        {sets.length > 0 ? ` : ${sets.map(([n, e]) => `${n}-${e}`).join(", ")}` : ""}.
       </p>
       <div
         aria-hidden="true"

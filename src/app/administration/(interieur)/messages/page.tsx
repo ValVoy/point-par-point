@@ -27,7 +27,7 @@ export default async function PageMessages() {
     <>
       <h1 className="titre-admin text-3xl">Messages</h1>
       <p className="mt-2 max-w-prose text-sm text-[var(--color-craie-douce)]">
-        Ce que les visiteurs écrivent depuis la page Contact. On répond depuis sa propre messagerie ; les
+        Ce que les visiteurs écrivent depuis la page Contact. Répondez depuis votre messagerie ; les
         messages s&apos;effacent d&apos;eux-mêmes un an après leur arrivée, comme annoncé sur le formulaire.
         {nonLus > 0 ? ` ${nonLus} non lu${nonLus > 1 ? "s" : ""}.` : null}
       </p>

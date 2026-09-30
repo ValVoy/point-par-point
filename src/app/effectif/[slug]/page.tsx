@@ -61,7 +61,7 @@ export default async function PageJoueur({ params }: Parametres) {
       <EnTete actif="/effectif" />
       <main id="contenu" className="colonne-large space-y-16 pt-10 pb-24 sm:pt-16">
         <p>
-          <Link href={effectif.saison.courante ? "/effectif" : `/effectif?saison=${encodeURIComponent(effectif.saison.libelle)}`} className="text-sm font-semibold text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
+          <Link href={effectif.saison.courante ? "/effectif" : `/effectif?saison=${encodeURIComponent(effectif.saison.libelle)}`} className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
             ← Tout l&apos;effectif
           </Link>
         </p>
@@ -138,7 +138,7 @@ export default async function PageJoueur({ params }: Parametres) {
                         <span className="titre-affiche block text-2xl group-hover:text-[var(--color-jaune)]">
                           {m.aDomicile ? "Contre" : "Chez"} {m.adversaire}
                         </span>
-                        <span className="text-sm text-[var(--color-craie-douce)] first-letter:uppercase">{dateLongue(m.joueLe)}</span>
+                        <span className="inline-block text-sm text-[var(--color-craie-douce)] first-letter:uppercase">{dateLongue(m.joueLe)}</span>
                       </span>
                       <span className="flex items-center gap-3">
                         <span className={`titre-affiche text-3xl ${victoire ? "" : "font-normal text-[var(--color-craie-douce)]"}`}>

@@ -16,6 +16,7 @@ import { matchPublic } from "@/lib/matchs-publics";
 import { resultatDepuis } from "@/lib/resultats";
 import { episodePublic, nouvelleAdresseEpisode } from "@/lib/serie";
 import { miniatureYoutube } from "@/lib/youtube";
+import { titreSansNumero } from "@/lib/titre-episode";
 
 /**
  * La page d'un episode (fiche fiches/serie.md) : le lecteur en facade, le
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: Parametres): Promise<Metadata
   const donnees = await episodePublic(slug);
   if (!donnees) return { title: "Épisode introuvable" };
   const { episode } = donnees;
-  const titre = episode.numero ? `Épisode ${episode.numero} : ${episode.titre}` : episode.titre;
+  const titre = episode.numero ? `Épisode ${episode.numero} : ${titreSansNumero(episode)}` : titreSansNumero(episode);
   return {
     title: titre,
     description: episode.resume ?? undefined,
@@ -55,7 +56,7 @@ function LienVoisin({ episode, sens }: { episode: Episode | null; sens: "précé
     <Link href={`/serie/${episode.slug}`} className={`group block min-h-16 py-4 ${sens === "suivant" ? "text-right" : ""}`}>
       <span className={etiquette}>{sens === "précédent" ? "← Épisode précédent" : "Épisode suivant →"}</span>
       <span className="titre-affiche mt-2 block text-2xl text-balance group-hover:text-[var(--color-jaune)]">
-        {episode.titre}
+        {titreSansNumero(episode)}
       </span>
     </Link>
   );
@@ -123,7 +124,7 @@ export default async function PageEpisode({ params }: Parametres) {
       <EnTete actif="/serie" />
       <main id="contenu" className="colonne-large space-y-16 pt-10 pb-24 sm:pt-16">
         <div>
-          <Link href="/serie" className="text-sm font-semibold text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
+          <Link href="/serie" className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
             ← Toute la série
           </Link>
           <p className={`mt-8 ${surtitre}`}>
@@ -131,12 +132,12 @@ export default async function PageEpisode({ params }: Parametres) {
               .filter(Boolean)
               .join(" · ")}
           </p>
-          <h1 className="titre-affiche mt-3 max-w-[20ch] text-5xl text-balance sm:text-7xl">{episode.titre}</h1>
+          <h1 className="titre-affiche mt-3 max-w-[20ch] text-5xl text-balance sm:text-7xl">{titreSansNumero(episode)}</h1>
         </div>
 
         <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="relative aspect-video overflow-hidden bg-[var(--color-nuit-surface)] lg:col-span-8">
-            <LecteurEpisode youtubeId={episode.youtubeId} titre={episode.titre}>
+            <LecteurEpisode youtubeId={episode.youtubeId} titre={titreSansNumero(episode)}>
               <MiniatureEpisode youtubeId={episode.youtubeId} sizes="(min-width: 1024px) 66vw, 100vw" prioritaire />
             </LecteurEpisode>
           </div>
