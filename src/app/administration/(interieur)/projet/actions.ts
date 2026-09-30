@@ -4,7 +4,8 @@ import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { etapesProjet, membresStaff, partenaires } from "@/lib/db/schema";
+import { etapesProjet, membresStaff, partenaires, reglages } from "@/lib/db/schema";
+import { CLES_REGLAGE } from "@/lib/reglages";
 import { exigerDroit } from "@/lib/auth/session-courante";
 import { deplacer, ordreSuivant, tableOrdonnee, type ListeOrdonnee } from "@/lib/ordre";
 import { adresseSure } from "@/lib/texte-leger";
@@ -234,4 +235,25 @@ export async function corbeilleElement(donnees: FormData): Promise<void> {
     .set({ supprimeLe: restaurer ? null : new Date(), modifieLe: new Date() })
     .where(eq(table.id, id));
   revalidatePath(CHEMINS[liste]);
+}
+
+/* --- La salle ------------------------------------------------------------ */
+
+/**
+ * « Venir a la salle » : transports, parking, acces PMR, entree, buvette, en
+ * texte leger. Un seul texte, remplace a chaque enregistrement ; vide, il
+ * disparait de la page publique.
+ */
+export async function enregistrerVenirALaSalle(_precedent: EtatProjet, donnees: FormData): Promise<EtatProjet> {
+  await exigerDroit("gererProjet");
+  const texte = (donnees.get("texte") ?? "").toString().trim();
+  if (texte.length > 4000) return refus(donnees, "Le texte dépasse 4 000 caractères.");
+
+  await db()
+    .insert(reglages)
+    .values({ cle: CLES_REGLAGE.venirALaSalle, valeur: texte })
+    .onConflictDoUpdate({ target: reglages.cle, set: { valeur: texte, modifieLe: new Date() } });
+
+  revalidatePath(`${CHEMIN}/salle`);
+  return { erreur: null, valeurs: { texte, enregistre: "1" } };
 }

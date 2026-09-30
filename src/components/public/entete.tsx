@@ -15,6 +15,13 @@ export const RUBRIQUES = [
   { href: "/actualites", nom: "Actualités" },
 ];
 
+/** Les pages de vitrine, reliees depuis le pied de page (l'en-tete n'en tiendrait pas plus au telephone). */
+export const VITRINE = [
+  { href: "/le-projet", nom: "Le projet" },
+  { href: "/ou-nous-voir", nom: "Où nous voir" },
+  { href: "/partenaires", nom: "Partenaires" },
+];
+
 export function EnTete({ actif }: { actif?: string }) {
   return (
     <header className="border-b border-[var(--color-nuit-trait)]">

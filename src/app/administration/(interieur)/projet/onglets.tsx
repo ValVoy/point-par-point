@@ -7,6 +7,7 @@ const ONGLETS = [
   { href: "/administration/projet", libelle: "Chronologie" },
   { href: "/administration/projet/equipe", libelle: "L'équipe derrière" },
   { href: "/administration/projet/partenaires", libelle: "Partenaires" },
+  { href: "/administration/projet/salle", libelle: "La salle" },
 ];
 
 export function Onglets() {

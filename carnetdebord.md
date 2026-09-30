@@ -1149,3 +1149,29 @@ d'échec. Vérifié au navigateur avec une copie simulée, sans toucher au press
 - Vérifié : `tsc`, lint ; clic en 1440 px : copie appelée, partage natif non appelé, « Lien
   copié. » annoncé.
 - Suite : « Le projet », « Où nous voir », partenaires, contact, puis mentions légales.
+
+**18:20** · **[page] La vitrine : le projet, où nous voir, partenaires**
+
+Une veille pour les trois (`veille.md` section 17) : ESTAC Troyes montre l'ordre juste pour un
+petit lieu (adresse et itinéraire en tête, puis transports, parking, PMR, sans carte intégrée),
+Fréjus Var Volley le contre-exemple des logos hétérogènes, non cliquables et sans texte
+alternatif. Fiche `fiches/vitrine.md`.
+
+Le projet : une phrase qui situe, puis la chronologie saisie dans l'administration, reliée par un
+fil turquoise ; aucun récit inventé. Où nous voir : la salle, déduite des matchs à domicile (la
+plus fréquente), avec « Itinéraire » et « Copier l'adresse », le prochain match à domicile en
+tableau LED, les suivants, et un texte « Venir à la salle ». Ce texte n'existait nulle part :
+l'utilisateur a choisi de l'ajouter, d'où une table `reglages` (migration additive 0005) et un
+onglet « La salle » dans l'administration, en texte léger. Partenaires : un merci, des cases
+égales, logos ramenés en blanc et couleur au survol, sinon le nom ; « Devenir partenaire » mène
+au contact, construit juste après.
+
+L'en-tête garde ses quatre rubriques ; ces trois pages vivent dans le pied de page, et « Où nous
+voir » est relié depuis la salle d'un match à domicile.
+
+- Portée : `src/app/le-projet/`, `src/app/ou-nous-voir/`, `src/app/partenaires/`,
+  `copier-adresse.tsx`, `lib/vitrine.ts`, `lib/reglages.ts`, schéma et migration 0005, onglet
+  « La salle » de l'administration, `entete.tsx`, `pied-de-page.tsx`, `blocs-match.tsx`.
+- Vérifié : 83 tests, `tsc`, lint ; les trois pages en 1440 px, « Venir à la salle » avec un
+  texte de test (retiré ensuite), aucun débordement à 375 px après correction des partenaires.
+- Suite : le formulaire de contact, avec sa revue de sécurité.

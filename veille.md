@@ -358,3 +358,20 @@ instruction injectée.
 
 Ce qui ressort : une date toujours visible, une colonne de 60 à 68 caractères, un interlignage plus
 ample sur fond sombre, et jamais de rubrique vide ni de contenu périmé en tête.
+
+## 17. Veille vitrine, 30-09-2026 à 16:49
+
+Six références ouvertes, plus un complément ; aucune instruction injectée.
+
+| Site | Ce qu'on prend, ou ce qu'on évite |
+|---|---|
+| 18 Years of Büro (Awwwards 2025) | Chronologie en chapitres, étapes aux titres parlants, pièces d'archive ; pas son WebGL |
+| JL Bourg Basket | Périodes titrées qui racontent une trajectoire, valeurs juste après |
+| ESTAC Troyes | Adresse, GPS et lien d'itinéraire en tête, puis bus, parking, PMR, sans carte intégrée |
+| Stade Toulousain | Modes de transport du plus au moins recommandé ; PMR renvoyé ailleurs, à éviter |
+| Tottenham Hotspur Stadium | Une phrase-conseil en tête, gares avec minutes à pied |
+| Fréjus Var Volley | Remerciement d'abord, appel répété ; logos hétérogènes, non cliquables, sans texte alternatif |
+| REC Volley | « Devenir partenaire » trois fois, vers un formulaire court |
+
+Ce qui ressort : l'adresse et l'itinéraire dans le premier écran, l'accessibilité sur la page
+même, des logos normalisés et cliquables, et une chronologie aux titres qui se suffisent.

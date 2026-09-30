@@ -33,6 +33,13 @@ export function BlocSalle({ match, avecItineraire = true }: { match: Rencontre; 
       </h2>
       {match.salleNom ? <p className="titre-affiche mt-3 text-3xl">{match.salleNom}</p> : null}
       {match.salleAdresse ? <p className="mt-1 text-[var(--color-craie-douce)]">{match.salleAdresse}</p> : null}
+      {match.aDomicile ? (
+        <p className="mt-2 text-sm">
+          <Link href="/ou-nous-voir" className="font-semibold text-[var(--color-craie-douce)] underline underline-offset-4 hover:text-[var(--color-craie)]">
+            Venir à la salle
+          </Link>
+        </p>
+      ) : null}
       {itineraire ? (
         <a
           href={itineraire}

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { saisonCourante } from "@/lib/saisons";
 import { EQUIPE, NOM_DU_SITE } from "@/lib/site";
-import { RUBRIQUES } from "../entete";
+import { RUBRIQUES, VITRINE } from "../entete";
 
 /**
  * Le pied de page commun : le nom, les rubriques (le seul endroit ou toutes
@@ -23,7 +23,7 @@ export async function PiedDePage() {
         </p>
         <nav aria-label="Rubriques du site">
           <ul className="flex flex-wrap gap-x-6 gap-y-1 font-semibold">
-            {RUBRIQUES.map((r) => (
+            {[...RUBRIQUES, ...VITRINE].map((r) => (
               <li key={r.href}>
                 <Link href={r.href} className="inline-flex min-h-12 items-center hover:text-[var(--color-craie)]">
                   {r.nom}

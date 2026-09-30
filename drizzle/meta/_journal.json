@@ -36,6 +36,13 @@
       "when": 1790778512979,
       "tag": "0004_anciens-slugs-actualite",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1790780135168,
+      "tag": "0005_reglages",
+      "breakpoints": true
     }
   ]
 }

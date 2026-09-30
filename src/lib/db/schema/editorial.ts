@@ -110,6 +110,17 @@ export const etapesProjet = sqliteTable("etapes_projet", {
   ...communes,
 });
 
+/**
+ * Les reglages du site : quelques textes uniques saisis dans l'administration,
+ * qu'aucune liste ne porte (par exemple « Venir a la salle », decide le
+ * 30-09-2026). Une cle, une valeur ; la liste des cles vit dans lib/reglages.ts.
+ */
+export const reglages = sqliteTable("reglages", {
+  cle: text("cle").primaryKey(),
+  valeur: text("valeur").notNull(),
+  ...horodatage,
+});
+
 export const membresStaff = sqliteTable("membres_staff", {
   id: identifiant(),
   nom: text("nom").notNull(),

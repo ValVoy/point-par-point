@@ -40,12 +40,15 @@ présentation, parcours, ses matchs de la saison, coéquipiers par numéro.
 **Les actualités le 30-09-2026** (fiche `fiches/actualites.md`) : liste datée, article réglé pour
 la lecture sur fond sombre, partage sans script tiers, bloc de l'accueil masqué au-delà de 90 jours.
 
-Ensuite : les pages « Le projet », « Où nous voir », partenaires et contact, puis les mentions
-légales et la politique de confidentialité.
+**La vitrine le 30-09-2026** (fiche `fiches/vitrine.md`) : `/le-projet`, `/ou-nous-voir` (avec le
+texte « Venir à la salle » saisi dans l'onglet « La salle » de l'administration), `/partenaires`.
+
+Ensuite : le formulaire de contact (revue de sécurité), puis les mentions légales et la politique
+de confidentialité.
 À vérifier avant la mise en ligne : l'accord de droit à l'image couvre le site ; mentions légales
 et politique de confidentialité.
-À préparer pour la mise en ligne : appliquer en production les migrations 0002, 0003 et 0004
-(tables des anciennes adresses), avec l'accord de l'utilisateur.
+À préparer pour la mise en ligne : appliquer en production les migrations 0002 à 0005
+(anciennes adresses, réglages), avec l'accord de l'utilisateur.
 Reporté : abonnement d'agenda à toute la saison, carte statique, transition animée liste → match.
 Le nom (« Point Par Point ») et la chaîne YouTube sont arrivés le 30-09-2026 et sont en place.
 
