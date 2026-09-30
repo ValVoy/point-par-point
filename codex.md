@@ -321,3 +321,14 @@ travail, c'est l'ajouter à cette liste.
 Le filtre n'utilise pas d'expression régulière : une première version en avait une, et ses barres
 obliques inverses se perdaient dans le HTML, ce qui cassait le filtre sans erreur visible côté
 serveur.
+
+### Un mot de passe provisoire se voit une fois, et nulle part ailleurs
+
+Le site n'envoie pas d'e-mail : un compte créé ou réinitialisé reçoit un mot de passe provisoire
+(`genererMotDePasse`, `src/lib/comptes.ts`), rendu une seule fois dans l'état de l'action et
+jamais stocké en clair. Next journalisait par défaut le résultat des actions serveur, mot de passe
+compris, dans `.next/dev/logs` : `logging.serverFunctions` est coupé dans `next.config.ts`. Toute
+nouvelle action qui rend ou reçoit une donnée sensible profite de ce réglage ; ne pas le rallumer.
+
+Deux règles de `refusChangement`, testées : on ne se retire pas ses propres droits, et il reste
+toujours un administrateur actif.

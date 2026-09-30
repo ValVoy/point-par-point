@@ -6,6 +6,12 @@ const nextConfig: NextConfig = {
   // l'image demarre sans serveur.
   output: "standalone",
 
+  // Next journalise par defaut les arguments et le resultat de chaque action
+  // serveur. Or une action rend un mot de passe provisoire (comptes) et une
+  // autre recoit les messages de contact : rien de cela n'a a finir en clair
+  // dans un journal, y compris en developpement (.next/dev/logs).
+  logging: { serverFunctions: false },
+
   // Contrairement a ope_cdm, la verification des types reste active pendant
   // le build. Le VPS Hetzner a 4 vCPU, un swap et 5 Go libres : rien a voir
   // avec l'instance Clever Cloud plafonnee a 644 Mo qui avait impose de la

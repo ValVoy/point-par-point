@@ -47,12 +47,13 @@ export function Coquille({
           </span>
 
           <div className="ml-auto flex items-center gap-3">
-            <span className="text-xs text-[var(--color-craie-douce)]">
+            <Link href="/administration/compte" className="text-xs text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
               {utilisateur.nom}
               <span className="ml-1.5 rounded bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]">
                 {utilisateur.role}
               </span>
-            </span>
+              <span className="sr-only"> : mon compte</span>
+            </Link>
             <form action={deconnecter}>
               <button
                 type="submit"

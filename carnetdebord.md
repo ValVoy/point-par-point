@@ -1326,3 +1326,31 @@ jusqu'ici épars dans le texte (migrations, sauvegardes de 30 jours, accords de 
 - Portée : ROADMAP.
 - Vérifié : rien de mon côté, rapport de la session Coolify relu.
 - Suite : l'écran « Comptes » de l'administration.
+
+**23:55** · **[écran] Comptes et Mon compte**
+
+L'entrée « Comptes » du menu menait à une page absente. Elle existe : liste des comptes, création,
+changement de rôle, désactivation, mot de passe provisoire. Le site n'envoyant aucun e-mail, un
+compte naît avec un mot de passe provisoire affiché une seule fois, sans caractère ambigu, que
+l'administrateur transmet de la main à la main. « Mon compte », ouvert à tous et relié depuis le
+nom dans l'en-tête, sert à le remplacer, avec le mot de passe actuel exigé et le compteur de
+tentatives de la connexion.
+
+Les garde-fous : on ne se retire pas ses propres droits, il reste toujours un administrateur
+actif (contrôle refait après écriture), et désactiver déconnecte aussitôt.
+
+Deux trouvailles en vérifiant. Le journal de développement de Next consignait en clair le
+résultat des actions serveur, donc le mot de passe provisoire : `logging.serverFunctions` est
+coupé. Et le formulaire client importait une constante depuis le fichier qui charge bcrypt, ce qui
+l'aurait envoyé au navigateur : la valeur passe désormais par la page serveur.
+
+- Portée : `src/lib/comptes.ts` et son test, `administration/(interieur)/comptes/`,
+  `administration/(interieur)/compte/`, `coquille.tsx`, `next.config.ts`, `fiches/comptes.md`,
+  codex, ROADMAP.
+- Vérifié : 103 tests, `tsc`, lint ; parcours complet avec un second navigateur : création,
+  connexion au mot de passe provisoire, rédacteur refusé sur « Comptes », mauvais mot de passe
+  actuel et confirmation différente refusés, changement réussi sans déconnexion, aucune action sur
+  son propre compte, promotion puis rétrogradation, désactivation qui déconnecte et bloque la
+  reconnexion ; 390 px sans débordement. Compte d'essai supprimé de la base ensuite.
+- Suite : relire la liste « Avant la mise en ligne » avec l'utilisateur ; passe de sécurité
+  complète avant déploiement.

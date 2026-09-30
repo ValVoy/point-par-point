@@ -57,7 +57,10 @@ travail exclues, politique de confidentialité à jour. **Umami 3.0.3 installé 
 `https://stats.valentincheron.fr` (projet Coolify `stats`, sonde Todai en place) ; ce qui reste
 se fait au déploiement du site, voir « Avant la mise en ligne ».
 
-Ensuite : l'écran « Comptes » (relié dans la navigation de l'administration, pas encore construit).
+**Les comptes le 30-09-2026** (fiche `fiches/comptes.md`) : écran « Comptes » (mot de passe
+provisoire affiché une fois, rôles, désactivation) et « Mon compte » pour changer le sien.
+
+Ensuite : relire la liste « Avant la mise en ligne » ; le lot 1 public est complet.
 À vérifier avant la mise en ligne : l'accord de droit à l'image couvre le site ; mentions légales
 et politique de confidentialité.
 À régler avant la mise en ligne : la sauvegarde nocturne de cette base garde **30 jours** au plus, durée annoncée par la politique de confidentialité.
@@ -101,7 +104,7 @@ design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`
 - [x] Chronologie du projet, staff, partenaires, ordre à la main, réservés à l'admin (29-09-2026). Photos et logos avec l'envoi vers R2
 - [ ] Classement de la poule, avec sa date de mise à jour
 - [x] Messages de contact (30-09-2026)
-- [ ] Comptes utilisateurs, corbeille
+- [x] Comptes utilisateurs et « Mon compte » (30-09-2026) ; corbeille : chaque écran a la sienne
 
 ### Site public
 
