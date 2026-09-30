@@ -31,11 +31,11 @@ export function LigneCompte({ compte: c, soiMeme }: { compte: Compte; soiMeme: b
       className={`rounded-xl border bg-[var(--color-nuit-surface)] p-4 ${c.actif ? "border-[var(--color-nuit-trait)]" : "border-dashed border-[var(--color-nuit-trait)]"}`}
     >
       <p className="flex flex-wrap items-center gap-2 text-xs text-[var(--color-craie-tenue)]">
-        <span className="rounded bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]">
+        <span className="rounded-lg bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]">
           {c.role === "admin" ? "administrateur" : "rédacteur"}
         </span>
-        {c.actif ? null : <span className="rounded bg-[var(--color-nuit)] px-1.5 py-0.5 text-[var(--color-craie-douce)]">désactivé</span>}
-        {soiMeme ? <span className="rounded bg-[var(--color-nuit)] px-1.5 py-0.5 text-[var(--color-craie-douce)]">vous</span> : null}
+        {c.actif ? null : <span className="rounded-lg bg-[var(--color-nuit)] px-1.5 py-0.5 text-[var(--color-craie-douce)]">désactivé</span>}
+        {soiMeme ? <span className="rounded-lg bg-[var(--color-nuit)] px-1.5 py-0.5 text-[var(--color-craie-douce)]">vous</span> : null}
         {c.derniereConnexion ? `dernière connexion le ${c.derniereConnexion}` : "jamais connecté"}
       </p>
       <p className="mt-1.5 font-medium break-words">

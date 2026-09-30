@@ -86,7 +86,7 @@ export function GrilleCalendrier({ saisonId }: { saisonId: number }) {
           onChange={(e) => setCompetition(e.target.value)}
           className={`${CLASSE} mt-1.5`}
         />
-        <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
+        <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">
           Commune à tous les matchs de la grille.
         </p>
       </div>

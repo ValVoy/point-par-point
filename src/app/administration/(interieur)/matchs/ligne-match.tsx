@@ -46,11 +46,11 @@ export function LigneMatch({ rencontre }: { rencontre: RencontreAvecSets }) {
         <p className="mt-0.5 font-medium">
           {rencontre.aDomicile ? "Contre " : "Chez "}
           {rencontre.adversaire}
-          <span className="ml-2 rounded bg-[var(--color-nuit)] px-1.5 py-0.5 text-xs font-normal text-[var(--color-craie-douce)]">
+          <span className="ml-2 rounded-lg bg-[var(--color-nuit)] px-1.5 py-0.5 text-xs font-normal text-[var(--color-craie-douce)]">
             {rencontre.aDomicile ? "domicile" : "extérieur"}
           </span>
           {rencontre.etat === "annulee" || rencontre.etat === "reportee" ? (
-            <span className="ml-1.5 rounded border border-[var(--color-craie-tenue)] px-1.5 py-px text-xs font-normal text-[var(--color-craie-douce)]">
+            <span className="ml-1.5 rounded-lg border border-[var(--color-craie-tenue)] px-1.5 py-px text-xs font-normal text-[var(--color-craie-douce)]">
               {LIBELLES_ETAT[rencontre.etat].toLowerCase()}
             </span>
           ) : null}

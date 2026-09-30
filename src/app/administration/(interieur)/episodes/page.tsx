@@ -53,7 +53,7 @@ export default async function PageEpisodes() {
                     height={360}
                     sizes="8rem"
                     loading={index === 0 ? "eager" : "lazy"}
-                    className="aspect-video w-32 rounded-md object-cover"
+                    className="aspect-video w-32 rounded-lg object-cover"
                   />
                   <div className="min-w-0 flex-1">
                     <p className="font-medium">
@@ -68,8 +68,8 @@ export default async function PageEpisodes() {
                       <span
                         className={
                           episode.etat === "publie"
-                            ? "rounded bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]"
-                            : "rounded bg-[var(--color-nuit)] px-1.5 py-0.5 text-[var(--color-craie-douce)]"
+                            ? "rounded-lg bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]"
+                            : "rounded-lg bg-[var(--color-nuit)] px-1.5 py-0.5 text-[var(--color-craie-douce)]"
                         }
                       >
                         {episode.etat === "publie" ? "publié" : "brouillon"}
@@ -116,7 +116,7 @@ export default async function PageEpisodes() {
               <h2 className="text-sm font-semibold text-[var(--color-craie-douce)]">
                 Corbeille
               </h2>
-              <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
+              <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">
                 Rien n&apos;est effacé : ces épisodes peuvent revenir.
               </p>
               <ul className="mt-3 space-y-2">

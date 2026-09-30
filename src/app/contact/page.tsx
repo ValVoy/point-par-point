@@ -32,7 +32,7 @@ export default async function PageContact({ searchParams }: { searchParams: Prom
   const { sujet } = await searchParams;
   return (
     <>
-      <EnTete />
+      <EnTete actif="/contact" />
       <main id="contenu" className="colonne-large pt-16 pb-24 sm:pt-24">
         <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">{EQUIPE}</p>
         <h1 className="titre-affiche mt-3 text-6xl sm:text-8xl">Nous écrire</h1>

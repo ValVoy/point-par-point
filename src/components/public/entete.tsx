@@ -43,6 +43,19 @@ export function EnTete({ actif }: { actif?: string }) {
                 </Link>
               </li>
             ))}
+            {/* La vitrine rejoint l'en-tete en grand ecran seulement (audit U13) :
+                au telephone, quatre rubriques tiennent sur une ligne, pas huit. */}
+            {VITRINE.map((r, i) => (
+              <li key={r.href} className={`hidden lg:block ${i === 0 ? "lg:ml-4 lg:border-l lg:border-[var(--color-nuit-trait)] lg:pl-6" : ""}`}>
+                <Link
+                  href={r.href}
+                  aria-current={actif === r.href ? "page" : undefined}
+                  className="inline-flex min-h-12 items-center border-b-2 border-transparent font-medium text-[var(--color-craie-tenue)] hover:text-[var(--color-craie)] aria-[current=page]:border-[var(--color-jaune)] aria-[current=page]:text-[var(--color-craie)]"
+                >
+                  {r.nom}
+                </Link>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>

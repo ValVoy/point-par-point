@@ -45,11 +45,11 @@ export default async function PageMessages() {
             >
               <p className="flex flex-wrap items-center gap-2 text-xs text-[var(--color-craie-tenue)]">
                 {m.lu ? null : (
-                  <span className="rounded bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]">
+                  <span className="rounded-lg bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]">
                     non lu
                   </span>
                 )}
-                <span className="rounded bg-[var(--color-nuit)] px-1.5 py-0.5 text-[var(--color-craie-douce)]">
+                <span className="rounded-lg bg-[var(--color-nuit)] px-1.5 py-0.5 text-[var(--color-craie-douce)]">
                   {libelleSujet(m.sujet)}
                 </span>
                 {dateCourte(m.creeLe)} à {heure(m.creeLe)}
@@ -89,7 +89,7 @@ export default async function PageMessages() {
       {corbeille.length > 0 ? (
         <section className="mt-8">
           <h2 className="text-sm font-semibold text-[var(--color-craie-douce)]">Corbeille</h2>
-          <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
+          <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">
             Ces messages peuvent revenir, jusqu&apos;à leur effacement un an après leur arrivée.
           </p>
           <ul className="mt-3 space-y-2">

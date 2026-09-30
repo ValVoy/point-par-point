@@ -37,7 +37,7 @@ function Bouton({
         aria-label={libelle}
         title={libelle}
         disabled={desactive}
-        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md px-2 text-[var(--color-craie-douce)] hover:bg-[var(--color-nuit)] disabled:opacity-30"
+        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg px-2 text-[var(--color-craie-douce)] hover:bg-[var(--color-nuit)] disabled:opacity-30"
       >
         {children}
       </button>
@@ -107,7 +107,7 @@ export function Corbeille({
   return (
     <section className="mt-8">
       <h2 className="text-sm font-semibold text-[var(--color-craie-douce)]">Corbeille</h2>
-      <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">Rien n&apos;est effacé : ces éléments peuvent revenir.</p>
+      <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">Rien n&apos;est effacé : ces éléments peuvent revenir.</p>
       <ul className="mt-3 space-y-2">
         {elements.map((element) => (
           <li

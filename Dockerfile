@@ -26,10 +26,14 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # autorise les photos dans next/image, et l'adresse publique du site, figee
 # dans les metadonnees et les fichiers d'agenda. A poser dans Coolify en
 # variables de build.
+# UMAMI_URL aussi : la politique de securite du contenu (next.config.ts)
+# autorise son script et ses envois, et se fige a la compilation.
 ARG R2_DOMAINE_PUBLIC
 ARG NEXT_PUBLIC_SITE_URL
+ARG UMAMI_URL
 ENV R2_DOMAINE_PUBLIC=$R2_DOMAINE_PUBLIC
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
+ENV UMAMI_URL=$UMAMI_URL
 RUN npm run build
 
 # --- Execution -------------------------------------------------------------

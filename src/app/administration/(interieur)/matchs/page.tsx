@@ -30,7 +30,7 @@ function Groupe({
         {titre} <span className="font-normal">({rencontres.length})</span>
       </h2>
       {aide ? (
-        <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">{aide}</p>
+        <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">{aide}</p>
       ) : null}
       <ul className="mt-3 space-y-3">
         {rencontres.map((rencontre) => (
@@ -88,7 +88,7 @@ export default async function PageMatchs({
               href={`/administration/matchs?saison=${autre.id}`}
               className={
                 autre.id === saison.id
-                  ? "rounded bg-[var(--color-turquoise-sourd)] inline-flex min-h-11 items-center px-3 text-[var(--color-turquoise-clair)]"
+                  ? "rounded-lg bg-[var(--color-turquoise-sourd)] inline-flex min-h-11 items-center px-3 text-[var(--color-turquoise-clair)]"
                   : "inline-flex min-h-11 items-center px-3 text-[var(--color-craie-douce)] hover:underline"
               }
             >
@@ -153,7 +153,7 @@ export default async function PageMatchs({
               <h2 className="text-sm font-semibold text-[var(--color-craie-douce)]">
                 Corbeille
               </h2>
-              <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
+              <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">
                 Rien n&apos;est effacé : ces matchs peuvent revenir, avec leur score.
               </p>
               <ul className="mt-3 space-y-2">
@@ -183,7 +183,7 @@ export default async function PageMatchs({
 
         <aside className="self-start rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-5">
           <h2 className="text-sm font-semibold">Ajouter un match</h2>
-          <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
+          <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">
             Un match isolé : amical, coupe, report. Pour la saison entière,
             passez par la saisie du calendrier.
           </p>

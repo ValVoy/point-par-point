@@ -39,7 +39,7 @@ export default async function PageOuNousVoir() {
 
   return (
     <>
-      <EnTete />
+      <EnTete actif="/ou-nous-voir" />
       <main id="contenu" className="colonne-large space-y-20 pt-16 pb-24 sm:pt-24">
         <section aria-labelledby="titre-salle">
           <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">Où nous voir</p>

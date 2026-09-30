@@ -28,10 +28,10 @@ export default async function PageProjet() {
 
   return (
     <>
-      <EnTete />
+      <EnTete actif="/le-projet" />
       <main id="contenu" className="colonne-large pt-16 pb-24 sm:pt-24">
-        <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">Le projet</p>
-        <h1 className="titre-affiche mt-3 text-6xl sm:text-8xl">{NOM_DU_SITE}</h1>
+        <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">{NOM_DU_SITE}</p>
+        <h1 className="titre-affiche mt-3 text-6xl sm:text-8xl">Le projet</h1>
         <p className="mt-5 max-w-[46ch] text-lg leading-relaxed text-[var(--color-craie-douce)]">
           L&apos;équipe D2 masculine du {EQUIPE}, et la série qui la suit. Son histoire, étape par étape.
         </p>

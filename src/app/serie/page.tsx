@@ -41,8 +41,8 @@ export default async function PageSerie() {
       <EnTete actif="/serie" />
       <main id="contenu" className="pb-24">
         <section className="colonne-large pt-16 pb-14 sm:pt-24">
-          <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">La série</p>
-          <h1 className="titre-affiche mt-3 text-6xl sm:text-8xl">{NOM_DU_SITE}</h1>
+          <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">{NOM_DU_SITE}</p>
+          <h1 className="titre-affiche mt-3 text-6xl sm:text-8xl">La série</h1>
           <p className="mt-5 max-w-[52ch] text-lg leading-relaxed text-[var(--color-craie-douce)]">
             La série qui suit l&apos;équipe D2 masculine du {EQUIPE}, match après match.
           </p>

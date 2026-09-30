@@ -101,7 +101,7 @@ export function ChampImage({
               if (fichier) setRetirer(false);
             }}
           />
-          <p id={`${id}-aide`} className="text-xs text-[var(--color-craie-tenue)]">
+          <p id={`${id}-aide`} className="text-sm text-[var(--color-craie-tenue)]">
             {aide ?? "JPEG, PNG, WebP ou AVIF, 12 Mo au plus. Le site la redimensionne et retire la position GPS."}
           </p>
           {trop ? (

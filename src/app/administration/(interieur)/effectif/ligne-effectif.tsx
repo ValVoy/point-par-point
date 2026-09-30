@@ -80,7 +80,7 @@ export function LigneEffectifModifiable({ ligne }: { ligne: LigneEffectif }) {
           </Link>
           <p className="truncate text-xs text-[var(--color-craie-tenue)]">
             {ligne.capitaine ? (
-              <span className="mr-1.5 rounded bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]">
+              <span className="mr-1.5 rounded-lg bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]">
                 capitaine
               </span>
             ) : null}

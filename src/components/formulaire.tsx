@@ -32,7 +32,7 @@ function Facultatif() {
 
 function Aide({ id, texte }: { id: string; texte?: string }) {
   return texte ? (
-    <p id={id} className="mt-1 text-xs text-[var(--color-craie-tenue)]">
+    <p id={id} className="mt-1 text-sm text-[var(--color-craie-tenue)]">
       {texte}
     </p>
   ) : null;

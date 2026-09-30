@@ -195,7 +195,7 @@ export function FormulaireEpisode({
           onChange={(e) => modifier("publieLe", e.target.value)}
           className={CLASSE_CHAMP}
         />
-        <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
+        <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">
           Laissée vide, elle prendra la date du jour où l&apos;épisode est publié sur le site.
         </p>
       </div>

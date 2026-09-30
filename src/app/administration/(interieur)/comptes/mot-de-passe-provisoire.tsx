@@ -14,7 +14,7 @@ export function MotDePasseProvisoire({ nom, email, motDePasse }: { nom: string; 
         Mot de passe provisoire de <strong className="text-[var(--color-craie)]">{nom}</strong> ({email}) :
       </p>
       <p className="mt-2 flex flex-wrap items-center gap-3">
-        <code className="rounded bg-[var(--color-nuit-surface)] px-3 py-2 font-mono text-lg tracking-wider text-[var(--color-craie)] select-all">
+        <code className="rounded-lg bg-[var(--color-nuit-surface)] px-3 py-2 font-mono text-lg tracking-[0.12em] text-[var(--color-craie)] select-all">
           {motDePasse}
         </code>
         <button

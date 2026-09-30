@@ -53,7 +53,7 @@ export function Coquille({
               className="inline-flex min-h-11 items-center gap-1.5 text-sm text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]"
             >
               {utilisateur.nom}
-              <span className="rounded bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-xs text-[var(--color-turquoise-clair)]">
+              <span className="rounded-lg bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-xs text-[var(--color-turquoise-clair)]">
                 {utilisateur.role === "admin" ? "administrateur" : "rédacteur"}
               </span>
               <span className="sr-only"> : mon compte</span>

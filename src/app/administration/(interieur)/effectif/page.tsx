@@ -97,7 +97,7 @@ export default async function PageEffectif({
               href={`/administration/effectif?saison=${autre.id}`}
               className={
                 autre.id === saison.id
-                  ? "rounded bg-[var(--color-turquoise-sourd)] inline-flex min-h-11 items-center px-3 text-[var(--color-turquoise-clair)]"
+                  ? "rounded-lg bg-[var(--color-turquoise-sourd)] inline-flex min-h-11 items-center px-3 text-[var(--color-turquoise-clair)]"
                   : "inline-flex min-h-11 items-center px-3 text-[var(--color-craie-douce)] hover:underline"
               }
             >
@@ -146,7 +146,7 @@ export default async function PageEffectif({
               <h2 className="text-sm font-semibold text-[var(--color-craie-douce)]">
                 Retirés du groupe
               </h2>
-              <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
+              <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">
                 Leur fiche et leurs statistiques restent intactes.
               </p>
               <ul className="mt-3 space-y-2">
@@ -180,12 +180,20 @@ export default async function PageEffectif({
 
         <aside className="rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-5">
           <h2 className="text-sm font-semibold">Ajouter un joueur</h2>
-          <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
+          <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">
             Il rejoint l&apos;effectif de {saison.libelle}.
           </p>
           <div className="mt-4">
             <FormulaireJoueur saisonId={saison.id} />
           </div>
+          {/* Le staff s'affiche sur la page Effectif du site : on le cherche ici (audit U14). */}
+          <p className="mt-6 border-t border-[var(--color-nuit-trait)] pt-4 text-sm text-[var(--color-craie-douce)]">
+            Le staff (entraîneurs, image, montage) se modifie dans{" "}
+            <Link href="/administration/projet/equipe" className="text-[var(--color-turquoise)] underline underline-offset-2">
+              Le projet, l&apos;équipe derrière
+            </Link>
+            .
+          </p>
         </aside>
       </div>
     </>

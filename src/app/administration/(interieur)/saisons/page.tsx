@@ -66,7 +66,7 @@ export default async function PageSaisons() {
                     <p className="font-medium">
                       {saison.libelle}
                       {saison.courante ? (
-                        <span className="ml-2 rounded bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-xs font-normal text-[var(--color-turquoise-clair)]">
+                        <span className="ml-2 rounded-lg bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-xs font-normal text-[var(--color-turquoise-clair)]">
                           courante
                         </span>
                       ) : null}
@@ -117,7 +117,7 @@ export default async function PageSaisons() {
               <h2 className="text-sm font-semibold text-[var(--color-craie-douce)]">
                 Corbeille
               </h2>
-              <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
+              <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">
                 Rien n&apos;est effacé : ces saisons peuvent revenir.
               </p>
               <ul className="mt-3 space-y-2">

@@ -72,7 +72,7 @@ export function FormulaireActualite({ actualite }: { actualite?: ActualiteModifi
           onChange={(e) => setChapo(e.target.value)}
           className={CLASSE_CHAMP}
         />
-        <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
+        <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">
           Une ou deux phrases qui résument l&apos;actualité. Elles s&apos;affichent dans la liste
           et en tête de l&apos;article. {chapo.length}/300
         </p>

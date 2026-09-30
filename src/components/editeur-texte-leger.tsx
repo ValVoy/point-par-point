@@ -102,7 +102,7 @@ export function EditeurTexteLeger({
               type="button"
               disabled={apercu}
               onClick={() => surBouton(bouton.action)}
-              className={`inline-flex min-h-11 items-center rounded-md border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] px-3 text-[var(--color-craie-douce)] disabled:opacity-40 ${bouton.classe}`}
+              className={`inline-flex min-h-11 items-center rounded-lg border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] px-3 text-[var(--color-craie-douce)] disabled:opacity-40 ${bouton.classe}`}
             >
               {bouton.libelle}
             </button>
@@ -111,7 +111,7 @@ export function EditeurTexteLeger({
             type="button"
             aria-pressed={apercu}
             onClick={() => setApercu((actuel) => !actuel)}
-            className="inline-flex min-h-11 items-center rounded-md border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] px-3 text-[var(--color-turquoise)] aria-pressed:bg-[var(--color-turquoise)] aria-pressed:text-[var(--color-nuit-surface)]"
+            className="inline-flex min-h-11 items-center rounded-lg border border-[var(--color-nuit-bord)] bg-[var(--color-nuit)] px-3 text-[var(--color-turquoise)] aria-pressed:bg-[var(--color-turquoise)] aria-pressed:text-[var(--color-nuit-surface)]"
           >
             Aperçu
           </button>
@@ -140,7 +140,7 @@ export function EditeurTexteLeger({
           )}
         </div>
       ) : null}
-      <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
+      <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">
         Une ligne vide sépare deux paragraphes. Sélectionnez un mot puis un bouton pour le mettre
         en forme.
       </p>

@@ -52,8 +52,8 @@ export default async function PageActualites() {
                   <span
                     className={
                       actualite.etat === "publie"
-                        ? "rounded bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]"
-                        : "rounded bg-[var(--color-nuit)] px-1.5 py-0.5 text-[var(--color-craie-douce)]"
+                        ? "rounded-lg bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]"
+                        : "rounded-lg bg-[var(--color-nuit)] px-1.5 py-0.5 text-[var(--color-craie-douce)]"
                     }
                   >
                     {actualite.etat === "publie" ? "publiée" : "brouillon"}
@@ -97,7 +97,7 @@ export default async function PageActualites() {
       {corbeille.length > 0 ? (
         <section className="mt-8">
           <h2 className="text-sm font-semibold text-[var(--color-craie-douce)]">Corbeille</h2>
-          <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
+          <p className="mt-1 text-sm text-[var(--color-craie-tenue)]">
             Rien n&apos;est effacé : ces actualités peuvent revenir.
           </p>
           <ul className="mt-3 space-y-2">

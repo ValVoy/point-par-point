@@ -89,7 +89,7 @@ export function GrilleClassement({
       {/* Intitules des colonnes en grand ecran ; sur telephone, chaque chiffre porte le sien. */}
       <div
         aria-hidden="true"
-        className="hidden gap-x-3 px-3 text-xs font-semibold tracking-[0.15em] text-[var(--color-craie-tenue)] uppercase lg:grid lg:grid-cols-[2rem_1fr_repeat(4,4.5rem)_5.5rem_12.5rem]"
+        className="hidden gap-x-3 px-3 text-xs font-semibold tracking-[0.12em] text-[var(--color-craie-tenue)] uppercase lg:grid lg:grid-cols-[2rem_1fr_repeat(4,4.5rem)_5.5rem_12.5rem]"
       >
         <span className="text-center">#</span>
         <span>Équipe</span>

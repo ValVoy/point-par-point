@@ -1,5 +1,46 @@
 import type { NextConfig } from "next";
 
+/**
+ * Politique de securite du contenu (audit S8, decision du 01-10-2026) : une
+ * liste blanche de base, sans jeton. Seuls peuvent s'executer ou se charger
+ * le site lui-meme, le lecteur YouTube sans cookie, les miniatures YouTube,
+ * les photos R2 et le compteur Umami. Construite a la compilation : les
+ * domaines R2 et Umami doivent donc etre connus a ce moment-la (variables de
+ * build dans Coolify, voir le Dockerfile).
+ *
+ * `'unsafe-inline'` reste necessaire aux scripts en ligne de Next et de
+ * l'intro ; la version a jeton viendra si le besoin s'en fait sentir.
+ */
+function politiqueDeContenu(): string {
+  const origine = (adresse: string | undefined) => {
+    try {
+      return adresse ? new URL(adresse).origin : null;
+    } catch {
+      return null;
+    }
+  };
+  const r2 = origine(process.env.R2_DOMAINE_PUBLIC);
+  const umami = origine(process.env.UMAMI_URL);
+  const dev = process.env.NODE_ENV !== "production";
+  const regles: Record<string, (string | null | false)[]> = {
+    "default-src": ["'self'"],
+    // Le rechargement a chaud de Next a besoin d'eval en developpement, jamais en production.
+    "script-src": ["'self'", "'unsafe-inline'", dev && "'unsafe-eval'", umami],
+    "style-src": ["'self'", "'unsafe-inline'"],
+    "img-src": ["'self'", "data:", "blob:", "https://i.ytimg.com", r2],
+    "font-src": ["'self'"],
+    "connect-src": ["'self'", umami, dev && "ws:"],
+    "frame-src": ["https://www.youtube-nocookie.com"],
+    "frame-ancestors": ["'none'"],
+    "base-uri": ["'self'"],
+    "form-action": ["'self'"],
+    "object-src": ["'none'"],
+  };
+  return Object.entries(regles)
+    .map(([directive, sources]) => [directive, ...sources.filter(Boolean)].join(" "))
+    .join("; ");
+}
+
 const nextConfig: NextConfig = {
   // Sortie autonome pour le conteneur Coolify : le serveur produit est
   // .next/standalone/server.js. Sans cette ligne, ce dossier n'existe pas et
@@ -63,9 +104,13 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Strict-Transport-Security",
-            value: "max-age=63072000; includeSubDomains; preload",
+            // Sans « preload » (audit S18, decision du 01-10-2026) : l'inscription en
+            // liste des navigateurs engagerait le futur domaine et tous ses
+            // sous-domaines, qui n'est ni achete ni attribue. A redecider ensuite.
+            value: "max-age=63072000; includeSubDomains",
           },
           { key: "X-Frame-Options", value: "DENY" },
+          { key: "Content-Security-Policy", value: politiqueDeContenu() },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           {
