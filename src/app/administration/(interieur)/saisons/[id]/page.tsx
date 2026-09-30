@@ -32,7 +32,7 @@ export default async function PageSaison({
     <>
       <Link
         href="/administration/saisons"
-        className="text-sm text-[var(--color-accent)] hover:underline"
+        className="text-sm text-[var(--color-turquoise)] hover:underline"
       >
         Retour aux saisons
       </Link>
@@ -41,7 +41,7 @@ export default async function PageSaison({
         {saison.libelle}
       </h1>
 
-      <div className="mt-6 max-w-md rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-5">
+      <div className="mt-6 max-w-md rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-5">
         <FormulaireSaison
           saison={{
             id: saison.id,

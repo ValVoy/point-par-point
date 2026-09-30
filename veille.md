@@ -237,3 +237,42 @@ Contre-exemple : WC26 Data Portraits (Awwwards 2026), fond nuit, arc-en-ciel et 
 4. Le texte sur aplat est le papier ou l'encre, jamais du blanc pur ni du gris.
 5. Pas de dégradé, pas de halo, pas d'ombre floue : de la surimpression et des aplats.
 6. Piège du crème : trop jaune, il vire au sépia sur les longues pages. Rester près du blanc.
+
+## 11. Veille nuit réelle, 30-09-2026 à 11:04
+
+Relancée après le verdict de l'utilisateur sur la palette papier : il aimait le style de la veille,
+moderne, limite néon, et ne lui reprochait que son air de site généré. Deux recherches parallèles :
+le vrai matériel de gymnase, et les sites sombres qui ne font pas générés (couleurs **lues dans le
+CSS calculé**).
+
+### Le vrai matériel
+
+| Source | Ce qu'on prend |
+|---|---|
+| Bodet Sport (Trémentines, gymnases municipaux) | Segments faits d'une seule rangée de LED : des pointillés, pas des pavés |
+| Daktronics VB-2101 | Bichromie rouge et ambre, sets gagnés affichés ; caisson mat, légendes en vinyle |
+| Stramatel | Noms d'équipes et messages défilants sur le tableau |
+| Règlement FIVB 2025, art. 70.4 | « No animation shall be allowed during rallies » : rien ne bouge pendant la lecture |
+| DSEG (police 7 segments, SIL OFL) | Segments éteints superposables sans code ; licence et date de version à vérifier avant usage |
+
+LED ambre mesurée : plus orangée que le jaune du ballon. Valeurs retenues : allumée `#ffae1f`,
+éteinte `#2d201b` (ambre fumé, jamais gris), halo `#ff8a00` à 30-40 %, flou de 2 à 6 px. Allumage
+instantané, extinction en 60 à 120 ms.
+
+### Les sites sombres réels (valeurs relevées)
+
+| Site | Ce qu'on prend |
+|---|---|
+| Lando Norris, Site of the Year 2025 | Fond noir kaki, tous les gris tirés de sa teinte ; survol par inversion pleine, aucune lueur |
+| Ousmane Dembélé, Ballon d'Or (Awwwards 2025) | Le noir coloré vient de l'identité : couleur de club assombrie par chapitre |
+| NTS Radio | Une couleur vive réservée à un état réel, le direct |
+| Boiler Room | Deux marches de surface suffisent, sans bordure ni ombre |
+| The Last Dance For Glory (Awwwards 2026) | Grain fixe à 7 % ; contre-exemple aussi : halos partout, pas de focus |
+
+Contre-exemple : fabric London, surfaces bleu marine, qui font aussitôt thème par défaut.
+
+### Les signes du sombre généré
+
+Fond bleu nuit et gris bleutés, halos sur boutons et cartes, dégradés d'accent, cartes arrondies à
+bordure translucide, accent vif partout, aplat parfait sans grain, focus absent ou bleu par défaut.
+La palette du 29-09 en cochait cinq sur six.

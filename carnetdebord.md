@@ -756,3 +756,34 @@ adressée à un agent (site de Perugia) : ignorée, référence écartée.
   défilement horizontal), l'accueil et les matchs de l'administration en 390 px.
 - Suite : l'utilisateur juge la planche à l'écran (la pastille de résultat sur le violet est à
   trancher). Puis la fiche de la nouvelle intro, salle dessinée à l'encre sur papier.
+
+**11:35** · **[design] Version 2 : le gymnase le soir**
+
+La palette papier n'a pas passé l'écran. L'utilisateur aimait le style de la veille, moderne,
+limite néon, et le tableau du prochain match, jugé plus réel. Son reproche du matin ne
+visait que l'air de site généré, et je l'avais lu comme un rejet du sombre : mes quatre
+recommandations de la première salve fuyaient toutes la nuit. Leçon notée en mémoire.
+
+Recadrage en une salve : on revient au sombre, mais réel. Deux veilles parallèles (le vrai
+matériel de gymnase, les sites sombres qui ne font pas générés, `veille.md` section 11) ont donné
+le diagnostic : la palette du 29-09 cochait cinq des six signes du sombre généré. Le bleu nuit
+devient un noir violacé tiré du maillot, le cyan ravivé redevient le turquoise réel (qui se lit
+tel quel sur ce noir, 5,8 pour 1), et la lumière ne vit plus que sur trois objets : le tableau,
+le bandeau LED, le ballon. Survol par inversion, focus jaune, plus de verre dépoli.
+
+Le tableau revient en LED ambre, dessinées en SVG : chaque segment est une rangée de points,
+comme sur les tableaux Bodet, et les segments éteints restent visibles. Première version trop
+espacée, illisible à taille réelle pour les chiffres à peu de segments : points resserrés,
+segments éteints assombris. L'intro passe à la nuit réelle sans changer un geste ; défaut trouvé
+à l'écran, les scores empilés 24 et 25 s'affichaient côte à côte, corrigé. L'administration passe
+de nuit elle aussi, par cohérence, décision de l'utilisateur. La version 1 reste dans l'historique
+(`c4d89e2`), l'intro d'origine sous l'étiquette `intro-nuit-v1`.
+
+- Portée : `globals.css`, `fiches/palette.md` (version 2), `veille.md`, `afficheur-led.tsx`
+  (nouveau), tableau du prochain match, intro (`salle.tsx`, bouton passer), ballon, planche,
+  administration (bascule des jetons dans 38 fichiers).
+- Vérifié : 57 tests, `tsc`, lint, `next build` ; à l'écran la planche en 1440 px, le tableau LED
+  en gros plan et à taille réelle, l'intro au début, au point marqué et à la fin, les matchs de
+  l'administration en 390 px.
+- Suite : l'utilisateur juge la version 2 à l'écran (planche, intro, administration). Puis
+  installer l'intro sur l'accueil avec le bloc prochain match branché sur la base.

@@ -14,7 +14,7 @@ import { TexteLeger } from "./texte-leger";
  */
 
 export const CLASSES_APERCU =
-  "text-[var(--color-encre)] [&_p]:mt-3 [&_p]:leading-relaxed [&_p:first-child]:mt-0 [&_h2]:mt-5 [&_h2]:text-lg [&_h2]:font-semibold [&_h2:first-child]:mt-0 [&_a]:text-[var(--color-accent)] [&_a]:underline";
+  "text-[var(--color-craie)] [&_p]:mt-3 [&_p]:leading-relaxed [&_p:first-child]:mt-0 [&_h2]:mt-5 [&_h2]:text-lg [&_h2]:font-semibold [&_h2:first-child]:mt-0 [&_a]:text-[var(--color-turquoise)] [&_a]:underline";
 
 type Action = "intertitre" | "gras" | "italique" | "lien";
 
@@ -92,7 +92,7 @@ export function EditeurTexteLeger({
   return (
     <div>
       <div className="flex flex-wrap items-end justify-between gap-2">
-        <label htmlFor={nom} className="block text-sm font-medium text-[var(--color-encre-douce)]">
+        <label htmlFor={nom} className="block text-sm font-medium text-[var(--color-craie-douce)]">
           {libelle}
         </label>
         <div className="flex flex-wrap gap-1 text-xs">
@@ -102,7 +102,7 @@ export function EditeurTexteLeger({
               type="button"
               disabled={apercu}
               onClick={() => surBouton(bouton.action)}
-              className={`rounded-md border border-[var(--color-trait)] bg-[var(--color-champ)] px-2 py-1 text-[var(--color-encre-douce)] disabled:opacity-40 ${bouton.classe}`}
+              className={`rounded-md border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-2 py-1 text-[var(--color-craie-douce)] disabled:opacity-40 ${bouton.classe}`}
             >
               {bouton.libelle}
             </button>
@@ -111,7 +111,7 @@ export function EditeurTexteLeger({
             type="button"
             aria-pressed={apercu}
             onClick={() => setApercu((actuel) => !actuel)}
-            className="rounded-md border border-[var(--color-trait)] bg-[var(--color-champ)] px-2 py-1 text-[var(--color-accent)] aria-pressed:bg-[var(--color-accent)] aria-pressed:text-[var(--color-papier)]"
+            className="rounded-md border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-2 py-1 text-[var(--color-turquoise)] aria-pressed:bg-[var(--color-turquoise)] aria-pressed:text-[var(--color-nuit-surface)]"
           >
             Aperçu
           </button>
@@ -129,18 +129,18 @@ export function EditeurTexteLeger({
         value={valeur}
         onChange={(e) => onChange(e.target.value)}
         hidden={apercu}
-        className="mt-1.5 w-full rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-3 py-2 font-mono text-sm leading-relaxed text-[var(--color-encre)] outline-none focus:border-[var(--color-accent)]"
+        className="mt-1.5 w-full rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-3 py-2 font-mono text-sm leading-relaxed text-[var(--color-craie)] outline-none focus:border-[var(--color-turquoise)]"
       />
       {apercu ? (
-        <div className="mt-1.5 min-h-40 rounded-lg border border-dashed border-[var(--color-trait)] bg-[var(--color-champ)] px-4 py-3">
+        <div className="mt-1.5 min-h-40 rounded-lg border border-dashed border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-4 py-3">
           {valeur.trim() ? (
             <TexteLeger texte={valeur} className={CLASSES_APERCU} />
           ) : (
-            <p className="text-sm text-[var(--color-encre-tenue)]">Rien à afficher pour l&apos;instant.</p>
+            <p className="text-sm text-[var(--color-craie-tenue)]">Rien à afficher pour l&apos;instant.</p>
           )}
         </div>
       ) : null}
-      <p className="mt-1 text-xs text-[var(--color-encre-tenue)]">
+      <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
         Une ligne vide sépare deux paragraphes. Sélectionnez un mot puis un bouton pour le mettre
         en forme.
       </p>

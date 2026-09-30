@@ -10,8 +10,8 @@ import { creerActualite, modifierActualite, type EtatActualite } from "./actions
 const ETAT_INITIAL: EtatActualite = { erreur: null };
 
 const CLASSE_CHAMP =
-  "mt-1.5 w-full rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-3 py-2 text-[var(--color-encre)] outline-none focus:border-[var(--color-accent)]";
-const CLASSE_LABEL = "block text-sm font-medium text-[var(--color-encre-douce)]";
+  "mt-1.5 w-full rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-3 py-2 text-[var(--color-craie)] outline-none focus:border-[var(--color-turquoise)]";
+const CLASSE_LABEL = "block text-sm font-medium text-[var(--color-craie-douce)]";
 
 export type ActualiteModifiable = {
   id: number;
@@ -51,7 +51,7 @@ export function FormulaireActualite({ actualite }: { actualite?: ActualiteModifi
       <div>
         <label htmlFor="chapo" className={CLASSE_LABEL}>
           Chapô
-          <span className="ml-1.5 text-xs font-normal text-[var(--color-encre-tenue)]">
+          <span className="ml-1.5 text-xs font-normal text-[var(--color-craie-tenue)]">
             facultatif
           </span>
         </label>
@@ -64,7 +64,7 @@ export function FormulaireActualite({ actualite }: { actualite?: ActualiteModifi
           onChange={(e) => setChapo(e.target.value)}
           className={CLASSE_CHAMP}
         />
-        <p className="mt-1 text-xs text-[var(--color-encre-tenue)]">
+        <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
           Une ou deux phrases qui résument l&apos;actualité. Elles s&apos;affichent dans la liste
           et en tête de l&apos;article. {chapo.length}/300
         </p>

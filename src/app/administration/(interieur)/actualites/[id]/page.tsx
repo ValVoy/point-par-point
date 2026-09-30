@@ -31,12 +31,12 @@ export default async function PageActualite({
     <>
       <Link
         href="/administration/actualites"
-        className="text-sm text-[var(--color-accent)] hover:underline"
+        className="text-sm text-[var(--color-turquoise)] hover:underline"
       >
         Retour aux actualités
       </Link>
       <h1 className="mt-3 titre-admin text-3xl">{actualite.titre}</h1>
-      <p className="mt-1 text-sm text-[var(--color-encre-douce)]">
+      <p className="mt-1 text-sm text-[var(--color-craie-douce)]">
         {brouillon
           ? "Brouillon, invisible sur le site"
           : `Publiée le ${dateCourte(actualite.publieLe)}`}
@@ -45,14 +45,14 @@ export default async function PageActualite({
       {creee ? (
         <p
           role="status"
-          className="mt-4 max-w-3xl rounded-lg bg-[var(--color-accent-sourd)] px-3 py-2 text-sm text-[var(--color-accent)]"
+          className="mt-4 max-w-3xl rounded-lg bg-[var(--color-turquoise-sourd)] px-3 py-2 text-sm text-[var(--color-turquoise-clair)]"
         >
           Brouillon enregistré. Relisez-le avec l&apos;aperçu, puis publiez-le.
         </p>
       ) : null}
 
       <div className="mt-6 grid gap-6 xl:grid-cols-[1fr_16rem]">
-        <div className="max-w-3xl rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-5">
+        <div className="max-w-3xl rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-5">
           <FormulaireActualite
             actualite={{
               id: actualite.id,
@@ -67,10 +67,10 @@ export default async function PageActualite({
           {peut(utilisateur, "publierContenu") ? (
             <form
               action={basculerPublicationActualite}
-              className="rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-4"
+              className="rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-4"
             >
               <input type="hidden" name="id" value={actualite.id} />
-              <p className="text-xs text-[var(--color-encre-tenue)]">
+              <p className="text-xs text-[var(--color-craie-tenue)]">
                 {brouillon
                   ? "Publier rend l'actualité visible sur le site, datée d'aujourd'hui. Les modifications non enregistrées ci-contre ne partent pas."
                   : "Dépublier la retire du site sans la perdre."}
@@ -79,8 +79,8 @@ export default async function PageActualite({
                 type="submit"
                 className={
                   brouillon
-                    ? "mt-3 w-full rounded-lg bg-[var(--color-encre)] px-3 py-2 font-medium text-[var(--color-papier)]"
-                    : "mt-2 text-[var(--color-encre-douce)] hover:underline"
+                    ? "mt-3 w-full rounded-lg bg-[var(--color-craie)] px-3 py-2 font-medium text-[var(--color-nuit-surface)]"
+                    : "mt-2 text-[var(--color-craie-douce)] hover:underline"
                 }
               >
                 {brouillon ? "Publier" : "Dépublier"}
@@ -90,13 +90,13 @@ export default async function PageActualite({
 
           <form
             action={mettreActualiteALaCorbeille}
-            className="rounded-xl border border-dashed border-[var(--color-trait)] p-4"
+            className="rounded-xl border border-dashed border-[var(--color-nuit-trait)] p-4"
           >
             <input type="hidden" name="id" value={actualite.id} />
-            <p className="text-xs text-[var(--color-encre-tenue)]">
+            <p className="text-xs text-[var(--color-craie-tenue)]">
               L&apos;actualité disparaît du site mais reste restaurable.
             </p>
-            <button type="submit" className="mt-2 text-[var(--color-encre-tenue)] hover:underline">
+            <button type="submit" className="mt-2 text-[var(--color-craie-tenue)] hover:underline">
               Mettre à la corbeille
             </button>
           </form>

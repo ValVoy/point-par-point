@@ -15,12 +15,12 @@ import { creerEpisode, modifierEpisode, type EtatEpisode } from "./actions";
 const ETAT_INITIAL: EtatEpisode = { erreur: null };
 
 const CLASSE_CHAMP =
-  "mt-1.5 w-full rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-3 py-2 text-[var(--color-encre)] outline-none focus:border-[var(--color-accent)]";
-const CLASSE_LABEL = "block text-sm font-medium text-[var(--color-encre-douce)]";
+  "mt-1.5 w-full rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-3 py-2 text-[var(--color-craie)] outline-none focus:border-[var(--color-turquoise)]";
+const CLASSE_LABEL = "block text-sm font-medium text-[var(--color-craie-douce)]";
 
 function Facultatif() {
   return (
-    <span className="ml-1.5 text-xs font-normal text-[var(--color-encre-tenue)]">
+    <span className="ml-1.5 text-xs font-normal text-[var(--color-craie-tenue)]">
       facultatif
     </span>
   );
@@ -195,14 +195,14 @@ export function FormulaireEpisode({
           onChange={(e) => modifier("publieLe", e.target.value)}
           className={CLASSE_CHAMP}
         />
-        <p className="mt-1 text-xs text-[var(--color-encre-tenue)]">
+        <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
           Laissée vide, elle prendra la date du jour où l&apos;épisode est publié sur le site.
         </p>
       </div>
 
       <Erreur message={etat.erreur} />
       {etat.enregistre && !episode ? (
-        <p role="status" className="rounded-lg bg-[var(--color-accent-sourd)] px-3 py-2 text-sm text-[var(--color-accent)]">
+        <p role="status" className="rounded-lg bg-[var(--color-turquoise-sourd)] px-3 py-2 text-sm text-[var(--color-turquoise-clair)]">
           Épisode ajouté en brouillon. Publiez-le depuis la liste quand il est prêt.
         </p>
       ) : null}

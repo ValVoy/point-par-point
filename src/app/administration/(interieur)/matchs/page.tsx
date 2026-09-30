@@ -26,11 +26,11 @@ function Groupe({
   if (rencontres.length === 0) return null;
   return (
     <section className="mt-8 first:mt-0">
-      <h2 className="text-sm font-semibold text-[var(--color-encre-douce)]">
+      <h2 className="text-sm font-semibold text-[var(--color-craie-douce)]">
         {titre} <span className="font-normal">({rencontres.length})</span>
       </h2>
       {aide ? (
-        <p className="mt-1 text-xs text-[var(--color-encre-tenue)]">{aide}</p>
+        <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">{aide}</p>
       ) : null}
       <ul className="mt-3 space-y-3">
         {rencontres.map((rencontre) => (
@@ -57,7 +57,7 @@ export default async function PageMatchs({
     return (
       <>
         <h1 className="titre-admin text-3xl">Matchs</h1>
-        <p className="mt-4 rounded-xl border border-dashed border-[var(--color-trait)] p-6 text-sm text-[var(--color-encre-tenue)]">
+        <p className="mt-4 rounded-xl border border-dashed border-[var(--color-nuit-trait)] p-6 text-sm text-[var(--color-craie-tenue)]">
           Il faut d&apos;abord créer une saison : chaque match s&apos;y rattache.
         </p>
       </>
@@ -88,8 +88,8 @@ export default async function PageMatchs({
               href={`/administration/matchs?saison=${autre.id}`}
               className={
                 autre.id === saison.id
-                  ? "rounded bg-[var(--color-accent-sourd)] px-2 py-0.5 text-[var(--color-accent)]"
-                  : "px-2 py-0.5 text-[var(--color-encre-douce)] hover:underline"
+                  ? "rounded bg-[var(--color-turquoise-sourd)] px-2 py-0.5 text-[var(--color-turquoise-clair)]"
+                  : "px-2 py-0.5 text-[var(--color-craie-douce)] hover:underline"
               }
             >
               {autre.libelle}
@@ -98,13 +98,13 @@ export default async function PageMatchs({
         </nav>
         <Link
           href={`/administration/matchs/calendrier?saison=${saison.id}`}
-          className="ml-auto rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-3 py-1.5 text-sm text-[var(--color-encre-douce)] hover:border-[var(--color-accent)]"
+          className="ml-auto rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-3 py-1.5 text-sm text-[var(--color-craie-douce)] hover:border-[var(--color-turquoise)]"
         >
           Saisir le calendrier
         </Link>
       </div>
 
-      <p className="mt-2 max-w-prose text-sm text-[var(--color-encre-douce)]">
+      <p className="mt-2 max-w-prose text-sm text-[var(--color-craie-douce)]">
         {toutes.length} {toutes.length > 1 ? "matchs" : "match"} pour la saison{" "}
         {saison.libelle}.
       </p>
@@ -112,7 +112,7 @@ export default async function PageMatchs({
       {Number.isInteger(ajoutes) && ajoutes > 0 ? (
         <p
           role="status"
-          className="mt-4 rounded-lg bg-[var(--color-accent-sourd)] px-3 py-2 text-sm text-[var(--color-accent)]"
+          className="mt-4 rounded-lg bg-[var(--color-turquoise-sourd)] px-3 py-2 text-sm text-[var(--color-turquoise-clair)]"
         >
           {ajoutes} {ajoutes > 1 ? "matchs ajoutés" : "match ajouté"} au calendrier.
         </p>
@@ -121,11 +121,11 @@ export default async function PageMatchs({
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_20rem]">
         <div>
           {toutes.length === 0 ? (
-            <p className="rounded-xl border border-dashed border-[var(--color-trait)] p-6 text-sm text-[var(--color-encre-tenue)]">
+            <p className="rounded-xl border border-dashed border-[var(--color-nuit-trait)] p-6 text-sm text-[var(--color-craie-tenue)]">
               Aucun match pour cette saison. Le plus rapide est de{" "}
               <Link
                 href={`/administration/matchs/calendrier?saison=${saison.id}`}
-                className="text-[var(--color-accent)] hover:underline"
+                className="text-[var(--color-turquoise)] hover:underline"
               >
                 saisir tout le calendrier d&apos;un coup
               </Link>
@@ -144,26 +144,26 @@ export default async function PageMatchs({
 
           {corbeille.length > 0 ? (
             <section className="mt-8">
-              <h2 className="text-sm font-semibold text-[var(--color-encre-douce)]">
+              <h2 className="text-sm font-semibold text-[var(--color-craie-douce)]">
                 Corbeille
               </h2>
-              <p className="mt-1 text-xs text-[var(--color-encre-tenue)]">
+              <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
                 Rien n&apos;est effacé : ces matchs peuvent revenir, avec leur score.
               </p>
               <ul className="mt-3 space-y-2">
                 {corbeille.map((rencontre) => (
                   <li
                     key={rencontre.id}
-                    className="flex items-center gap-4 rounded-lg border border-dashed border-[var(--color-trait)] px-4 py-2.5 text-sm"
+                    className="flex items-center gap-4 rounded-lg border border-dashed border-[var(--color-nuit-trait)] px-4 py-2.5 text-sm"
                   >
-                    <span className="text-[var(--color-encre-tenue)]">
+                    <span className="text-[var(--color-craie-tenue)]">
                       {dateCourte(rencontre.joueLe)} · {rencontre.adversaire}
                     </span>
                     <form action={restaurerMatch} className="ml-auto">
                       <input type="hidden" name="id" value={rencontre.id} />
                       <button
                         type="submit"
-                        className="text-[var(--color-accent)] hover:underline"
+                        className="text-[var(--color-turquoise)] hover:underline"
                       >
                         Restaurer
                       </button>
@@ -175,9 +175,9 @@ export default async function PageMatchs({
           ) : null}
         </div>
 
-        <aside className="self-start rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-5">
+        <aside className="self-start rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-5">
           <h2 className="text-sm font-semibold">Ajouter un match</h2>
-          <p className="mt-1 text-xs text-[var(--color-encre-tenue)]">
+          <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
             Un match isolé : amical, coupe, report. Pour la saison entière,
             passez par la saisie du calendrier.
           </p>

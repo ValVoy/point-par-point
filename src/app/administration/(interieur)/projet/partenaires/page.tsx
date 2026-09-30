@@ -24,12 +24,12 @@ export default async function PagePartenaires() {
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_20rem]">
       <section>
-        <p className="mb-4 max-w-prose text-sm text-[var(--color-encre-douce)]">
+        <p className="mb-4 max-w-prose text-sm text-[var(--color-craie-douce)]">
           Les logos du bandeau partenaires, dans l&apos;ordre d&apos;affichage.
           Un partenaire en pause reste ici sans apparaître sur le site.
         </p>
         {liste.length === 0 ? (
-          <p className="rounded-xl border border-dashed border-[var(--color-trait)] p-6 text-sm text-[var(--color-encre-tenue)]">
+          <p className="rounded-xl border border-dashed border-[var(--color-nuit-trait)] p-6 text-sm text-[var(--color-craie-tenue)]">
             Aucun partenaire pour l&apos;instant.
           </p>
         ) : (
@@ -51,7 +51,7 @@ export default async function PagePartenaires() {
                 actions={
                   <form action={basculerPartenaire}>
                     <input type="hidden" name="id" value={partenaire.id} />
-                    <button type="submit" className="text-[var(--color-encre-douce)] hover:underline">
+                    <button type="submit" className="text-[var(--color-craie-douce)] hover:underline">
                       {partenaire.actif ? "Mettre en pause" : "Réafficher"}
                     </button>
                   </form>
@@ -74,7 +74,7 @@ export default async function PagePartenaires() {
         />
       </section>
 
-      <aside className="self-start rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-5">
+      <aside className="self-start rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-5">
         <h2 className="text-sm font-semibold">Ajouter un partenaire</h2>
         <div className="mt-4">
           <FormulairePartenaire />

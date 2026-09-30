@@ -25,7 +25,7 @@ export function Ouverture({ sousTitre }: { sousTitre: string }) {
   );
 
   return (
-    <section aria-labelledby="titre-du-site" className="palette-nuit relative flex min-h-svh flex-col justify-center bg-[var(--color-nuit)] text-[var(--color-craie)]">
+    <section aria-labelledby="titre-du-site" className="relative flex min-h-svh flex-col justify-center bg-[var(--color-nuit)] text-[var(--color-craie)]">
       <script dangerouslySetInnerHTML={{ __html: SCRIPT_AVANT_AFFICHAGE }} />
       <h1 id="titre-du-site" className="sr-only">
         {TITRE}

@@ -13,13 +13,13 @@ Ce qui marche à l'écran : connexion avec limitation des tentatives, déconnexi
 réduite selon le rôle, bandeau de démonstration, gestion des saisons et de l'effectif.
 **Aucune page publique réelle**, l'accueil est encore provisoire.
 
-**Palette refaite le 30-09-2026** (fiche `fiches/palette.md`) : un programme de match imprimé,
-papier clair, turquoise et violet réels du maillot, jaune du ballon en accent. Appliquée au site,
-à l'administration et à la planche. L'intro de nuit validée est gardée intacte dans
-`components/public/intro-nuit/` (étiquette git `intro-nuit-v1`).
+**Palette refaite le 30-09-2026, version 2** (fiche `fiches/palette.md`) : le gymnase le soir.
+Noir violacé du maillot, turquoise et violet réels, jaune du ballon, et de la lumière seulement sur
+les objets lumineux (tableau de score en LED ambre, bandeau LED, ballon). Appliquée au site, à
+l'intro, à l'administration et à la planche. La version 1, papier imprimé, a été essayée et
+écartée le même matin.
 
-Ensuite : la fiche de la nouvelle intro, la salle dessinée à l'encre sur papier, puis son
-installation sur l'accueil avec le bloc prochain match branché sur la base.
+Ensuite : installer l'intro sur l'accueil, avec le bloc prochain match branché sur la base.
 
 **À revoir avant d'écrire les pages publiques** : la largeur de la mise en page et le motion
 design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`.

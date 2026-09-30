@@ -186,7 +186,7 @@ export function AnimationOuverture({ children }: { children: ReactNode }) {
         type="button"
         data-intro-seulement
         data-intro-passer
-        className="fixed right-4 bottom-4 z-20 rounded-full border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)]/90 px-5 py-2.5 text-sm font-semibold text-[var(--color-craie)] backdrop-blur focus-visible:outline-[var(--color-turquoise)]"
+        className="fixed right-4 bottom-4 z-20 rounded-sm border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--color-craie)] hover:bg-[var(--color-craie)] hover:text-[var(--color-nuit)]"
       >
         Passer l&apos;intro
       </button>

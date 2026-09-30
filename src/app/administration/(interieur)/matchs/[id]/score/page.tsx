@@ -38,7 +38,7 @@ export default async function PageScore({
     <div className="mx-auto max-w-md">
       <Link
         href={`/administration/matchs?saison=${rencontre.saisonId}`}
-        className="text-sm text-[var(--color-accent)] hover:underline"
+        className="text-sm text-[var(--color-turquoise)] hover:underline"
       >
         Retour aux matchs
       </Link>
@@ -47,7 +47,7 @@ export default async function PageScore({
         {rencontre.aDomicile ? "Contre " : "Chez "}
         {rencontre.adversaire}
       </h1>
-      <p className="mt-1 text-sm text-[var(--color-encre-douce)] first-letter:uppercase">
+      <p className="mt-1 text-sm text-[var(--color-craie-douce)] first-letter:uppercase">
         {dateEtHeure(rencontre.joueLe)}
       </p>
 

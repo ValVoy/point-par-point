@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { CARRES, Motif } from "@/components/motif";
+import { AfficheurLed } from "../afficheur-led";
 import { Ballon, Terrain } from "../ballon-scene";
 import { TITRE_TRACES } from "../titre-traces";
 import { placementTitre, pointsDuPublic, TAILLE_BANDEAU, type GeometrieIntro } from "./geometrie-intro";
@@ -24,22 +25,22 @@ const pourcent = (valeur: number, total: number) => `${(valeur / total) * 100}%`
 function TableauIntro({ gi }: { gi: GeometrieIntro }) {
   const { largeur, hauteur } = gi.terrain;
   const t = gi.tableau;
-  const lueur = { textShadow: "0 0 12px rgb(62 197 204 / 0.55), 0 0 2px rgb(191 241 243 / 0.9)" };
   return (
     <div
       data-intro-seulement
       data-tableau-intro
-      className="absolute flex flex-col justify-center rounded-md border border-[var(--color-nuit-trait)] px-[4%]"
+      className="absolute flex flex-col justify-center rounded-sm border border-[var(--color-nuit-trait)] px-[4%]"
       style={{
         left: pourcent(t.x, largeur),
         top: pourcent(t.y, hauteur),
         width: pourcent(t.largeur, largeur),
         height: pourcent(t.hauteur, hauteur),
-        background: "#05060c",
+        background: "var(--color-boitier)",
         containerType: "inline-size",
       }}
     >
-      <p data-balle-de-set className="text-center text-[4.5cqw] font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">
+      <p data-balle-de-set className="text-center text-[4.5cqw] font-semibold tracking-[0.2em] text-[var(--color-led)] uppercase"
+        style={{ textShadow: "var(--led-halo)" }}>
         Balle de set
       </p>
       {/* Les noms sur leur ligne, le score en grand dessous : rien n'est tronque. */}
@@ -47,16 +48,20 @@ function TableauIntro({ gi }: { gi: GeometrieIntro }) {
         <span>VF Francheville</span>
         <span>Adversaire</span>
       </div>
-      <div className="titre-affiche mt-[1.5cqw] flex items-center justify-center gap-[4cqw] text-[20cqw] text-[var(--color-turquoise)]" style={lueur}>
-        {/* Les deux chiffres empiles : le point fait glisser 24 vers 25. */}
+      <div className="mt-[2cqw] flex items-center justify-center gap-[4cqw] text-[17cqw]">
+        {/* Les deux scores empiles : le point fait glisser 24 vers 25. */}
         <span className="relative block h-[1em] overflow-hidden leading-none">
           <span data-score-nous className="block leading-none">
-            <span className="block">24</span>
-            <span className="block">25</span>
+            <span className="block h-[1em]">
+              <AfficheurLed valeur="24" />
+            </span>
+            <span className="block h-[1em]">
+              <AfficheurLed valeur="25" />
+            </span>
           </span>
         </span>
-        <span className="text-[0.5em] opacity-40">-</span>
-        <span className="leading-none">23</span>
+        <AfficheurLed valeur="-" className="text-[0.5em]" />
+        <AfficheurLed valeur="23" />
       </div>
     </div>
   );

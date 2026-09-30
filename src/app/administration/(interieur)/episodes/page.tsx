@@ -24,7 +24,7 @@ export default async function PageEpisodes() {
   return (
     <>
       <h1 className="titre-admin text-3xl">Épisodes</h1>
-      <p className="mt-2 max-w-prose text-sm text-[var(--color-encre-douce)]">
+      <p className="mt-2 max-w-prose text-sm text-[var(--color-craie-douce)]">
         La série, épisode par épisode. On colle l&apos;adresse de la vidéo, le
         site affiche la miniature et le lecteur. Un nouvel épisode reste en
         brouillon, invisible sur le site, jusqu&apos;à sa publication.
@@ -36,7 +36,7 @@ export default async function PageEpisodes() {
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
         <section>
           {lignes.length === 0 ? (
-            <p className="rounded-xl border border-dashed border-[var(--color-trait)] p-6 text-sm text-[var(--color-encre-tenue)]">
+            <p className="rounded-xl border border-dashed border-[var(--color-nuit-trait)] p-6 text-sm text-[var(--color-craie-tenue)]">
               Aucun épisode pour l&apos;instant.
             </p>
           ) : (
@@ -44,7 +44,7 @@ export default async function PageEpisodes() {
               {lignes.map(({ episode, adversaire, joueLe }, index) => (
                 <li
                   key={episode.id}
-                  className="flex flex-wrap items-center gap-4 rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-3"
+                  className="flex flex-wrap items-center gap-4 rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-3"
                 >
                   <Image
                     src={miniatureYoutube(episode.youtubeId)}
@@ -58,18 +58,18 @@ export default async function PageEpisodes() {
                   <div className="min-w-0 flex-1">
                     <p className="font-medium">
                       {episode.numero !== null ? (
-                        <span className="mr-1.5 text-[var(--color-encre-tenue)] tabular-nums">
+                        <span className="mr-1.5 text-[var(--color-craie-tenue)] tabular-nums">
                           {episode.numero}.
                         </span>
                       ) : null}
                       {episode.titre}
                     </p>
-                    <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[var(--color-encre-tenue)]">
+                    <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[var(--color-craie-tenue)]">
                       <span
                         className={
                           episode.etat === "publie"
-                            ? "rounded bg-[var(--color-accent-sourd)] px-1.5 py-0.5 text-[var(--color-accent)]"
-                            : "rounded bg-[var(--color-papier-creuse)] px-1.5 py-0.5 text-[var(--color-encre-douce)]"
+                            ? "rounded bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]"
+                            : "rounded bg-[var(--color-nuit)] px-1.5 py-0.5 text-[var(--color-craie-douce)]"
                         }
                       >
                         {episode.etat === "publie" ? "publié" : "brouillon"}
@@ -90,8 +90,8 @@ export default async function PageEpisodes() {
                           type="submit"
                           className={
                             episode.etat === "brouillon"
-                              ? "rounded-lg bg-[var(--color-encre)] px-3 py-1.5 font-medium text-[var(--color-papier)]"
-                              : "text-[var(--color-encre-douce)] hover:underline"
+                              ? "rounded-lg bg-[var(--color-craie)] px-3 py-1.5 font-medium text-[var(--color-nuit-surface)]"
+                              : "text-[var(--color-craie-douce)] hover:underline"
                           }
                         >
                           {episode.etat === "brouillon" ? "Publier" : "Dépublier"}
@@ -100,7 +100,7 @@ export default async function PageEpisodes() {
                     ) : null}
                     <Link
                       href={`/administration/episodes/${episode.id}`}
-                      className="text-[var(--color-accent)] hover:underline"
+                      className="text-[var(--color-turquoise)] hover:underline"
                     >
                       Modifier
                     </Link>
@@ -112,22 +112,22 @@ export default async function PageEpisodes() {
 
           {corbeille.length > 0 ? (
             <section className="mt-8">
-              <h2 className="text-sm font-semibold text-[var(--color-encre-douce)]">
+              <h2 className="text-sm font-semibold text-[var(--color-craie-douce)]">
                 Corbeille
               </h2>
-              <p className="mt-1 text-xs text-[var(--color-encre-tenue)]">
+              <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
                 Rien n&apos;est effacé : ces épisodes peuvent revenir.
               </p>
               <ul className="mt-3 space-y-2">
                 {corbeille.map((episode) => (
                   <li
                     key={episode.id}
-                    className="flex items-center gap-4 rounded-lg border border-dashed border-[var(--color-trait)] px-4 py-2.5 text-sm"
+                    className="flex items-center gap-4 rounded-lg border border-dashed border-[var(--color-nuit-trait)] px-4 py-2.5 text-sm"
                   >
-                    <span className="text-[var(--color-encre-tenue)]">{episode.titre}</span>
+                    <span className="text-[var(--color-craie-tenue)]">{episode.titre}</span>
                     <form action={restaurerEpisode} className="ml-auto">
                       <input type="hidden" name="id" value={episode.id} />
-                      <button type="submit" className="text-[var(--color-accent)] hover:underline">
+                      <button type="submit" className="text-[var(--color-turquoise)] hover:underline">
                         Restaurer
                       </button>
                     </form>
@@ -138,7 +138,7 @@ export default async function PageEpisodes() {
           ) : null}
         </section>
 
-        <aside className="self-start rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-5">
+        <aside className="self-start rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-5">
           <h2 className="text-sm font-semibold">Nouvel épisode</h2>
           <div className="mt-4">
             <FormulaireEpisode matchs={matchs} numeroSuivant={numeroSuivant} />

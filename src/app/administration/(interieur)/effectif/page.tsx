@@ -30,13 +30,13 @@ export default async function PageEffectif({
         <h1 className="titre-admin text-3xl">
           Effectif
         </h1>
-        <p className="mt-4 rounded-xl border border-dashed border-[var(--color-trait)] p-6 text-sm text-[var(--color-encre-tenue)]">
+        <p className="mt-4 rounded-xl border border-dashed border-[var(--color-nuit-trait)] p-6 text-sm text-[var(--color-craie-tenue)]">
           Il faut d&apos;abord créer une saison : l&apos;effectif s&apos;y
           rattache, puisque numéro et poste changent d&apos;une année sur
           l&apos;autre.{" "}
           <Link
             href="/administration/saisons"
-            className="text-[var(--color-accent)] hover:underline"
+            className="text-[var(--color-turquoise)] hover:underline"
           >
             Créer une saison
           </Link>
@@ -95,8 +95,8 @@ export default async function PageEffectif({
               href={`/administration/effectif?saison=${autre.id}`}
               className={
                 autre.id === saison.id
-                  ? "rounded bg-[var(--color-accent-sourd)] px-2 py-0.5 text-[var(--color-accent)]"
-                  : "px-2 py-0.5 text-[var(--color-encre-douce)] hover:underline"
+                  ? "rounded bg-[var(--color-turquoise-sourd)] px-2 py-0.5 text-[var(--color-turquoise-clair)]"
+                  : "px-2 py-0.5 text-[var(--color-craie-douce)] hover:underline"
               }
             >
               {autre.libelle}
@@ -105,7 +105,7 @@ export default async function PageEffectif({
         </nav>
       </div>
 
-      <p className="mt-2 max-w-prose text-sm text-[var(--color-encre-douce)]">
+      <p className="mt-2 max-w-prose text-sm text-[var(--color-craie-douce)]">
         {triees.length} {triees.length > 1 ? "joueurs" : "joueur"} pour la
         saison {saison.libelle}. Le numéro et le poste appartiennent à la
         saison : les changer ici ne touche pas aux saisons passées.
@@ -114,7 +114,7 @@ export default async function PageEffectif({
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem]">
         <section>
           {triees.length === 0 ? (
-            <p className="rounded-xl border border-dashed border-[var(--color-trait)] p-6 text-sm text-[var(--color-encre-tenue)]">
+            <p className="rounded-xl border border-dashed border-[var(--color-nuit-trait)] p-6 text-sm text-[var(--color-craie-tenue)]">
               Aucun joueur pour cette saison.
             </p>
           ) : (
@@ -139,19 +139,19 @@ export default async function PageEffectif({
 
           {retires.length > 0 ? (
             <section className="mt-6">
-              <h2 className="text-sm font-semibold text-[var(--color-encre-douce)]">
+              <h2 className="text-sm font-semibold text-[var(--color-craie-douce)]">
                 Retirés du groupe
               </h2>
-              <p className="mt-1 text-xs text-[var(--color-encre-tenue)]">
+              <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
                 Leur fiche et leurs statistiques restent intactes.
               </p>
               <ul className="mt-3 space-y-2">
                 {retires.map((ligne) => (
                   <li
                     key={ligne.effectifId}
-                    className="flex items-center gap-4 rounded-lg border border-dashed border-[var(--color-trait)] px-4 py-2.5 text-sm"
+                    className="flex items-center gap-4 rounded-lg border border-dashed border-[var(--color-nuit-trait)] px-4 py-2.5 text-sm"
                   >
-                    <span className="text-[var(--color-encre-tenue)]">
+                    <span className="text-[var(--color-craie-tenue)]">
                       {ligne.prenom} {ligne.nom}
                     </span>
                     <form action={reintegrerDansLEffectif} className="ml-auto">
@@ -162,7 +162,7 @@ export default async function PageEffectif({
                       />
                       <button
                         type="submit"
-                        className="text-[var(--color-accent)] hover:underline"
+                        className="text-[var(--color-turquoise)] hover:underline"
                       >
                         Réintégrer
                       </button>
@@ -174,9 +174,9 @@ export default async function PageEffectif({
           ) : null}
         </section>
 
-        <aside className="rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-5">
+        <aside className="rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-5">
           <h2 className="text-sm font-semibold">Ajouter un joueur</h2>
-          <p className="mt-1 text-xs text-[var(--color-encre-tenue)]">
+          <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
             Il rejoint l&apos;effectif de {saison.libelle}.
           </p>
           <div className="mt-4">

@@ -17,9 +17,7 @@ import { segments, type Geometrie } from "./ballon-geometrie";
  * masques (pathLength a 1, donc masquables sans mesurer leur longueur). Rien
  * ne clignote avant que l'animation prenne la main.
  *
- * Dessinee pour la palette de nuit : elle ne s'affiche que sous la classe
- * .palette-nuit (intro validee, prototype du ballon), qui porte ses couleurs.
- * Sa version a l'encre viendra avec la nouvelle intro.
+ * Le ballon est jaune, comme le vrai : le jaune du site, c'est lui.
  */
 
 export type Variante = "grand" | "portrait";
@@ -57,11 +55,11 @@ export function Ballon({ g }: { g: Geometrie }) {
             <div data-ecrasement-sol className={calque}>
               <div data-ecrasement className={calque}>
                 <svg data-rotation viewBox={`${-r} ${-r} ${2 * r} ${2 * r}`} className={`${calque} overflow-visible`}>
-                  <circle r={r - 1.5} fill="var(--color-nuit)" stroke="var(--color-turquoise)" strokeWidth={2.5} />
+                  <circle r={r - 1.5} fill="var(--color-nuit)" stroke="var(--color-jaune)" strokeWidth={2.5} />
                   <path
                     d={`M${-r * 0.96},${-r * 0.28} Q0,${-r * 0.02} ${r * 0.96},${-r * 0.28} M${-r * 0.7},${r * 0.7} Q${-r * 0.1},${r * 0.1} ${-r * 0.28},${-r * 0.96} M${r * 0.7},${r * 0.7} Q${r * 0.1},${r * 0.1} ${r * 0.28},${-r * 0.96}`}
                     fill="none"
-                    stroke="var(--color-turquoise)"
+                    stroke="var(--color-jaune)"
                     strokeWidth={1.8}
                     strokeLinecap="round"
                   />

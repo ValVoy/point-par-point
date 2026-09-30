@@ -1,11 +1,11 @@
 /*
- * La planche de la palette du 30-09-2026 (fiche fiches/palette.md). Elle ne
+ * La planche de la palette du 30-09-2026, version 2 (fiche fiches/palette.md). Elle ne
  * porte aucune couleur propre : tout vient des jetons de globals.css, pour
  * que la planche montre exactement ce que le site affichera.
  */
 .planche {
-  background: var(--color-papier);
-  color: var(--color-encre);
+  background: var(--color-nuit);
+  color: var(--color-craie);
   min-height: 100dvh;
 }
 
@@ -15,7 +15,7 @@
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--color-encre-tenue);
+  color: var(--color-craie-tenue);
 }
 
 /* --- Portraits ---------------------------------------------------------- */
@@ -24,7 +24,7 @@
   position: relative;
   overflow: hidden;
   aspect-ratio: 4 / 5;
-  background: var(--color-papier-creuse);
+  background: var(--color-nuit-surface);
 }
 
 /*
@@ -49,6 +49,6 @@
   font-size: clamp(6rem, 14vw, 10rem);
   line-height: 1;
   color: transparent;
-  -webkit-text-stroke: 1.5px var(--color-papier);
+  -webkit-text-stroke: 1.5px var(--color-craie);
   pointer-events: none;
 }

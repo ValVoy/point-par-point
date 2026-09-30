@@ -32,7 +32,7 @@ function ligneVide(lieu: Ligne["lieu"] = "domicile"): Ligne {
 const ETAT_INITIAL: EtatMatch = { erreurs: [] };
 
 const CLASSE =
-  "w-full rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-2.5 py-2 text-sm outline-none focus:border-[var(--color-accent)]";
+  "w-full rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-2.5 py-2 text-sm outline-none focus:border-[var(--color-turquoise)]";
 
 export function GrilleCalendrier({ saisonId }: { saisonId: number }) {
   const [etat, action] = useActionState(creerCalendrier, ETAT_INITIAL);
@@ -71,9 +71,9 @@ export function GrilleCalendrier({ saisonId }: { saisonId: number }) {
       <input type="hidden" name="saisonId" value={saisonId} />
 
       <div className="max-w-md">
-        <label htmlFor="competition" className="block text-sm font-medium text-[var(--color-encre-douce)]">
+        <label htmlFor="competition" className="block text-sm font-medium text-[var(--color-craie-douce)]">
           Compétition
-          <span className="ml-1.5 text-xs font-normal text-[var(--color-encre-tenue)]">
+          <span className="ml-1.5 text-xs font-normal text-[var(--color-craie-tenue)]">
             facultatif
           </span>
         </label>
@@ -86,7 +86,7 @@ export function GrilleCalendrier({ saisonId }: { saisonId: number }) {
           onChange={(e) => setCompetition(e.target.value)}
           className={`${CLASSE} mt-1.5`}
         />
-        <p className="mt-1 text-xs text-[var(--color-encre-tenue)]">
+        <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
           Commune à tous les matchs de la grille.
         </p>
       </div>
@@ -102,7 +102,7 @@ export function GrilleCalendrier({ saisonId }: { saisonId: number }) {
         </ul>
       ) : null}
 
-      <div className="hidden grid-cols-[2rem_9.5rem_6.5rem_1fr_8.5rem_1fr] gap-2 px-1 text-xs font-medium text-[var(--color-encre-tenue)] lg:grid">
+      <div className="hidden grid-cols-[2rem_9.5rem_6.5rem_1fr_8.5rem_1fr] gap-2 px-1 text-xs font-medium text-[var(--color-craie-tenue)] lg:grid">
         <span>N°</span>
         <span>Date</span>
         <span>Heure</span>
@@ -115,9 +115,9 @@ export function GrilleCalendrier({ saisonId }: { saisonId: number }) {
         {lignes.map((ligne, index) => (
           <li
             key={ligne.cle}
-            className="grid grid-cols-2 gap-2 rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-3 lg:grid-cols-[2rem_9.5rem_6.5rem_1fr_8.5rem_1fr] lg:items-center lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:px-1"
+            className="grid grid-cols-2 gap-2 rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-3 lg:grid-cols-[2rem_9.5rem_6.5rem_1fr_8.5rem_1fr] lg:items-center lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:px-1"
           >
-            <span className="col-span-2 text-xs font-medium text-[var(--color-encre-tenue)] lg:col-span-1">
+            <span className="col-span-2 text-xs font-medium text-[var(--color-craie-tenue)] lg:col-span-1">
               <span className="lg:hidden">Ligne </span>
               {index + 1}
             </span>
@@ -180,11 +180,11 @@ export function GrilleCalendrier({ saisonId }: { saisonId: number }) {
               ),
             ])
           }
-          className="rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-4 py-2 text-sm text-[var(--color-encre-douce)]"
+          className="rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-4 py-2 text-sm text-[var(--color-craie-douce)]"
         >
           Ajouter {LIGNES_AJOUTEES} lignes
         </button>
-        <span className="text-sm text-[var(--color-encre-tenue)]">
+        <span className="text-sm text-[var(--color-craie-tenue)]">
           {remplies} {remplies > 1 ? "lignes remplies" : "ligne remplie"}. Les lignes
           vides sont ignorées.
         </span>

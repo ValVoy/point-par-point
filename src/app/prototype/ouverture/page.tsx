@@ -18,7 +18,7 @@ export default function PrototypeOuverture() {
   if (process.env.NODE_ENV === "production") notFound();
 
   return (
-    <div className="palette-nuit min-h-dvh bg-[var(--color-nuit)] text-[var(--color-craie)]">
+    <div className="min-h-dvh bg-[var(--color-nuit)] text-[var(--color-craie)]">
       <Ouverture sousTitre="L'équipe D2 masculine du VF Francheville, sur le terrain et dans la série." />
       <section className="colonne-large py-32">
         <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">

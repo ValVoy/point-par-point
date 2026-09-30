@@ -21,7 +21,7 @@ export default async function PageCalendrier({
     <>
       <Link
         href={`/administration/matchs${saison ? `?saison=${saison.id}` : ""}`}
-        className="text-sm text-[var(--color-accent)] hover:underline"
+        className="text-sm text-[var(--color-turquoise)] hover:underline"
       >
         Retour aux matchs
       </Link>
@@ -32,7 +32,7 @@ export default async function PageCalendrier({
 
       {saison ? (
         <>
-          <p className="mt-2 max-w-prose text-sm text-[var(--color-encre-douce)]">
+          <p className="mt-2 max-w-prose text-sm text-[var(--color-craie-douce)]">
             Tous les matchs de la saison {saison.libelle} en une fois, depuis
             le calendrier de la fédération. Une date posée sur une ligne sans
             heure reprend l&apos;heure de la ligne du dessus. Si une ligne
@@ -44,7 +44,7 @@ export default async function PageCalendrier({
           </div>
         </>
       ) : (
-        <p className="mt-4 rounded-xl border border-dashed border-[var(--color-trait)] p-6 text-sm text-[var(--color-encre-tenue)]">
+        <p className="mt-4 rounded-xl border border-dashed border-[var(--color-nuit-trait)] p-6 text-sm text-[var(--color-craie-tenue)]">
           Il faut d&apos;abord créer une saison.
         </p>
       )}

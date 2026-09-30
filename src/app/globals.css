@@ -1,48 +1,57 @@
 @import "tailwindcss";
 
 /*
- * Systeme de design. Palette refaite le 30-09-2026 (fiche fiches/palette.md,
- * veille.md section 10) : la nuit et le turquoise ravive faisaient « site
- * genere ». Tout passe par ces jetons : changer une teinte est une
- * modification d'une ligne, ici et nulle part ailleurs.
+ * Systeme de design. Palette du 30-09-2026, version 2 (fiche
+ * fiches/palette.md, veille.md sections 10 et 11) : le gymnase le soir. Tout
+ * passe par ces jetons : changer une teinte est une modification d'une ligne,
+ * ici et nulle part ailleurs.
  *
- * Un programme de match imprime : un papier clair, trois encres, et le jaune
- * du ballon la ou il se passe quelque chose. Les couleurs du maillot sont
- * celles mesurees sur photo, sourdes, telles quelles.
+ * La salle est sombre, et la lumiere ne vient que de ce qui eclaire vraiment :
+ * le tableau de score, le bandeau LED, le projecteur sur le ballon. Tout le
+ * reste est mat. Le noir est tire du violet du maillot, les gris aussi : aucun
+ * bleu nuit, aucun gris bleute, aucun cyan ravive. Le turquoise est celui du
+ * maillot, tel quel : sur ce noir il se lit sans retouche.
  *
- * Une fonction par couleur : turquoise pour l'equipe, violet pour les matchs,
- * jaune pour ce qui est en direct ou nouveau. Environ 70 % de papier, 25 % de
- * maillot, moins de 5 % de jaune. Ni halo, ni degrade, ni ombre floue.
+ * Une fonction par couleur : turquoise l'equipe, violet les matchs, jaune ce
+ * qui est en direct ou nouveau. Le site public et l'administration partagent
+ * tout (decision du 30-09-2026).
  *
- * Contrastes sur le papier (WCAG, 4,5 pour 1 exige pour le texte courant) :
- * encre 16,0 ; encre-douce 8,9 ; encre-tenue 5,4 ; accent 6,5 ; violet 7,1 ;
- * ocre 5,7. Le turquoise (3,0) et le jaune (1,6) ne portent jamais de texte :
- * aplats seulement, avec l'encre dessus (5,4 et 10,3), ou le papier sur le
- * violet (7,1).
+ * Contrastes sur la nuit (WCAG, 4,5 pour 1 exige, 7 vise pour les scores,
+ * dates et lieux) : craie 15,9 ; craie-douce 8,7 ; craie-tenue 5,7 (legendes
+ * seulement) ; turquoise 5,8 ; turquoise-clair 9,0 ; jaune 10,9 ;
+ * jaune-eteint 6,4 ; erreur 6,0. Le violet (2,4) ne porte jamais de texte :
+ * aplat seulement, la craie dessus (6,6).
  */
 @theme {
-  /* --- Le papier et l'encre --------------------------------------------- */
-  --color-papier: #f8f4ea;
-  --color-papier-creuse: #efe9dc;
-  /* Les champs de saisie, un cran plus clairs que la page, jamais blanc pur. */
-  --color-champ: #fdfbf6;
-  --color-encre: #1f1622;
-  --color-encre-douce: #4b404e;
-  --color-encre-tenue: #6b6070;
-  --color-trait: #ddd5c6;
+  /* --- La salle ----------------------------------------------------------- */
+  --color-nuit: #16101a;
+  --color-nuit-surface: #1f1724;
+  --color-nuit-releve: #2a2030;
+  --color-nuit-violet: #2b1b30;
+  --color-nuit-trait: #3a2e40;
 
-  /* --- Les couleurs du maillot ------------------------------------------ */
+  /* --- Le texte, une craie chaude ----------------------------------------- */
+  --color-craie: #f1ece6;
+  --color-craie-douce: #b9adb8;
+  --color-craie-tenue: #958a95;
+
+  /* --- Les couleurs du maillot, mates ------------------------------------- */
   --color-turquoise: #64979d;
-  --color-accent: #2d5f65;
-  --color-accent-sourd: #e1e6de;
+  --color-turquoise-clair: #8fbcc1;
+  --color-turquoise-sourd: #1c2c30;
   --color-violet: #66486b;
 
-  /* --- Le ballon --------------------------------------------------------- */
+  /* --- Le ballon ----------------------------------------------------------- */
   --color-jaune: #f2bf2e;
-  --color-ocre: #7a5c00;
+  --color-jaune-eteint: #b8922c;
 
-  /* --- Le seul signal hors palette : l'erreur de saisie ------------------ */
-  --color-erreur: #a1303f;
+  /* --- Les objets lumineux, et eux seuls ----------------------------------- */
+  --color-boitier: #0c090e;
+  --color-led: #ffae1f;
+  --color-led-eteinte: #251a17;
+
+  /* --- Le seul signal hors palette : l'erreur de saisie ------------------- */
+  --color-erreur: #e0707e;
 
   /* --- Typographie : une seule famille, Archivo --------------------------- */
   --font-titre: var(--police-archivo), ui-sans-serif, system-ui, sans-serif;
@@ -59,7 +68,10 @@
  * 200 a 400 ms : le temps d'une frappe, pas d'une glissade.
  */
 :root {
-  color-scheme: light;
+  color-scheme: dark;
+
+  /* Le halo d'une LED ambre : court, serre, plus orange que son coeur. */
+  --led-halo: 0 0 2px rgb(255 174 31 / 0.9), 0 0 6px rgb(255 138 0 / 0.35);
 
   --duree-breve: 160ms;
   --duree: 280ms;
@@ -73,8 +85,8 @@
 }
 
 body {
-  background-color: var(--color-papier);
-  color: var(--color-encre);
+  background-color: var(--color-nuit);
+  color: var(--color-craie);
   font-family: var(--font-texte);
   -webkit-font-smoothing: antialiased;
 }
@@ -128,54 +140,29 @@ body {
 }
 
 /*
- * Le grain du papier : un bruit fixe, a la limite du perceptible, pose en
- * multiplication comme une encre. Site public seulement, jamais anime, jamais
- * sur l'administration. L'element qui le porte doit etre positionne.
+ * Le grain : un bruit fixe, a la limite du perceptible, qui retire a la nuit
+ * son aplat numerique. Site public seulement, jamais anime, jamais sur
+ * l'administration. L'element qui le porte doit etre positionne.
  */
 .grain::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.05;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.12 0 0 0 0 0.09 0 0 0 0 0.13 0 0 0 1.6 -0.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-}
-
-/*
- * La palette de nuit du 29-09-2026, gardee pour l'intro validee (dossier
- * components/public/intro-nuit, etiquette git intro-nuit-v1) et la scene du
- * ballon, en attendant leur version a l'encre. Ces variables ne sont pas des
- * jetons du theme : elles n'existent que sous la classe, qui les impose a
- * tout ce qu'elle contient. Ne rien construire de neuf dessus.
- */
-.palette-nuit {
-  --color-nuit: #0a0d1a;
-  --color-nuit-surface: #11162a;
-  --color-nuit-releve: #1a2140;
-  --color-nuit-trait: #262e4d;
-  --color-turquoise: #3ec5cc;
-  --color-turquoise-clair: #bff1f3;
-  --color-violet: #5e3f98;
-  --color-craie: #eef2f4;
-  --color-craie-douce: #a3adc0;
-  color-scheme: dark;
+  opacity: 0.06;
+  mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.93 0 0 0 0 0.9 0 0 0 1.6 -0.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
 }
 
 /*
  * Anneau de focus visible partout. Un site consulte au telephone dans un
  * gymnase se navigue aussi au clavier sur un ordinateur, et le focus par
- * defaut de Tailwind disparait des qu'on touche aux couleurs. A l'encre, parce
- * que c'est la seule teinte lisible sur toutes les surfaces du site.
+ * defaut de Tailwind disparait des qu'on touche aux couleurs. En jaune ballon,
+ * net et sans lueur : 10,9 pour 1 sur la nuit, 4,5 sur le violet.
  */
 :focus-visible {
-  outline: 2px solid var(--color-encre);
+  outline: 2px solid var(--color-jaune);
   outline-offset: 2px;
-}
-
-/* Sur un aplat violet, l'encre tombe a 2,3 pour 1 : le focus passe au papier. */
-[data-surface="violet"] :focus-visible {
-  outline-color: var(--color-papier);
 }
 
 /*

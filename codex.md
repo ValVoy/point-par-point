@@ -126,18 +126,19 @@ Tranché par l'utilisateur sur la planche de style (`/planche`, développement s
 raisons dans `veille.md`, sections 7 à 9. Les jetons vivent dans `src/app/globals.css`, nulle part
 ailleurs.
 
-- **Couleurs** (refaites le 30-09-2026, `fiches/palette.md`) : un programme de match imprimé.
-  Papier `#f8f4ea`, encre violette `#1f1622`, turquoise `#64979d` et violet `#66486b` réels du
-  maillot, jaune ballon `#f2bf2e`. Une fonction par couleur : **turquoise l'équipe, violet les
-  matchs, jaune ce qui est en direct ou nouveau**. Turquoise et jaune ne portent jamais de texte
-  (aplats seulement) ; le turquoise d'encre `accent` sert aux liens et boutons, l'`ocre` au jaune
-  en petit. Victoire et défaite sans couleur : pastille pleine V ou contour D
-  (`components/pastille-resultat.tsx`). Seul signal hors palette : `erreur`, pour les erreurs de
-  saisie. Ni blanc pur (les champs prennent `champ`), ni halo, ni dégradé, ni ombre floue. Grain
-  de papier par la classe `grain`, site public seulement. Focus à l'encre, au papier sur le violet
-  (`data-surface="violet"`).
-- **Palette de nuit** : gardée sous la classe `.palette-nuit` pour l'intro validée et la scène du
-  ballon, en attendant leur version à l'encre. Ne rien construire de neuf dessus.
+- **Couleurs** (version 2 du 30-09-2026, `fiches/palette.md`) : le gymnase le soir. Fond `nuit`
+  `#16101a`, noir violacé tiré du maillot, et tous les gris qui en dérivent ; texte `craie`
+  `#f1ece6`. Turquoise `#64979d` et violet `#66486b` réels du maillot, jaune ballon `#f2bf2e`.
+  Une fonction par couleur : **turquoise l'équipe, violet les matchs (chapitre `nuit-violet`),
+  jaune ce qui est en direct ou nouveau**. Le violet ne porte jamais de texte. **La lumière
+  n'existe que sur les objets lumineux** : tableau de score (`led` `#ffae1f`, segments éteints
+  `led-eteinte`, halo `--led-halo`), bandeau LED, ballon. Survol par inversion ou remplissage,
+  jamais par une lueur ; focus en contour jaune. Victoire et défaite sans couleur : pastille
+  pleine V ou contour D (`components/pastille-resultat.tsx`). Seul signal hors palette : `erreur`.
+  Ni bleu nuit, ni cyan ravivé, ni dégradé, ni verre dépoli. L'administration partage tout.
+- **Afficheur LED** (`components/public/afficheur-led.tsx`) : sept segments dessinés en SVG, chaque
+  segment une rangée de points (trait en pointillés à bouts ronds, comme les tableaux Bodet),
+  segments éteints visibles dessous. Préféré à la police DSEG : aucune dépendance à télécharger.
 - **Typographie** : une seule famille, **Archivo**, chargée avec son axe de largeur.
   `titre-affiche` (largeur 62 %, graisse 800, capitales, chiffres à largeur fixe) pour la voix du
   site public ; `titre-admin` (largeur 80 %, graisse 700) pour les écrans de travail ; largeur
@@ -148,7 +149,7 @@ ailleurs.
 - **Mouvement** : nerveux et net. Trois durées (`--duree-breve` 160 ms, `--duree` 280 ms,
   `--duree-appuyee` 420 ms) et deux courbes (`ease-ressort`, léger rebond ; `ease-sortie`, arrêt
   franc), partagées avec GSAP.
-- **Portraits** : surimpression encre sur la couleur de fonction (encre, turquoise, papier pour
+- **Portraits** : surimpression sur la couleur de fonction (nuit, turquoise, craie pour
   l'effectif), avec cadrage sur le point de visage.
 - **Motif du maillot** : en filigrane, un contour fin et à peine perceptible ; le halo, qui ne
   révèle le motif que sous une lumière, est réservé à la scène du ballon.

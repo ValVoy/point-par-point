@@ -9,9 +9,9 @@ import { useFormStatus } from "react-dom";
  */
 
 const CLASSE_CHAMP =
-  "mt-1.5 w-full rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-3 py-2 text-[var(--color-encre)] outline-none focus:border-[var(--color-accent)]";
+  "mt-1.5 w-full rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-3 py-2 text-[var(--color-craie)] outline-none focus:border-[var(--color-turquoise)]";
 
-const CLASSE_LABEL = "block text-sm font-medium text-[var(--color-encre-douce)]";
+const CLASSE_LABEL = "block text-sm font-medium text-[var(--color-craie-douce)]";
 
 export function Champ({
   nom,
@@ -34,7 +34,7 @@ export function Champ({
       <label htmlFor={nom} className={CLASSE_LABEL}>
         {libelle}
         {requis ? null : (
-          <span className="ml-1.5 text-xs font-normal text-[var(--color-encre-tenue)]">
+          <span className="ml-1.5 text-xs font-normal text-[var(--color-craie-tenue)]">
             facultatif
           </span>
         )}
@@ -49,7 +49,7 @@ export function Champ({
         {...reste}
       />
       {aide ? (
-        <p className="mt-1 text-xs text-[var(--color-encre-tenue)]">{aide}</p>
+        <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">{aide}</p>
       ) : null}
     </div>
   );
@@ -107,7 +107,7 @@ export function ZoneTexte({
     <div>
       <label htmlFor={nom} className={CLASSE_LABEL}>
         {libelle}
-        <span className="ml-1.5 text-xs font-normal text-[var(--color-encre-tenue)]">
+        <span className="ml-1.5 text-xs font-normal text-[var(--color-craie-tenue)]">
           facultatif
         </span>
       </label>
@@ -119,7 +119,7 @@ export function ZoneTexte({
         className={CLASSE_CHAMP}
       />
       {aide ? (
-        <p className="mt-1 text-xs text-[var(--color-encre-tenue)]">{aide}</p>
+        <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">{aide}</p>
       ) : null}
     </div>
   );
@@ -135,12 +135,12 @@ export function CaseACocher({
   coche?: boolean;
 }) {
   return (
-    <label className="flex items-center gap-2 text-sm text-[var(--color-encre-douce)]">
+    <label className="flex items-center gap-2 text-sm text-[var(--color-craie-douce)]">
       <input
         type="checkbox"
         name={nom}
         defaultChecked={coche}
-        className="size-4 rounded border-[var(--color-trait)]"
+        className="size-4 rounded border-[var(--color-nuit-trait)]"
       />
       {libelle}
     </label>
@@ -161,8 +161,8 @@ export function BoutonEnvoi({
   const { pending } = useFormStatus();
   const classes =
     variante === "principal"
-      ? "bg-[var(--color-encre)] text-[var(--color-papier)]"
-      : "border border-[var(--color-trait)] bg-[var(--color-champ)] text-[var(--color-encre-douce)]";
+      ? "bg-[var(--color-craie)] text-[var(--color-nuit-surface)]"
+      : "border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] text-[var(--color-craie-douce)]";
 
   return (
     <button

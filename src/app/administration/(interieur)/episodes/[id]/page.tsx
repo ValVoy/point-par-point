@@ -28,27 +28,27 @@ export default async function PageEpisode({
     <>
       <Link
         href="/administration/episodes"
-        className="text-sm text-[var(--color-accent)] hover:underline"
+        className="text-sm text-[var(--color-turquoise)] hover:underline"
       >
         Retour aux épisodes
       </Link>
 
       <h1 className="mt-3 titre-admin text-3xl">{episode.titre}</h1>
-      <p className="mt-1 text-sm text-[var(--color-encre-douce)]">
+      <p className="mt-1 text-sm text-[var(--color-craie-douce)]">
         {episode.etat === "publie" ? "Publié sur le site" : "Brouillon, invisible sur le site"}
         {" · "}
         <a
           href={lienYoutube(episode.youtubeId)}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[var(--color-accent)] hover:underline"
+          className="text-[var(--color-turquoise)] hover:underline"
         >
           Voir sur YouTube
         </a>
       </p>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_16rem]">
-        <div className="max-w-xl rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-5">
+        <div className="max-w-xl rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-5">
           <FormulaireEpisode
             matchs={matchs}
             episode={{
@@ -65,14 +65,14 @@ export default async function PageEpisode({
 
         <form
           action={mettreEpisodeALaCorbeille}
-          className="self-start rounded-xl border border-dashed border-[var(--color-trait)] p-4 text-sm"
+          className="self-start rounded-xl border border-dashed border-[var(--color-nuit-trait)] p-4 text-sm"
         >
           <input type="hidden" name="id" value={episode.id} />
-          <p className="text-xs text-[var(--color-encre-tenue)]">
+          <p className="text-xs text-[var(--color-craie-tenue)]">
             L&apos;épisode disparaît du site mais reste restaurable. Pour le
             retirer un temps, préférez « Dépublier » dans la liste.
           </p>
-          <button type="submit" className="mt-2 text-[var(--color-encre-tenue)] hover:underline">
+          <button type="submit" className="mt-2 text-[var(--color-craie-tenue)] hover:underline">
             Mettre à la corbeille
           </button>
         </form>

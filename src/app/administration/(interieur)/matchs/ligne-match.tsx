@@ -20,7 +20,7 @@ function Score({ rencontre }: { rencontre: RencontreAvecSets }) {
         {rencontre.setsNous}-{rencontre.setsEux}
       </span>
       {rencontre.sets.length > 0 ? (
-        <span className="text-xs text-[var(--color-encre-tenue)] tabular-nums">
+        <span className="text-xs text-[var(--color-craie-tenue)] tabular-nums">
           {rencontre.sets
             .map((set) => `${set.pointsNous ?? "?"}-${set.pointsEux ?? "?"}`)
             .join(" · ")}
@@ -35,22 +35,22 @@ export function LigneMatch({ rencontre }: { rencontre: RencontreAvecSets }) {
 
   return (
     <li
-      className={`flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border bg-[var(--color-papier)] p-4 ${
-        aSaisir ? "border-[var(--color-accent)]" : "border-[var(--color-trait)]"
+      className={`flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border bg-[var(--color-nuit-surface)] p-4 ${
+        aSaisir ? "border-[var(--color-turquoise)]" : "border-[var(--color-nuit-trait)]"
       }`}
     >
       <div className="min-w-0 flex-1">
-        <p className="text-xs text-[var(--color-encre-tenue)] first-letter:uppercase">
+        <p className="text-xs text-[var(--color-craie-tenue)] first-letter:uppercase">
           {dateEtHeure(rencontre.joueLe)}
         </p>
         <p className="mt-0.5 font-medium">
           {rencontre.aDomicile ? "Contre " : "Chez "}
           {rencontre.adversaire}
-          <span className="ml-2 rounded bg-[var(--color-papier-creuse)] px-1.5 py-0.5 text-xs font-normal text-[var(--color-encre-douce)]">
+          <span className="ml-2 rounded bg-[var(--color-nuit)] px-1.5 py-0.5 text-xs font-normal text-[var(--color-craie-douce)]">
             {rencontre.aDomicile ? "domicile" : "extérieur"}
           </span>
           {rencontre.etat === "annulee" || rencontre.etat === "reportee" ? (
-            <span className="ml-1.5 rounded border border-[var(--color-encre-tenue)] px-1.5 py-px text-xs font-normal text-[var(--color-encre-douce)]">
+            <span className="ml-1.5 rounded border border-[var(--color-craie-tenue)] px-1.5 py-px text-xs font-normal text-[var(--color-craie-douce)]">
               {LIBELLES_ETAT[rencontre.etat].toLowerCase()}
             </span>
           ) : null}
@@ -64,8 +64,8 @@ export function LigneMatch({ rencontre }: { rencontre: RencontreAvecSets }) {
             href={`/administration/matchs/${rencontre.id}/score`}
             className={
               aSaisir
-                ? "rounded-lg bg-[var(--color-accent)] px-3 py-1.5 font-medium text-[var(--color-papier)]"
-                : "text-[var(--color-accent)] hover:underline"
+                ? "rounded-lg bg-[var(--color-turquoise)] px-3 py-1.5 font-medium text-[var(--color-nuit-surface)]"
+                : "text-[var(--color-turquoise)] hover:underline"
             }
           >
             {aSaisir ? "Saisir le score" : "Score"}
@@ -73,7 +73,7 @@ export function LigneMatch({ rencontre }: { rencontre: RencontreAvecSets }) {
         )}
         <Link
           href={`/administration/matchs/${rencontre.id}`}
-          className="text-[var(--color-encre-douce)] hover:underline"
+          className="text-[var(--color-craie-douce)] hover:underline"
         >
           Modifier
         </Link>

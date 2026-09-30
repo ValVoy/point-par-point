@@ -43,7 +43,7 @@ export function LigneEffectifModifiable({ ligne }: { ligne: LigneEffectif }) {
       .join(" · ") || "Fiche à compléter";
 
   return (
-    <div className="rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] px-4 py-3">
+    <div className="rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] px-4 py-3">
       {/* Grille plutot que flex-wrap : le retour a la ligne d'un flex depend
           de la largeur du contenu, donc le bouton sautait a la ligne des que
           le nom d'un joueur etait long. Ici, les colonnes sont decidees. */}
@@ -60,7 +60,7 @@ export function LigneEffectifModifiable({ ligne }: { ligne: LigneEffectif }) {
           max={99}
           aria-label={`Numéro de ${ligne.nomComplet}`}
           defaultValue={ligne.numero ?? ""}
-          className="w-full rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-2 py-1.5 text-center font-medium outline-none focus:border-[var(--color-accent)]"
+          className="w-full rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-2 py-1.5 text-center font-medium outline-none focus:border-[var(--color-turquoise)]"
         />
 
         <div className="min-w-0">
@@ -68,9 +68,9 @@ export function LigneEffectifModifiable({ ligne }: { ligne: LigneEffectif }) {
               cote a cote, c'est le nom qui se faisait tronquer par un badge
               pourtant plus court que lui. */}
           <p className="truncate font-medium">{ligne.nomComplet}</p>
-          <p className="truncate text-xs text-[var(--color-encre-tenue)]">
+          <p className="truncate text-xs text-[var(--color-craie-tenue)]">
             {ligne.capitaine ? (
-              <span className="mr-1.5 rounded bg-[var(--color-accent-sourd)] px-1.5 py-0.5 text-[var(--color-accent)]">
+              <span className="mr-1.5 rounded bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]">
                 capitaine
               </span>
             ) : null}
@@ -82,7 +82,7 @@ export function LigneEffectifModifiable({ ligne }: { ligne: LigneEffectif }) {
           name="poste"
           aria-label={`Poste de ${ligne.nomComplet}`}
           defaultValue={ligne.poste}
-          className="col-span-2 w-full rounded-lg border border-[var(--color-trait)] bg-[var(--color-champ)] px-2 py-1.5 outline-none focus:border-[var(--color-accent)] sm:col-span-1"
+          className="col-span-2 w-full rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-2 py-1.5 outline-none focus:border-[var(--color-turquoise)] sm:col-span-1"
         >
           {Object.entries(LIBELLES_POSTE).map(([valeur, libelle]) => (
             <option key={valeur} value={valeur}>
@@ -102,13 +102,13 @@ export function LigneEffectifModifiable({ ligne }: { ligne: LigneEffectif }) {
         </div>
       ) : null}
 
-      <div className="mt-2 flex gap-4 border-t border-[var(--color-trait)] pt-2 text-xs">
+      <div className="mt-2 flex gap-4 border-t border-[var(--color-nuit-trait)] pt-2 text-xs">
         {ligne.capitaine ? null : (
           <form action={designerCapitaine}>
             <input type="hidden" name="effectifId" value={ligne.effectifId} />
             <button
               type="submit"
-              className="text-[var(--color-encre-tenue)] hover:text-[var(--color-accent)] hover:underline"
+              className="text-[var(--color-craie-tenue)] hover:text-[var(--color-turquoise)] hover:underline"
             >
               Désigner capitaine
             </button>
@@ -118,7 +118,7 @@ export function LigneEffectifModifiable({ ligne }: { ligne: LigneEffectif }) {
           <input type="hidden" name="effectifId" value={ligne.effectifId} />
           <button
             type="submit"
-            className="text-[var(--color-encre-tenue)] hover:text-[var(--color-accent)] hover:underline"
+            className="text-[var(--color-craie-tenue)] hover:text-[var(--color-turquoise)] hover:underline"
           >
             Retirer du groupe
           </button>

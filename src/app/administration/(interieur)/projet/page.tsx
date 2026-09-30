@@ -16,12 +16,12 @@ export default async function PageChronologie() {
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_20rem]">
       <section>
-        <p className="mb-4 max-w-prose text-sm text-[var(--color-encre-douce)]">
+        <p className="mb-4 max-w-prose text-sm text-[var(--color-craie-douce)]">
           Les moments qui ont fait le projet, dans l&apos;ordre du récit. Une
           étape nouvelle reste en brouillon jusqu&apos;à sa publication.
         </p>
         {liste.length === 0 ? (
-          <p className="rounded-xl border border-dashed border-[var(--color-trait)] p-6 text-sm text-[var(--color-encre-tenue)]">
+          <p className="rounded-xl border border-dashed border-[var(--color-nuit-trait)] p-6 text-sm text-[var(--color-craie-tenue)]">
             Aucune étape pour l&apos;instant.
           </p>
         ) : (
@@ -50,8 +50,8 @@ export default async function PageChronologie() {
                       type="submit"
                       className={
                         etape.etat === "brouillon"
-                          ? "rounded-lg bg-[var(--color-encre)] px-3 py-1.5 font-medium text-[var(--color-papier)]"
-                          : "text-[var(--color-encre-douce)] hover:underline"
+                          ? "rounded-lg bg-[var(--color-craie)] px-3 py-1.5 font-medium text-[var(--color-nuit-surface)]"
+                          : "text-[var(--color-craie-douce)] hover:underline"
                       }
                     >
                       {etape.etat === "brouillon" ? "Publier" : "Dépublier"}
@@ -78,7 +78,7 @@ export default async function PageChronologie() {
         />
       </section>
 
-      <aside className="self-start rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-5">
+      <aside className="self-start rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-5">
         <h2 className="text-sm font-semibold">Nouvelle étape</h2>
         <div className="mt-4">
           <FormulaireEtape />

@@ -18,7 +18,7 @@ type Mode = "sets" | "final";
 const ETAT_INITIAL: EtatScore = { erreurs: [], alertes: [], enregistre: false };
 
 const CLASSE_POINTS =
-  "h-16 w-full rounded-xl border border-[var(--color-trait)] bg-[var(--color-champ)] text-center text-3xl font-semibold tabular-nums outline-none focus:border-[var(--color-accent)]";
+  "h-16 w-full rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] text-center text-3xl font-semibold tabular-nums outline-none focus:border-[var(--color-turquoise)]";
 
 /** Deux chiffres tapes : on passe au champ suivant, sans lever le pouce. */
 function avancer(evenement: ChangeEvent<HTMLInputElement>) {
@@ -82,21 +82,21 @@ export function SaisieScore({
       <input type="hidden" name="id" value={id} />
       <input type="hidden" name="mode" value={mode} />
 
-      <div role="group" aria-label="Type de saisie" className="grid grid-cols-2 gap-1 rounded-xl bg-[var(--color-papier-creuse)] p-1 text-sm">
+      <div role="group" aria-label="Type de saisie" className="grid grid-cols-2 gap-1 rounded-xl bg-[var(--color-nuit)] p-1 text-sm">
         {(["sets", "final"] as const).map((valeur) => (
           <button
             key={valeur}
             type="button"
             aria-pressed={mode === valeur}
             onClick={() => setMode(valeur)}
-            className="rounded-lg py-2.5 font-medium text-[var(--color-encre-douce)] aria-pressed:bg-[var(--color-champ)] aria-pressed:text-[var(--color-encre)] aria-pressed:shadow-sm"
+            className="rounded-lg py-2.5 font-medium text-[var(--color-craie-douce)] aria-pressed:bg-[var(--color-nuit)] aria-pressed:text-[var(--color-craie)] aria-pressed:shadow-sm"
           >
             {valeur === "sets" ? "Set par set" : "Score final seul"}
           </button>
         ))}
       </div>
 
-      <div className="grid grid-cols-[3.5rem_1fr_1fr] items-end gap-3 text-center text-xs font-medium text-[var(--color-encre-tenue)]">
+      <div className="grid grid-cols-[3.5rem_1fr_1fr] items-end gap-3 text-center text-xs font-medium text-[var(--color-craie-tenue)]">
         <span />
         <span>Nous</span>
         <span className="truncate">{adversaire}</span>
@@ -106,7 +106,7 @@ export function SaisieScore({
         <ol className="space-y-3">
           {sets.slice(0, nombre).map((set, index) => (
             <li key={index} className="grid grid-cols-[3.5rem_1fr_1fr] items-center gap-3">
-              <span className="text-sm font-medium text-[var(--color-encre-douce)]">
+              <span className="text-sm font-medium text-[var(--color-craie-douce)]">
                 Set {index + 1}
               </span>
               {(["nous", "eux"] as const).map((cote) => (
@@ -132,7 +132,7 @@ export function SaisieScore({
         </ol>
       ) : (
         <div className="grid grid-cols-[3.5rem_1fr_1fr] items-center gap-3">
-          <span className="text-sm font-medium text-[var(--color-encre-douce)]">Sets</span>
+          <span className="text-sm font-medium text-[var(--color-craie-douce)]">Sets</span>
           {(["nous", "eux"] as const).map((cote) => (
             <input
               key={cote}
@@ -149,16 +149,16 @@ export function SaisieScore({
               className={CLASSE_POINTS}
             />
           ))}
-          <p className="col-span-3 text-xs text-[var(--color-encre-tenue)]">
+          <p className="col-span-3 text-xs text-[var(--color-craie-tenue)]">
             Enregistrer un score final seul efface le détail des sets déjà saisi.
           </p>
         </div>
       )}
 
       {mode === "sets" && analyse.sets.length > 0 ? (
-        <p className="text-center text-sm text-[var(--color-encre-douce)]">
+        <p className="text-center text-sm text-[var(--color-craie-douce)]">
           Total{" "}
-          <span className="text-2xl font-semibold text-[var(--color-encre)] tabular-nums">
+          <span className="text-2xl font-semibold text-[var(--color-craie)] tabular-nums">
             {analyse.setsNous} - {analyse.setsEux}
           </span>
         </p>
@@ -173,7 +173,7 @@ export function SaisieScore({
       ) : null}
 
       {mode === "sets" && analyse.alertes.length > 0 ? (
-        <ul className="space-y-1 rounded-lg bg-[var(--color-accent-sourd)] px-3 py-2 text-sm text-[var(--color-encre-douce)]">
+        <ul className="space-y-1 rounded-lg bg-[var(--color-turquoise-sourd)] px-3 py-2 text-sm text-[var(--color-craie-douce)]">
           {analyse.alertes.map((m) => (
             <li key={m}>{m} Enregistrable quand même.</li>
           ))}
@@ -181,7 +181,7 @@ export function SaisieScore({
       ) : null}
 
       {etat.enregistre ? (
-        <p role="status" className="rounded-lg bg-[var(--color-accent-sourd)] px-3 py-2 text-sm text-[var(--color-accent)]">
+        <p role="status" className="rounded-lg bg-[var(--color-turquoise-sourd)] px-3 py-2 text-sm text-[var(--color-turquoise-clair)]">
           Score enregistré.{" "}
           <Link href="/administration/matchs" className="underline">
             Retour aux matchs

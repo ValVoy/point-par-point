@@ -28,7 +28,7 @@ export default async function PageMatch({
     <>
       <Link
         href={`/administration/matchs?saison=${rencontre.saisonId}`}
-        className="text-sm text-[var(--color-accent)] hover:underline"
+        className="text-sm text-[var(--color-turquoise)] hover:underline"
       >
         Retour aux matchs
       </Link>
@@ -37,12 +37,12 @@ export default async function PageMatch({
         {rencontre.aDomicile ? "Contre " : "Chez "}
         {rencontre.adversaire}
       </h1>
-      <p className="mt-1 text-sm text-[var(--color-encre-douce)] first-letter:uppercase">
+      <p className="mt-1 text-sm text-[var(--color-craie-douce)] first-letter:uppercase">
         {dateLongue(rencontre.joueLe)}
       </p>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_16rem]">
-        <div className="max-w-xl rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-5">
+        <div className="max-w-xl rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-5">
           <FormulaireMatch
             saisonId={rencontre.saisonId}
             match={{
@@ -63,24 +63,24 @@ export default async function PageMatch({
         <aside className="space-y-4 self-start text-sm">
           <Link
             href={`/administration/matchs/${rencontre.id}/score`}
-            className="block rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-4 text-[var(--color-accent)] hover:border-[var(--color-accent)]"
+            className="block rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-4 text-[var(--color-turquoise)] hover:border-[var(--color-turquoise)]"
           >
             {rencontre.etat === "jouee" ? "Corriger le score" : "Saisir le score"}
           </Link>
 
           <form
             action={mettreMatchALaCorbeille}
-            className="rounded-xl border border-dashed border-[var(--color-trait)] p-4"
+            className="rounded-xl border border-dashed border-[var(--color-nuit-trait)] p-4"
           >
             <input type="hidden" name="id" value={rencontre.id} />
-            <p className="text-xs text-[var(--color-encre-tenue)]">
+            <p className="text-xs text-[var(--color-craie-tenue)]">
               Le match disparaît du site mais reste restaurable, score compris.
               Pour un match qui n&apos;aura pas lieu, préférez l&apos;état
               « Annulé ».
             </p>
             <button
               type="submit"
-              className="mt-2 text-[var(--color-encre-tenue)] hover:underline"
+              className="mt-2 text-[var(--color-craie-tenue)] hover:underline"
             >
               Mettre à la corbeille
             </button>

@@ -26,18 +26,18 @@ export default async function PageActualites() {
         <h1 className="titre-admin text-3xl">Actualités</h1>
         <Link
           href="/administration/actualites/nouvelle"
-          className="ml-auto rounded-lg bg-[var(--color-encre)] px-4 py-2 text-sm font-medium text-[var(--color-papier)]"
+          className="ml-auto rounded-lg bg-[var(--color-craie)] px-4 py-2 text-sm font-medium text-[var(--color-nuit-surface)]"
         >
           Écrire une actualité
         </Link>
       </div>
-      <p className="mt-2 max-w-prose text-sm text-[var(--color-encre-douce)]">
+      <p className="mt-2 max-w-prose text-sm text-[var(--color-craie-douce)]">
         Une actualité s&apos;écrit en brouillon, se relit, puis se publie. Tant
         qu&apos;elle est en brouillon, personne ne la voit sur le site.
       </p>
 
       {liste.length === 0 ? (
-        <p className="mt-8 rounded-xl border border-dashed border-[var(--color-trait)] p-6 text-sm text-[var(--color-encre-tenue)]">
+        <p className="mt-8 rounded-xl border border-dashed border-[var(--color-nuit-trait)] p-6 text-sm text-[var(--color-craie-tenue)]">
           Aucune actualité pour l&apos;instant.
         </p>
       ) : (
@@ -45,15 +45,15 @@ export default async function PageActualites() {
           {liste.map((actualite) => (
             <li
               key={actualite.id}
-              className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border border-[var(--color-trait)] bg-[var(--color-papier)] p-4"
+              className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)] p-4"
             >
               <div className="min-w-0 flex-1">
-                <p className="flex flex-wrap items-center gap-2 text-xs text-[var(--color-encre-tenue)]">
+                <p className="flex flex-wrap items-center gap-2 text-xs text-[var(--color-craie-tenue)]">
                   <span
                     className={
                       actualite.etat === "publie"
-                        ? "rounded bg-[var(--color-accent-sourd)] px-1.5 py-0.5 text-[var(--color-accent)]"
-                        : "rounded bg-[var(--color-papier-creuse)] px-1.5 py-0.5 text-[var(--color-encre-douce)]"
+                        ? "rounded bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]"
+                        : "rounded bg-[var(--color-nuit)] px-1.5 py-0.5 text-[var(--color-craie-douce)]"
                     }
                   >
                     {actualite.etat === "publie" ? "publiée" : "brouillon"}
@@ -61,7 +61,7 @@ export default async function PageActualites() {
                   {actualite.publieLe ? dateCourte(actualite.publieLe) : null}
                 </p>
                 <p className="mt-1 font-medium">{actualite.titre}</p>
-                <p className="mt-0.5 text-sm text-[var(--color-encre-douce)]">
+                <p className="mt-0.5 text-sm text-[var(--color-craie-douce)]">
                   {extrait(actualite.chapo, actualite.corps)}
                 </p>
               </div>
@@ -73,8 +73,8 @@ export default async function PageActualites() {
                       type="submit"
                       className={
                         actualite.etat === "brouillon"
-                          ? "rounded-lg bg-[var(--color-encre)] px-3 py-1.5 font-medium text-[var(--color-papier)]"
-                          : "text-[var(--color-encre-douce)] hover:underline"
+                          ? "rounded-lg bg-[var(--color-craie)] px-3 py-1.5 font-medium text-[var(--color-nuit-surface)]"
+                          : "text-[var(--color-craie-douce)] hover:underline"
                       }
                     >
                       {actualite.etat === "brouillon" ? "Publier" : "Dépublier"}
@@ -83,7 +83,7 @@ export default async function PageActualites() {
                 ) : null}
                 <Link
                   href={`/administration/actualites/${actualite.id}`}
-                  className="text-[var(--color-accent)] hover:underline"
+                  className="text-[var(--color-turquoise)] hover:underline"
                 >
                   Modifier
                 </Link>
@@ -95,20 +95,20 @@ export default async function PageActualites() {
 
       {corbeille.length > 0 ? (
         <section className="mt-8">
-          <h2 className="text-sm font-semibold text-[var(--color-encre-douce)]">Corbeille</h2>
-          <p className="mt-1 text-xs text-[var(--color-encre-tenue)]">
+          <h2 className="text-sm font-semibold text-[var(--color-craie-douce)]">Corbeille</h2>
+          <p className="mt-1 text-xs text-[var(--color-craie-tenue)]">
             Rien n&apos;est effacé : ces actualités peuvent revenir.
           </p>
           <ul className="mt-3 space-y-2">
             {corbeille.map((actualite) => (
               <li
                 key={actualite.id}
-                className="flex items-center gap-4 rounded-lg border border-dashed border-[var(--color-trait)] px-4 py-2.5 text-sm"
+                className="flex items-center gap-4 rounded-lg border border-dashed border-[var(--color-nuit-trait)] px-4 py-2.5 text-sm"
               >
-                <span className="text-[var(--color-encre-tenue)]">{actualite.titre}</span>
+                <span className="text-[var(--color-craie-tenue)]">{actualite.titre}</span>
                 <form action={restaurerActualite} className="ml-auto">
                   <input type="hidden" name="id" value={actualite.id} />
-                  <button type="submit" className="text-[var(--color-accent)] hover:underline">
+                  <button type="submit" className="text-[var(--color-turquoise)] hover:underline">
                     Restaurer
                   </button>
                 </form>

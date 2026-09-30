@@ -16,13 +16,13 @@ export default async function PageConnexion() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-sm flex-col justify-center px-4 py-16">
-      <p className="text-xs font-medium tracking-widest text-[var(--color-encre-tenue)] uppercase">
+      <p className="text-xs font-medium tracking-widest text-[var(--color-craie-tenue)] uppercase">
         {NOM_DU_SITE}
       </p>
       <h1 className="mt-2 titre-admin text-4xl">
         Administration
       </h1>
-      <p className="mt-3 text-sm text-[var(--color-encre-douce)]">
+      <p className="mt-3 text-sm text-[var(--color-craie-douce)]">
         Cet espace est réservé à l&apos;équipe.
       </p>
 

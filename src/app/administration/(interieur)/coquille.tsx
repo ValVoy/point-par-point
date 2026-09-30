@@ -34,27 +34,27 @@ export function Coquille({
   const rubriques = RUBRIQUES.filter((r) => peut(utilisateur, r.droit));
 
   return (
-    <div className="min-h-dvh bg-[var(--color-papier-creuse)]">
-      <header className="border-b border-[var(--color-trait)] bg-[var(--color-papier)]">
+    <div className="min-h-dvh bg-[var(--color-nuit)]">
+      <header className="border-b border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)]">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
           <Link href="/" className="text-sm font-semibold">
             {NOM_DU_SITE}
           </Link>
-          <span className="text-xs text-[var(--color-encre-tenue)]">
+          <span className="text-xs text-[var(--color-craie-tenue)]">
             Administration
           </span>
 
           <div className="ml-auto flex items-center gap-3">
-            <span className="text-xs text-[var(--color-encre-douce)]">
+            <span className="text-xs text-[var(--color-craie-douce)]">
               {utilisateur.nom}
-              <span className="ml-1.5 rounded bg-[var(--color-accent-sourd)] px-1.5 py-0.5 text-[var(--color-accent)]">
+              <span className="ml-1.5 rounded bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]">
                 {utilisateur.role}
               </span>
             </span>
             <form action={deconnecter}>
               <button
                 type="submit"
-                className="text-xs text-[var(--color-encre-douce)] underline underline-offset-2 hover:text-[var(--color-encre)]"
+                className="text-xs text-[var(--color-craie-douce)] underline underline-offset-2 hover:text-[var(--color-craie)]"
               >
                 Se déconnecter
               </button>
@@ -68,7 +68,7 @@ export function Coquille({
               <li key={rubrique.href}>
                 <Link
                   href={rubrique.href}
-                  className="text-[var(--color-encre-douce)] hover:text-[var(--color-accent)]"
+                  className="text-[var(--color-craie-douce)] hover:text-[var(--color-turquoise)]"
                 >
                   {rubrique.libelle}
                 </Link>

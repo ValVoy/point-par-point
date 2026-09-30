@@ -12,7 +12,7 @@ const ONGLETS = [
 export function Onglets() {
   const chemin = usePathname();
   return (
-    <nav className="mt-6 flex gap-1 border-b border-[var(--color-trait)] text-sm">
+    <nav className="mt-6 flex gap-1 border-b border-[var(--color-nuit-trait)] text-sm">
       {ONGLETS.map((onglet) => {
         const actif = chemin === onglet.href;
         return (
@@ -22,8 +22,8 @@ export function Onglets() {
             aria-current={actif ? "page" : undefined}
             className={`-mb-px border-b-2 px-3 py-2 ${
               actif
-                ? "border-[var(--color-accent)] text-[var(--color-encre)]"
-                : "border-transparent text-[var(--color-encre-douce)] hover:text-[var(--color-accent)]"
+                ? "border-[var(--color-turquoise)] text-[var(--color-craie)]"
+                : "border-transparent text-[var(--color-craie-douce)] hover:text-[var(--color-turquoise)]"
             }`}
           >
             {onglet.libelle}
