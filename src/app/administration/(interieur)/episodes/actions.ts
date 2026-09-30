@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { episodes, rencontres } from "@/lib/db/schema";
+import { anciensSlugsEpisode, episodes, rencontres } from "@/lib/db/schema";
 import { exigerDroit } from "@/lib/auth/session-courante";
 import { slugEpisodeLibre } from "@/lib/episodes";
 import { saisonCourante } from "@/lib/saisons";
@@ -147,11 +147,19 @@ export async function modifierEpisode(
   if ("erreur" in lecture) return { erreur: lecture.erreur };
   const { colonnes } = lecture;
 
+  // L'adresse suit le titre ; l'ancienne est gardee pour rediriger les liens
+  // deja partages (table anciens_slugs_episode).
+  const [avant] = await db().select({ slug: episodes.slug }).from(episodes).where(eq(episodes.id, id)).limit(1);
+  const slug = await slugEpisodeLibre(colonnes.titre, colonnes.numero, id);
+  if (avant && avant.slug !== slug) {
+    await db().insert(anciensSlugsEpisode).values({ slug: avant.slug, episodeId: id }).onConflictDoNothing();
+  }
+
   await db()
     .update(episodes)
     .set({
       ...colonnes,
-      slug: await slugEpisodeLibre(colonnes.titre, colonnes.numero, id),
+      slug,
       modifieLe: new Date(),
     })
     .where(eq(episodes.id, id));

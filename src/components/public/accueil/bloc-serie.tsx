@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Episode } from "@/lib/episodes";
 import { CHAINE_YOUTUBE } from "@/lib/site";
 import { lienYoutube, miniatureYoutube } from "@/lib/youtube";
@@ -65,6 +66,12 @@ export function BlocSerie({ episode }: { episode: Episode }) {
             >
               Voir sur YouTube
             </a>
+            <Link
+              href="/serie"
+              className="inline-flex min-h-12 items-center font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--color-jaune)]"
+            >
+              Toute la série
+            </Link>
           </div>
         </div>
       </div>

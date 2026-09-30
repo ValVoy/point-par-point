@@ -72,6 +72,12 @@ export function BlocEpisode({ episode, prioritaire = false }: { episode: Episode
           {episode.titre}
         </h2>
         {episode.resume ? <p className="mt-4 leading-relaxed text-[var(--color-craie-douce)]">{episode.resume}</p> : null}
+        <Link
+          href={`/serie/${episode.slug}`}
+          className="mt-5 inline-flex min-h-12 items-center font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--color-jaune)]"
+        >
+          La page de l&apos;épisode
+        </Link>
       </div>
     </section>
   );

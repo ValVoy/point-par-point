@@ -189,6 +189,17 @@ ailleurs.
 - **Composants partagés** : `ActionsMatch` (agenda, itinéraire, Google Agenda), `EnTete` pour les
   pages hors accueil, `matchPublic` mis en cache par requête (page et métadonnées).
 
+### La série publique (30-09-2026)
+
+- **Lectures** : `lib/serie.ts`, épisodes publiés avec leur match visible, voisins, anciennes
+  adresses (`anciens_slugs_episode`, redirection 308 comme pour les matchs).
+- **Lien réciproque** : la page d'un épisode montre le match raconté en tableau LED et mène à sa
+  page ; la page d'un match mène à la page de l'épisode.
+- **Jaune** : « S'abonner » et « Nouveau » (épisode de moins de quatorze jours) seulement ; deux
+  appels à l'abonnement au plus par page, jamais de fenêtre surgissante.
+- **Pas de donnée absente** : ni durée, ni chapitres, ni prochain épisode tant qu'ils ne sont
+  pas en base. Le texte d'accroche reste neutre en attendant celui de l'ami.
+
 ## Conventions
 
 ### Le marquage des données de démonstration

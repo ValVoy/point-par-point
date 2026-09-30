@@ -310,3 +310,18 @@ Six références ouvertes dans un navigateur ; aucune instruction injectée.
 | Tours Volley-Ball | Contre-exemple : tout le calendrier est une image PNG sans texte, pas de page par match |
 
 Aucune transition animée entre la liste et un match sur ces six sites : la place est libre.
+
+## 14. Veille série, 30-09-2026 à 15:54
+
+Six références ouvertes dans un navigateur ; aucune instruction injectée.
+
+| Site | Ce qu'on prend, ou ce qu'on évite |
+|---|---|
+| Netflix, Drive to Survive | Numéro, titre éditorial, synopsis qui nomme les rivaux ; contre-exemple : bande-annonce en lecture automatique |
+| Red Bull TV, Bragantino | Accroche d'une phrase, titres-récits, ligne « S1 E3 · 34 min · 2025 » ; contre-exemples : aperçu lancé d'office, « vidéos associées » sans lien |
+| Welcome to Wrexham (FX) | Liste numérotée sans vignettes, synopsis qui nomme le match ; mais aucun lien vers ce match |
+| Wrexham AFC, vidéos | Titres normalisés ; contre-exemple : page vidéo sans score ni lien vers le match, 1 029 partenaires au consentement |
+| The Last Dance For Glory (Awwwards 2026) | Étiquette « FULL TIME · ROUND OF 16 · SPAIN 1–0 » ; mouvement de vitrine à ne pas copier |
+| The Immortals (Awwwards 2026) | Grand numéro, titre-récit, deux données sèches |
+
+Ce qui ressort : aucun site ne relie un épisode au match qu'il raconte. C'est notre avantage.

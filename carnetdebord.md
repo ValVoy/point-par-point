@@ -977,3 +977,28 @@ prend la date de Paris et une heure réaliste (20 h 30) ; démonstration purgée
 - Vérifié : 82 tests, `tsc`, lint ; redirection 308, 404 sur une adresse inconnue ou mal formée ;
   à l'écran le calendrier en 390 px et un match joué avec épisode en 1440 px.
 - Suite : la série, liste des épisodes et page d'un épisode.
+
+**16:15** · **[page] La série**
+
+Veille d'abord (`veille.md` section 14) : six sites de séries sportives ouverts, dont deux
+primés en 2026. Aucun ne relie un épisode au match qu'il raconte, même « Welcome to Wrexham » qui
+les nomme dans ses synopsis : c'est l'avantage du site, et il fonctionne dans les deux sens. Puis
+la fiche `fiches/serie.md`, puis le code.
+
+La liste : l'accroche et l'abonnement en jaune, le dernier épisode en vedette avec « Nouveau », les
+autres en liste numérotée, le grand numéro rythmant la page comme un numéro de maillot. La page
+d'un épisode : le lecteur au clic, le titre et le résumé, le match raconté en tableau LED avec
+« Voir le match », une carte d'abonnement après le visionnage, les épisodes voisins. L'adresse
+d'un épisode suit son titre : même parade que pour les matchs, table `anciens_slugs_episode`
+(migration additive 0003, appliquée en développement) et redirection 308, testée.
+
+Deux retenues volontaires : pas de durée ni de chapitres, faute de donnée en base ; et une
+accroche neutre, après avoir retiré en relecture des phrases qui promettaient un contenu (les
+vestiaires, un épisode après chaque temps fort) que personne n'a validé.
+
+- Portée : `src/app/serie/`, `src/components/public/serie/`, `lib/serie.ts`, schéma éditorial et
+  migration 0003, action de modification d'un épisode, purge de démonstration, `entete.tsx`,
+  liens depuis la page d'un match et l'accueil.
+- Vérifié : 82 tests, `tsc`, lint ; à l'écran la liste en 1440 et 390 px, un épisode en 1440 px ;
+  en-tête mesurée à 375 px sans débordement ; redirection 308 d'une ancienne adresse ; 404.
+- Suite : critique à froid de la série, puis l'effectif.

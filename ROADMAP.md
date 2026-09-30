@@ -29,7 +29,13 @@ avec le prochain match en tableau, la liste par mois et le filet « Aujourd'hui 
 dont l'ordre des blocs suit l'état du match (à venir, en cours, joué, score à venir, reporté,
 annulé), avec l'épisode lié et les matchs voisins. En-tête publique commune.
 
-Ensuite : la série (liste des épisodes et page d'un épisode), puis l'effectif.
+**La série le 30-09-2026** (fiche `fiches/serie.md`) : `/serie`, épisode vedette et liste
+numérotée avec le match de chaque épisode ; `/serie/<slug>`, lecteur au clic, match raconté en
+tableau LED relié à sa page, abonnement, épisodes voisins. Lien réciproque match ↔ épisode.
+
+Ensuite : l'effectif (grille par poste, page d'un joueur).
+À préparer pour la mise en ligne : appliquer en production les migrations 0002 et 0003 (tables
+des anciennes adresses), avec l'accord de l'utilisateur.
 Reporté : abonnement d'agenda à toute la saison, carte statique, transition animée liste → match.
 Le nom (« Point Par Point ») et la chaîne YouTube sont arrivés le 30-09-2026 et sont en place.
 

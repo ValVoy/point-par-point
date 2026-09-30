@@ -6,7 +6,7 @@ import {
   text,
   uniqueIndex,
 } from "drizzle-orm/sqlite-core";
-import { communes, etatPublication, identifiant } from "./colonnes";
+import { communes, etatPublication, horodatage, identifiant } from "./colonnes";
 import { rencontres, saisons } from "./sportif";
 
 /**
@@ -35,6 +35,24 @@ export const episodes = sqliteTable(
     uniqueIndex("episodes_slug_unique").on(table.slug),
     index("episodes_rencontre_idx").on(table.rencontreId),
   ],
+);
+
+/**
+ * Les anciennes adresses d'un episode : l'adresse suit le titre, et un lien
+ * deja partage doit survivre a une correction de titre, par redirection vers
+ * l'adresse du moment (meme parade que pour les matchs, 30-09-2026).
+ */
+export const anciensSlugsEpisode = sqliteTable(
+  "anciens_slugs_episode",
+  {
+    id: identifiant(),
+    slug: text("slug").notNull(),
+    episodeId: integer("episode_id")
+      .notNull()
+      .references(() => episodes.id),
+    ...horodatage,
+  },
+  (table) => [uniqueIndex("anciens_slugs_episode_slug_unique").on(table.slug)],
 );
 
 export const actualites = sqliteTable(
