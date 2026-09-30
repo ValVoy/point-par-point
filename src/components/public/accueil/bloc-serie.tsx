@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Episode } from "@/lib/episodes";
 import { CHAINE_YOUTUBE } from "@/lib/site";
-import { lienYoutube, miniatureYoutube } from "@/lib/youtube";
+import { lienYoutube } from "@/lib/youtube";
 import { LecteurEpisode } from "../lecteur-episode";
+import { MiniatureEpisode } from "../miniature-episode";
 
 /**
  * La serie, premier but du site : qu'on regarde, puis qu'on s'abonne (fiche
@@ -23,13 +23,7 @@ export function BlocSerie({ episode }: { episode: Episode }) {
       <div className="grid items-end gap-8 lg:grid-cols-12 lg:gap-12">
         <div className="relative aspect-video overflow-hidden bg-[var(--color-nuit-surface)] lg:col-span-7">
           <LecteurEpisode youtubeId={episode.youtubeId} titre={titre}>
-            <Image
-              src={miniatureYoutube(episode.youtubeId)}
-              alt=""
-              fill
-              sizes="(min-width: 1024px) 58vw, 100vw"
-              className="object-cover grayscale transition-[filter] duration-[var(--duree)] group-hover:grayscale-0"
-            />
+            <MiniatureEpisode youtubeId={episode.youtubeId} sizes="(min-width: 1024px) 58vw, 100vw" />
             <span
               aria-hidden="true"
               className="absolute inset-0 bg-[var(--color-nuit)] opacity-25 transition-opacity duration-[var(--duree)] group-hover:opacity-0"

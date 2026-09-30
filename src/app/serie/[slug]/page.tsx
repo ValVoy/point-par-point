@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { PiedDePage } from "@/components/public/accueil/pied-de-page";
 import { Revelations } from "@/components/public/accueil/revelations";
 import { EnTete } from "@/components/public/entete";
 import { LecteurEpisode } from "@/components/public/lecteur-episode";
+import { MiniatureEpisode } from "@/components/public/miniature-episode";
 import { BoutonAbonnement } from "@/components/public/serie/elements-serie";
 import { TableauProchainMatch } from "@/components/public/tableau-prochain-match";
 import { TableauResultat } from "@/components/public/tableau-resultat";
@@ -32,13 +32,22 @@ export async function generateMetadata({ params }: Parametres): Promise<Metadata
   const donnees = await episodePublic(slug);
   if (!donnees) return { title: "Épisode introuvable" };
   const { episode } = donnees;
+  const titre = episode.numero ? `Épisode ${episode.numero} : ${episode.titre}` : episode.titre;
   return {
-    title: episode.numero ? `Épisode ${episode.numero} : ${episode.titre}` : episode.titre,
+    title: titre,
     description: episode.resume ?? undefined,
+    // Un episode partage sur Instagram ou WhatsApp arrive avec son image.
+    openGraph: {
+      type: "video.episode",
+      title: titre,
+      description: episode.resume ?? undefined,
+      images: [{ url: miniatureYoutube(episode.youtubeId), width: 480, height: 360 }],
+    },
   };
 }
 
 const etiquette = "text-xs font-semibold tracking-[0.2em] text-[var(--color-craie-douce)] uppercase";
+const surtitre = "text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase";
 
 function LienVoisin({ episode, sens }: { episode: Episode | null; sens: "précédent" | "suivant" }) {
   if (!episode) return <span />;
@@ -90,7 +99,7 @@ async function MatchRaconte({ slug }: { slug: string }) {
         href={`/matchs/${match.slug}`}
         className="mt-4 inline-flex min-h-12 items-center font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--color-jaune)]"
       >
-        Voir le match
+        Voir le match {match.aDomicile ? "contre" : "chez"} {match.adversaire}
       </Link>
     </section>
   );
@@ -99,6 +108,7 @@ async function MatchRaconte({ slug }: { slug: string }) {
 export default async function PageEpisode({ params }: Parametres) {
   const { slug } = await params;
   const donnees = await episodePublic(slug);
+  if (!donnees && slug !== slug.toLowerCase()) permanentRedirect(`/serie/${slug.toLowerCase()}`);
   if (!donnees) {
     const actuelle = await nouvelleAdresseEpisode(slug);
     if (actuelle) permanentRedirect(`/serie/${actuelle}`);
@@ -114,38 +124,31 @@ export default async function PageEpisode({ params }: Parametres) {
           <Link href="/serie" className="text-sm font-semibold text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
             ← Toute la série
           </Link>
-          <p className={`mt-8 ${etiquette} first-letter:uppercase`}>
-            {[episode.numero ? `Épisode ${episode.numero}` : null, dateLongue(episode.publieLe)].filter(Boolean).join(" · ")}
+          <p className={`mt-8 ${surtitre}`}>
+            {[episode.numero ? `Épisode ${episode.numero}` : null, episode.publieLe ? `Publié le ${dateLongue(episode.publieLe)}` : null]
+              .filter(Boolean)
+              .join(" · ")}
           </p>
+          <h1 className="titre-affiche mt-3 max-w-[20ch] text-5xl text-balance sm:text-7xl">{episode.titre}</h1>
         </div>
 
-        <div className="relative aspect-video max-w-5xl overflow-hidden bg-[var(--color-nuit-surface)]">
-          <LecteurEpisode youtubeId={episode.youtubeId} titre={episode.titre}>
-            <Image
-              src={miniatureYoutube(episode.youtubeId)}
-              alt=""
-              fill
-              priority
-              sizes="(min-width: 1024px) 64rem, 100vw"
-              className="object-cover grayscale transition-[filter] duration-[var(--duree)] group-hover:grayscale-0"
-            />
-          </LecteurEpisode>
-        </div>
-
-        <div className="max-w-3xl">
-          <h1 className="titre-affiche text-5xl text-balance sm:text-7xl">{episode.titre}</h1>
-          {episode.resume ? (
-            <p className="mt-6 text-lg leading-relaxed text-[var(--color-craie-douce)]">{episode.resume}</p>
-          ) : null}
+        <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="relative aspect-video overflow-hidden bg-[var(--color-nuit-surface)] lg:col-span-8">
+            <LecteurEpisode youtubeId={episode.youtubeId} titre={episode.titre}>
+              <MiniatureEpisode youtubeId={episode.youtubeId} sizes="(min-width: 1024px) 66vw, 100vw" prioritaire />
+            </LecteurEpisode>
+          </div>
+          <div className="space-y-8 lg:col-span-4">
+            {episode.resume ? <p className="text-lg leading-relaxed text-[var(--color-craie-douce)]">{episode.resume}</p> : null}
+            <section aria-label="S'abonner" className="border-l-4 border-[var(--color-jaune)] bg-[var(--color-nuit-surface)] px-6 py-6">
+              <p className="titre-affiche text-3xl">La suite au prochain épisode</p>
+              <p className="mt-2 mb-5 text-[var(--color-craie-douce)]">Abonnez-vous à la chaîne pour ne manquer aucune sortie.</p>
+              <BoutonAbonnement />
+            </section>
+          </div>
         </div>
 
         {match ? <MatchRaconte slug={match.slug} /> : null}
-
-        <section aria-label="S'abonner" className="max-w-3xl border-l-4 border-[var(--color-jaune)] bg-[var(--color-nuit-surface)] px-6 py-6">
-          <p className="titre-affiche text-3xl">La suite au prochain épisode</p>
-          <p className="mt-2 mb-5 text-[var(--color-craie-douce)]">Abonnez-vous à la chaîne pour ne manquer aucune sortie.</p>
-          <BoutonAbonnement />
-        </section>
 
         <nav aria-label="Autres épisodes" className="grid gap-4 border-t border-[var(--color-nuit-trait)] sm:grid-cols-2">
           <LienVoisin episode={precedent} sens="précédent" />

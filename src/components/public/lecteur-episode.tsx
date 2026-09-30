@@ -45,10 +45,17 @@ export function LecteurEpisode({
     <button
       type="button"
       onClick={() => setLance(true)}
-      className="group absolute inset-0 size-full cursor-pointer"
+      className="group absolute inset-0 size-full cursor-pointer focus-visible:outline-none"
       aria-label={`Lire l'épisode : ${titre}`}
     >
       {children}
+      {/* Le cadre de focus, sur un calque au-dessus de la vignette : un contour
+          du bouton serait peint sous elle, puisqu'elle est positionnee, et le
+          cadre parent le rognerait vers l'exterieur. */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10 border-4 border-transparent group-focus-visible:border-[var(--color-jaune)]"
+      />
       <span
         aria-hidden="true"
         className="absolute bottom-5 left-5 grid size-16 place-items-center bg-[var(--color-jaune)] text-[var(--color-nuit)] transition-transform duration-[var(--duree-breve)] group-hover:scale-110 sm:bottom-8 sm:left-8 sm:size-20"

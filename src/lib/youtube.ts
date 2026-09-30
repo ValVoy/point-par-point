@@ -54,6 +54,14 @@ export function miniatureYoutube(id: string): string {
   return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 }
 
+/**
+ * Miniature en 1280 x 720, absente pour certaines videos anciennes ou
+ * courtes : toujours prevoir le repli sur miniatureYoutube.
+ */
+export function miniatureYoutubeHD(id: string): string {
+  return `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+}
+
 /** Lien public de la video, pour ouvrir YouTube depuis l'administration. */
 export function lienYoutube(id: string): string {
   return `https://www.youtube.com/watch?v=${id}`;

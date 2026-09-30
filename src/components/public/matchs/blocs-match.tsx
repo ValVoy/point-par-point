@@ -1,11 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Episode } from "@/lib/episodes";
 import { dateLongue, heure } from "@/lib/dates";
 import type { Rencontre } from "@/lib/rencontres";
-import { miniatureYoutube } from "@/lib/youtube";
 import { lienItineraire } from "../actions-match";
 import { LecteurEpisode } from "../lecteur-episode";
+import { MiniatureEpisode } from "../miniature-episode";
 
 /**
  * Les blocs de la page d'un match (fiche fiches/matchs.md), chacun absent
@@ -54,14 +53,7 @@ export function BlocEpisode({ episode, prioritaire = false }: { episode: Episode
     <section aria-labelledby="titre-episode" className="grid items-end gap-6 lg:grid-cols-12">
       <div className="relative aspect-video overflow-hidden bg-[var(--color-nuit-surface)] lg:col-span-7">
         <LecteurEpisode youtubeId={episode.youtubeId} titre={episode.titre}>
-          <Image
-            src={miniatureYoutube(episode.youtubeId)}
-            alt=""
-            fill
-            priority={prioritaire}
-            sizes="(min-width: 1024px) 58vw, 100vw"
-            className="object-cover grayscale transition-[filter] duration-[var(--duree)] group-hover:grayscale-0"
-          />
+          <MiniatureEpisode youtubeId={episode.youtubeId} sizes="(min-width: 1024px) 58vw, 100vw" prioritaire={prioritaire} />
         </LecteurEpisode>
       </div>
       <div className="lg:col-span-5">
@@ -76,7 +68,8 @@ export function BlocEpisode({ episode, prioritaire = false }: { episode: Episode
           href={`/serie/${episode.slug}`}
           className="mt-5 inline-flex min-h-12 items-center font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--color-jaune)]"
         >
-          La page de l&apos;épisode
+          {episode.numero ? `Épisode ${episode.numero} : ` : ""}
+          {episode.titre}
         </Link>
       </div>
     </section>

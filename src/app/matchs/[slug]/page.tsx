@@ -44,6 +44,7 @@ export async function generateMetadata({ params }: Parametres): Promise<Metadata
 export default async function PageMatch({ params }: Parametres) {
   const { slug } = await params;
   const donnees = await matchPublic(slug);
+  if (!donnees && slug !== slug.toLowerCase()) permanentRedirect(`/matchs/${slug.toLowerCase()}`);
   if (!donnees) {
     // Un lien partage avant un report ou une correction : redirection 308.
     const actuelle = await nouvelleAdresse(slug);

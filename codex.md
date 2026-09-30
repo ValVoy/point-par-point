@@ -200,6 +200,12 @@ ailleurs.
 - **Pas de donnée absente** : ni durée, ni chapitres, ni prochain épisode tant qu'ils ne sont
   pas en base. Le texte d'accroche reste neutre en attendant celui de l'ami.
 
+### Le focus clavier (30-09-2026)
+
+La règle globale `:focus-visible` vit dans `@layer base` : hors couche, elle écraserait toute
+classe utilitaire. Sur un bouton qui porte une image positionnée (façade vidéo), l'anneau se
+dessine sur un calque au-dessus de l'image, sinon elle le recouvre.
+
 ## Conventions
 
 ### Le marquage des données de démonstration

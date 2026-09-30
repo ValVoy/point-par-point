@@ -44,7 +44,8 @@ export async function episodesPublies() {
     .from(episodes)
     .leftJoin(rencontres, eq(episodes.rencontreId, rencontres.id))
     .where(and(eq(episodes.etat, "publie"), isNull(episodes.supprimeLe)))
-    .orderBy(desc(episodes.numero), desc(episodes.publieLe));
+    // La date de publication d'abord : un bonus sans numero passe quand meme en tete.
+    .orderBy(desc(episodes.publieLe), desc(episodes.numero));
   return lignes.map((l) => ({ episode: l.episode, match: matchVisible(l.match) }));
 }
 

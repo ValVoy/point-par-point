@@ -161,10 +161,16 @@ body {
  * gymnase se navigue aussi au clavier sur un ordinateur, et le focus par
  * defaut de Tailwind disparait des qu'on touche aux couleurs. En jaune ballon,
  * net et sans lueur : 10,9 pour 1 sur la nuit, 4,5 sur le violet.
+ *
+ * Dans la couche de base : hors couche, cette regle l'emporterait sur toutes
+ * les classes utilitaires, et un anneau ne pourrait jamais etre replie a
+ * l'interieur d'un cadre qui le rogne (constate le 30-09-2026).
  */
-:focus-visible {
-  outline: 2px solid var(--color-jaune);
-  outline-offset: 2px;
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-jaune);
+    outline-offset: 2px;
+  }
 }
 
 /*

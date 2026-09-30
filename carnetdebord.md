@@ -1002,3 +1002,27 @@ vestiaires, un épisode après chaque temps fort) que personne n'a validé.
 - Vérifié : 82 tests, `tsc`, lint ; à l'écran la liste en 1440 et 390 px, un épisode en 1440 px ;
   en-tête mesurée à 375 px sans débordement ; redirection 308 d'une ancienne adresse ; 404.
 - Suite : critique à froid de la série, puis l'effectif.
+
+**16:35** · **[revue] Critique à froid de la série, et ses corrections**
+
+Un point bloquant : le focus clavier du bouton de lecture était invisible. En le corrigeant, deux
+causes empilées, instructives pour tout le site. La règle de focus de `globals.css` était écrite
+hors des couches de Tailwind, et une règle hors couche l'emporte sur toutes les classes
+utilitaires : aucun anneau ne pouvait être ajusté, ni ici ni sur la rangée des résultats de
+l'accueil, dont la correction de la veille n'avait donc jamais pris. Elle passe dans
+`@layer base`. Et l'anneau replié dans le cadre était peint sous la vignette, positionnée : le
+cadre de focus est maintenant un calque au-dessus d'elle. Vérifié à la vraie touche Tab, gros plan
+à l'appui.
+
+Le reste : vignettes en haute définition avec repli (`MiniatureEpisode`, 950 pixels servis au
+lieu de 455), image de partage pour les réseaux sur chaque épisode, bouton lecture jaune sur
+l'épisode vedette, page d'épisode en deux colonnes avec le titre au-dessus du lecteur, libellés
+qui ne disent jamais « Épisode null », tri par date de publication, « Publié le » devant les
+dates, noms de liens explicites, surtitres harmonisés, redirection des adresses en majuscules.
+
+- Portée : `globals.css`, `lecteur-episode.tsx`, `miniature-episode.tsx` (nouveau),
+  `lib/youtube.ts`, `lib/serie.ts`, les deux pages de la série, `bloc-serie.tsx`,
+  `blocs-match.tsx`, page d'un match.
+- Vérifié : 82 tests, `tsc`, lint ; au navigateur l'anneau au clavier, la vignette HD, la balise
+  `og:image`, la page d'épisode en 1440 px.
+- Suite : l'effectif, grille par poste et page d'un joueur.
