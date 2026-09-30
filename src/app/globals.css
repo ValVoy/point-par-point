@@ -184,6 +184,24 @@ body {
  * intertitres ; les liens sont soulignes, en turquoise clair (9,4 pour 1).
  */
 @layer components {
+  /*
+   * Une action de ligne dans l'administration : 44 px de haut, pour que l'ami
+   * gere le site depuis son telephone sans viser au pixel pres.
+   */
+  .action-admin {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-inline: 0.75rem;
+    border: 1px solid var(--color-nuit-trait);
+    border-radius: 0.5rem;
+    transition: border-color 80ms, background-color 80ms;
+  }
+  .action-admin:hover {
+    border-color: var(--color-craie-tenue);
+    background-color: var(--color-nuit-releve);
+  }
+
   .texte-article {
     max-width: 31em;
     font-size: 1.125rem;

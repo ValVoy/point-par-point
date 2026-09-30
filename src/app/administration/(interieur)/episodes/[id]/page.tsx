@@ -28,7 +28,7 @@ export default async function PageEpisode({
     <>
       <Link
         href="/administration/episodes"
-        className="text-sm text-[var(--color-turquoise)] hover:underline"
+        className="text-sm text-[var(--color-turquoise)] inline-flex min-h-11 items-center hover:underline"
       >
         Retour aux épisodes
       </Link>
@@ -72,7 +72,7 @@ export default async function PageEpisode({
             L&apos;épisode disparaît du site mais reste restaurable. Pour le
             retirer un temps, préférez « Dépublier » dans la liste.
           </p>
-          <button type="submit" className="mt-2 text-[var(--color-craie-tenue)] hover:underline">
+          <button type="submit" className="mt-2 text-[var(--color-craie-tenue)] action-admin">
             Mettre à la corbeille
           </button>
         </form>

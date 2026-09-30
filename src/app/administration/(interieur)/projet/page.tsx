@@ -50,8 +50,8 @@ export default async function PageChronologie() {
                       type="submit"
                       className={
                         etape.etat === "brouillon"
-                          ? "rounded-lg bg-[var(--color-craie)] px-3 py-1.5 font-medium text-[var(--color-nuit-surface)]"
-                          : "text-[var(--color-craie-douce)] hover:underline"
+                          ? "rounded-lg bg-[var(--color-craie)] inline-flex min-h-11 items-center px-3 font-medium text-[var(--color-nuit-surface)]"
+                          : "text-[var(--color-craie-douce)] action-admin"
                       }
                     >
                       {etape.etat === "brouillon" ? "Publier" : "Dépublier"}

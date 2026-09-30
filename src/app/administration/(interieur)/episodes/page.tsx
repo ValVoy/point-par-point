@@ -90,8 +90,8 @@ export default async function PageEpisodes() {
                           type="submit"
                           className={
                             episode.etat === "brouillon"
-                              ? "rounded-lg bg-[var(--color-craie)] px-3 py-1.5 font-medium text-[var(--color-nuit-surface)]"
-                              : "text-[var(--color-craie-douce)] hover:underline"
+                              ? "rounded-lg bg-[var(--color-craie)] inline-flex min-h-11 items-center px-3 font-medium text-[var(--color-nuit-surface)]"
+                              : "text-[var(--color-craie-douce)] action-admin"
                           }
                         >
                           {episode.etat === "brouillon" ? "Publier" : "Dépublier"}
@@ -100,7 +100,7 @@ export default async function PageEpisodes() {
                     ) : null}
                     <Link
                       href={`/administration/episodes/${episode.id}`}
-                      className="text-[var(--color-turquoise)] hover:underline"
+                      className="text-[var(--color-turquoise)] action-admin"
                     >
                       Modifier
                     </Link>
@@ -127,7 +127,7 @@ export default async function PageEpisodes() {
                     <span className="text-[var(--color-craie-tenue)]">{episode.titre}</span>
                     <form action={restaurerEpisode} className="ml-auto">
                       <input type="hidden" name="id" value={episode.id} />
-                      <button type="submit" className="text-[var(--color-turquoise)] hover:underline">
+                      <button type="submit" className="text-[var(--color-turquoise)] action-admin">
                         Restaurer
                       </button>
                     </form>

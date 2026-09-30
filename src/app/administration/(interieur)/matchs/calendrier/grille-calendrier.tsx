@@ -180,7 +180,7 @@ export function GrilleCalendrier({ saisonId }: { saisonId: number }) {
               ),
             ])
           }
-          className="rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-4 py-2 text-sm text-[var(--color-craie-douce)]"
+          className="inline-flex min-h-11 items-center rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-4 text-sm text-[var(--color-craie-douce)]"
         >
           Ajouter {LIGNES_AJOUTEES} lignes
         </button>

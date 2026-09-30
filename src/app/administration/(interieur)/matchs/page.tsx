@@ -88,8 +88,8 @@ export default async function PageMatchs({
               href={`/administration/matchs?saison=${autre.id}`}
               className={
                 autre.id === saison.id
-                  ? "rounded bg-[var(--color-turquoise-sourd)] px-2 py-0.5 text-[var(--color-turquoise-clair)]"
-                  : "px-2 py-0.5 text-[var(--color-craie-douce)] hover:underline"
+                  ? "rounded bg-[var(--color-turquoise-sourd)] inline-flex min-h-11 items-center px-3 text-[var(--color-turquoise-clair)]"
+                  : "inline-flex min-h-11 items-center px-3 text-[var(--color-craie-douce)] hover:underline"
               }
             >
               {autre.libelle}
@@ -98,7 +98,7 @@ export default async function PageMatchs({
         </nav>
         <Link
           href={`/administration/matchs/calendrier?saison=${saison.id}`}
-          className="ml-auto rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] px-3 py-1.5 text-sm text-[var(--color-craie-douce)] hover:border-[var(--color-turquoise)]"
+          className="ml-auto rounded-lg border border-[var(--color-nuit-trait)] bg-[var(--color-nuit)] inline-flex min-h-11 items-center px-3 text-sm text-[var(--color-craie-douce)] hover:border-[var(--color-turquoise)]"
         >
           Saisir le calendrier
         </Link>
@@ -163,7 +163,7 @@ export default async function PageMatchs({
                       <input type="hidden" name="id" value={rencontre.id} />
                       <button
                         type="submit"
-                        className="text-[var(--color-turquoise)] hover:underline"
+                        className="text-[var(--color-turquoise)] action-admin"
                       >
                         Restaurer
                       </button>

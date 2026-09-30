@@ -108,7 +108,7 @@ export function LigneEffectifModifiable({ ligne }: { ligne: LigneEffectif }) {
             <input type="hidden" name="effectifId" value={ligne.effectifId} />
             <button
               type="submit"
-              className="text-[var(--color-craie-tenue)] hover:text-[var(--color-turquoise)] hover:underline"
+              className="text-[var(--color-craie-tenue)] action-admin"
             >
               Désigner capitaine
             </button>
@@ -118,7 +118,7 @@ export function LigneEffectifModifiable({ ligne }: { ligne: LigneEffectif }) {
           <input type="hidden" name="effectifId" value={ligne.effectifId} />
           <button
             type="submit"
-            className="text-[var(--color-craie-tenue)] hover:text-[var(--color-turquoise)] hover:underline"
+            className="text-[var(--color-craie-tenue)] action-admin"
           >
             Retirer du groupe
           </button>

@@ -95,8 +95,8 @@ export default async function PageEffectif({
               href={`/administration/effectif?saison=${autre.id}`}
               className={
                 autre.id === saison.id
-                  ? "rounded bg-[var(--color-turquoise-sourd)] px-2 py-0.5 text-[var(--color-turquoise-clair)]"
-                  : "px-2 py-0.5 text-[var(--color-craie-douce)] hover:underline"
+                  ? "rounded bg-[var(--color-turquoise-sourd)] inline-flex min-h-11 items-center px-3 text-[var(--color-turquoise-clair)]"
+                  : "inline-flex min-h-11 items-center px-3 text-[var(--color-craie-douce)] hover:underline"
               }
             >
               {autre.libelle}
@@ -162,7 +162,7 @@ export default async function PageEffectif({
                       />
                       <button
                         type="submit"
-                        className="text-[var(--color-turquoise)] hover:underline"
+                        className="text-[var(--color-turquoise)] action-admin"
                       >
                         Réintégrer
                       </button>

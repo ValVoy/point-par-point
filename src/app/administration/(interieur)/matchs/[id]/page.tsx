@@ -28,7 +28,7 @@ export default async function PageMatch({
     <>
       <Link
         href={`/administration/matchs?saison=${rencontre.saisonId}`}
-        className="text-sm text-[var(--color-turquoise)] hover:underline"
+        className="text-sm text-[var(--color-turquoise)] inline-flex min-h-11 items-center hover:underline"
       >
         Retour aux matchs
       </Link>
@@ -80,7 +80,7 @@ export default async function PageMatch({
             </p>
             <button
               type="submit"
-              className="mt-2 text-[var(--color-craie-tenue)] hover:underline"
+              className="mt-2 text-[var(--color-craie-tenue)] action-admin"
             >
               Mettre à la corbeille
             </button>

@@ -64,8 +64,8 @@ export function LigneMatch({ rencontre }: { rencontre: RencontreAvecSets }) {
             href={`/administration/matchs/${rencontre.id}/score`}
             className={
               aSaisir
-                ? "rounded-lg bg-[var(--color-turquoise)] px-3 py-1.5 font-medium text-[var(--color-nuit-surface)]"
-                : "text-[var(--color-turquoise)] hover:underline"
+                ? "rounded-lg bg-[var(--color-turquoise)] inline-flex min-h-11 items-center px-3 font-medium text-[var(--color-nuit-surface)]"
+                : "text-[var(--color-turquoise)] action-admin"
             }
           >
             {aSaisir ? "Saisir le score" : "Score"}
@@ -73,7 +73,7 @@ export function LigneMatch({ rencontre }: { rencontre: RencontreAvecSets }) {
         )}
         <Link
           href={`/administration/matchs/${rencontre.id}`}
-          className="text-[var(--color-craie-douce)] hover:underline"
+          className="text-[var(--color-craie-douce)] action-admin"
         >
           Modifier
         </Link>

@@ -26,7 +26,7 @@ export default async function PageActualites() {
         <h1 className="titre-admin text-3xl">Actualités</h1>
         <Link
           href="/administration/actualites/nouvelle"
-          className="ml-auto rounded-lg bg-[var(--color-craie)] px-4 py-2 text-sm font-medium text-[var(--color-nuit-surface)]"
+          className="ml-auto inline-flex min-h-11 items-center rounded-lg bg-[var(--color-craie)] px-4 text-sm font-medium text-[var(--color-nuit-surface)]"
         >
           Écrire une actualité
         </Link>
@@ -73,8 +73,8 @@ export default async function PageActualites() {
                       type="submit"
                       className={
                         actualite.etat === "brouillon"
-                          ? "rounded-lg bg-[var(--color-craie)] px-3 py-1.5 font-medium text-[var(--color-nuit-surface)]"
-                          : "text-[var(--color-craie-douce)] hover:underline"
+                          ? "rounded-lg bg-[var(--color-craie)] inline-flex min-h-11 items-center px-3 font-medium text-[var(--color-nuit-surface)]"
+                          : "text-[var(--color-craie-douce)] action-admin"
                       }
                     >
                       {actualite.etat === "brouillon" ? "Publier" : "Dépublier"}
@@ -83,7 +83,7 @@ export default async function PageActualites() {
                 ) : null}
                 <Link
                   href={`/administration/actualites/${actualite.id}`}
-                  className="text-[var(--color-turquoise)] hover:underline"
+                  className="text-[var(--color-turquoise)] action-admin"
                 >
                   Modifier
                 </Link>
@@ -108,7 +108,7 @@ export default async function PageActualites() {
                 <span className="text-[var(--color-craie-tenue)]">{actualite.titre}</span>
                 <form action={restaurerActualite} className="ml-auto">
                   <input type="hidden" name="id" value={actualite.id} />
-                  <button type="submit" className="text-[var(--color-turquoise)] hover:underline">
+                  <button type="submit" className="text-[var(--color-turquoise)] action-admin">
                     Restaurer
                   </button>
                 </form>

@@ -63,20 +63,20 @@ export default async function PageMessages() {
               <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
                 <a
                   href={lienReponse(m.email, m.sujet)}
-                  className="rounded-lg bg-[var(--color-craie)] px-3 py-1.5 font-medium text-[var(--color-nuit-surface)]"
+                  className="rounded-lg bg-[var(--color-craie)] inline-flex min-h-11 items-center px-3 font-medium text-[var(--color-nuit-surface)]"
                 >
                   Répondre par e-mail
                 </a>
                 <form action={basculerLu}>
                   <input type="hidden" name="id" value={m.id} />
                   <input type="hidden" name="lu" value={m.lu ? "0" : "1"} />
-                  <button type="submit" className="text-[var(--color-turquoise)] hover:underline">
+                  <button type="submit" className="text-[var(--color-turquoise)] action-admin">
                     {m.lu ? "Marquer non lu" : "Marquer lu"}
                   </button>
                 </form>
                 <form action={mettreMessageALaCorbeille}>
                   <input type="hidden" name="id" value={m.id} />
-                  <button type="submit" className="text-[var(--color-craie-douce)] hover:underline">
+                  <button type="submit" className="text-[var(--color-craie-douce)] action-admin">
                     Mettre à la corbeille
                   </button>
                 </form>
@@ -103,7 +103,7 @@ export default async function PageMessages() {
                 </span>
                 <form action={restaurerMessage} className="ml-auto">
                   <input type="hidden" name="id" value={m.id} />
-                  <button type="submit" className="text-[var(--color-turquoise)] hover:underline">
+                  <button type="submit" className="text-[var(--color-turquoise)] action-admin">
                     Restaurer
                   </button>
                 </form>

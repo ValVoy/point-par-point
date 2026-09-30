@@ -31,7 +31,7 @@ export default async function PageActualite({
     <>
       <Link
         href="/administration/actualites"
-        className="text-sm text-[var(--color-turquoise)] hover:underline"
+        className="text-sm text-[var(--color-turquoise)] inline-flex min-h-11 items-center hover:underline"
       >
         Retour aux actualités
       </Link>
@@ -80,7 +80,7 @@ export default async function PageActualite({
                 className={
                   brouillon
                     ? "mt-3 w-full rounded-lg bg-[var(--color-craie)] px-3 py-2 font-medium text-[var(--color-nuit-surface)]"
-                    : "mt-2 text-[var(--color-craie-douce)] hover:underline"
+                    : "mt-2 text-[var(--color-craie-douce)] action-admin"
                 }
               >
                 {brouillon ? "Publier" : "Dépublier"}
@@ -96,7 +96,7 @@ export default async function PageActualite({
             <p className="text-xs text-[var(--color-craie-tenue)]">
               L&apos;actualité disparaît du site mais reste restaurable.
             </p>
-            <button type="submit" className="mt-2 text-[var(--color-craie-tenue)] hover:underline">
+            <button type="submit" className="mt-2 text-[var(--color-craie-tenue)] action-admin">
               Mettre à la corbeille
             </button>
           </form>

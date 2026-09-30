@@ -37,7 +37,7 @@ function Bouton({
         aria-label={libelle}
         title={libelle}
         disabled={desactive}
-        className="rounded-md px-2 py-1 text-[var(--color-craie-douce)] hover:bg-[var(--color-nuit)] disabled:opacity-30"
+        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md px-2 text-[var(--color-craie-douce)] hover:bg-[var(--color-nuit)] disabled:opacity-30"
       >
         {children}
       </button>
@@ -67,7 +67,7 @@ export function LigneElement({
   return (
     <li className="rounded-xl border border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)]">
       <div className="flex flex-wrap items-center gap-2 p-3">
-        <div className="flex flex-col">
+        <div className="flex">
           <Bouton liste={liste} id={id} action={deplacerElement} champ="sens" valeur="haut" libelle={`Monter « ${titre} »`} desactive={premier}>
             ▲
           </Bouton>
@@ -82,7 +82,7 @@ export function LigneElement({
         <div className="flex items-center gap-2 text-sm">{actions}</div>
       </div>
       <details className="group border-t border-[var(--color-nuit-trait)]">
-        <summary className="cursor-pointer px-4 py-2 text-sm text-[var(--color-turquoise)] hover:underline">
+        <summary className="cursor-pointer px-4 py-2 text-sm text-[var(--color-turquoise)] inline-flex min-h-11 items-center hover:underline">
           Modifier
         </summary>
         <div className="space-y-4 px-4 pb-4">
@@ -119,7 +119,7 @@ export function Corbeille({
               <input type="hidden" name="liste" value={liste} />
               <input type="hidden" name="id" value={element.id} />
               <input type="hidden" name="restaurer" value="1" />
-              <button type="submit" className="text-[var(--color-turquoise)] hover:underline">
+              <button type="submit" className="text-[var(--color-turquoise)] action-admin">
                 Restaurer
               </button>
             </form>

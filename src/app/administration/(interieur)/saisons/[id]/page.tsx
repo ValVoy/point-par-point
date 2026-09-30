@@ -32,7 +32,7 @@ export default async function PageSaison({
     <>
       <Link
         href="/administration/saisons"
-        className="text-sm text-[var(--color-turquoise)] hover:underline"
+        className="text-sm text-[var(--color-turquoise)] inline-flex min-h-11 items-center hover:underline"
       >
         Retour aux saisons
       </Link>

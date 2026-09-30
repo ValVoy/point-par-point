@@ -79,7 +79,7 @@ export default async function PageSaisons() {
                   <div className="ml-auto flex items-center gap-3 text-sm">
                     <Link
                       href={`/administration/saisons/${saison.id}`}
-                      className="text-[var(--color-turquoise)] hover:underline"
+                      className="text-[var(--color-turquoise)] action-admin"
                     >
                       Modifier
                     </Link>
@@ -90,7 +90,7 @@ export default async function PageSaisons() {
                           <input type="hidden" name="id" value={saison.id} />
                           <button
                             type="submit"
-                            className="text-[var(--color-craie-douce)] hover:underline"
+                            className="text-[var(--color-craie-douce)] action-admin"
                           >
                             Rendre courante
                           </button>
@@ -99,7 +99,7 @@ export default async function PageSaisons() {
                           <input type="hidden" name="id" value={saison.id} />
                           <button
                             type="submit"
-                            className="text-[var(--color-craie-tenue)] hover:underline"
+                            className="text-[var(--color-craie-tenue)] action-admin"
                           >
                             Corbeille
                           </button>
@@ -133,7 +133,7 @@ export default async function PageSaisons() {
                       <input type="hidden" name="id" value={saison.id} />
                       <button
                         type="submit"
-                        className="text-[var(--color-turquoise)] hover:underline"
+                        className="text-[var(--color-turquoise)] action-admin"
                       >
                         Restaurer
                       </button>

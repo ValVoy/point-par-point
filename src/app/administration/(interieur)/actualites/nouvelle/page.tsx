@@ -11,7 +11,7 @@ export default async function PageNouvelleActualite() {
     <>
       <Link
         href="/administration/actualites"
-        className="text-sm text-[var(--color-turquoise)] hover:underline"
+        className="text-sm text-[var(--color-turquoise)] inline-flex min-h-11 items-center hover:underline"
       >
         Retour aux actualités
       </Link>

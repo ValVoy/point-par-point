@@ -168,7 +168,7 @@ export function BoutonEnvoi({
     <button
       type="submit"
       disabled={pending}
-      className={`rounded-lg px-4 py-2 text-sm font-medium transition-opacity hover:opacity-90 disabled:opacity-50 ${classes}`}
+      className={`inline-flex min-h-11 items-center justify-center rounded-lg px-4 text-sm font-medium transition-opacity hover:opacity-90 disabled:opacity-50 ${classes}`}
     >
       {pending ? "..." : children}
     </button>

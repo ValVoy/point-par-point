@@ -1241,3 +1241,22 @@ confidentialité mentionne l'adresse réseau gardée 24 heures.
 - Suite : mentions légales et politique de confidentialité (éditeur en nom seul, anonymat LCEN ;
   demandes par le formulaire ; Hetzner, Turso et R2 nommés), puis Umami sur le VPS, puis l'écran
   « Comptes ».
+
+**18:25** · **[ui] Contact élargi, actions de l'administration à 44 px**
+
+Deux propositions de la critique, validées par l'utilisateur. Sur grand écran, la page Contact
+laissait 600 px de nuit à droite : une colonne « Ce qu'on peut vous répondre » y explique les
+sujets et renvoie vers ce qui n'a pas besoin d'un message (les matchs, la salle, la série).
+
+Dans l'administration, les actions de ligne étaient de petits liens de 14 px, pénibles au
+téléphone, alors que l'ami gérera le site depuis le sien. Une classe commune `.action-admin`
+(44 px, bordure discrète) les remplace sur tous les écrans ; les boutons principaux, les liens
+« Retour », les onglets de saison et les flèches d'ordre passent aussi à 44 px. Les trois liens
+pris dans une phrase restent des liens.
+
+- Portée : `src/app/contact/page.tsx`, `globals.css`, `components/formulaire.tsx`, 18 écrans de
+  `administration/(interieur)/`.
+- Vérifié : `tsc`, lint ; contact en 1440 et 375 px ; sept écrans d'administration à 390 px,
+  aucune action sous 44 px, aucun débordement.
+- Suite : mentions légales et politique de confidentialité, puis Umami sur le VPS, puis l'écran
+  « Comptes ».
