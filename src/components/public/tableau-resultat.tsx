@@ -1,0 +1,103 @@
+import { PastilleResultat } from "@/components/pastille-resultat";
+import { AfficheurLed } from "./afficheur-led";
+
+/**
+ * Le dernier resultat en tableau de gymnase, frere du tableau du prochain
+ * match : boitier mat, sets en LED ambre, detail des sets en craie. C'est un
+ * evenement, il a donc droit a la lumiere ; les matchs plus anciens n'y ont
+ * pas droit (voir resultats-precedents.tsx).
+ *
+ * Comme sur un vrai tableau, les locaux sont a gauche : a l'exterieur, le
+ * score se lit donc adversaire d'abord. Il doit tenir jusqu'au cinquieme set,
+ * le cas le plus large sur un telephone. Toute l'information en LED existe
+ * aussi en texte clair, pour les lecteurs d'ecran.
+ */
+
+export type Resultat = {
+  adversaire: string;
+  domicile: boolean;
+  dateLisible: string;
+  /** Les points de chaque set, de notre point de vue : [nous, eux]. */
+  sets: [number, number][];
+};
+
+const NOMBRES = ["zéro", "un", "deux", "trois"];
+
+export function bilan(sets: [number, number][]) {
+  const nous = sets.filter(([n, e]) => n > e).length;
+  return { nous, eux: sets.length - nous, victoire: nous > sets.length - nous };
+}
+
+export function TableauResultat({ resultat }: { resultat: Resultat }) {
+  const { adversaire, domicile, dateLisible, sets } = resultat;
+  const { nous, eux, victoire } = bilan(sets);
+  const equipe = "VF Francheville";
+  const [gauche, droite] = domicile ? [equipe, adversaire] : [adversaire, equipe];
+  const [setsGauche, setsDroite] = domicile ? [nous, eux] : [eux, nous];
+  const oriente = (set: [number, number]) => (domicile ? set : ([set[1], set[0]] as [number, number]));
+  const cinq = sets.length === 5;
+
+  return (
+    <div
+      className="rounded-sm border border-[var(--color-nuit-trait)] bg-[var(--color-boitier)] p-5 sm:p-8"
+      style={{ boxShadow: "inset 0 0 0 6px var(--color-nuit)" }}
+    >
+      <div className="flex items-center justify-between gap-4">
+        <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-jaune)] uppercase">Dernier match</p>
+        <PastilleResultat victoire={victoire} className="text-lg" />
+      </div>
+      <div className="titre-affiche mt-3 flex items-start justify-between gap-4 text-2xl sm:text-4xl">
+        <div>
+          <p className="text-xs tracking-[0.2em] text-[var(--color-craie-douce)]">Locaux</p>
+          <p className="mt-1">{gauche}</p>
+        </div>
+        <div className="text-right">
+          <p className="text-xs tracking-[0.2em] text-[var(--color-craie-douce)]">Visiteurs</p>
+          <p className="mt-1">{droite}</p>
+        </div>
+      </div>
+
+      <p className="sr-only">
+        {victoire ? "Victoire" : "Défaite"} {NOMBRES[nous]} sets à {NOMBRES[eux]} :{" "}
+        {sets.map(([n, e]) => `${n}-${e}`).join(", ")}. {dateLisible}.
+      </p>
+      <div aria-hidden="true" className="mt-6 flex items-center justify-center gap-4 sm:gap-8">
+        <AfficheurLed valeur={String(setsGauche)} className="text-7xl sm:text-9xl" />
+        <AfficheurLed valeur="-" className="text-4xl sm:text-6xl" />
+        <AfficheurLed valeur={String(setsDroite)} className="text-7xl sm:text-9xl" />
+      </div>
+
+      <ol
+        aria-hidden="true"
+        className={`mt-6 grid gap-1 border-t border-[var(--color-nuit-trait)] pt-4 text-center sm:gap-2 ${cinq ? "grid-cols-5" : "grid-cols-4"}`}
+      >
+        {sets.map((set, i) => {
+          const [g, d] = oriente(set);
+          const gagne = set[0] > set[1];
+          return (
+            <li key={i} className="titre-affiche">
+              <span className="block text-[0.65rem] tracking-[0.15em] text-[var(--color-craie-douce)] sm:text-xs sm:tracking-[0.2em]">
+                {i === 4 ? (
+                  <>
+                    <span className="sm:hidden">Set 5</span>
+                    <span className="hidden sm:inline">Tie-break</span>
+                  </>
+                ) : (
+                  `Set ${i + 1}`
+                )}
+              </span>
+              <span
+                className={`${gagne ? "" : "font-normal text-[var(--color-craie-tenue)]"} ${cinq ? "text-xl" : "text-2xl"} whitespace-nowrap sm:text-3xl`}
+              >
+                {g}-{d}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+      <p aria-hidden="true" className="mt-4 text-center text-sm text-[var(--color-craie-douce)]">
+        {dateLisible}
+      </p>
+    </div>
+  );
+}

@@ -787,3 +787,27 @@ de nuit elle aussi, par cohérence, décision de l'utilisateur. La version 1 res
   l'administration en 390 px.
 - Suite : l'utilisateur juge la version 2 à l'écran (planche, intro, administration). Puis
   installer l'intro sur l'accueil avec le bloc prochain match branché sur la base.
+
+**12:10** · **[design] Modernité : variantes à comparer, et les résultats refaits**
+
+Retour de l'utilisateur sur la version 2 : le tableau du prochain match plaît beaucoup, mais
+l'ensemble a perdu en modernité, et la liste des derniers résultats ne convainc pas. Diagnostic
+demandé plutôt que deviné, cette fois : couleurs trop ternes, texte crème à l'effet rétro, mise
+en page trop sage. Le reste (la lumière réservée aux objets lumineux) n'est pas en cause.
+
+Plutôt que trancher sur description, la planche porte un sélecteur de quatre variantes appliquées
+à toute la page : l'actuelle, « éclat » (turquoise `#2ec4b6` plus vert que le cyan du 29-09,
+violet `#7d4fc4`), « net » (blanc d'écran `#f5f6f7`, noir plus profond `#0e0c11`), et les deux
+ensemble. Contrastes vérifiés pour chacune.
+
+Les résultats sont refaits : le dernier match a son tableau LED (`tableau-resultat.tsx`), frère
+de celui du prochain match, les deux côte à côte ; les précédents défilent en cartes pleine
+largeur avec un score géant, plein pour une victoire, en contour pour une défaite, la grammaire
+de la pastille. Premier pas contre la mise en page trop sage.
+
+- Portée : `planche/` (sélecteur, variantes, chapitre des matchs), `tableau-resultat.tsx` et
+  `resultats-precedents.tsx` (nouveaux).
+- Vérifié : 57 tests, `tsc`, lint ; à l'écran en 1440 px la planche en variante actuelle et
+  « éclat et net ».
+- Suite : l'utilisateur choisit une variante sur la planche ; je la reporte dans les jetons de
+  `globals.css` et dans la fiche palette, puis j'installe l'intro sur l'accueil.

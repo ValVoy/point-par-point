@@ -1,5 +1,6 @@
-import { PastilleResultat } from "@/components/pastille-resultat";
+import { ResultatsPrecedents } from "@/components/public/resultats-precedents";
 import { TableauProchainMatch } from "@/components/public/tableau-prochain-match";
+import { TableauResultat, type Resultat } from "@/components/public/tableau-resultat";
 import styles from "./planche.module.css";
 
 /*
@@ -38,31 +39,19 @@ function Etats() {
   );
 }
 
-function Resultats() {
-  const lignes: [string, boolean, string][] = [
-    ["Samedi 27 septembre", true, "3-1"],
-    ["Samedi 20 septembre", false, "2-3"],
-    ["Samedi 13 septembre", true, "3-0"],
-  ];
-  return (
-    <ul className="mt-8 border-t border-[var(--color-nuit-trait)]">
-      {lignes.map(([date, victoire, score], i) => (
-        <li
-          key={date}
-          className={`flex items-center gap-4 border-b border-[var(--color-nuit-trait)] px-3 py-3 ${
-            i % 2 === 1 ? "bg-[var(--color-nuit)]/40" : ""
-          }`}
-        >
-          <PastilleResultat victoire={victoire} className="text-lg" />
-          <span className="flex-1">{date}</span>
-          <span className={`titre-affiche text-3xl ${victoire ? "" : "font-normal text-[var(--color-craie-douce)]"}`}>
-            {score}
-          </span>
-        </li>
-      ))}
-    </ul>
-  );
-}
+const DERNIER: Resultat = {
+  adversaire: "VBC Sainte-Colombe",
+  domicile: false,
+  dateLisible: "Samedi 27 septembre",
+  sets: [[25, 21], [22, 25], [25, 19], [25, 23]],
+};
+
+const PRECEDENTS: Resultat[] = [
+  { adversaire: "US Chantemerle", domicile: true, dateLisible: "samedi 20 septembre", sets: [[23, 25], [25, 22], [21, 25], [25, 23], [12, 15]] },
+  { adversaire: "Volley Club des Trois Rivières", domicile: true, dateLisible: "samedi 13 septembre", sets: [[25, 16], [25, 23], [25, 19]] },
+  { adversaire: "AS Montbrison", domicile: false, dateLisible: "samedi 6 septembre", sets: [[22, 25], [25, 27], [20, 25]] },
+  { adversaire: "Entente Val-Fleury", domicile: true, dateLisible: "samedi 30 août", sets: [[25, 20], [23, 25], [25, 18], [25, 22]] },
+];
 
 export function Bandeaux() {
   return (
@@ -89,14 +78,14 @@ export function Bandeaux() {
         </div>
       </div>
 
-      <div className="grain relative bg-[var(--color-nuit-violet)]">
-        <div className="colonne-large relative py-16">
+      <div className="grain relative bg-[var(--color-nuit-violet)] py-16">
+        <div className="colonne-large relative">
           <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-craie-douce)] uppercase">
             Les matchs · chapitre violet
           </p>
-          <p className="titre-affiche mt-3 text-6xl sm:text-8xl">Derniers résultats</p>
-          <Resultats />
-          <div className="mt-12 max-w-3xl">
+          <p className="titre-affiche mt-3 text-6xl sm:text-8xl">Au tableau</p>
+          <div className="mt-10 grid items-start gap-6 xl:grid-cols-2">
+            <TableauResultat resultat={DERNIER} />
             <TableauProchainMatch
               match={{
                 adversaire: "Adversaire",
@@ -107,6 +96,12 @@ export function Bandeaux() {
               }}
             />
           </div>
+          <p className="mt-16 text-xs font-semibold tracking-[0.2em] text-[var(--color-craie-douce)] uppercase">
+            Avant ça
+          </p>
+        </div>
+        <div className="relative mt-6">
+          <ResultatsPrecedents resultats={PRECEDENTS} />
         </div>
       </div>
     </section>

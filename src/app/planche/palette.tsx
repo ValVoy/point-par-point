@@ -57,7 +57,7 @@ export function Palette() {
           const c = contraste(t.valeur, NUIT);
           return (
             <li key={t.jeton} className="bg-[var(--color-nuit)]">
-              <div className="h-24" style={{ background: t.valeur }} />
+              <div className="h-24" style={{ background: `var(--color-${t.jeton})` }} />
               <div className="p-4">
                 <p className="font-semibold">{t.nom}</p>
                 <p className="mt-1 font-mono text-xs text-[var(--color-craie-tenue)]">

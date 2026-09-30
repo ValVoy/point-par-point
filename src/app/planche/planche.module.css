@@ -52,3 +52,37 @@
   -webkit-text-stroke: 1.5px var(--color-craie);
   pointer-events: none;
 }
+
+/* --- Variantes a comparer (30-09-2026) ------------------------------------ */
+
+/*
+ * Eclat : les couleurs du maillot ravivees, sans lueur. Le turquoise tire vers
+ * le vert, loin du cyan du 29-09 (9 pour 1 sur la nuit) ; le violet sert en
+ * aplat, le blanc dessus a 5,1 pour 1.
+ */
+.planche[data-variante~="eclat"] {
+  --color-turquoise: #2ec4b6;
+  --color-turquoise-clair: #7fdcd2;
+  --color-turquoise-sourd: #10302d;
+  --color-violet: #7d4fc4;
+  --color-nuit-violet: #1f1533;
+}
+
+/*
+ * Net : un blanc d'ecran, legerement froid, et un noir plus profond, moins
+ * violace. Les gris restent tires de la teinte du fond.
+ */
+.planche[data-variante~="net"] {
+  --color-nuit: #0e0c11;
+  --color-nuit-surface: #17141b;
+  --color-nuit-releve: #221e27;
+  --color-nuit-trait: #2e2a35;
+  --color-boitier: #08070a;
+  --color-craie: #f5f6f7;
+  --color-craie-douce: #b3b0bb;
+  --color-craie-tenue: #8e8a96;
+}
+
+.planche[data-variante~="net"]:not([data-variante~="eclat"]) {
+  --color-nuit-violet: #1b1320;
+}

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Motif } from "@/components/motif";
 import { Bandeaux } from "./bandeaux";
 import { Palette } from "./palette";
+import { SelecteurVariante } from "./selecteur-variante";
 import { FiltresSvg, Portraits } from "./portraits";
 import { TableauScore } from "./tableau-score";
 import styles from "./planche.module.css";
@@ -52,7 +53,7 @@ export default function Planche() {
   if (process.env.NODE_ENV === "production") notFound();
 
   return (
-    <div className={styles.planche}>
+    <div data-planche className={styles.planche}>
       <FiltresSvg />
 
       <header className="grain relative">
@@ -72,6 +73,7 @@ export default function Planche() {
       <Portraits />
       <TableauScore />
       <MotifSection />
+      <SelecteurVariante />
     </div>
   );
 }
