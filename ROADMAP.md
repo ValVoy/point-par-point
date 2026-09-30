@@ -53,10 +53,9 @@ Oger, éditeur particulier en nom seul ; Hetzner, Turso et Cloudflare nommés) e
 
 **La mesure d'audience le 30-09-2026** : Umami, sans cookie, branché côté site (variables
 d'exécution `UMAMI_URL` et `UMAMI_SITE_ID`, rien de chargé sans elles), administration et pages de
-travail exclues, politique de confidentialité à jour. **Reste l'installation sur le VPS**, par
-l'utilisateur dans Coolify : nom DNS `stats.valentincheron.fr` en nuage gris, service Umami du
-catalogue, mot de passe par défaut changé tout de suite, site « Point Par Point » déclaré, puis les
-deux variables posées sur l'application.
+travail exclues, politique de confidentialité à jour. **Umami 3.0.3 installé le 30-09-2026** sur
+`https://stats.valentincheron.fr` (projet Coolify `stats`, sonde Todai en place) ; ce qui reste
+se fait au déploiement du site, voir « Avant la mise en ligne ».
 
 Ensuite : l'écran « Comptes » (relié dans la navigation de l'administration, pas encore construit).
 À vérifier avant la mise en ligne : l'accord de droit à l'image couvre le site ; mentions légales
@@ -170,7 +169,14 @@ zéro, la logique reste.
 - [ ] Purge des données de démonstration, bandeau disparu
 - [ ] Déploiement Coolify depuis `main`
 - [ ] Sonde Todai sur le domaine
-- [ ] Sauvegarde nocturne de la base Turso
+- [ ] Sauvegarde nocturne de la base Turso, **30 jours** au plus (durée annoncée par la politique de confidentialité)
+- [ ] Migrations 0002 à 0006 appliquées en production, avec l'accord de l'utilisateur
+- [ ] Umami : poser `UMAMI_URL=https://stats.valentincheron.fr` et
+  `UMAMI_SITE_ID=15868b64-5057-4ce2-bc1a-0bc7adbc6eaa` en variables d'**exécution** (relire
+  `is_buildtime` par l'API, Coolify coche Buildtime par défaut) ; renseigner le domaine du site
+  dans Umami ; mettre en place la sauvegarde de la base d'Umami ; vérifier qu'une visite apparaît
+  (un bloqueur de publicité peut arrêter `script.js`)
+- [ ] Accord de droit à l'image couvrant le site, accord parental pour les mineurs
 
 ## Lot 2
 

@@ -1310,3 +1310,19 @@ Cloudflare et un service de plus dans Coolify, deux gestes sur sa production.
   script est rendu, le filtre écarte `/administration` et `/planche`, garde `/`, `/matchs` et
   `/administrations-locales`, et survit à une navigation interne.
 - Suite : l'utilisateur installe Umami dans Coolify ; puis l'écran « Comptes ».
+
+**23:20** · **[infra] Umami installé sur le VPS**
+
+La session Coolify a installé Umami 3.0.3 sur `https://stats.valentincheron.fr`, dans son propre
+projet Coolify (`stats`), pour pouvoir compter d'autres sites plus tard. Mot de passe par défaut
+changé dès le déploiement, site « Point Par Point » déclaré, sonde Todai active, `script.js`
+vérifié en 200. Le détail est dans `APP/Coolify/ETAT.md`, section « Umami, en détail ».
+
+Rien ne change dans le code : les deux valeurs attendues et les gestes du jour du déploiement
+(variables d'exécution et non de build, domaine du site dans Umami, sauvegarde de sa base) sont
+rangés dans la liste « Avant la mise en ligne » de la ROADMAP, qui a aussi repris les points
+jusqu'ici épars dans le texte (migrations, sauvegardes de 30 jours, accords de droit à l'image).
+
+- Portée : ROADMAP.
+- Vérifié : rien de mon côté, rapport de la session Coolify relu.
+- Suite : l'écran « Comptes » de l'administration.
