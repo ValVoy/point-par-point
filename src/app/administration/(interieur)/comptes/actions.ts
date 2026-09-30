@@ -105,6 +105,7 @@ async function appliquer(donnees: FormData, changement: ChangementCompte): Promi
 }
 
 export async function changerRole(_precedent: EtatCompte, donnees: FormData): Promise<EtatCompte> {
+  await exigerDroit("gererComptes");
   const role = texte(donnees, "role");
   if (!(ROLES as readonly string[]).includes(role)) return { erreur: "Rôle inconnu." };
   return appliquer(donnees, { role: role as (typeof ROLES)[number] });

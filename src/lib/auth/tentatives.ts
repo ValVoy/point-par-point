@@ -1,21 +1,27 @@
-import { and, count, eq, gt, lt } from "drizzle-orm";
+import { and, count, eq, gt, isNull, lt, min } from "drizzle-orm";
 import { db } from "../db";
 import { tentativesAuth } from "../db/schema";
 
 /**
- * Limitation de debit sur la connexion, en fenetre glissante.
+ * Limitation de debit sur la connexion, en fenetre glissante de 15 minutes.
  *
- * Deux compteurs independants, et ce n'est pas un doublon :
- *  - par **adresse visee**, serre, contre l'attaque d'un compte precis ;
- *  - par **adresse reseau**, large, contre le balayage de beaucoup de comptes.
+ * Trois compteurs d'echecs, revus a l'audit du 01-10-2026 (S4, S5) :
+ *  - par **couple adresse visee et adresse reseau**, serre (5) : celui qui
+ *    essaie des mots de passe se bloque lui-meme, sans bloquer le vrai titulaire
+ *    du compte, qui se connecte d'ailleurs ;
+ *  - par **adresse visee**, large (30), contre une attaque repartie sur
+ *    beaucoup d'adresses reseau ;
+ *  - par **adresse reseau**, large (50), contre le balayage de beaucoup de
+ *    comptes. Genereux : l'ami et ses coequipiers peuvent partager une connexion.
  *
- * Le seuil par reseau est volontairement genereux : l'ami et ses coequipiers
- * peuvent partager une connexion, et verrouiller tout le monde parce que l'un
- * d'eux se trompe trois fois serait pire que le mal.
+ * La tentative est **reservee** (ecrite) avant bcrypt, puis comptee : compter
+ * puis ecrire laissait passer une salve de requetes simultanees, toutes
+ * controlees avant la premiere ecriture.
  */
 
 const FENETRE_MS = 15 * 60 * 1000;
-const PLAFOND_PAR_EMAIL = 5;
+const PLAFOND_PAR_COUPLE = 5;
+const PLAFOND_PAR_EMAIL = 30;
 const PLAFOND_PAR_IP = 50;
 
 export type Verdict =
@@ -50,64 +56,52 @@ export function lireIp(enTetes: Headers): string | null {
 }
 
 /**
- * Dit si une tentative est permise. A appeler **avant** bcrypt : hacher un mot
- * de passe coute volontairement cher, et laisser un attaquant declencher ce
- * calcul sans limite serait lui offrir un deni de service sur le processeur.
+ * Reserve une tentative, puis dit si elle est permise. A appeler **avant**
+ * bcrypt : hacher un mot de passe coute volontairement cher, et laisser un
+ * attaquant declencher ce calcul sans limite serait lui offrir un deni de
+ * service sur le processeur. La tentative est notee comme un echec ; en cas de
+ * succes, `confirmerTentative` la corrige. Les tentatives sorties de la
+ * fenetre sont purgees au passage.
  */
-export async function tentativeAutorisee(
+export async function reserverTentative(
   email: string | null,
   ip: string | null,
-): Promise<Verdict> {
+): Promise<{ id: number | null; verdict: Verdict }> {
+  const base = db();
+  const [ligne] = await base.insert(tentativesAuth).values({ email, ip, reussie: false }).returning({ id: tentativesAuth.id });
+  await base.delete(tentativesAuth).where(lt(tentativesAuth.survenuLe, debutFenetre()));
+
   const depuis = debutFenetre();
-
+  const echecs = and(eq(tentativesAuth.reussie, false), gt(tentativesAuth.survenuLe, depuis));
+  const memeIp = ip ? eq(tentativesAuth.ip, ip) : isNull(tentativesAuth.ip);
+  const compteurs: { filtre: ReturnType<typeof and>; plafond: number }[] = [];
   if (email) {
-    const [ligne] = await db()
-      .select({ nombre: count() })
+    compteurs.push({ filtre: and(echecs, eq(tentativesAuth.email, email), memeIp), plafond: PLAFOND_PAR_COUPLE });
+    compteurs.push({ filtre: and(echecs, eq(tentativesAuth.email, email)), plafond: PLAFOND_PAR_EMAIL });
+  }
+  if (ip) compteurs.push({ filtre: and(echecs, eq(tentativesAuth.ip, ip)), plafond: PLAFOND_PAR_IP });
+  if (!email && !ip) compteurs.push({ filtre: and(echecs, isNull(tentativesAuth.email), isNull(tentativesAuth.ip)), plafond: PLAFOND_PAR_IP });
+
+  for (const { filtre, plafond } of compteurs) {
+    const [resultat] = await base
+      .select({ nombre: count(), plusAncienne: min(tentativesAuth.survenuLe) })
       .from(tentativesAuth)
-      .where(
-        and(
-          eq(tentativesAuth.email, email),
-          eq(tentativesAuth.reussie, false),
-          gt(tentativesAuth.survenuLe, depuis),
-        ),
-      );
-    if ((ligne?.nombre ?? 0) >= PLAFOND_PAR_EMAIL) {
-      return { autorise: false, minutesRestantes: FENETRE_MS / 60000 };
+      .where(filtre);
+    // La tentative qui vient d'etre reservee compte : au-dela du plafond, refus.
+    if ((resultat?.nombre ?? 0) > plafond) {
+      const libre = (resultat?.plusAncienne?.getTime() ?? Date.now()) + FENETRE_MS;
+      return {
+        id: ligne?.id ?? null,
+        verdict: { autorise: false, minutesRestantes: Math.max(1, Math.ceil((libre - Date.now()) / 60000)) },
+      };
     }
   }
-
-  if (ip) {
-    const [ligne] = await db()
-      .select({ nombre: count() })
-      .from(tentativesAuth)
-      .where(
-        and(
-          eq(tentativesAuth.ip, ip),
-          eq(tentativesAuth.reussie, false),
-          gt(tentativesAuth.survenuLe, depuis),
-        ),
-      );
-    if ((ligne?.nombre ?? 0) >= PLAFOND_PAR_IP) {
-      return { autorise: false, minutesRestantes: FENETRE_MS / 60000 };
-    }
-  }
-
-  return { autorise: true };
+  return { id: ligne?.id ?? null, verdict: { autorise: true } };
 }
 
-/**
- * Enregistre une tentative, et purge au passage celles sorties de la fenetre.
- * La purge se fait ici plutot que dans une tache planifiee : elle est de toute
- * facon declenchee par le seul evenement qui fait grossir la table.
- */
-export async function noterTentative(
-  email: string | null,
-  ip: string | null,
-  reussie: boolean,
-): Promise<void> {
-  const base = db();
-  await base.insert(tentativesAuth).values({ email, ip, reussie });
-  await base.delete(tentativesAuth).where(lt(tentativesAuth.survenuLe, debutFenetre()));
+/** Marque une tentative reservee comme reussie : elle ne compte plus comme un echec. */
+export async function confirmerTentative(id: number | null): Promise<void> {
+  if (id) await db().update(tentativesAuth).set({ reussie: true }).where(eq(tentativesAuth.id, id));
 }
 
 /**

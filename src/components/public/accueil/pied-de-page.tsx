@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MesureAudience } from "@/components/mesure-audience";
 import { saisonCourante } from "@/lib/saisons";
 import { EQUIPE, NOM_DU_SITE } from "@/lib/site";
 import { RUBRIQUES, VITRINE } from "../entete";
@@ -7,6 +8,10 @@ import { RUBRIQUES, VITRINE } from "../entete";
  * Le pied de page commun : le nom, les rubriques (le seul endroit ou toutes
  * se lisent d'un coup, meme sur un telephone), la saison courante, lue ici
  * pour etre la meme sur toutes les pages, et les deux pages juridiques.
+ *
+ * Il porte aussi le script de mesure d'audience : present sur toutes les pages
+ * publiques et sur aucune page d'administration, il n'execute jamais de code
+ * tiers dans l'origine de l'administration (audit S9).
  */
 export async function PiedDePage() {
   const saison = (await saisonCourante())?.libelle ?? null;
@@ -40,6 +45,7 @@ export async function PiedDePage() {
           </Link>
         </div>
       </div>
+      <MesureAudience />
     </footer>
   );
 }

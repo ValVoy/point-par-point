@@ -43,10 +43,16 @@ export function adresseSure(adresse: string): string | null {
   }
 }
 
+/*
+ * Motifs bornes a 500 caracteres entre les delimiteurs, en mode global pour
+ * chercher a partir d'une position (audit du 01-10-2026, S1) : sans borne, le
+ * motif du gras revenait sur ses pas a chaque position et 20 000 caracteres
+ * pieges (« **x » repete) bloquaient le serveur 40 secondes.
+ */
 const MOTIFS: { type: "lien" | "gras" | "italique"; regle: RegExp }[] = [
-  { type: "lien", regle: /\[([^\]\n]+)\]\(([^)\s]+)\)/ },
-  { type: "gras", regle: /\*\*(?=\S)([^\n]*?\S)\*\*/ },
-  { type: "italique", regle: /\*(?=\S)([^*\n]*?\S)\*/ },
+  { type: "lien", regle: /\[([^\]\n]{1,500})\]\(([^)\s]{1,500})\)/g },
+  { type: "gras", regle: /\*\*(?=\S)([^\n]{0,500}?\S)\*\*/g },
+  { type: "italique", regle: /\*(?=\S)([^*\n]{0,500}?\S)\*/g },
 ];
 
 function ajouterTexte(sortie: Enligne[], valeur: string) {
@@ -61,43 +67,55 @@ function ajouterTexte(sortie: Enligne[], valeur: string) {
   });
 }
 
-/** Analyse la mise en forme d'un bloc. `profondeur` borne l'imbrication. */
+/**
+ * Analyse la mise en forme d'un bloc. `profondeur` borne l'imbrication.
+ *
+ * Chaque motif garde sa prochaine correspondance tant qu'elle est devant la
+ * position courante, et un motif introuvable ne se cherche plus : le texte ne
+ * fait que raccourcir par l'avant, ce qui n'est pas dans le tout n'est pas
+ * dans la fin. Le cout reste lineaire en la longueur du texte.
+ */
 export function analyserEnligne(texte: string, profondeur = 0): Enligne[] {
   const sortie: Enligne[] = [];
-  let reste = texte;
+  const prochaines = new Map<(typeof MOTIFS)[number]["type"], RegExpExecArray | null>();
+  let position = 0;
 
-  while (reste) {
+  const chercher = (type: (typeof MOTIFS)[number]["type"], regle: RegExp) => {
+    const connue = prochaines.get(type);
+    if (connue === null) return null;
+    if (connue && connue.index >= position) return connue;
+    regle.lastIndex = position;
+    const trouve = regle.exec(texte);
+    prochaines.set(type, trouve);
+    return trouve;
+  };
+
+  while (position < texte.length) {
     // Le motif qui commence le plus tot l'emporte ; a egalite, l'ordre de
     // MOTIFS decide (un lien avant du gras, du gras avant de l'italique).
-    let meilleur: { type: (typeof MOTIFS)[number]["type"]; trouve: RegExpExecArray } | null =
-      null;
+    let meilleur: { type: (typeof MOTIFS)[number]["type"]; trouve: RegExpExecArray } | null = null;
     for (const { type, regle } of MOTIFS) {
       if (profondeur >= 2 && type !== "lien") continue;
-      const trouve = regle.exec(reste);
-      if (trouve && (!meilleur || trouve.index < meilleur.trouve.index)) {
-        meilleur = { type, trouve };
-      }
+      const trouve = chercher(type, regle);
+      if (trouve && (!meilleur || trouve.index < meilleur.trouve.index)) meilleur = { type, trouve };
     }
     if (!meilleur) {
-      ajouterTexte(sortie, reste);
+      ajouterTexte(sortie, texte.slice(position));
       break;
     }
 
     const { type, trouve } = meilleur;
-    ajouterTexte(sortie, reste.slice(0, trouve.index));
+    ajouterTexte(sortie, texte.slice(position, trouve.index));
     const interieur = trouve[1] ?? "";
 
     if (type === "lien") {
       const href = adresseSure(trouve[2] ?? "");
-      if (href) {
-        sortie.push({ type: "lien", href, contenu: analyserEnligne(interieur, 2) });
-      } else {
-        ajouterTexte(sortie, trouve[0]);
-      }
+      if (href) sortie.push({ type: "lien", href, contenu: analyserEnligne(interieur, 2) });
+      else ajouterTexte(sortie, trouve[0]);
     } else {
       sortie.push({ type, contenu: analyserEnligne(interieur, profondeur + 1) });
     }
-    reste = reste.slice(trouve.index + trouve[0].length);
+    position = trouve.index + trouve[0].length;
   }
 
   return sortie;

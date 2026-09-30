@@ -57,6 +57,13 @@
       "when": 1790805479107,
       "tag": "0007_visage-joueur",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1790808530925,
+      "tag": "0008_envois-contact-refus",
+      "breakpoints": true
     }
   ]
 }

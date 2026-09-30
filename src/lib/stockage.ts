@@ -18,7 +18,7 @@ import { AwsClient } from "aws4fetch";
 export const DOSSIERS = ["joueurs", "staff", "partenaires", "actualites", "projet"] as const;
 export type Dossier = (typeof DOSSIERS)[number];
 
-const FORME_CLE = new RegExp(`^(${DOSSIERS.join("|")})/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.webp$`);
+const FORME_CLE = new RegExp(`^(${DOSSIERS.join("|")})/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\\.webp$`);
 
 export function cleValide(cle: string): boolean {
   return FORME_CLE.test(cle);

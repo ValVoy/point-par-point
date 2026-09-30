@@ -37,6 +37,7 @@ export function LecteurEpisode({
         src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0`}
         title={titre}
         allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+        referrerPolicy="strict-origin-when-cross-origin"
       />
     );
   }

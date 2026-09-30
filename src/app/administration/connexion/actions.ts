@@ -7,13 +7,8 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { utilisateurs } from "@/lib/db/schema";
 import { HACHAGE_FACTICE, verifier } from "@/lib/auth/mots-de-passe";
-import { NOM_COOKIE, optionsCookie, ouvrirSession } from "@/lib/auth/sessions";
-import {
-  lireIp,
-  noterTentative,
-  oublierTentatives,
-  tentativeAutorisee,
-} from "@/lib/auth/tentatives";
+import { NOM_COOKIE, optionsCookie, ouvrirSession, purgerSessionsExpirees } from "@/lib/auth/sessions";
+import { confirmerTentative, lireIp, oublierTentatives, reserverTentative } from "@/lib/auth/tentatives";
 
 const schema = z.object({
   email: z.email(),
@@ -56,7 +51,7 @@ export async function connecter(
 
   // Avant bcrypt : hacher coute cher, et laisser declencher ce calcul sans
   // limite offrirait un deni de service sur le processeur.
-  const verdict = await tentativeAutorisee(email, ip);
+  const { id: tentative, verdict } = await reserverTentative(email, ip);
   if (!verdict.autorise) {
     return {
       erreur: `Trop de tentatives. Réessayez dans ${verdict.minutesRestantes} minutes.`,
@@ -64,10 +59,7 @@ export async function connecter(
     };
   }
 
-  if (!analyse.success) {
-    await noterTentative(email, ip, false);
-    return { erreur: MESSAGE_ECHEC, email: brut.email };
-  }
+  if (!analyse.success) return { erreur: MESSAGE_ECHEC, email: brut.email };
 
   const lignes = await db()
     .select()
@@ -86,10 +78,7 @@ export async function connecter(
     compte && compte.actif && compte.supprimeLe === null,
   );
 
-  if (!correspond || !utilisable || !compte) {
-    await noterTentative(analyse.data.email, ip, false);
-    return { erreur: MESSAGE_ECHEC, email: brut.email };
-  }
+  if (!correspond || !utilisable || !compte) return { erreur: MESSAGE_ECHEC, email: brut.email };
 
   const { jeton, expireLe } = await ouvrirSession(compte.id);
   await db()
@@ -97,8 +86,10 @@ export async function connecter(
     .set({ derniereConnexionLe: new Date() })
     .where(eq(utilisateurs.id, compte.id));
 
-  await noterTentative(analyse.data.email, ip, true);
+  await confirmerTentative(tentative);
   await oublierTentatives(analyse.data.email);
+  // Les sessions expirees ne servent plus a rien : menage a chaque connexion (audit S12).
+  await purgerSessionsExpirees();
 
   const magasin = await cookies();
   magasin.set(NOM_COOKIE, jeton, optionsCookie(expireLe));

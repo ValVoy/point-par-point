@@ -16,10 +16,9 @@ export async function MesureAudience() {
   if (!umami) return null;
   return (
     <>
-      {/* Regle ecrite pour l'ancien routeur de pages : dans l'App Router, un script
-          beforeInteractive rendu par la mise en page racine est le cas prevu. */}
-      {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
-      <Script id="ppp-filtre-audience" strategy="beforeInteractive">
+      {/* Ecrit en ligne, le filtre s'execute des son insertion, avant que le script
+          externe d'Umami ne soit seulement telecharge. */}
+      <Script id="ppp-filtre-audience" strategy="afterInteractive">
         {FILTRE}
       </Script>
       <Script

@@ -18,7 +18,7 @@ export function FormulaireMotDePasse({ longueurMinimale }: { longueurMinimale: n
         type="password"
         requis
         minLength={longueurMinimale}
-        maxLength={200}
+        maxLength={72}
         autoComplete="new-password"
         aide={`${longueurMinimale} caractères au moins. Une phrase de quelques mots fait très bien l'affaire.`}
       />

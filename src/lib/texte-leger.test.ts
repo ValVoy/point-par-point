@@ -93,3 +93,24 @@ describe("texteBrut", () => {
     );
   });
 });
+
+describe("analyserTexteLeger face a un texte piege (audit S1)", () => {
+  it("reste rapide sur 20 000 caracteres de delimiteurs ouverts", () => {
+    for (const piege of ["**x ".repeat(5000), "*x ".repeat(6666), "[".repeat(20000), "[a](".repeat(5000)]) {
+      const debut = Date.now();
+      analyserTexteLeger(piege);
+      assert.ok(Date.now() - debut < 500, `trop lent sur ${piege.slice(0, 8)}`);
+    }
+  });
+
+  it("garde la mise en forme ordinaire", () => {
+    assert.deepEqual(analyserEnligne("a **b** c *d* [e](https://x.fr)").map((e) => e.type), [
+      "texte",
+      "gras",
+      "texte",
+      "italique",
+      "texte",
+      "lien",
+    ]);
+  });
+});

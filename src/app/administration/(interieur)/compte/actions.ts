@@ -5,7 +5,7 @@ import { eq } from "drizzle-orm";
 import { exigerConnexion } from "@/lib/auth/session-courante";
 import { hacher, LONGUEUR_MINIMALE, motDePasseAcceptable, verifier } from "@/lib/auth/mots-de-passe";
 import { fermerToutesLesSessions, NOM_COOKIE, optionsCookie, ouvrirSession } from "@/lib/auth/sessions";
-import { lireIp, noterTentative, oublierTentatives, tentativeAutorisee } from "@/lib/auth/tentatives";
+import { confirmerTentative, lireIp, oublierTentatives, reserverTentative } from "@/lib/auth/tentatives";
 import { db } from "@/lib/db";
 import { utilisateurs } from "@/lib/db/schema";
 
@@ -36,12 +36,15 @@ export async function changerMonMotDePasse(_precedent: EtatMonCompte, donnees: F
   if (!motDePasseAcceptable(nouveau)) {
     return { erreur: `Le nouveau mot de passe doit faire au moins ${LONGUEUR_MINIMALE} caractères.` };
   }
-  if (nouveau.length > 200) return { erreur: "Le nouveau mot de passe dépasse 200 caractères." };
+  // bcrypt ignore tout ce qui depasse 72 octets (audit S13) : mieux vaut le dire.
+  if (Buffer.byteLength(nouveau, "utf8") > 72) {
+    return { erreur: "Le nouveau mot de passe est trop long : 72 caractères au plus, moins avec des accents." };
+  }
   if (nouveau !== confirmation) return { erreur: "La confirmation ne correspond pas au nouveau mot de passe." };
   if (nouveau === actuel) return { erreur: "Le nouveau mot de passe doit être différent de l'actuel." };
 
   const ip = lireIp(await headers());
-  const verdict = await tentativeAutorisee(moi.email, ip);
+  const { id: tentative, verdict } = await reserverTentative(moi.email, ip);
   if (!verdict.autorise) {
     return { erreur: `Trop de tentatives. Réessayez dans ${verdict.minutesRestantes} minutes.` };
   }
@@ -52,10 +55,9 @@ export async function changerMonMotDePasse(_precedent: EtatMonCompte, donnees: F
     .where(eq(utilisateurs.id, moi.id))
     .limit(1);
   if (!compte || !(await verifier(actuel, compte.hache))) {
-    await noterTentative(moi.email, ip, false);
     return { erreur: "Le mot de passe actuel est incorrect." };
   }
-  await noterTentative(moi.email, ip, true);
+  await confirmerTentative(tentative);
   await oublierTentatives(moi.email);
 
   await db()

@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
   // l'image demarre sans serveur.
   output: "standalone",
 
+  // Pas d'en-tete « X-Powered-By: Next.js » : inutile de dire a un attaquant
+  // quelle version chercher (audit S8).
+  poweredByHeader: false,
+
   // Next journalise par defaut les arguments et le resultat de chaque action
   // serveur. Or une action rend un mot de passe provisoire (comptes) et une
   // autre recoit les messages de contact : rien de cela n'a a finir en clair

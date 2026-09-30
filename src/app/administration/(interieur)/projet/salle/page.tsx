@@ -1,3 +1,4 @@
+import { exigerDroit } from "@/lib/auth/session-courante";
 import { CLES_REGLAGE, lireReglage } from "@/lib/reglages";
 import { FormulaireSalle } from "./formulaire-salle";
 
@@ -9,6 +10,7 @@ export const metadata = { title: "Venir à la salle" };
  * eux, viennent des matchs a domicile.
  */
 export default async function PageSalle() {
+  await exigerDroit("gererProjet");
   const texte = (await lireReglage(CLES_REGLAGE.venirALaSalle)) ?? "";
   return (
     <section className="max-w-3xl">

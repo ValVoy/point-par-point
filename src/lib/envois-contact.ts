@@ -9,6 +9,9 @@ import { envoisContact } from "./db/schema";
  *  - global, contre une attaque repartie sur beaucoup d'adresses, qui
  *    remplirait la base de messages.
  *
+ * Seuls les envois acceptes comptent pour le plafond global (audit S2) : une
+ * adresse qui insiste se ferme la porte a elle seule, pas au reste du monde.
+ *
  * L'envoi est note **avant** d'etre compte : compter puis noter laissait
  * passer une salve de requetes simultanees, toutes controlees avant la
  * premiere ecriture. Un envoi refuse compte donc aussi, ce qui est le but :
@@ -24,16 +27,30 @@ export type Debit = "autorise" | "adresse" | "global";
 
 export async function reserverEnvoi(ip: string | null): Promise<Debit> {
   const maintenant = Date.now();
-  await db().insert(envoisContact).values({ ip, survenuLe: new Date(maintenant) });
-  await db().delete(envoisContact).where(lt(envoisContact.survenuLe, new Date(maintenant - CONSERVATION_MS)));
+  const base = db();
+  const [ligne] = await base
+    .insert(envoisContact)
+    .values({ ip, survenuLe: new Date(maintenant) })
+    .returning({ id: envoisContact.id });
+  await base.delete(envoisContact).where(lt(envoisContact.survenuLe, new Date(maintenant - CONSERVATION_MS)));
+  const refuser = async (raison: Exclude<Debit, "autorise">) => {
+    if (ligne) await base.update(envoisContact).set({ refuse: true }).where(eq(envoisContact.id, ligne.id));
+    return raison;
+  };
 
   const depuis = new Date(maintenant - FENETRE_MS);
-  const [global] = await db().select({ nombre: count() }).from(envoisContact).where(gt(envoisContact.survenuLe, depuis));
-  if ((global?.nombre ?? 0) > PLAFOND_GLOBAL) return "global";
-  if (!ip) return "autorise";
-  const [parIp] = await db()
+  // Par adresse d'abord : un envoi refuse ici ne pese pas sur le plafond global.
+  if (ip) {
+    const [parIp] = await base
+      .select({ nombre: count() })
+      .from(envoisContact)
+      .where(and(eq(envoisContact.ip, ip), gt(envoisContact.survenuLe, depuis)));
+    if ((parIp?.nombre ?? 0) > PLAFOND_PAR_IP) return refuser("adresse");
+  }
+  const [global] = await base
     .select({ nombre: count() })
     .from(envoisContact)
-    .where(and(eq(envoisContact.ip, ip), gt(envoisContact.survenuLe, depuis)));
-  return (parIp?.nombre ?? 0) > PLAFOND_PAR_IP ? "adresse" : "autorise";
+    .where(and(eq(envoisContact.refuse, false), gt(envoisContact.survenuLe, depuis)));
+  if ((global?.nombre ?? 0) > PLAFOND_GLOBAL) return refuser("global");
+  return "autorise";
 }

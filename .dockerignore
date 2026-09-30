@@ -10,3 +10,7 @@ codex.md
 ROADMAP.md
 PLAN.md
 CLAUDE.md
+# Jamais dans une image : photos de travail, stockage de developpement, captures.
+/public/_local/
+/.stockage-local/
+/.playwright-mcp/

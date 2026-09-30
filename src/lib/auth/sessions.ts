@@ -8,6 +8,11 @@ export const NOM_COOKIE = "session_volley";
 /** Duree de vie d'une session, et seuil de prolongation glissante. */
 const DUREE_MS = 30 * 24 * 60 * 60 * 1000;
 const SEUIL_PROLONGATION_MS = 7 * 24 * 60 * 60 * 1000;
+/**
+ * Echeance absolue, prolongation comprise (audit S12) : sans elle, un cookie
+ * vole et reutilise regulierement restait valide indefiniment.
+ */
+const DUREE_ABSOLUE_MS = 90 * 24 * 60 * 60 * 1000;
 
 /**
  * Le cookie porte le jeton en clair, la base n'en garde que le hachage. Une
@@ -62,6 +67,7 @@ export async function lireSession(
   const lignes = await db()
     .select({
       expireLe: sessions.expireLe,
+      ouverteLe: sessions.creeLe,
       id: utilisateurs.id,
       email: utilisateurs.email,
       nom: utilisateurs.nom,
@@ -82,6 +88,7 @@ export async function lireSession(
   // Un compte desactive ou mis a la corbeille perd ses sessions a la volee,
   // sans qu'il faille penser a les supprimer au moment de la desactivation.
   if (!ligne.actif || ligne.supprimeLe !== null) return null;
+  if (maintenant.getTime() - ligne.ouverteLe.getTime() > DUREE_ABSOLUE_MS) return null;
 
   const resteMs = ligne.expireLe.getTime() - maintenant.getTime();
   if (resteMs < SEUIL_PROLONGATION_MS) {

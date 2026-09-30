@@ -17,6 +17,7 @@ describe("cleValide", () => {
       "joueurs/0a1b2c3d-0000-4000-8000-000000000000.svg",
       "joueurs\0a1b2c3d-0000-4000-8000-000000000000.webp",
       "/joueurs/0a1b2c3d-0000-4000-8000-000000000000.webp",
+      "joueurs/0a1b2c3d-0000-4000-8000-000000000000Xwebp",
     ]) {
       assert.equal(cleValide(cle), false, cle);
     }
