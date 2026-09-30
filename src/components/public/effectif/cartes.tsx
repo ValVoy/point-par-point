@@ -8,8 +8,9 @@ import { PortraitJoueur } from "./portrait-joueur";
 
 /**
  * Les cartes de la page de l'effectif (fiche fiches/effectif.md). Celle d'un
- * joueur porte son poste en surtitre, puisque la grille est continue ; celle
- * du staff est plus sobre, sans portrait si personne n'a donne de photo.
+ * joueur : le grand portrait, puis le nom ; le poste est dit par l'intertitre
+ * de sa section, et redit aux lecteurs d'ecran. Celle du staff est plus
+ * sobre, sans portrait si personne n'a donne de photo.
  */
 
 export const taille = (cm: number | null) =>
@@ -39,13 +40,10 @@ export function CarteJoueur({ membre: m, maintenant }: { membre: Membre; mainten
           photo={photo}
           numero={m.numero}
           poste={m.poste}
-          format="aspect-[5/6]"
-          sizes="(min-width: 1280px) 15vw, (min-width: 1024px) 22vw, (min-width: 640px) 30vw, 45vw"
+          sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 45vw"
         />
-        <span className="mt-4 block text-xs font-semibold tracking-[0.15em] text-[var(--color-turquoise)] uppercase">
-          {LIBELLES_POSTE[m.poste]}
-        </span>
-        <span className="mt-1 flex items-baseline gap-2">
+        <span className="sr-only">{LIBELLES_POSTE[m.poste]}, </span>
+        <span className="mt-4 flex items-baseline gap-3">
           {m.numero !== null ? (
             <span className={photo ? "titre-affiche text-2xl text-[var(--color-turquoise)]" : "sr-only"}>
               <span className="sr-only">Numéro </span>
@@ -53,7 +51,7 @@ export function CarteJoueur({ membre: m, maintenant }: { membre: Membre; mainten
               <span className="sr-only">, </span>
             </span>
           ) : null}
-          <span className="titre-affiche text-2xl leading-none text-balance group-hover:text-[var(--color-jaune)] group-focus-visible:text-[var(--color-jaune)]">
+          <span className="titre-affiche text-2xl leading-none text-balance group-hover:text-[var(--color-jaune)] group-focus-visible:text-[var(--color-jaune)] sm:text-3xl">
             {m.prenom} {m.nom}
           </span>
         </span>

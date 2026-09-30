@@ -1101,3 +1101,17 @@ aucun.
   px, le bloc de l'accueil ; débordement à 375 px sur six pages.
 - Suite : critique à froid des actualités, puis « Le projet », « Où nous voir », partenaires,
   contact, mentions légales.
+
+**17:40** · **[retour] La grille de l'effectif par poste, rétablie**
+
+L'utilisateur préférait la grille d'avant, une section par poste avec de grandes cartes au
+numéro géant : « un vrai choix identitaire ». Je l'avais remplacée par une grille continue sur la
+foi de la critique à froid, qui mesurait du vide et une page trop haute. Rétablie, en gardant ce
+qui ne touche pas à ce choix : le staff, l'accroche collective, le numéro lu par les lecteurs
+d'écran, l'effet du focus. Leçon notée en mémoire : un défaut se corrige seul, un choix de
+composition se propose d'abord.
+
+- Portée : `src/app/effectif/page.tsx`, `src/components/public/effectif/cartes.tsx`.
+- Vérifié : `tsc`, lint ; la page en 1440 px.
+- Suite : critique à froid des actualités (en cours), puis « Le projet », « Où nous voir »,
+  partenaires, contact, mentions légales.

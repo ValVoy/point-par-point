@@ -4,16 +4,17 @@ import { PiedDePage } from "@/components/public/accueil/pied-de-page";
 import { CarteJoueur, CarteStaff } from "@/components/public/effectif/cartes";
 import { EnTete } from "@/components/public/entete";
 import { effectifDeLaSaison } from "@/lib/effectif-public";
-import { grouperParPoste } from "@/lib/postes";
+import { grouperParPoste, LIBELLES_POSTE_PLURIEL } from "@/lib/postes";
 import { membres as lireStaff } from "@/lib/projet";
 import { EQUIPE } from "@/lib/site";
 
 /**
  * L'effectif de la saison (fiche fiches/effectif.md) : une accroche
- * collective, puis toute l'equipe en une seule grille continue, dans l'ordre
- * des postes, le poste ecrit au-dessus de chaque nom. Des cartes toutes
- * egales, ni vedette, ni classement. Le staff ferme la page : il accompagne
- * l'equipe, il ne la precede pas.
+ * collective, puis une section par poste, dans l'ordre ou l'on presente une
+ * equipe, avec de grandes cartes au numero geant. Choix identitaire de
+ * l'utilisateur (30-09-2026), prefere a une grille continue plus compacte.
+ * Des cartes toutes egales, ni vedette, ni classement. Le staff ferme la
+ * page : il accompagne l'equipe, il ne la precede pas.
  */
 export const dynamic = "force-dynamic";
 
@@ -28,8 +29,8 @@ export default async function PageEffectif({ searchParams }: { searchParams: Pro
     effectifDeLaSaison(demandee),
     lireStaff(),
   ]);
-  // L'ordre des postes, puis les numeros : la grille reste continue, sans trou.
-  const equipe = grouperParPoste(membres).flatMap((g) => g.membres);
+  const groupes = grouperParPoste(membres);
+  const equipe = groupes.flatMap((g) => g.membres);
 
   return (
     <>
@@ -67,13 +68,21 @@ export default async function PageEffectif({ searchParams }: { searchParams: Pro
             L&apos;effectif de cette saison n&apos;est pas encore publié.
           </p>
         ) : (
-          <section aria-label="Les joueurs" className="colonne-large">
-            <ul className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 lg:gap-x-6 xl:grid-cols-6">
-              {equipe.map((m) => (
-                <CarteJoueur key={m.id} membre={m} maintenant={maintenant} />
-              ))}
-            </ul>
-          </section>
+          groupes.map((groupe) => (
+            <section key={groupe.poste} aria-labelledby={`poste-${groupe.poste}`} className="colonne-large mt-14 first-of-type:mt-0">
+              <h2
+                id={`poste-${groupe.poste}`}
+                className="border-b-2 border-[var(--color-craie)] pb-2 text-xs font-semibold tracking-[0.2em] uppercase"
+              >
+                {LIBELLES_POSTE_PLURIEL[groupe.poste]}
+              </h2>
+              <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 lg:gap-x-6">
+                {groupe.membres.map((m) => (
+                  <CarteJoueur key={m.id} membre={m} maintenant={maintenant} />
+                ))}
+              </ul>
+            </section>
+          ))
         )}
 
         {staff.length > 0 ? (
