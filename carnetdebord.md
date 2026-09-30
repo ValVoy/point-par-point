@@ -811,3 +811,22 @@ de la pastille. Premier pas contre la mise en page trop sage.
   « éclat et net ».
 - Suite : l'utilisateur choisit une variante sur la planche ; je la reporte dans les jetons de
   `globals.css` et dans la fiche palette, puis j'installe l'intro sur l'accueil.
+
+**12:30** · **[design] Variante « net » retenue, glow des LED renforcé**
+
+L'utilisateur a comparé les variantes à l'écran et penchait pour « net », puis m'a demandé mon
+avis. J'ai suivi ce choix, avec une réserve : le blanc net sur un noir profond règle l'effet rétro et
+fait la modernité par le contraste, sans raviver le turquoise vers le cyan qu'on a quitté ; mais
+le turquoise sourd en grand aplat restait terne. Décision : « net », turquoise en accent (un mot,
+un filet, le motif), plus de bandeau turquoise pleine largeur.
+
+Autre demande, un glow plus présent sur les chiffres LED : trois couches, du cœur saturé à
+une diffusion large et faible qui éclaire le boîtier. Toujours réservé aux tableaux. Le
+sélecteur de variantes est retiré de la planche, il a rempli son rôle.
+
+- Portée : `globals.css`, `afficheur-led.tsx`, planche (bandeau de l'équipe, nuancier),
+  `fiches/palette.md`, `codex.md`.
+- Vérifié : `tsc`, lint ; à l'écran en 1440 px, le glow sur les deux tableaux et le chapitre de
+  l'équipe en accent turquoise.
+- Suite : installer l'intro sur l'accueil, avec le bloc prochain match et le dernier résultat
+  branchés sur la base.

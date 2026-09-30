@@ -1,3 +1,4 @@
+import { Motif } from "@/components/motif";
 import { ResultatsPrecedents } from "@/components/public/resultats-precedents";
 import { TableauProchainMatch } from "@/components/public/tableau-prochain-match";
 import { TableauResultat, type Resultat } from "@/components/public/tableau-resultat";
@@ -68,12 +69,20 @@ export function Bandeaux() {
         </div>
       </div>
 
-      <div className="grain relative bg-[var(--color-turquoise)] text-[var(--color-nuit)]">
+      <div className="grain relative overflow-hidden border-y border-[var(--color-nuit-trait)] bg-[var(--color-nuit-surface)]">
+        <div aria-hidden="true" className="absolute inset-y-0 right-0 w-1/2 opacity-[0.14] [mask-image:linear-gradient(90deg,transparent,#000)]">
+          <Motif contour sombre="var(--color-turquoise)" taille={32} />
+        </div>
         <div className="colonne-large relative py-16">
-          <p className="text-xs font-semibold tracking-[0.2em] uppercase">L&apos;équipe · turquoise</p>
-          <p className="titre-affiche mt-3 text-6xl sm:text-8xl">Douze joueurs</p>
-          <p className="mt-4 max-w-[52ch] leading-relaxed">
-            Un aplat du maillot, la nuit par-dessus (5,8 pour 1).
+          <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">
+            L&apos;équipe · turquoise en accent
+          </p>
+          <p className="titre-affiche mt-3 text-6xl sm:text-8xl">
+            Douze <span className="text-[var(--color-turquoise)]">joueurs</span>
+          </p>
+          <p className="mt-4 max-w-[52ch] leading-relaxed text-[var(--color-craie-douce)]">
+            Le turquoise du maillot en accent : un mot, un filet, le motif qui s&apos;efface. Plus de
+            grand aplat terne.
           </p>
         </div>
       </div>

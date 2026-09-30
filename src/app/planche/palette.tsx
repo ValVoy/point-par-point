@@ -9,15 +9,15 @@ import styles from "./planche.module.css";
 type Teinte = { jeton: string; nom: string; valeur: string; role: string };
 
 const TEINTES: Teinte[] = [
-  { jeton: "nuit", nom: "Nuit", valeur: "#16101a", role: "Le fond, noir violacé du maillot" },
-  { jeton: "nuit-surface", nom: "Surface", valeur: "#1f1724", role: "Cartes, blocs" },
-  { jeton: "nuit-releve", nom: "Relevée", valeur: "#2a2030", role: "Survols, badges" },
-  { jeton: "nuit-violet", nom: "Chapitre violet", valeur: "#2b1b30", role: "Le fond des matchs" },
-  { jeton: "nuit-trait", nom: "Filet", valeur: "#3a2e40", role: "Bordures, séparations" },
-  { jeton: "craie", nom: "Craie", valeur: "#f1ece6", role: "Texte, toute information" },
-  { jeton: "craie-douce", nom: "Craie douce", valeur: "#b9adb8", role: "Texte secondaire" },
-  { jeton: "craie-tenue", nom: "Craie tenue", valeur: "#958a95", role: "Légendes seulement" },
-  { jeton: "turquoise", nom: "Turquoise", valeur: "#64979d", role: "L'équipe, liens, boutons" },
+  { jeton: "nuit", nom: "Nuit", valeur: "#0e0c11", role: "Le fond, noir profond" },
+  { jeton: "nuit-surface", nom: "Surface", valeur: "#17141b", role: "Cartes, blocs" },
+  { jeton: "nuit-releve", nom: "Relevée", valeur: "#221e27", role: "Survols, badges" },
+  { jeton: "nuit-violet", nom: "Chapitre violet", valeur: "#1b1320", role: "Le fond des matchs" },
+  { jeton: "nuit-trait", nom: "Filet", valeur: "#2e2a35", role: "Bordures, séparations" },
+  { jeton: "craie", nom: "Blanc", valeur: "#f5f6f7", role: "Texte, toute information" },
+  { jeton: "craie-douce", nom: "Craie douce", valeur: "#b3b0bb", role: "Texte secondaire" },
+  { jeton: "craie-tenue", nom: "Craie tenue", valeur: "#8e8a96", role: "Légendes seulement" },
+  { jeton: "turquoise", nom: "Turquoise", valeur: "#64979d", role: "L'équipe, en accent" },
   { jeton: "turquoise-clair", nom: "Turquoise clair", valeur: "#8fbcc1", role: "Traits, petits textes" },
   { jeton: "violet", nom: "Violet", valeur: "#66486b", role: "Les matchs, en aplat" },
   { jeton: "jaune", nom: "Jaune ballon", valeur: "#f2bf2e", role: "Direct, nouveau, focus" },
@@ -39,7 +39,7 @@ export function contraste(a: string, b: string) {
   return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
 }
 
-const NUIT = "#16101a";
+const NUIT = "#0e0c11";
 
 export function Palette() {
   return (
@@ -47,7 +47,7 @@ export function Palette() {
       <p className={styles.etiquette}>01 · Palette</p>
       <h2 className="titre-affiche mt-3 text-5xl sm:text-7xl">Le gymnase, le soir</h2>
       <p className="mt-4 max-w-[62ch] leading-relaxed text-[var(--color-craie-douce)]">
-        Un noir tiré du maillot, les couleurs du maillot telles qu&apos;elles sont, et de la
+        Un noir profond, un blanc d&apos;écran net, les couleurs du maillot telles qu&apos;elles sont, et de la
         lumière seulement sur ce qui éclaire vraiment. Le chiffre donne le contraste sur la nuit ;
         sous 4,5, la teinte ne porte jamais de texte courant.
       </p>

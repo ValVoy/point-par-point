@@ -43,7 +43,11 @@ const CHIFFRES: Record<string, Segment[]> = {
 
 const POINTS = { strokeWidth: 8.5, strokeLinecap: "round", strokeDasharray: "0 8" } as const;
 
-const LUEUR = "drop-shadow(0 0 1px rgb(255 174 31 / 0.9)) drop-shadow(0 0 4px rgb(255 138 0 / 0.35))";
+// Trois couches, du coeur vers la salle : le point lui-meme qui sature, un
+// halo serre, puis une diffusion large et faible, celle qui eclaire le
+// boitier autour des chiffres sur un vrai tableau.
+const LUEUR =
+  "drop-shadow(0 0 1.5px rgb(255 190 60 / 0.9)) drop-shadow(0 0 6px rgb(255 138 0 / 0.55)) drop-shadow(0 0 16px rgb(255 120 0 / 0.25))";
 
 function Traits({ segments, couleur }: { segments: Segment[]; couleur: string }) {
   return (

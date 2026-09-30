@@ -107,3 +107,22 @@ Fiche validée par l'utilisateur.
 1. **L'intro validée passe à la nuit réelle** : même animation, nouvelles couleurs, tableau en LED
    ambre. L'original reste retrouvable par l'étiquette git `intro-nuit-v1`.
 2. **L'administration est de nuit**, par cohérence avec le site.
+
+## Variante « net », décidée le 30-09-2026 à 12:25
+
+Après la version 2, l'utilisateur a jugé l'ensemble moins moderne : couleurs ternes, texte crème à
+l'effet rétro, mise en page trop sage. Quatre variantes comparées à l'écran sur la planche ;
+retenue : **« net »**, avec le turquoise en accent.
+
+- Fond `nuit` `#0e0c11`, noir profond à peine violacé ; surfaces `#17141b`, `#221e27` ; chapitre
+  des matchs `#1b1320` ; filets `#2e2a35` ; boîtier des tableaux `#08070a`.
+- Texte : blanc d'écran `#f5f6f7` (18,0 pour 1), secondaire `#b3b0bb` (9,1), légendes `#8e8a96`
+  (5,8).
+- Le turquoise reste celui du maillot, mais **en accent** : un mot, un filet, le motif. Les grands
+  aplats turquoise sont abandonnés, ils sonnaient ternes sur toute la largeur.
+- **Glow des LED renforcé** à la demande de l'utilisateur : un cœur saturé, un halo à 6 px, une
+  diffusion large et faible à 16 px, toujours sur les seuls chiffres des tableaux.
+- Résultats : le dernier match en tableau LED à côté du prochain ; les précédents en cartes
+  défilantes, score géant plein pour une victoire, en contour pour une défaite.
+
+Les valeurs du tableau de la section 2 sont remplacées par celles-ci ; `globals.css` fait foi.

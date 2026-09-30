@@ -126,9 +126,9 @@ Tranché par l'utilisateur sur la planche de style (`/planche`, développement s
 raisons dans `veille.md`, sections 7 à 9. Les jetons vivent dans `src/app/globals.css`, nulle part
 ailleurs.
 
-- **Couleurs** (version 2 du 30-09-2026, `fiches/palette.md`) : le gymnase le soir. Fond `nuit`
-  `#16101a`, noir violacé tiré du maillot, et tous les gris qui en dérivent ; texte `craie`
-  `#f1ece6`. Turquoise `#64979d` et violet `#66486b` réels du maillot, jaune ballon `#f2bf2e`.
+- **Couleurs** (version 2, variante « net », 30-09-2026, `fiches/palette.md`) : le gymnase le
+  soir. Fond `nuit` `#0e0c11`, noir profond à peine violacé ; texte `craie` `#f5f6f7`, un blanc
+  d'écran net. Le turquoise en accent (mot, filet, motif), plus de grand aplat turquoise. Turquoise `#64979d` et violet `#66486b` réels du maillot, jaune ballon `#f2bf2e`.
   Une fonction par couleur : **turquoise l'équipe, violet les matchs (chapitre `nuit-violet`),
   jaune ce qui est en direct ou nouveau**. Le violet ne porte jamais de texte. **La lumière
   n'existe que sur les objets lumineux** : tableau de score (`led` `#ffae1f`, segments éteints
@@ -138,7 +138,11 @@ ailleurs.
   Ni bleu nuit, ni cyan ravivé, ni dégradé, ni verre dépoli. L'administration partage tout.
 - **Afficheur LED** (`components/public/afficheur-led.tsx`) : sept segments dessinés en SVG, chaque
   segment une rangée de points (trait en pointillés à bouts ronds, comme les tableaux Bodet),
-  segments éteints visibles dessous. Préféré à la police DSEG : aucune dépendance à télécharger.
+  segments éteints visibles dessous, glow en trois couches sur les seuls chiffres allumés.
+  Préféré à la police DSEG : aucune dépendance à télécharger.
+- **Résultats** : le dernier match en tableau LED (`tableau-resultat.tsx`), à côté du prochain ;
+  les précédents en cartes défilantes (`resultats-precedents.tsx`), score géant plein pour une
+  victoire, en contour pour une défaite.
 - **Typographie** : une seule famille, **Archivo**, chargée avec son axe de largeur.
   `titre-affiche` (largeur 62 %, graisse 800, capitales, chiffres à largeur fixe) pour la voix du
   site public ; `titre-admin` (largeur 80 %, graisse 700) pour les écrans de travail ; largeur

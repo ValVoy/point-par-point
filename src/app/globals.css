@@ -1,39 +1,41 @@
 @import "tailwindcss";
 
 /*
- * Systeme de design. Palette du 30-09-2026, version 2 (fiche
+ * Systeme de design. Palette du 30-09-2026, version 2, variante « net » (fiche
  * fiches/palette.md, veille.md sections 10 et 11) : le gymnase le soir. Tout
  * passe par ces jetons : changer une teinte est une modification d'une ligne,
  * ici et nulle part ailleurs.
  *
  * La salle est sombre, et la lumiere ne vient que de ce qui eclaire vraiment :
  * le tableau de score, le bandeau LED, le projecteur sur le ballon. Tout le
- * reste est mat. Le noir est tire du violet du maillot, les gris aussi : aucun
- * bleu nuit, aucun gris bleute, aucun cyan ravive. Le turquoise est celui du
- * maillot, tel quel : sur ce noir il se lit sans retouche.
+ * reste est mat. Un noir profond a peine violace et un blanc d'ecran net : le
+ * contraste fait la modernite, pas une couleur criarde. Aucun bleu nuit, aucun
+ * gris bleute, aucun cyan ravive. Le turquoise est celui du maillot, tel quel,
+ * en accent (textes, filets, motif) plutot qu'en grands aplats.
  *
  * Une fonction par couleur : turquoise l'equipe, violet les matchs, jaune ce
  * qui est en direct ou nouveau. Le site public et l'administration partagent
  * tout (decision du 30-09-2026).
  *
  * Contrastes sur la nuit (WCAG, 4,5 pour 1 exige, 7 vise pour les scores,
- * dates et lieux) : craie 15,9 ; craie-douce 8,7 ; craie-tenue 5,7 (legendes
- * seulement) ; turquoise 5,8 ; turquoise-clair 9,0 ; jaune 10,9 ;
- * jaune-eteint 6,4 ; erreur 6,0. Le violet (2,4) ne porte jamais de texte :
- * aplat seulement, la craie dessus (6,6).
+ * dates et lieux) : craie 18,0 ; craie-douce 9,1 ; craie-tenue 5,8 (legendes
+ * seulement) ; turquoise 6,0 ; turquoise-clair 9,4 ; jaune 11,4 ;
+ * jaune-eteint 6,7 ; erreur 6,3. Le violet (2,5) ne porte jamais de texte :
+ * aplat seulement, la craie dessus (7,2). Sur turquoise-sourd, le texte prend
+ * turquoise-clair (7,0), le turquoise n'y fait que 4,4.
  */
 @theme {
   /* --- La salle ----------------------------------------------------------- */
-  --color-nuit: #16101a;
-  --color-nuit-surface: #1f1724;
-  --color-nuit-releve: #2a2030;
-  --color-nuit-violet: #2b1b30;
-  --color-nuit-trait: #3a2e40;
+  --color-nuit: #0e0c11;
+  --color-nuit-surface: #17141b;
+  --color-nuit-releve: #221e27;
+  --color-nuit-violet: #1b1320;
+  --color-nuit-trait: #2e2a35;
 
-  /* --- Le texte, une craie chaude ----------------------------------------- */
-  --color-craie: #f1ece6;
-  --color-craie-douce: #b9adb8;
-  --color-craie-tenue: #958a95;
+  /* --- Le texte, un blanc d'ecran ----------------------------------------- */
+  --color-craie: #f5f6f7;
+  --color-craie-douce: #b3b0bb;
+  --color-craie-tenue: #8e8a96;
 
   /* --- Les couleurs du maillot, mates ------------------------------------- */
   --color-turquoise: #64979d;
@@ -46,7 +48,7 @@
   --color-jaune-eteint: #b8922c;
 
   /* --- Les objets lumineux, et eux seuls ----------------------------------- */
-  --color-boitier: #0c090e;
+  --color-boitier: #08070a;
   --color-led: #ffae1f;
   --color-led-eteinte: #251a17;
 
@@ -70,8 +72,8 @@
 :root {
   color-scheme: dark;
 
-  /* Le halo d'une LED ambre : court, serre, plus orange que son coeur. */
-  --led-halo: 0 0 2px rgb(255 174 31 / 0.9), 0 0 6px rgb(255 138 0 / 0.35);
+  /* Le halo d'une LED ambre : un coeur sature, puis une diffusion plus orange. */
+  --led-halo: 0 0 2px rgb(255 190 60 / 0.9), 0 0 8px rgb(255 138 0 / 0.55), 0 0 18px rgb(255 120 0 / 0.25);
 
   --duree-breve: 160ms;
   --duree: 280ms;
