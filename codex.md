@@ -287,3 +287,24 @@ HTML injecté**, et seules les adresses `http`, `https` et `mailto` deviennent d
 `<script>` tapé dans le texte s'affiche comme du texte. Les boutons de l'éditeur posent la syntaxe,
 l'ami n'a pas à la connaître. Les pages publiques réutiliseront le même composant `TexteLeger`,
 habillé autrement.
+
+### Le message d'un inconnu : borné, compté, et vraiment effacé
+
+Le formulaire de contact (`src/lib/contact.ts`, fiche `fiches/contact.md`) est le seul endroit où
+un inconnu écrit dans la base. Tout y est borné (nom 80, e-mail 160, message 3 000 caractères), un
+champ piège invisible écarte les robots sans captcha, et un robot pris reçoit la même confirmation
+qu'un humain, pour ne rien lui apprendre. Deux plafonds par heure : 3 envois par adresse réseau,
+30 au total, ce second plafond ne dépendant d'aucun en-tête.
+
+Les adresses réseau vivent dans `envois_contact`, jamais reliées au message, purgées après
+24 heures. Les messages, eux, sont **la seule exception à « rien ne disparaît par accident »** :
+ils s'effacent réellement un an après leur arrivée, parce que c'est ce que le formulaire promet.
+Une donnée personnelle ne se garde pas au-delà de ce qui a été annoncé.
+
+### L'adresse réseau est la dernière de `X-Forwarded-For`
+
+Le Traefik de Coolify ajoute l'adresse réelle du client en fin de liste (vérifié en production
+pour Todai). La première entrée est ce que le client a bien voulu envoyer. `lireIp` retient donc
+la dernière, corrigé le 30-09-2026 : avant, un robot contournait tout plafond par adresse en
+changeant l'en-tête à chaque envoi. Si un relais s'ajoute un jour devant Traefik (Cloudflare en
+nuage orange), la dernière entrée deviendra ce relais : à revoir à ce moment-là.

@@ -1175,3 +1175,39 @@ voir » est relié depuis la salle d'un match à domicile.
 - Vérifié : 83 tests, `tsc`, lint ; les trois pages en 1440 px, « Venir à la salle » avec un
   texte de test (retiré ensuite), aucun débordement à 375 px après correction des partenaires.
 - Suite : le formulaire de contact, avec sa revue de sécurité.
+
+**18:15** · **[page] Le contact, et l'écran « Messages »**
+
+Fiche `fiches/contact.md` posée avant le code : une page calme, sans mouvement, quatre champs
+(sujet, nom, e-mail, message), le sujet pré-choisi par l'adresse (« Devenir partenaire » arrive
+sur `?sujet=partenariat`). Refus annoncé en tête avec la saisie conservée, confirmation qui
+remplace le formulaire et prend le focus. Une phrase dit ce qu'on garde, qui le lit, et pour
+combien de temps : un an.
+
+Côté sécurité : longueurs bornées, piège à robots hors écran et hors tabulation, plafonds de
+3 envois par heure et par adresse réseau et de 30 au total, adresses gardées 24 heures dans une
+table séparée, jamais reliées au message. La promesse d'un an est tenue par un effacement réel,
+seule exception au principe de la corbeille, déclenché à chaque envoi et à chaque ouverture de
+l'écran « Messages ».
+
+La passe adversariale a trouvé un défaut qui dépassait le contact : `lireIp` retenait la première
+entrée de `X-Forwarded-For`, choisie par le client. `Coolify/ETAT.md` note que le Traefik de
+Coolify ajoute la vraie adresse en fin de liste ; la fonction retient désormais la dernière. La
+connexion à l'administration en profite aussi, même si son compteur par adresse visée la
+protégeait déjà.
+
+L'écran « Messages » de l'administration, relié dans la navigation mais absent jusqu'ici :
+non lus d'abord, réponse par un lien e-mail pré-rempli, marquer lu, corbeille restaurable. Le
+texte s'affiche en texte brut. L'entrée « Comptes » de la même navigation mène encore à une page
+absente.
+
+- Portée : `src/app/contact/`, `src/lib/envois-contact.ts`, `src/lib/messages.ts`,
+  `src/lib/auth/tentatives.ts` et son test, `administration/(interieur)/messages/`, schéma et
+  migration 0006, `entete.tsx` (Contact au pied de page), `fiches/contact.md`, codex, ROADMAP.
+- Vérifié : 91 tests, `tsc`, lint ; à 390 px le sujet pré-choisi et aucun débordement ; un
+  message trop court refusé avec saisie gardée et focus sur l'alerte ; trois envois reçus, le
+  quatrième refusé ; le piège rempli donne la confirmation sans rien ranger ; en 1440 px,
+  marquer lu, corbeille et restauration, une balise `<b>` saisie reste du texte. Essais retirés
+  de la base de développement ensuite.
+- Suite : critique à froid du contact, puis mentions légales et politique de confidentialité,
+  puis l'écran « Comptes ».

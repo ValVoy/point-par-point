@@ -28,20 +28,23 @@ function debutFenetre(): Date {
 
 /**
  * Lit l'adresse reseau derriere le proxy. En production le site est servi par
- * Traefik, qui pose `x-forwarded-for` ; la premiere entree est le client, les
- * suivantes sont les relais. En developpement, aucun en-tete n'existe et la
+ * Traefik, qui ajoute l'adresse reelle du client en **fin** de `x-forwarded-for`
+ * (verifie en production pour Todai, cf. Coolify/ETAT.md). La premiere entree,
+ * elle, est ce que le client a bien voulu envoyer : la retenir laissait un robot
+ * changer d'adresse a chaque essai. En developpement, aucun en-tete n'existe et la
  * valeur est nulle, ce qui desactive simplement le compteur par reseau.
  *
- * Cette valeur est fournie par le client et donc falsifiable : elle ne sert
- * qu'a ralentir, jamais a autoriser. Le compteur par adresse visee, lui, ne
+ * Si un jour un autre relais s'intercale (Cloudflare en nuage orange), la
+ * derniere entree deviendra le relais : la valeur ne sert donc qu'a ralentir,
+ * jamais a autoriser. Le compteur par adresse visee, lui, ne
  * depend d'aucun en-tete et reste efficace meme contre un attaquant qui change
  * d'adresse a chaque essai.
  */
 export function lireIp(enTetes: Headers): string | null {
   const transmis = enTetes.get("x-forwarded-for");
   if (transmis) {
-    const premier = transmis.split(",")[0]?.trim();
-    if (premier) return premier;
+    const dernier = transmis.split(",").at(-1)?.trim();
+    if (dernier) return dernier;
   }
   return enTetes.get("x-real-ip");
 }

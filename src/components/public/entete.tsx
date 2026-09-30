@@ -20,6 +20,7 @@ export const VITRINE = [
   { href: "/le-projet", nom: "Le projet" },
   { href: "/ou-nous-voir", nom: "Où nous voir" },
   { href: "/partenaires", nom: "Partenaires" },
+  { href: "/contact", nom: "Contact" },
 ];
 
 export function EnTete({ actif }: { actif?: string }) {

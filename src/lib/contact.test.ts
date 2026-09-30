@@ -1,0 +1,49 @@
+import assert from "node:assert/strict";
+import { describe, it } from "node:test";
+import { lireMessage, sujetInitial } from "./contact";
+
+function donnees(valeurs: Record<string, string>) {
+  const d = new FormData();
+  for (const [cle, valeur] of Object.entries(valeurs)) d.set(cle, valeur);
+  return d;
+}
+
+const VALIDE = { nom: "Camille", email: "camille@exemple.fr", sujet: "question", message: "Bonjour, à quelle heure ouvre la salle ?" };
+
+describe("lireMessage", () => {
+  it("accepte un message complet et nettoie les espaces", () => {
+    const lu = lireMessage(donnees({ ...VALIDE, nom: "  Camille  " }));
+    assert.equal(lu.ok, true);
+    if (lu.ok) assert.equal(lu.message.nom, "Camille");
+  });
+
+  it("refuse une adresse e-mail invalide", () => {
+    const lu = lireMessage(donnees({ ...VALIDE, email: "pas-une-adresse" }));
+    assert.equal(lu.ok, false);
+  });
+
+  it("refuse un message trop court ou trop long", () => {
+    assert.equal(lireMessage(donnees({ ...VALIDE, message: "Salut" })).ok, false);
+    assert.equal(lireMessage(donnees({ ...VALIDE, message: "a".repeat(3001) })).ok, false);
+  });
+
+  it("ramene un sujet inconnu a « autre », sans refuser le message", () => {
+    const lu = lireMessage(donnees({ ...VALIDE, sujet: "<script>" }));
+    assert.equal(lu.ok, true);
+    if (lu.ok) assert.equal(lu.message.sujet, "autre");
+  });
+
+  it("signale un robot quand le champ piege est rempli", () => {
+    const lu = lireMessage(donnees({ ...VALIDE, site_web: "http://spam.example" }));
+    assert.equal(lu.ok, false);
+    if (!lu.ok) assert.equal(lu.robot, true);
+  });
+});
+
+describe("sujetInitial", () => {
+  it("ne retient qu'un sujet connu de l'adresse", () => {
+    assert.equal(sujetInitial("partenariat"), "partenariat");
+    assert.equal(sujetInitial("n'importe quoi"), "question");
+    assert.equal(sujetInitial(undefined), "question");
+  });
+});

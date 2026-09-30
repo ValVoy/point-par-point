@@ -43,11 +43,15 @@ la lecture sur fond sombre, partage sans script tiers, bloc de l'accueil masqué
 **La vitrine le 30-09-2026** (fiche `fiches/vitrine.md`) : `/le-projet`, `/ou-nous-voir` (avec le
 texte « Venir à la salle » saisi dans l'onglet « La salle » de l'administration), `/partenaires`.
 
-Ensuite : le formulaire de contact (revue de sécurité), puis les mentions légales et la politique
-de confidentialité.
+**Le contact le 30-09-2026** (fiche `fiches/contact.md`) : `/contact` (sujet pré-choisi par
+l'adresse, piège à robots, 3 envois par heure et par adresse réseau, 30 au total), écran
+« Messages » de l'administration, effacement réel des messages après un an.
+
+Ensuite : les mentions légales et la politique de confidentialité, puis l'écran « Comptes »
+(relié dans la navigation de l'administration, pas encore construit).
 À vérifier avant la mise en ligne : l'accord de droit à l'image couvre le site ; mentions légales
 et politique de confidentialité.
-À préparer pour la mise en ligne : appliquer en production les migrations 0002 à 0005
+À préparer pour la mise en ligne : appliquer en production les migrations 0002 à 0006
 (anciennes adresses, réglages), avec l'accord de l'utilisateur.
 Reporté : abonnement d'agenda à toute la saison, carte statique, transition animée liste → match.
 Le nom (« Point Par Point ») et la chaîne YouTube sont arrivés le 30-09-2026 et sont en place.
@@ -86,19 +90,19 @@ design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`
 - [x] Actualités, avec brouillon obligatoire et mise en forme légère maison (29-09-2026)
 - [x] Chronologie du projet, staff, partenaires, ordre à la main, réservés à l'admin (29-09-2026). Photos et logos avec l'envoi vers R2
 - [ ] Classement de la poule, avec sa date de mise à jour
-- [ ] Messages de contact
+- [x] Messages de contact (30-09-2026)
 - [ ] Comptes utilisateurs, corbeille
 
 ### Site public
 
-- [ ] Accueil : dernier épisode et prochain match
-- [ ] Effectif, et une page par joueur
-- [ ] Matchs : calendrier, page d'un match, bouton d'ajout à l'agenda
-- [ ] Série : liste et page par épisode
-- [ ] Actualités
-- [ ] Le projet et sa chronologie, l'équipe derrière
-- [ ] Où nous voir jouer : salle, adresse, carte
-- [ ] Partenaires, contact
+- [x] Accueil : dernier épisode et prochain match
+- [x] Effectif, et une page par joueur
+- [x] Matchs : calendrier, page d'un match, bouton d'ajout à l'agenda
+- [x] Série : liste et page par épisode
+- [x] Actualités
+- [x] Le projet et sa chronologie, l'équipe derrière
+- [x] Où nous voir jouer : salle, adresse, itinéraire (sans carte intégrée)
+- [x] Partenaires, contact
 - [ ] Bilan de saison calculé depuis les scores
 - [ ] Mentions légales et politique de confidentialité
 - [ ] Compteur d'audience sans cookie
@@ -147,11 +151,11 @@ zéro, la logique reste.
       - police allégée aux deux variantes utilisées (environ 40 Ko de moins sur tout le site)
       - essai sur un vrai téléphone Android d'entrée de gamme
 - [x] Réhabillage de l'administration avec le nouveau système, sobre, clair et sans animation (29-09-2026)
-- [ ] Une fiche de page validée avant chaque page publique
+- [x] Une fiche de page validée avant chaque page publique
 
 ### Avant la mise en ligne
 
-- [ ] Revue de sécurité manuelle en passe adversariale (formulaire de contact, passe complète)
+- [ ] Revue de sécurité manuelle en passe adversariale : formulaire de contact fait le 30-09-2026, passe complète à faire
 - [ ] Purge des données de démonstration, bandeau disparu
 - [ ] Déploiement Coolify depuis `main`
 - [ ] Sonde Todai sur le domaine
