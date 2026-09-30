@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { ChampImage } from "@/components/champ-image";
 import { BoutonEnvoi, Erreur } from "@/components/formulaire";
 import { EditeurTexteLeger } from "@/components/editeur-texte-leger";
 import { creerActualite, modifierActualite, type EtatActualite } from "./actions";
@@ -18,6 +19,8 @@ export type ActualiteModifiable = {
   titre: string;
   chapo: string;
   corps: string;
+  /** Adresse de l'illustration en place, calculee par la page. */
+  image: string | null;
 };
 
 export function FormulaireActualite({ actualite }: { actualite?: ActualiteModifiable }) {
@@ -71,6 +74,14 @@ export function FormulaireActualite({ actualite }: { actualite?: ActualiteModifi
       </div>
 
       <EditeurTexteLeger nom="corps" libelle="Texte" valeur={corps} onChange={setCorps} requis />
+
+      <ChampImage
+        nom="image"
+        libelle="Illustration"
+        actuelle={actualite?.image ?? null}
+        forme="paysage"
+        aide="En tête de l'article et dans la liste. JPEG, PNG, WebP ou AVIF, 12 Mo au plus. À choisir de nouveau si l'enregistrement est refusé."
+      />
 
       <Erreur message={etat.erreur} />
 

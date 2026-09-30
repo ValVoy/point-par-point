@@ -3,6 +3,7 @@ import { and, asc, eq, isNull } from "drizzle-orm";
 import { db } from "./db";
 import { effectifs, feuillesRencontre, joueurs, rencontres, saisons } from "./db/schema";
 import { saisonsActives } from "./saisons";
+import { cleValide, modeStockage } from "./stockage";
 
 /**
  * Lectures publiques de l'effectif (fiche fiches/effectif.md). Seuls les
@@ -20,9 +21,12 @@ const FORME_SLUG = /^[a-z0-9-]{1,120}$/;
  * base, jamais du visiteur.
  */
 export function urlPhoto(cle: string | null): string | null {
+  if (!cle) return null;
   const domaine = process.env.R2_DOMAINE_PUBLIC;
-  if (!cle || !domaine) return null;
-  return new URL(cle.split("/").map(encodeURIComponent).join("/"), domaine.endsWith("/") ? domaine : `${domaine}/`).toString();
+  const chemin = cle.split("/").map(encodeURIComponent).join("/");
+  if (domaine) return new URL(chemin, domaine.endsWith("/") ? domaine : `${domaine}/`).toString();
+  // Developpement sans R2 : les photos envoyees vivent dans .stockage-local.
+  return modeStockage() === "local" && cleValide(cle) ? `/fichiers-locaux/${chemin}` : null;
 }
 
 const colonnesMembre = {

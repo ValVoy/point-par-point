@@ -1,4 +1,5 @@
 import { exigerDroit } from "@/lib/auth/session-courante";
+import { urlPhoto } from "@/lib/effectif-public";
 import { membres } from "@/lib/projet";
 import { Corbeille, LigneElement } from "../elements";
 import { FormulaireMembre } from "../formulaires";
@@ -41,6 +42,7 @@ export default async function PageEquipe() {
                     nom: membre.nom,
                     role: membre.role,
                     texte: membre.texte ?? "",
+                    imageActuelle: urlPhoto(membre.photoCle) ?? "",
                   }}
                 />
               </LigneElement>

@@ -8,6 +8,7 @@ import { db } from "@/lib/db";
 import { actualites, anciensSlugsActualite } from "@/lib/db/schema";
 import { exigerDroit } from "@/lib/auth/session-courante";
 import { slugActualiteLibre } from "@/lib/actualites";
+import { lireImageDuFormulaire } from "@/lib/envoi-image";
 
 /**
  * Meme regle que les episodes : une actualite nait en brouillon, `redigerContenu`
@@ -56,16 +57,26 @@ export async function creerActualite(
     return { erreur: analyse.error.issues[0]?.message ?? "Saisie invalide." };
   }
 
-  const [creee] = await db()
-    .insert(actualites)
-    .values({
-      titre: analyse.data.titre,
-      chapo: analyse.data.chapo || null,
-      corps: analyse.data.corps,
-      slug: await slugActualiteLibre(analyse.data.titre),
-      etat: "brouillon",
-    })
-    .returning({ id: actualites.id });
+  const image = await lireImageDuFormulaire(donnees, "image", { dossier: "actualites", genre: "illustration", ancienne: null });
+  if (!image.ok) return { erreur: image.erreur };
+
+  let creee: { id: number } | undefined;
+  try {
+    [creee] = await db()
+      .insert(actualites)
+      .values({
+        titre: analyse.data.titre,
+        chapo: analyse.data.chapo || null,
+        corps: analyse.data.corps,
+        slug: await slugActualiteLibre(analyse.data.titre),
+        etat: "brouillon",
+        imageCle: image.cle ?? null,
+      })
+      .returning({ id: actualites.id });
+  } catch (erreur) {
+    await image.annuler();
+    throw erreur;
+  }
 
   revalidatePath("/administration/actualites");
   // On revient sur la fiche : un brouillon se relit avant d'etre publie.
@@ -88,22 +99,40 @@ export async function modifierActualite(
 
   // L'adresse suit le titre ; l'ancienne est gardee pour rediriger les liens
   // deja partages (table anciens_slugs_actualite).
-  const [avant] = await db().select({ slug: actualites.slug }).from(actualites).where(eq(actualites.id, id)).limit(1);
+  const [avant] = await db()
+    .select({ slug: actualites.slug, imageCle: actualites.imageCle })
+    .from(actualites)
+    .where(eq(actualites.id, id))
+    .limit(1);
+  if (!avant) return { erreur: "Actualité inconnue." };
+  const image = await lireImageDuFormulaire(donnees, "image", {
+    dossier: "actualites",
+    genre: "illustration",
+    ancienne: avant.imageCle,
+  });
+  if (!image.ok) return { erreur: image.erreur };
   const slug = await slugActualiteLibre(analyse.data.titre, id);
-  if (avant && avant.slug !== slug) {
+  if (avant.slug !== slug) {
     await db().insert(anciensSlugsActualite).values({ slug: avant.slug, actualiteId: id }).onConflictDoNothing();
   }
 
-  await db()
-    .update(actualites)
-    .set({
-      titre: analyse.data.titre,
-      chapo: analyse.data.chapo || null,
-      corps: analyse.data.corps,
-      slug,
-      modifieLe: new Date(),
-    })
-    .where(eq(actualites.id, id));
+  try {
+    await db()
+      .update(actualites)
+      .set({
+        titre: analyse.data.titre,
+        chapo: analyse.data.chapo || null,
+        corps: analyse.data.corps,
+        slug,
+        ...(image.cle === undefined ? {} : { imageCle: image.cle }),
+        modifieLe: new Date(),
+      })
+      .where(eq(actualites.id, id));
+  } catch (erreur) {
+    await image.annuler();
+    throw erreur;
+  }
+  await image.apresEnregistrement();
 
   revalidatePath("/administration/actualites");
   redirect("/administration/actualites");

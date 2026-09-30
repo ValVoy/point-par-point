@@ -21,3 +21,6 @@ tsconfig.tsbuildinfo
 
 # Images de remplacement pour la planche de style, jamais publiees.
 /public/_local/
+
+# Photos envoyees en developpement sans identifiants R2.
+/.stockage-local/

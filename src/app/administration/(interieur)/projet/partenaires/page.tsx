@@ -1,4 +1,5 @@
 import { exigerDroit } from "@/lib/auth/session-courante";
+import { urlPhoto } from "@/lib/effectif-public";
 import { listePartenaires } from "@/lib/projet";
 import { basculerPartenaire } from "../actions";
 import { Corbeille, LigneElement } from "../elements";
@@ -62,6 +63,7 @@ export default async function PagePartenaires() {
                     id: String(partenaire.id),
                     nom: partenaire.nom,
                     lien: partenaire.lien ?? "",
+                    imageActuelle: urlPhoto(partenaire.logoCle) ?? "",
                   }}
                 />
               </LigneElement>

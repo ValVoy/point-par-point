@@ -1387,3 +1387,32 @@ le verrou.
 - Vérifié : dates lues dans le registre ; diff du verrou limité à la famille `sharp` et à
   `aws4fetch` ; `sharp` 0.35.4 se charge.
 - Suite : l'envoi des photos vers R2.
+
+**00:50** · **[fonction] L'envoi des photos**
+
+Fiche `fiches/photos.md` d'abord. L'ami choisit une photo telle quelle, depuis son téléphone ;
+le serveur fait le reste : format lu dans le contenu, SVG et non-images refusés, 12 Mo et
+40 millions de pixels au plus, rotation, réduction, WebP, et **toutes les métadonnées retirées**,
+position GPS comprise. Clés tirées au hasard, jamais le nom du fichier. L'ancien objet est effacé
+après l'enregistrement, le neuf si l'enregistrement échoue.
+
+Les identifiants R2 sont vides en local : un stockage de développement (`.stockage-local/`,
+servi par `/fichiers-locaux/`, 404 en production) permet de tout essayer. En production sans R2,
+l'envoi est refusé plutôt qu'écrit sur un disque éphémère. Le plafond des actions serveur passe
+à 13 Mo, et le navigateur bloque lui-même une photo de plus de 12 Mo, sinon Next couperait la
+requête avec une page d'erreur brute.
+
+Branché sur le staff, les logos des partenaires, les étapes du projet et les actualités. La
+photo des joueurs attend leur fiche détaillée, qui n'existe pas encore dans l'administration.
+
+- Portée : `src/lib/images.ts`, `stockage.ts`, `envoi-image.ts` et leurs tests,
+  `src/components/champ-image.tsx`, `src/app/fichiers-locaux/`, `lib/effectif-public.ts`
+  (`urlPhoto`), actions et formulaires du projet et des actualités, `next.config.ts`,
+  `.gitignore`, fiche, codex, ROADMAP.
+- Vérifié : 110 tests (dont redimension, GPS retiré, SVG déguisé, bombe de pixels, clés de
+  remontée refusées), `tsc`, lint ; à l'écran : SVG déguisé en JPEG refusé avec une phrase,
+  vraie photo de 3000 × 4000 enregistrée en 1200 × 1600 sans EXIF (6,9 Ko), affichée sur
+  `/effectif` ; remplacement et retrait effacent l'ancien fichier ; logo affiché en blanc sur
+  `/partenaires` ; actualité avec illustration puis retrait ; 14 Mo bloqués sans envoi ;
+  `/fichiers-locaux/..%2F.env.local` en 404. Essais retirés de la base et du disque.
+- Suite : la fiche joueur détaillée, avec sa photo et le point de visage.

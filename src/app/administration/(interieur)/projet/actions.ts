@@ -9,6 +9,7 @@ import { CLES_REGLAGE } from "@/lib/reglages";
 import { exigerDroit } from "@/lib/auth/session-courante";
 import { deplacer, ordreSuivant, tableOrdonnee, type ListeOrdonnee } from "@/lib/ordre";
 import { adresseSure } from "@/lib/texte-leger";
+import { lireImageDuFormulaire, type IssueImage } from "@/lib/envoi-image";
 
 /**
  * La vitrine du projet : chronologie, equipe derriere, partenaires. Reservee
@@ -39,6 +40,20 @@ function lireIdentifiant(donnees: FormData) {
 
 function refus(donnees: FormData, erreur: string): EtatProjet {
   return { erreur, valeurs: valeurs(donnees) };
+}
+
+/**
+ * Enregistre en base avec la photo du formulaire : l'objet neuf est efface si
+ * l'ecriture echoue, l'ancien seulement une fois l'ecriture reussie.
+ */
+async function enregistrerAvecImage(image: Extract<IssueImage, { ok: true }>, ecrire: () => Promise<unknown>) {
+  try {
+    await ecrire();
+  } catch (erreur) {
+    await image.annuler();
+    throw erreur;
+  }
+  await image.apresEnregistrement();
 }
 
 const texteFacultatif = (max: number, nom: string) =>
@@ -77,17 +92,26 @@ export async function enregistrerEtape(_p: EtatProjet, donnees: FormData): Promi
   if ("erreur" in lecture) return refus(donnees, lecture.erreur ?? "Saisie invalide.");
 
   const id = lireIdentifiant(donnees);
-  if (id) {
-    await db()
-      .update(etapesProjet)
-      .set({ ...lecture.colonnes, modifieLe: new Date() })
-      .where(eq(etapesProjet.id, id));
-  } else {
-    // Une etape nait en brouillon, comme tout contenu qui se publie.
-    await db()
-      .insert(etapesProjet)
-      .values({ ...lecture.colonnes, ordre: await ordreSuivant("etapes"), etat: "brouillon" });
-  }
+  const ancienne = id
+    ? ((await db().select({ cle: etapesProjet.imageCle }).from(etapesProjet).where(eq(etapesProjet.id, id)).limit(1))[0]?.cle ?? null)
+    : null;
+  const image = await lireImageDuFormulaire(donnees, "image", { dossier: "projet", genre: "illustration", ancienne });
+  if (!image.ok) return refus(donnees, image.erreur);
+  const colonnes = { ...lecture.colonnes, ...(image.cle === undefined ? {} : { imageCle: image.cle }) };
+
+  await enregistrerAvecImage(image, async () => {
+    if (id) {
+      await db()
+        .update(etapesProjet)
+        .set({ ...colonnes, modifieLe: new Date() })
+        .where(eq(etapesProjet.id, id));
+    } else {
+      // Une etape nait en brouillon, comme tout contenu qui se publie.
+      await db()
+        .insert(etapesProjet)
+        .values({ ...colonnes, ordre: await ordreSuivant("etapes"), etat: "brouillon" });
+    }
+  });
   revalidatePath(CHEMIN);
   return { erreur: null };
 }
@@ -123,19 +147,30 @@ export async function enregistrerMembre(_p: EtatProjet, donnees: FormData): Prom
   if (!analyse.success) {
     return refus(donnees, analyse.error.issues[0]?.message ?? "Saisie invalide.");
   }
-  const colonnes = { ...analyse.data, texte: analyse.data.texte || null };
-
   const id = lireIdentifiant(donnees);
-  if (id) {
-    await db()
-      .update(membresStaff)
-      .set({ ...colonnes, modifieLe: new Date() })
-      .where(eq(membresStaff.id, id));
-  } else {
-    await db()
-      .insert(membresStaff)
-      .values({ ...colonnes, ordre: await ordreSuivant("staff") });
-  }
+  const ancienne = id
+    ? ((await db().select({ cle: membresStaff.photoCle }).from(membresStaff).where(eq(membresStaff.id, id)).limit(1))[0]?.cle ?? null)
+    : null;
+  const image = await lireImageDuFormulaire(donnees, "photo", { dossier: "staff", genre: "photo", ancienne });
+  if (!image.ok) return refus(donnees, image.erreur);
+  const colonnes = {
+    ...analyse.data,
+    texte: analyse.data.texte || null,
+    ...(image.cle === undefined ? {} : { photoCle: image.cle }),
+  };
+
+  await enregistrerAvecImage(image, async () => {
+    if (id) {
+      await db()
+        .update(membresStaff)
+        .set({ ...colonnes, modifieLe: new Date() })
+        .where(eq(membresStaff.id, id));
+    } else {
+      await db()
+        .insert(membresStaff)
+        .values({ ...colonnes, ordre: await ordreSuivant("staff") });
+    }
+  });
   revalidatePath(`${CHEMIN}/equipe`);
   return { erreur: null };
 }
@@ -167,16 +202,25 @@ export async function enregistrerPartenaire(
   }
 
   const id = lireIdentifiant(donnees);
-  if (id) {
-    await db()
-      .update(partenaires)
-      .set({ nom: analyse.data.nom, lien, modifieLe: new Date() })
-      .where(eq(partenaires.id, id));
-  } else {
-    await db()
-      .insert(partenaires)
-      .values({ nom: analyse.data.nom, lien, ordre: await ordreSuivant("partenaires") });
-  }
+  const ancienne = id
+    ? ((await db().select({ cle: partenaires.logoCle }).from(partenaires).where(eq(partenaires.id, id)).limit(1))[0]?.cle ?? null)
+    : null;
+  const image = await lireImageDuFormulaire(donnees, "logo", { dossier: "partenaires", genre: "logo", ancienne });
+  if (!image.ok) return refus(donnees, image.erreur);
+  const colonnes = { nom: analyse.data.nom, lien, ...(image.cle === undefined ? {} : { logoCle: image.cle }) };
+
+  await enregistrerAvecImage(image, async () => {
+    if (id) {
+      await db()
+        .update(partenaires)
+        .set({ ...colonnes, modifieLe: new Date() })
+        .where(eq(partenaires.id, id));
+    } else {
+      await db()
+        .insert(partenaires)
+        .values({ ...colonnes, ordre: await ordreSuivant("partenaires") });
+    }
+  });
   revalidatePath(`${CHEMIN}/partenaires`);
   return { erreur: null };
 }

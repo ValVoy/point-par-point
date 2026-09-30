@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { ChampImage } from "@/components/champ-image";
 import { BoutonEnvoi, Champ, Erreur, ZoneTexte } from "@/components/formulaire";
 import {
   enregistrerEtape,
@@ -13,6 +14,7 @@ import {
  * Formulaires de la vitrine du projet. Les valeurs par defaut viennent de
  * l'element modifie ou, apres un refus, de ce qui vient d'etre saisi : React
  * remet le formulaire a ces valeurs apres l'envoi, donc rien ne se perd.
+ * `imageActuelle` porte l'adresse de la photo en place, calculee par la page.
  */
 
 const ETAT_INITIAL: EtatProjet = { erreur: null };
@@ -45,6 +47,7 @@ export function FormulaireEtape({ initiales = {} }: { initiales?: Valeurs }) {
         />
       </div>
       <ZoneTexte nom="texte" libelle="Récit" valeur={valeur("texte")} lignes={4} />
+      <ChampImage nom="image" libelle="Illustration" actuelle={initiales.imageActuelle || null} forme="paysage" />
       <Erreur message={etat.erreur} />
       <BoutonEnvoi>{initiales.id ? "Enregistrer" : "Ajouter en brouillon"}</BoutonEnvoi>
     </form>
@@ -66,6 +69,7 @@ export function FormulaireMembre({ initiales = {} }: { initiales?: Valeurs }) {
         placeholder="Entraîneur, image et montage..."
       />
       <ZoneTexte nom="texte" libelle="Présentation" valeur={valeur("texte")} lignes={3} />
+      <ChampImage nom="photo" libelle="Photo" actuelle={initiales.imageActuelle || null} />
       <Erreur message={etat.erreur} />
       <BoutonEnvoi>{initiales.id ? "Enregistrer" : "Ajouter"}</BoutonEnvoi>
     </form>
@@ -85,6 +89,13 @@ export function FormulairePartenaire({ initiales = {} }: { initiales?: Valeurs }
         valeur={valeur("lien")}
         maxLength={300}
         placeholder="https://"
+      />
+      <ChampImage
+        nom="logo"
+        libelle="Logo"
+        actuelle={initiales.imageActuelle || null}
+        forme="logo"
+        aide="PNG sur fond transparent de préférence. Le site l'affiche en blanc, en couleur au survol."
       />
       <Erreur message={etat.erreur} />
       <BoutonEnvoi>{initiales.id ? "Enregistrer" : "Ajouter"}</BoutonEnvoi>

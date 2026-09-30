@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
   // dans un journal, y compris en developpement (.next/dev/logs).
   logging: { serverFunctions: false },
 
+  // Une photo de telephone depasse vite le mega-octet par defaut des actions
+  // serveur. 13 Mo : les 12 Mo acceptes par src/lib/images.ts, plus le reste
+  // du formulaire.
+  experimental: { serverActions: { bodySizeLimit: "13mb" } },
+
   // Contrairement a ope_cdm, la verification des types reste active pendant
   // le build. Le VPS Hetzner a 4 vCPU, un swap et 5 Go libres : rien a voir
   // avec l'instance Clever Cloud plafonnee a 644 Mo qui avait impose de la

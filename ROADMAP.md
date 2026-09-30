@@ -85,7 +85,7 @@ design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`
 - [x] Base Turso de développement migrée et semée (`projet-volley-local-valvoy`, `aws-eu-west-1`)
 - [ ] Base Turso de production, le jour du déploiement
 - [x] Authentification identifiant et mot de passe, sessions en base, deux rôles
-- [ ] Envoi d'images vers R2 avec redimension
+- [x] Envoi d'images vers R2 avec redimension (01-10-2026, fiche `fiches/photos.md`) : staff, logos, étapes, actualités ; la photo de joueur arrive avec sa fiche
 - [x] Jeu de données de démonstration marqué `demo`, comptage et commande de purge
 - [x] Bandeau de démonstration dans l'administration
 
@@ -183,6 +183,10 @@ zéro, la logique reste.
   dans Umami ; mettre en place la sauvegarde de la base d'Umami ; vérifier qu'une visite apparaît
   (un bloqueur de publicité peut arrêter `script.js`)
 - [ ] Accord de droit à l'image couvrant le site, accord parental pour les mineurs
+- [ ] R2 : créer le bucket `projet-volley`, un jeton limité à ce bucket (lecture et écriture), et
+  son domaine public ; poser `R2_COMPTE_ID`, `R2_CLE_ACCES`, `R2_CLE_SECRETE` en variables
+  d'exécution et **`R2_DOMAINE_PUBLIC` aussi en variable de build** (lu par `next.config.ts`
+  pour autoriser les images) ; sans R2, l'envoi est refusé en production
 
 ## Lot 2
 

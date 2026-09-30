@@ -332,3 +332,18 @@ nouvelle action qui rend ou reçoit une donnée sensible profite de ce réglage 
 
 Deux règles de `refusChangement`, testées : on ne se retire pas ses propres droits, et il reste
 toujours un administrateur actif.
+
+### Une photo envoyée est relue, réduite, et nettoyée
+
+`src/lib/images.ts` lit le format dans le contenu (jamais le nom ni le type annoncé), refuse SVG,
+GIF et tout ce qui n'est pas une image, plafonne à 12 Mo et 40 millions de pixels, pivote selon
+l'appareil, réduit et sort du WebP **sans aucune métadonnée** : la position GPS qu'un téléphone
+inscrit dans chaque photo ne part jamais en ligne. Les clés d'objet sont tirées au hasard par le
+serveur et validées avant toute lecture ou effacement (`cleValide`), ce qui protège la route de
+développement contre une remontée de dossiers.
+
+L'ancien objet s'efface **après** l'enregistrement en base, l'objet neuf **si** l'enregistrement
+échoue (`lireImageDuFormulaire`). Un objet orphelin coûte moins qu'un formulaire bloqué :
+l'effacement ne fait jamais échouer une action. En développement sans R2, les photos vont dans
+`.stockage-local/` ; en production sans R2, l'envoi est refusé, le disque d'un conteneur
+s'effaçant à chaque déploiement.

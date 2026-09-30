@@ -6,6 +6,7 @@ import { dateCourte } from "@/lib/dates";
 import { actualiteParId } from "@/lib/actualites";
 import { FormulaireActualite } from "../formulaire-actualite";
 import { basculerPublicationActualite, mettreActualiteALaCorbeille } from "../actions";
+import { urlPhoto } from "@/lib/effectif-public";
 
 export const metadata = { title: "Modifier une actualité" };
 
@@ -59,6 +60,7 @@ export default async function PageActualite({
               titre: actualite.titre,
               chapo: actualite.chapo ?? "",
               corps: actualite.corps,
+              image: urlPhoto(actualite.imageCle),
             }}
           />
         </div>

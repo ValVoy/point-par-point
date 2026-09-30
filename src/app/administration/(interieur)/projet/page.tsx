@@ -1,4 +1,5 @@
 import { exigerDroit } from "@/lib/auth/session-courante";
+import { urlPhoto } from "@/lib/effectif-public";
 import { dateLongue, pourChampDate } from "@/lib/dates";
 import { etapes } from "@/lib/projet";
 import { basculerEtape } from "./actions";
@@ -66,6 +67,7 @@ export default async function PageChronologie() {
                     survenuLe: pourChampDate(etape.survenuLe),
                     dateLibre: etape.dateLibre ?? "",
                     texte: etape.texte ?? "",
+                    imageActuelle: urlPhoto(etape.imageCle) ?? "",
                   }}
                 />
               </LigneElement>
