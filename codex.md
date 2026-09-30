@@ -308,3 +308,16 @@ pour Todai). La première entrée est ce que le client a bien voulu envoyer. `li
 la dernière, corrigé le 30-09-2026 : avant, un robot contournait tout plafond par adresse en
 changeant l'en-tête à chaque envoi. Si un relais s'ajoute un jour devant Traefik (Cloudflare en
 nuage orange), la dernière entrée deviendra ce relais : à revoir à ce moment-là.
+
+### La mesure d'audience ne compte que le site public
+
+Umami (choix du 30-09-2026) est chargé par `MesureAudience`, lu à l'exécution : sans `UMAMI_URL`
+et `UMAMI_SITE_ID`, aucun script, ce qui est le cas en développement. L'administration, la planche
+et les prototypes ne sont pas comptés, sinon l'ami ferait gonfler lui-même les chiffres qu'il
+montrera aux partenaires. La règle vit deux fois, dans `pageComptee` (testée) et dans le filtre
+envoyé au navigateur, mais sur **la même liste** `SEGMENTS_NON_COMPTES` : ajouter une page de
+travail, c'est l'ajouter à cette liste.
+
+Le filtre n'utilise pas d'expression régulière : une première version en avait une, et ses barres
+obliques inverses se perdaient dans le HTML, ce qui cassait le filtre sans erreur visible côté
+serveur.

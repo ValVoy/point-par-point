@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo } from "next/font/google";
+import { MesureAudience } from "@/components/mesure-audience";
 import { DESCRIPTION_DU_SITE, NOM_DU_SITE } from "@/lib/site";
 import "./globals.css";
 
@@ -42,6 +43,7 @@ export default function RacineLayout({
           Aller au contenu
         </a>
         {children}
+        <MesureAudience />
       </body>
     </html>
   );

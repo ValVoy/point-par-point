@@ -1287,3 +1287,26 @@ le texte le dit ainsi (« la personne qui assure l'hébergement »), sans le nom
 - Vérifié : `tsc`, lint ; les deux pages en 390 et 1440 px, statut 200, aucun débordement.
 - Suite : Umami sur le VPS (le code du site, puis l'installation Coolify avec l'utilisateur), et la
   politique mise à jour dans le même commit ; puis l'écran « Comptes ».
+
+**22:40** · **[fonction] La mesure d'audience Umami, côté site**
+
+L'utilisateur ne se souvenait plus du nom de l'outil retenu au cadrage : un compteur de visites
+sans cookie, libre, installé sur son propre serveur. Expliqué, puis validé.
+
+Côté site, le script se charge seulement si ses deux variables d'exécution existent, posées dans
+Coolify sans reconstruire. Il respecte « Do Not Track », ignore les paramètres d'adresse, et ne
+compte ni l'administration ni les pages de travail. Première version cassée : l'expression
+régulière du filtre perdait ses barres obliques dans le HTML, et React signalait la balise brute.
+Réécrit avec `next/script` et une simple liste de segments, partagée avec la fonction testée.
+
+La politique de confidentialité décrit Umami dans le même commit, comme la fiche l'exige.
+
+L'installation sur le VPS reste à faire par l'utilisateur : elle demande un nom DNS chez
+Cloudflare et un service de plus dans Coolify, deux gestes sur sa production.
+
+- Portée : `src/lib/mesure-audience.ts` et son test, `src/components/mesure-audience.tsx`,
+  `src/app/layout.tsx`, `src/app/confidentialite/page.tsx`, `.env.example`, codex, ROADMAP.
+- Vérifié : 97 tests, `tsc`, lint ; avec une configuration factice en local (retirée ensuite), le
+  script est rendu, le filtre écarte `/administration` et `/planche`, garde `/`, `/matchs` et
+  `/administrations-locales`, et survit à une navigation interne.
+- Suite : l'utilisateur installe Umami dans Coolify ; puis l'écran « Comptes ».

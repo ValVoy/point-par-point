@@ -51,8 +51,14 @@ l'adresse, piège à robots, 3 envois par heure et par adresse réseau, 30 au to
 Oger, éditeur particulier en nom seul ; Hetzner, Turso et Cloudflare nommés) et `/confidentialite`
 (chaque durée annoncée tenue par le code), reliées depuis le pied de page.
 
-Ensuite : la mesure d'audience Umami (sans cookie, sur le VPS), puis l'écran « Comptes » (relié
-dans la navigation de l'administration, pas encore construit).
+**La mesure d'audience le 30-09-2026** : Umami, sans cookie, branché côté site (variables
+d'exécution `UMAMI_URL` et `UMAMI_SITE_ID`, rien de chargé sans elles), administration et pages de
+travail exclues, politique de confidentialité à jour. **Reste l'installation sur le VPS**, par
+l'utilisateur dans Coolify : nom DNS `stats.valentincheron.fr` en nuage gris, service Umami du
+catalogue, mot de passe par défaut changé tout de suite, site « Point Par Point » déclaré, puis les
+deux variables posées sur l'application.
+
+Ensuite : l'écran « Comptes » (relié dans la navigation de l'administration, pas encore construit).
 À vérifier avant la mise en ligne : l'accord de droit à l'image couvre le site ; mentions légales
 et politique de confidentialité.
 À régler avant la mise en ligne : la sauvegarde nocturne de cette base garde **30 jours** au plus, durée annoncée par la politique de confidentialité.

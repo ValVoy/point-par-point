@@ -11,8 +11,10 @@ import { EDITEUR, NOM_DU_SITE } from "@/lib/site";
  *  - adresse reseau du formulaire : 24 h (src/lib/envois-contact.ts) ;
  *  - tentatives de connexion : 15 min (src/lib/auth/tentatives.ts) ;
  *  - session d'administration : 30 jours (src/lib/auth/sessions.ts) ;
- *  - sauvegardes : 30 jours, a regler avant la mise en ligne (ROADMAP).
- * Toute nouvelle collecte (mesure d'audience comprise) met cette page a jour.
+ *  - sauvegardes : 30 jours, a regler avant la mise en ligne (ROADMAP) ;
+ *  - mesure d'audience Umami, sans cookie, hors administration
+ *    (src/lib/mesure-audience.ts).
+ * Toute nouvelle collecte met cette page a jour, dans le meme commit.
  */
 export const metadata: Metadata = {
   title: "Confidentialité",
@@ -60,6 +62,16 @@ export default function PageConfidentialite() {
         (jamais stocké en clair), date de dernière connexion. Un cookie de session les garde connectées 30 jours au
         plus. Les tentatives de connexion, avec l&apos;adresse réseau, sont gardées 15 minutes pour bloquer les
         essais de mots de passe.
+      </p>
+
+      <h3>Quand vous visitez le site</h3>
+      <p>
+        Pour savoir combien de personnes le lisent, le site utilise Umami, un compteur de visites installé sur notre
+        propre serveur. Il ne dépose aucun cookie et ne garde pas votre adresse réseau. Il retient la page vue, le
+        site d&apos;où vous venez, le type d&apos;appareil, le navigateur, la langue et le pays. Une visite est
+        reconnue par une empreinte calculée, qui ne permet pas de savoir qui vous êtes. Ces chiffres ne sont
+        partagés avec personne. Si votre navigateur demande à ne pas être suivi (réglage « Do Not Track »), rien
+        n&apos;est compté.
       </p>
 
       <h2>Cookies et traceurs</h2>
