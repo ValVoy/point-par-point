@@ -36,6 +36,8 @@
   --color-craie: #f5f6f7;
   --color-craie-douce: #b3b0bb;
   --color-craie-tenue: #8e8a96;
+  /* Le corps d'un long texte : moins eblouissant que la craie (13,6 pour 1). */
+  --color-craie-lecture: #d8d7dc;
 
   /* --- Les couleurs du maillot, mates ------------------------------------- */
   --color-turquoise: #64979d;
@@ -170,6 +172,47 @@ body {
   :focus-visible {
     outline: 2px solid var(--color-jaune);
     outline-offset: 2px;
+  }
+}
+
+/*
+ * Le corps d'un article (fiche fiches/actualites.md) : lire sur fond sombre
+ * demande une colonne etroite (34 em, 60 a 68 caracteres), un corps de 18 px
+ * et un interlignage plus ample que sur fond clair. Le condense reste aux
+ * intertitres ; les liens sont soulignes, en turquoise clair (9,4 pour 1).
+ */
+@layer components {
+  .texte-article {
+    max-width: 34em;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-craie-lecture);
+  }
+  .texte-article p + p,
+  .texte-article h2 + p {
+    margin-top: 1.1em;
+  }
+  .texte-article h2 {
+    margin-top: 1.8em;
+    font-family: var(--font-titre);
+    font-weight: 800;
+    font-stretch: 62%;
+    text-transform: uppercase;
+    font-size: 1.9rem;
+    line-height: 1;
+    color: var(--color-craie);
+  }
+  .texte-article a {
+    color: var(--color-turquoise-clair);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+  }
+  .texte-article a:hover {
+    color: var(--color-jaune);
+  }
+  .texte-article strong {
+    color: var(--color-craie);
   }
 }
 

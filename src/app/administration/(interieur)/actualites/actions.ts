@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { actualites } from "@/lib/db/schema";
+import { actualites, anciensSlugsActualite } from "@/lib/db/schema";
 import { exigerDroit } from "@/lib/auth/session-courante";
 import { slugActualiteLibre } from "@/lib/actualites";
 
@@ -86,13 +86,21 @@ export async function modifierActualite(
     return { erreur: analyse.error.issues[0]?.message ?? "Saisie invalide." };
   }
 
+  // L'adresse suit le titre ; l'ancienne est gardee pour rediriger les liens
+  // deja partages (table anciens_slugs_actualite).
+  const [avant] = await db().select({ slug: actualites.slug }).from(actualites).where(eq(actualites.id, id)).limit(1);
+  const slug = await slugActualiteLibre(analyse.data.titre, id);
+  if (avant && avant.slug !== slug) {
+    await db().insert(anciensSlugsActualite).values({ slug: avant.slug, actualiteId: id }).onConflictDoNothing();
+  }
+
   await db()
     .update(actualites)
     .set({
       titre: analyse.data.titre,
       chapo: analyse.data.chapo || null,
       corps: analyse.data.corps,
-      slug: await slugActualiteLibre(analyse.data.titre, id),
+      slug,
       modifieLe: new Date(),
     })
     .where(eq(actualites.id, id));

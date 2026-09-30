@@ -2,6 +2,7 @@ import { and, count, eq, inArray, isNull, sql } from "drizzle-orm";
 import { db } from "./db";
 import {
   actualites,
+  anciensSlugsActualite,
   anciensSlugsEpisode,
   anciensSlugsRencontre,
   classements,
@@ -139,6 +140,17 @@ export async function purgerDemo(): Promise<number> {
     const r = await base
       .delete(anciensSlugsEpisode)
       .where(inArray(anciensSlugsEpisode.episodeId, idsEpisodesDemo));
+    effaces += r.rowsAffected ?? 0;
+  }
+
+  // Les anciennes adresses des actualites de demonstration partent avec elles.
+  const idsActualitesDemo = (
+    await base.select({ id: actualites.id }).from(actualites).where(eq(actualites.demo, true))
+  ).map((l) => l.id);
+  if (idsActualitesDemo.length > 0) {
+    const r = await base
+      .delete(anciensSlugsActualite)
+      .where(inArray(anciensSlugsActualite.actualiteId, idsActualitesDemo));
     effaces += r.rowsAffected ?? 0;
   }
 

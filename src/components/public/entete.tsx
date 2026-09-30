@@ -3,25 +3,27 @@ import { NOM_DU_SITE } from "@/lib/site";
 
 /**
  * L'en-tete des pages publiques hors accueil (l'accueil a son ouverture). Le
- * nom a gauche, les rubriques a droite ; seules celles qui existent sont
- * listees, on n'annonce pas une page qui n'est pas encore la.
+ * nom a gauche, les rubriques a droite ; sur un telephone, les rubriques
+ * passent sous le nom plutot que de deborder. Seules les rubriques qui
+ * existent sont listees : on n'annonce pas une page qui n'est pas encore la.
  */
 
-const RUBRIQUES = [
+export const RUBRIQUES = [
   { href: "/matchs", nom: "Matchs" },
   { href: "/effectif", nom: "Effectif" },
   { href: "/serie", nom: "La série" },
+  { href: "/actualites", nom: "Actualités" },
 ];
 
 export function EnTete({ actif }: { actif?: string }) {
   return (
     <header className="border-b border-[var(--color-nuit-trait)]">
-      <div className="colonne-large flex min-h-16 items-center justify-between gap-4">
-        <Link href="/" className="titre-affiche shrink-0 text-xl sm:text-2xl">
+      <div className="colonne-large flex flex-wrap items-center justify-between gap-x-6 pt-3 sm:min-h-16 sm:pt-0">
+        <Link href="/" className="titre-affiche shrink-0 text-2xl">
           {NOM_DU_SITE}
         </Link>
-        <nav aria-label="Rubriques">
-          <ul className="flex gap-4 text-sm font-semibold sm:gap-6">
+        <nav aria-label="Rubriques" className="w-full sm:w-auto">
+          <ul className="flex gap-5 text-sm font-semibold sm:gap-6">
             {RUBRIQUES.map((r) => (
               <li key={r.href}>
                 <Link

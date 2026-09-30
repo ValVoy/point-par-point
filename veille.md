@@ -341,3 +341,20 @@ Six clubs ouverts dans un navigateur ; aucune instruction injectée.
 
 Ce qui ressort : aucun site ne traite l'absence de photo, et trois publient la date de naissance
 complète, à éviter pour des amateurs.
+
+## 16. Veille actualités, 30-09-2026 à 16:31
+
+Six sites ouverts dans un navigateur, tailles et largeurs lues dans les styles calculés ; aucune
+instruction injectée.
+
+| Site | Ce qu'on prend, ou ce qu'on évite |
+|---|---|
+| Toulouse FC (Awwwards 2023) | Fond sombre, titre condensé, « Publié le » ; mais cartes sans date, chapô condensé répété dans le corps |
+| The Guardian | Chapô distinct, 17 px à 1,4 sur 620 px, date complète, liens internes |
+| Paris Basketball | Fond #0e0e0e, 18 px à 1,6 sur 499 px, date complète sur chaque carte ; chapô trop large |
+| Arsenal | « Related News » en fin d'article ; corps sur 960 px, 110 caractères par ligne |
+| The Players' Tribune | Chapô en citation ; texte de juin laissé en tête fin septembre, sans date visible |
+| Tours Volley-Ball | Rubrique « Actualité » entièrement vide |
+
+Ce qui ressort : une date toujours visible, une colonne de 60 à 68 caractères, un interlignage plus
+ample sur fond sombre, et jamais de rubrique vide ni de contenu périmé en tête.

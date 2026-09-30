@@ -1,4 +1,5 @@
 import { and, desc, eq, isNull } from "drizzle-orm";
+import { actualitesPubliees } from "./actualites-publiques";
 import { db } from "./db";
 import { episodes } from "./db/schema";
 import { rencontresDeLaSaison } from "./rencontres";
@@ -11,8 +12,7 @@ import { saisonCourante } from "./saisons";
  * montrer une case vide ou une donnee perimee (principe 4 du plan).
  *
  * Seul le contenu publie sort d'ici : un brouillon ne doit jamais atteindre
- * une page publique (principe 6). Les actualites et les partenaires viendront
- * avec leurs propres pages, pas avant.
+ * une page publique (principe 6). Les partenaires viendront avec leur page.
  */
 
 const NOMBRE_PRECEDENTS = 6;
@@ -28,7 +28,7 @@ async function dernierEpisode() {
 }
 
 export async function donneesAccueil(maintenant = new Date()) {
-  const [saison, episode] = await Promise.all([saisonCourante(), dernierEpisode()]);
+  const [saison, episode, actualites] = await Promise.all([saisonCourante(), dernierEpisode(), actualitesPubliees(3)]);
   const matchs = saison ? await rencontresDeLaSaison(saison.id) : [];
 
   const resultats = derniersResultats(matchs);
@@ -41,6 +41,7 @@ export async function donneesAccueil(maintenant = new Date()) {
     dernier: resultats[0] ?? null,
     precedents: resultats.slice(1, 1 + NOMBRE_PRECEDENTS),
     episode,
+    actualites,
   };
 }
 

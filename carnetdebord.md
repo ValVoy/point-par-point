@@ -1073,3 +1073,31 @@ Point ajouté à la mise en ligne : un joueur mineur demande l'accord de ses par
   redirection pour une adresse inconnue en majuscules.
 - Suite : les actualités, puis les pages « Le projet », « Où nous voir », partenaires, contact et
   les mentions légales.
+
+**17:20** · **[page] Les actualités**
+
+Veille d'abord (`veille.md` section 16) : six sites mesurés dans leurs styles calculés. Ce qui en
+sort pour la lecture sur fond sombre : un corps de 18 px, un interlignage plus ample que sur fond
+clair, 60 à 68 caractères par ligne, pas de blanc pur. Et deux échecs répétés : des articles sans
+date visible, et des rubriques vides ou périmées (celle d'un club de Ligue A est entièrement vide).
+
+La liste : la plus récente en grand, les autres en liste datée d'une colonne, et une rubrique vide
+qui renvoie vers les matchs et la série. L'article : date en toutes lettres, chapô distinct, corps
+dans une colonne de 612 pixels réglée par une classe `texte-article` (18 px, interlignage 1,7,
+craie de lecture à 13,6 pour 1, liens turquoise clair soulignés), partage natif ou copie du lien
+sans aucun script tiers, articles voisins. Sur l'accueil, un bloc de trois actualités, masqué si
+la plus récente a plus de quatre-vingt-dix jours. L'adresse d'une actualité suit son titre :
+troisième table d'anciennes adresses (migration additive 0004) et redirection 308.
+
+L'en-tête compte quatre rubriques : sur téléphone, elles passent sous le nom du site ; le pied de
+page les reprend toutes. Un titre d'affiche géant débordait de l'écran au téléphone : tailles
+réduites d'un cran et césure française. Débordement mesuré à 375 px sur les six pages publiques :
+aucun.
+
+- Portée : `src/app/actualites/`, `src/components/public/actualites/`, `bloc-actualites.tsx`,
+  `lib/actualites-publiques.ts`, schéma éditorial et migration 0004, action de modification d'une
+  actualité, purge de démonstration, `entete.tsx`, `pied-de-page.tsx`, `globals.css`.
+- Vérifié : 83 tests, `tsc`, lint ; à l'écran la liste et un article en 1440 px, la liste en 375
+  px, le bloc de l'accueil ; débordement à 375 px sur six pages.
+- Suite : critique à froid des actualités, puis « Le projet », « Où nous voir », partenaires,
+  contact, mentions légales.

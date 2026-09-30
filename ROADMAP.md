@@ -37,11 +37,15 @@ tableau LED relié à sa page, abonnement, épisodes voisins. Lien réciproque m
 cartes égales, numéro géant en guise de portrait ; `/effectif/<slug>`, identité, âge et taille,
 présentation, parcours, ses matchs de la saison, coéquipiers par numéro.
 
-Ensuite : les actualités, puis les pages « Le projet », « Où nous voir », partenaires et contact.
+**Les actualités le 30-09-2026** (fiche `fiches/actualites.md`) : liste datée, article réglé pour
+la lecture sur fond sombre, partage sans script tiers, bloc de l'accueil masqué au-delà de 90 jours.
+
+Ensuite : les pages « Le projet », « Où nous voir », partenaires et contact, puis les mentions
+légales et la politique de confidentialité.
 À vérifier avant la mise en ligne : l'accord de droit à l'image couvre le site ; mentions légales
 et politique de confidentialité.
-À préparer pour la mise en ligne : appliquer en production les migrations 0002 et 0003 (tables
-des anciennes adresses), avec l'accord de l'utilisateur.
+À préparer pour la mise en ligne : appliquer en production les migrations 0002, 0003 et 0004
+(tables des anciennes adresses), avec l'accord de l'utilisateur.
 Reporté : abonnement d'agenda à toute la saison, carte statique, transition animée liste → match.
 Le nom (« Point Par Point ») et la chaîne YouTube sont arrivés le 30-09-2026 et sont en place.
 

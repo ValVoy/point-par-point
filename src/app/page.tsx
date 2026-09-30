@@ -1,3 +1,4 @@
+import { BlocActualites } from "@/components/public/accueil/bloc-actualites";
 import { BlocSerie } from "@/components/public/accueil/bloc-serie";
 import { BlocTableaux } from "@/components/public/accueil/bloc-tableaux";
 import { PiedDePage } from "@/components/public/accueil/pied-de-page";
@@ -33,6 +34,7 @@ export default async function Accueil() {
             precedents={donnees.precedents}
             maintenant={donnees.maintenant}
           />
+          <BlocActualites actualites={donnees.actualites} maintenant={donnees.maintenant} />
         </Revelations>
       </main>
       <PiedDePage saison={donnees.saison} />

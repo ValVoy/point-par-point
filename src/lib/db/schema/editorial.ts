@@ -75,6 +75,24 @@ export const actualites = sqliteTable(
 );
 
 /**
+ * Les anciennes adresses d'une actualite : l'adresse suit le titre, et un lien
+ * deja partage doit survivre a une correction (meme parade que les matchs et
+ * les episodes, 30-09-2026).
+ */
+export const anciensSlugsActualite = sqliteTable(
+  "anciens_slugs_actualite",
+  {
+    id: identifiant(),
+    slug: text("slug").notNull(),
+    actualiteId: integer("actualite_id")
+      .notNull()
+      .references(() => actualites.id),
+    ...horodatage,
+  },
+  (table) => [uniqueIndex("anciens_slugs_actualite_slug_unique").on(table.slug)],
+);
+
+/**
  * La chronologie de la page « le projet ». Saisie a la main et non deduite des
  * evenements : le recit d'un projet ne se resume pas a ses donnees, et les
  * vrais moments fondateurs ne sont ni un match ni un episode.
