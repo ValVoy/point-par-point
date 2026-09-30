@@ -61,13 +61,12 @@ se fait au déploiement du site, voir « Avant la mise en ligne ».
 provisoire affiché une fois, rôles, désactivation) et « Mon compte » pour changer le sien.
 
 Ensuite, ce qui reste à construire du lot 1 (relu le 30-09-2026, contrairement à ce que disait
-l'entrée précédente) : l'envoi des photos vers R2, sans lequel aucune photo de joueur, de staff ni
-logo ne peut être ajouté ; la fiche joueur détaillée ; le classement de la poule ; le bilan de
-saison. Puis la liste « Avant la mise en ligne ».
+l'entrée précédente) : ~~l'envoi des photos~~ et ~~la fiche joueur~~ faits le 01-10-2026 ; restent
+le classement de la poule et le bilan de saison. Puis la liste « Avant la mise en ligne ».
 À vérifier avant la mise en ligne : l'accord de droit à l'image couvre le site ; mentions légales
 et politique de confidentialité.
 À régler avant la mise en ligne : la sauvegarde nocturne de cette base garde **30 jours** au plus, durée annoncée par la politique de confidentialité.
-À préparer pour la mise en ligne : appliquer en production les migrations 0002 à 0006
+À préparer pour la mise en ligne : appliquer en production les migrations 0002 à 0007
 (anciennes adresses, réglages), avec l'accord de l'utilisateur.
 Reporté : abonnement d'agenda à toute la saison, carte statique, transition animée liste → match.
 Le nom (« Point Par Point ») et la chaîne YouTube sont arrivés le 30-09-2026 et sont en place.
@@ -94,14 +93,14 @@ design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`
 - [x] Écran de connexion, limitation des tentatives, coquille et navigation par rôle
 - [x] Saisons : création, modification, saison courante, corbeille
 - [x] Effectif : ajout de joueur, numéro et poste par saison, capitaine, retrait
-- [ ] Fiche joueur détaillée (photo, présentation longue, parcours)
+- [x] Fiche joueur détaillée : identité, taille, photo, présentation, parcours (01-10-2026, fiche `fiches/fiche-joueur.md`)
 - [x] Matchs : liste par saison, scores à saisir en tête, ajout isolé, modification, état,
       commentaire, corbeille (29-09-2026)
 - [x] Calendrier de la saison, saisie en masse, tout ou rien (29-09-2026)
 - [x] Score et détail set par set, écran court pensé pour le téléphone, ou score final seul
       (29-09-2026)
 - [x] Tableau de bord : scores à saisir, épisodes en brouillon, prochain match (29-09-2026)
-- [ ] Point de visage des photos de joueurs (deux colonnes sur `joueurs`), avec l'envoi vers R2
+- [x] Point de visage des photos de joueurs (deux colonnes sur `joueurs`, migration 0007) (01-10-2026)
 - [x] Épisodes : adresse YouTube, résumé, lien vers un match, brouillon puis publication (29-09-2026)
 - [x] Actualités, avec brouillon obligatoire et mise en forme légère maison (29-09-2026)
 - [x] Chronologie du projet, staff, partenaires, ordre à la main, réservés à l'admin (29-09-2026). Photos et logos avec l'envoi vers R2
@@ -176,7 +175,7 @@ zéro, la logique reste.
 - [ ] Déploiement Coolify depuis `main`
 - [ ] Sonde Todai sur le domaine
 - [ ] Sauvegarde nocturne de la base Turso, **30 jours** au plus (durée annoncée par la politique de confidentialité)
-- [ ] Migrations 0002 à 0006 appliquées en production, avec l'accord de l'utilisateur
+- [ ] Migrations 0002 à 0007 appliquées en production, avec l'accord de l'utilisateur
 - [ ] Umami : poser `UMAMI_URL=https://stats.valentincheron.fr` et
   `UMAMI_SITE_ID=15868b64-5057-4ce2-bc1a-0bc7adbc6eaa` en variables d'**exécution** (relire
   `is_buildtime` par l'API, Coolify coche Buildtime par défaut) ; renseigner le domaine du site

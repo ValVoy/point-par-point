@@ -27,8 +27,11 @@ export function PortraitJoueur({
   sizes,
   format = "aspect-[4/5]",
   prioritaire = false,
+  position = "50% 0%",
 }: {
   photo: string | null;
+  /** `object-position` de la photo : le point de visage place dans l'administration. */
+  position?: string;
   numero: number | null;
   poste: Poste;
   sizes: string;
@@ -48,7 +51,8 @@ export function PortraitJoueur({
             fill
             priority={prioritaire}
             sizes={sizes}
-            className="object-cover object-top grayscale transition-[filter] duration-[var(--duree)] group-hover:grayscale-0 group-focus-visible:grayscale-0"
+            style={{ objectPosition: position }}
+            className="object-cover grayscale transition-[filter] duration-[var(--duree)] group-hover:grayscale-0 group-focus-visible:grayscale-0"
           />
           <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1 bg-[var(--color-turquoise)]" />
         </>

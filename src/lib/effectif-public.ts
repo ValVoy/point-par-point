@@ -37,6 +37,8 @@ const colonnesMembre = {
   neLe: joueurs.neLe,
   tailleCm: joueurs.tailleCm,
   photoCle: joueurs.photoCle,
+  visageX: joueurs.visageX,
+  visageY: joueurs.visageY,
   numero: effectifs.numero,
   poste: effectifs.poste,
   capitaine: effectifs.capitaine,

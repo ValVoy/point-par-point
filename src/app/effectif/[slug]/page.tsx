@@ -11,6 +11,7 @@ import { age, dateLongue } from "@/lib/dates";
 import { effectifDeLaSaison, joueurPublic, urlPhoto } from "@/lib/effectif-public";
 import { LIBELLES_POSTE } from "@/lib/postes";
 import { EQUIPE } from "@/lib/site";
+import { positionPhoto } from "@/lib/position-photo";
 
 /**
  * La page d'un joueur (fiche fiches/effectif.md) : son identite sportive,
@@ -69,6 +70,7 @@ export default async function PageJoueur({ params }: Parametres) {
           <div className="max-w-sm lg:col-span-4 lg:max-w-none">
             <PortraitJoueur
               photo={urlPhoto(joueur.photoCle)}
+              position={positionPhoto({ x: joueur.visageX, y: joueur.visageY })}
               numero={effectif.numero}
               poste={effectif.poste}
               sizes="(min-width: 1024px) 30vw, 24rem"

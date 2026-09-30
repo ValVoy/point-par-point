@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 import { BoutonEnvoi, Erreur } from "@/components/formulaire";
 import { LIBELLES_POSTE } from "@/lib/postes";
@@ -15,6 +16,8 @@ const ETAT_INITIAL: EtatJoueur = { erreur: null };
 
 export type LigneEffectif = {
   effectifId: number;
+  joueurId: number;
+  aPhoto: boolean;
   nomComplet: string;
   numero: number | null;
   poste: Poste;
@@ -38,6 +41,7 @@ export function LigneEffectifModifiable({ ligne }: { ligne: LigneEffectif }) {
     [
       ligne.age !== null ? `${ligne.age} ans` : null,
       ligne.tailleCm ? `${ligne.tailleCm} cm` : null,
+      ligne.aPhoto ? null : "sans photo",
     ]
       .filter(Boolean)
       .join(" · ") || "Fiche à compléter";
@@ -67,7 +71,13 @@ export function LigneEffectifModifiable({ ligne }: { ligne: LigneEffectif }) {
           {/* Le nom occupe sa ligne entiere, le reste passe dessous : mis
               cote a cote, c'est le nom qui se faisait tronquer par un badge
               pourtant plus court que lui. */}
-          <p className="truncate font-medium">{ligne.nomComplet}</p>
+          <Link
+            href={`/administration/effectif/joueur/${ligne.joueurId}`}
+            className="block truncate font-medium hover:text-[var(--color-turquoise)] hover:underline"
+          >
+            {ligne.nomComplet}
+            <span className="sr-only"> : ouvrir sa fiche</span>
+          </Link>
           <p className="truncate text-xs text-[var(--color-craie-tenue)]">
             {ligne.capitaine ? (
               <span className="mr-1.5 rounded bg-[var(--color-turquoise-sourd)] px-1.5 py-0.5 text-[var(--color-turquoise-clair)]">
@@ -102,7 +112,10 @@ export function LigneEffectifModifiable({ ligne }: { ligne: LigneEffectif }) {
         </div>
       ) : null}
 
-      <div className="mt-2 flex gap-4 border-t border-[var(--color-nuit-trait)] pt-2 text-xs">
+      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-2 border-t border-[var(--color-nuit-trait)] pt-2 text-xs">
+        <Link href={`/administration/effectif/joueur/${ligne.joueurId}`} className="action-admin text-[var(--color-turquoise)]">
+          Fiche et photo
+        </Link>
         {ligne.capitaine ? null : (
           <form action={designerCapitaine}>
             <input type="hidden" name="effectifId" value={ligne.effectifId} />

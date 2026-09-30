@@ -17,12 +17,15 @@ export function ChampImage({
   actuelle,
   aide,
   forme = "portrait",
+  position,
 }: {
   nom: string;
   libelle: string;
   actuelle: string | null;
   aide?: string;
   forme?: "portrait" | "paysage" | "logo";
+  /** `object-position` de la photo en place (point de visage d'un joueur). */
+  position?: string;
 }) {
   const [apercu, setApercu] = useState<string | null>(null);
   const [trop, setTrop] = useState(false);
@@ -65,7 +68,12 @@ export function ChampImage({
           {montree ? (
             // Apercu local (blob:) ou photo deja optimisee : next/image n'apporterait rien ici.
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={montree} alt="" className={`h-full w-full ${forme === "logo" ? "object-contain p-2" : "object-cover"}`} />
+            <img
+              src={montree}
+              alt=""
+              style={apercu ? undefined : { objectPosition: position }}
+              className={`h-full w-full ${forme === "logo" ? "object-contain p-2" : "object-cover"}`}
+            />
           ) : (
             <span className="grid h-full place-items-center text-xs text-[var(--color-craie-tenue)]">Aucune</span>
           )}

@@ -55,6 +55,8 @@ export default async function PageEffectif({
       nom: joueurs.nom,
       neLe: joueurs.neLe,
       tailleCm: joueurs.tailleCm,
+      joueurId: joueurs.id,
+      aPhoto: joueurs.photoCle,
     })
     .from(effectifs)
     .innerJoin(joueurs, eq(effectifs.joueurId, joueurs.id))
@@ -124,6 +126,8 @@ export default async function PageEffectif({
                   <LigneEffectifModifiable
                     ligne={{
                       effectifId: ligne.effectifId,
+                      joueurId: ligne.joueurId,
+                      aPhoto: ligne.aPhoto !== null,
                       nomComplet: `${ligne.prenom} ${ligne.nom}`,
                       numero: ligne.numero,
                       poste: ligne.poste,

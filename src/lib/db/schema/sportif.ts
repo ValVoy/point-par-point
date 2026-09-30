@@ -54,6 +54,14 @@ export const joueurs = sqliteTable(
     tailleCm: integer("taille_cm"),
     /** Cle de l'objet dans le bucket R2, jamais une URL complete. */
     photoCle: text("photo_cle"),
+    /**
+     * Point de visage de la photo, en pourcentage de la largeur et de la
+     * hauteur (0 a 100). Sert d'`object-position` : chaque cadrage du site,
+     * carte en 4:5 comme portrait de la fiche, garde le visage dans le champ.
+     * Null tant que personne ne l'a place : le haut de la photo par defaut.
+     */
+    visageX: integer("visage_x"),
+    visageY: integer("visage_y"),
     presentation: text("presentation"),
     parcours: text("parcours"),
     actif: integer("actif", { mode: "boolean" }).notNull().default(true),

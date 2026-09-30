@@ -5,6 +5,7 @@ import type { Poste } from "@/lib/db/schema";
 import { urlPhoto } from "@/lib/effectif-public";
 import { LIBELLES_POSTE } from "@/lib/postes";
 import { PortraitJoueur } from "./portrait-joueur";
+import { positionPhoto } from "@/lib/position-photo";
 
 /**
  * Les cartes de la page de l'effectif (fiche fiches/effectif.md). Celle d'un
@@ -24,6 +25,8 @@ type Membre = {
   neLe: Date | null;
   tailleCm: number | null;
   photoCle: string | null;
+  visageX: number | null;
+  visageY: number | null;
   numero: number | null;
   poste: Poste;
   capitaine: boolean;
@@ -38,6 +41,7 @@ export function CarteJoueur({ membre: m, maintenant }: { membre: Membre; mainten
       <Link href={`/effectif/${m.slug}`} className="group block">
         <PortraitJoueur
           photo={photo}
+          position={positionPhoto({ x: m.visageX, y: m.visageY })}
           numero={m.numero}
           poste={m.poste}
           sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 45vw"

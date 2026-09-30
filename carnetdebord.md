@@ -1416,3 +1416,31 @@ photo des joueurs attend leur fiche détaillée, qui n'existe pas encore dans l'
   `/partenaires` ; actualité avec illustration puis retrait ; 14 Mo bloqués sans envoi ;
   `/fichiers-locaux/..%2F.env.local` en 404. Essais retirés de la base et du disque.
 - Suite : la fiche joueur détaillée, avec sa photo et le point de visage.
+
+**00:05** · **[écran] La fiche joueur, et un rectificatif d'heures**
+
+Rectificatif d'abord : les deux entrées précédentes, « sharp ramené » et « L'envoi des photos »,
+portent les heures 00:05 et 00:50 du 01-10. Elles sont fausses, je les ai inventées au lieu de
+lire l'horloge : elles ont été écrites le 30-09 vers 23:45 et 23:55. Le titre de date
+« 01-10-2026 » qui les précède est donc prématuré, sans conséquence sur leur contenu. Les heures
+se lisent désormais avec `date` avant chaque entrée.
+
+La fiche joueur existe : l'administration ne savait modifier que le numéro et le poste. Depuis
+chaque ligne de l'effectif (« Fiche et photo », ou le nom), on saisit l'identité, la date de
+naissance, la taille, la photo, la présentation et le parcours. Le point de visage se place d'un
+clic sur la photo, ou au clavier avec deux curseurs, avec l'aperçu du cadrage de la carte à côté ;
+deux colonnes (migration additive 0007), rendues en `object-position` partout où le portrait
+apparaît. L'adresse publique ne suit pas le nom, pour ne casser aucun lien partagé.
+
+`positionPhoto` vit dans son propre module : importée par le sélecteur, côté navigateur, depuis le
+fichier de validation, elle y aurait embarqué zod.
+
+- Portée : `src/lib/fiche-joueur.ts` et son test, `src/lib/position-photo.ts`,
+  `administration/(interieur)/effectif/joueur/`, `ligne-effectif.tsx`, `effectif/page.tsx`,
+  `champ-image.tsx`, `portrait-joueur.tsx`, `cartes.tsx`, `effectif/[slug]/page.tsx`,
+  `lib/effectif-public.ts`, schéma et migration 0007, fiche, ROADMAP.
+- Vérifié : 117 tests, `tsc`, lint ; à l'écran : date de naissance en 2030 refusée, photo en
+  paysage enregistrée, point placé d'un clic à 75 % / 29 %, repris tel quel sur la carte de
+  `/effectif` et sur la page du joueur ; fiche et effectif à 390 px sans débordement. Joueur de
+  démonstration remis en état, fichiers d'essai effacés.
+- Suite : le classement de la poule, puis le bilan de saison.

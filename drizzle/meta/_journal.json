@@ -50,6 +50,13 @@
       "when": 1790780440241,
       "tag": "0006_envois-contact",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1790805479107,
+      "tag": "0007_visage-joueur",
+      "breakpoints": true
     }
   ]
 }
