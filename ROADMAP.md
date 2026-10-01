@@ -181,7 +181,7 @@ public consistera à retirer la barrière et à brancher le domaine définitif (
 `NEXT_PUBLIC_SITE_URL` est figé à la compilation).
 
 - [ ] Enregistrement DNS `volley` dans la zone Cloudflare `valentincheron.fr`
-- [ ] Base Turso de production, migrations appliquées avec l'accord de l'utilisateur
+- [x] Base Turso de production `projet-volley-prod` (aws-eu-west-1), migrations 0000 à 0009 appliquées avec l'accord de l'utilisateur (01-10-2026)
 - [ ] Bucket R2 et jeton limité (voir plus bas)
 - [ ] Application Coolify depuis `main`, santé sur `/sante`, variables de build et d'exécution
 - [ ] Barrière Traefik `basicauth` par label personnalisé (recette dans `Coolify/ETAT.md`)
