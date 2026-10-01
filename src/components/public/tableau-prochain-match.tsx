@@ -1,6 +1,7 @@
-import { dateEtHeure } from "@/lib/dates";
-import { compteRebours } from "@/lib/resultats";
+import { joursAvant, quandDuMatch } from "@/lib/horaire";
+import { compteRebours, quantite } from "@/lib/resultats";
 import { EQUIPE } from "@/lib/site";
+import { AfficheurLed } from "./afficheur-led";
 import { CompteReboursLed } from "./compte-rebours-led";
 
 /**
@@ -19,13 +20,36 @@ export type ProchainMatch = {
   adversaire: string;
   domicile: boolean;
   joueLe: Date;
+  /** Faux quand l'horaire est a confirmer : le tableau compte alors en jours. */
+  heureConnue?: boolean;
   salle?: string | null;
 };
+
+/**
+ * Sans horaire, pas de faux compte a rebours a la seconde : le tableau dit
+ * « J-16 », et « C'est aujourd'hui » le jour venu (demande du 01-10-2026).
+ * Le compte change a minuit, la page est rendue a chaque visite.
+ */
+function JoursLed({ jours }: { jours: number }) {
+  const texte = jours === 0 ? "C'est aujourd'hui, horaire à confirmer." : `Dans ${quantite(jours, "jour")}, horaire à confirmer.`;
+  return (
+    <div>
+      <p className="sr-only">{texte}</p>
+      <div aria-hidden="true" className="text-center">
+        <AfficheurLed valeur={`J-${Math.min(jours, 99)}`} className="text-[2.75rem] sm:text-7xl" />
+        <span className="mt-2 block text-[0.65rem] tracking-[0.2em] text-[var(--color-craie-douce)] uppercase">
+          {jours === 0 ? "C'est aujourd'hui" : "Horaire à confirmer"}
+        </span>
+      </div>
+    </div>
+  );
+}
 
 export function TableauProchainMatch({ match, maintenant }: { match: ProchainMatch; maintenant: Date }) {
   const initial = compteRebours(match.joueLe, maintenant);
   const [gauche, droite] = match.domicile ? [EQUIPE, match.adversaire] : [match.adversaire, EQUIPE];
-  const quand = dateEtHeure(match.joueLe);
+  const heureConnue = match.heureConnue !== false;
+  const quand = quandDuMatch({ joueLe: match.joueLe, heureConnue });
 
   return (
     <div
@@ -46,7 +70,11 @@ export function TableauProchainMatch({ match, maintenant }: { match: ProchainMat
       </div>
 
       <div className="mt-6" style={{ opacity: "calc(0.25 + 0.75 * var(--allume, 1))" }}>
-        <CompteReboursLed cible={match.joueLe.toISOString()} initial={initial} />
+        {heureConnue ? (
+          <CompteReboursLed cible={match.joueLe.toISOString()} initial={initial} />
+        ) : (
+          <JoursLed jours={joursAvant(match.joueLe, maintenant)} />
+        )}
       </div>
 
       <p className="mt-6 border-t border-[var(--color-nuit-trait)] pt-4 text-center text-sm first-letter:uppercase">

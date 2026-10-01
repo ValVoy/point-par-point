@@ -58,3 +58,20 @@ describe("lienGoogleAgenda", () => {
     assert.equal(lien.searchParams.get("location"), "Gymnase du Bourg, Francheville");
   });
 });
+
+describe("match sans horaire", () => {
+  // Range a 23 h 59 a Paris (lib/horaire.ts) : la journee entiere, a la date de Paris.
+  const SANS_HEURE = { ...BASE, debut: new Date("2026-10-17T21:59:00Z"), journeeEntiere: true };
+
+  it("devient un evenement sur la journee, sans heure inventee", () => {
+    const ics = evenementAgenda(SANS_HEURE);
+    assert.match(ics, /\r\nDTSTART;VALUE=DATE:20261017\r\n/);
+    assert.match(ics, /\r\nDTEND;VALUE=DATE:20261018\r\n/);
+    assert.doesNotMatch(ics, /T215900Z/);
+  });
+
+  it("donne aussi la journee entiere au lien Google Agenda", () => {
+    const lien = new URL(lienGoogleAgenda(SANS_HEURE));
+    assert.equal(lien.searchParams.get("dates"), "20261017/20261018");
+  });
+});

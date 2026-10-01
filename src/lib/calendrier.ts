@@ -14,6 +14,8 @@ export type MatchCalendrier = {
   etat: EtatRencontre;
   setsNous: number | null;
   setsEux: number | null;
+  /** Faux quand l'horaire est a confirmer (lib/horaire.ts) ; absent, il est connu. */
+  heureConnue?: boolean;
 };
 
 export type StatutPublic = "a_venir" | "en_cours" | "score_a_venir" | "jouee" | "reportee" | "annulee";
@@ -26,7 +28,8 @@ export function statutPublic(m: MatchCalendrier, maintenant: Date): StatutPublic
   if (m.setsNous !== null && m.setsEux !== null && m.etat === "jouee") return "jouee";
   const ecart = maintenant.getTime() - m.joueLe.getTime();
   if (m.etat === "a_venir" && ecart < 0) return "a_venir";
-  if (m.etat === "a_venir" && ecart < DUREE_EN_COURS) return "en_cours";
+  // Sans horaire, rien ne dit que le match a commence : on attend le score.
+  if (m.etat === "a_venir" && ecart < DUREE_EN_COURS && m.heureConnue !== false) return "en_cours";
   return "score_a_venir";
 }
 

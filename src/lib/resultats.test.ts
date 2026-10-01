@@ -113,6 +113,12 @@ describe("matchDuTableau", () => {
     assert.equal(matchDuTableau(liste, maintenant)?.adversaire, "2026-10-10T18:00:00Z");
   });
 
+  it("ne garde pas un match sans horaire passe 23 h 59 : rien ne dit qu'il est en cours", () => {
+    const sansHeure = { ...a("2026-10-02T21:59:00Z"), heureConnue: false };
+    const liste = [sansHeure, a("2026-10-10T18:00:00Z")];
+    assert.equal(matchDuTableau(liste, new Date("2026-10-02T23:00:00Z"))?.adversaire, "2026-10-10T18:00:00Z");
+  });
+
   it("ignore un match annule ou reporte", () => {
     const liste = [a("2026-10-04T18:00:00Z", "annulee"), a("2026-10-05T18:00:00Z", "reportee")];
     assert.equal(matchDuTableau(liste, maintenant), undefined);

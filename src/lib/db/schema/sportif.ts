@@ -111,6 +111,13 @@ export const rencontres = sqliteTable(
       .references(() => saisons.id),
     slug: text("slug").notNull(),
     joueLe: integer("joue_le", { mode: "timestamp_ms" }).notNull(),
+    /**
+     * Faux quand l'horaire n'est pas encore publie (demande du 01-10-2026) :
+     * `joueLe` porte alors le jour a 23 h 59, heure de Paris (lib/horaire.ts),
+     * pour que le match reste « a venir » toute la journee, et l'heure ne
+     * s'affiche nulle part.
+     */
+    heureConnue: integer("heure_connue", { mode: "boolean" }).notNull().default(true),
     adversaire: text("adversaire").notNull(),
     aDomicile: integer("a_domicile", { mode: "boolean" })
       .notNull()

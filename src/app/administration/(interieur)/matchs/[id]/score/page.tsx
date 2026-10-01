@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { exigerDroit } from "@/lib/auth/session-courante";
-import { dateEtHeure } from "@/lib/dates";
+import { quandDuMatch } from "@/lib/horaire";
 import { rencontreParId } from "@/lib/rencontres";
 import { SaisieScore } from "./saisie-score";
 
@@ -48,7 +48,7 @@ export default async function PageScore({
         {rencontre.adversaire}
       </h1>
       <p className="mt-1 text-sm text-[var(--color-craie-douce)] first-letter:uppercase">
-        {dateEtHeure(rencontre.joueLe)}
+        {quandDuMatch(rencontre)}
       </p>
 
       <div className="mt-6">

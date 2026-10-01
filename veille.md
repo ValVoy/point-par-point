@@ -397,3 +397,81 @@ l'équipe entière plutôt qu'un joueur, un lien vers la page complète aligné 
 emplacement de même gabarit quand la photo manque, et trois étapes numérotées pour un extrait de
 chronologie. Pièges : l'équipe née d'une série qui ne raconte pas son origine, le carrousel une
 carte à la fois, les boucles infinies et le récit qui laisse des écrans vides.
+
+## 19. Refonte de la mise en page, veille du groupe des trois, 01-10-2026 à 23:14
+
+Demande de l'utilisateur : « tout est trop tassé ». Trois veilles parallèles, déléguées, en lecture
+seule, mesurées dans un navigateur en 1440 et 390 px ; aucune instruction injectée.
+
+### 19.1 Les pages de vidéos et de la série
+
+| Site | Mesures | Ce qu'on prend, ou ce qu'on évite |
+|---|---|---|
+| Netflix, Drive to Survive | Titres de section 32 px (20 en 390), 350 à 430 px entre sections ; cartes 16:9 de 327×184, écart 12 px ; titre « 1. … » 16 px ; durée en pastille | Numéro collé au titre, durée sur l'image, résumé court, bandes-annonces à part. Évite : le carrousel qui cache la suite |
+| Red Bull TV, The Next Goal (docuserie d'un club) | Héros 1440×729 ; cartes 16:9 de 580×325, deux et demie par rangée, écart 26 px (306×171 et 14 px en 390) ; titre d'épisode 18 px, « S1E1 » discret | La plus proche : très grandes vignettes, peu de texte, un seul appel à l'action dans le héros |
+| Arte.tv, Karambolage | Héros en deux, accroche 20 px ; cartes 326×183, écart 24 px (164×92 en 390) | Regroupements éditoriaux sous la liste. Évite : le résumé au survol (absent au téléphone), vignettes de 92 px de haut |
+| Nebula, Jet Lag | Liste verticale, vignette 249×140, 24 px entre lignes ; « Episode 1: » puis titre 14 px, date, durée | La liste verticale numérotée et datée, tri inversable, « prochain épisode » près du lecteur. Évite : titres de 14 px |
+| Dude Perfect | Titres 96 px capitales (49 en 390) ; compte à rebours jusqu'à la prochaine vidéo ; titre d'épisode 36 px capitales sous un lecteur de 1125×658 | Le compte à rebours vers le prochain épisode, les capitales très grosses. Évite : iframe YouTube chargée avant consentement, lecture automatique |
+| The Last Dance for Glory (Awwwards) | H1 166 px, chapitres « I » à « IX » : surtitre 12 px, H2 108 px, accroche 27 px, environ 1 350 px entre chapitres ; rail d'index fixé | Chapitres numérotés, rail d'index, vide généreux. Évite : défilement long et lissé sur une page utilitaire |
+| The Immortals (Awwwards) | Canvas WebGL en 1440 ; en 390, une image 16:9 tous les 500 px | Une entrée par élément, beaucoup d'air. Évite : contenu en canvas, intro bloquante |
+
+Ce qui ressort : une liste verticale numérotée plutôt qu'un carrousel, des vignettes de 400 à
+580 px de large en 1440, des titres d'épisode de 20 à 24 px, la durée sur l'image ; l'épisode à la
+une se distingue par la taille et la place, pas par un badge ; le lecteur large d'abord sur la page
+d'épisode, puis « Épisode suivant » ; sur l'accueil, la vignette en grand bandeau plutôt qu'une
+grille moitié-moitié. Écart entre cartes 24 à 26 px en 1440, 12 à 14 px en 390.
+
+### 19.2 Respiration, espacement et échelle typographique (le graphiste)
+
+| Site | Mesures (1440 / 390) | Ce qu'on prend, ou ce qu'on évite |
+|---|---|---|
+| Trevor Noah (Awwwards SOTD 03-09-2026, sombre) | Titres de section 99 px (40 en 390), corps 19/27 ; 449 à 1 142 px de vide avant un titre, puis titre collé au contenu ; lignes pleine largeur de 217 px séparées d'un filet | Vide énorme avant le titre, titre collé au contenu, lignes à filet plutôt que cartes, texte décalé |
+| White Desert (SOTD 11-09-2026) | Paddings 320/160 ; h2 140 px (60 en 390) ; texte limité à 640 px ; colonnes de grille en filets visibles | La grille rendue visible, colonne de lecture d'environ 40 rem. Évite : 19 000 px de page au téléphone |
+| Radian (SOTD 04-07-2026) | h2 48 px ; 72 px réguliers entre blocs d'une suite (52 en 390), grand vide seulement à l'entrée | Rythme régulier dans une suite, grand vide à son entrée ; images bord à bord. Évite : légendes à 13,5 px |
+| Williams GP Tech (HM 31-07-2026, sombre) | Chiffre géant 88 px au-dessus d'une légende de 13 px ; cartes écartées de 18 (14 en 390) | Le chiffre géant sur légende minuscule, pour nos scores ; écarts serrés dans les grilles, grands vides autour |
+| LOVB (ligue de volley) | Paddings 96/96 (24/24 en 390) ; corps 18/28 (1,56) ; contenu 1 200 px ; cartes écartées de 16 | Corps à 1,55, écarts de 16 px. Évite : 24 px de padding au téléphone, notre reproche même |
+| Manchester City | Contenu 1 024 px, corps 13 px, 28 à 43 px entre sections | Contre-modèle : l'image même du tassé |
+| Premier League | Lignes de liste de 88 px, écart 16 ; h2 24 px | Lignes de 88 px. Évite : titres de section à 24 px, sans hiérarchie |
+| It's Nice That (éditorial) | 353 à 436 px avant chaque titre de rubrique, 5 à 20 px après ; corps 18 px même au téléphone | Le procédé central : vide très asymétrique, la rubrique se lit comme un chapitre |
+
+Non mesuré : The Tie Break (SOTD 25-09-2026), expérience WebGL sans grille de page.
+
+Ce qui ressort : l'air vient de l'**asymétrie** (grand vide avant un titre, titre collé à son
+contenu), pas d'un padding uniforme ; nos py-24/py-32 symétriques ne sont pas petits, ils sont
+uniformes. Les titres de section montent à 99-140 px sur les sites primés contre nos 48-60 ; les
+écarts restent serrés dans les grilles (14-21 px) et les lignes de liste montent à 72-88 px. Pièges :
+corps à 13-14 px sur fond sombre, 24 px de padding au téléphone, défilements démesurés, colonne de
+1 024 px.
+
+**Proposition chiffrée du graphiste** (à arbitrer dans la fiche) : marge `clamp(1.25rem, 3.5vw,
+3.5rem)` ; colonne large 75rem, lecture 38rem ; `--air-titre` `clamp(6rem, 3rem + 12vw, 20rem)`,
+`--titre-contenu` `clamp(1.25rem, 0.75rem + 1.5vw, 2.5rem)`, `--section-serree` `clamp(3rem, 2rem +
+4vw, 6rem)`, `--section-fin` `clamp(4rem, 2rem + 6vw, 8rem)`, `--gouttiere` `clamp(0.875rem, 0.6rem +
+1vw, 1.5rem)`, lignes de liste 4.5rem puis 5.5rem ; titre principal `clamp(4rem, 1rem + 14vw,
+16rem)`, titre de section `clamp(2.75rem, 1.5rem + 5.5vw, 7rem)`, chiffre géant `clamp(4rem, 2rem +
+9vw, 11rem)`, h3 `clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem)`, chapeau `clamp(1.25rem, 1rem + 1vw,
+1.75rem)`, corps `clamp(1rem, 0.95rem + 0.25vw, 1.1875rem)` à 1,55, étiquette 0.8125rem.
+
+### 19.3 Les pages de calendrier, de résultats et de match
+
+Non abouties : Arsenal (navigation refusée), Real Madrid (calendrier vide), Leinster (404), LNV (lien
+introuvable). Aucun site primé avec un vrai calendrier ; Cadillac F1 n'est que « Nominee ».
+
+| Site | Mesures | Ce qu'on prend, ou ce qu'on évite |
+|---|---|---|
+| LOVB (volley US) | Cartes de 172 px, écart 17, par semaine ; score set par set aligné à droite, total en rond de 32 px (334 px de large en 390) | Sets gagnés clairs et perdus atténués, total en pastille ; page match : hero sombre, barre des points par set, confrontations précédentes. Évite : « Away at Home » |
+| TAURON Liga (volley polonais) | Cartes de 96 px, écart 17 ; logo 56 px, nom 19 px ; filtre par journée | Points par set en tuiles sur la page match. Évite : cases « ... » à la place du score, bandeaux empilés |
+| Lega Volley, SuperLega | Tableau 8 colonnes, lignes de 47 px, texte 12,3 px (89 à 110 px en 390) | Contre-modèle exact du tassé ; saison affichée périmée |
+| FC Barcelone | Lignes de 81 px à filets ; noms 20 px condensés ; titre de mois 30 px, barre pleine largeur, 50 px d'air avant chaque mois | Le meilleur horaire inconnu : sur-titre « Date et heure à confirmer » en accent, même hauteur de ligne ; « horaires à l'heure de Paris ». Évite : gros logos de compétition |
+| Manchester City | Ligne de 128 px ; l'heure dans la case du score ; titre de mois 41 px | Une seule case pour l'heure puis le score ; noms abrégés au téléphone. Évite : heure provisoire « subject to change », débordement mesuré à 552 px en 390 |
+| Racing 92 (rugby) | Cartes de 595×378, gouttière 28 ; bande visuelle de 120 px | Le meilleur domicile/extérieur : bande claire à domicile, noire à l'extérieur, lisible sans texte ; « Le week-end du 31 octobre » quand l'heure manque ; page match après : score gagnant plein, perdant en contour. Évite : premier match à 2 164 px au téléphone |
+| Hashtag United (né sur YouTube) | Lignes de 128 px à filets, adversaire 20 px capitales, « Home/Away » en texte gris | Billet réservé au domicile (chez nous : « comment venir »). Évite : date sans jour, Home/Away sans marqueur, pagination au lieu des mois |
+| Cadillac F1 (Nominee) | Cartes 432×531, filtre « All / Previous / Upcoming » | Le filtre « à venir / joués ». Évite : chargeur bloquant, cartes géantes, coquille de saisie |
+
+Ce qui ressort : des lignes de 80 à 130 px (viser 88 à 104 px, 120 à 150 en carte au téléphone)
+avec trois blocs seulement, date, adversaire, heure ou score, le reste en sur-titre ; le mois comme
+regroupement, avec un vrai titre et de l'air avant ; le domicile lu par l'ordre et par un signal
+visuel fort (fond clair ou sombre) ; une seule case pour l'heure puis le score, avec les sets en
+petit ; l'horaire inconnu comme un état à part entière, en accent, à hauteur de ligne égale. Pièges :
+tableau multi-colonnes, cases vides, contenu qui enterre la liste au téléphone, débordement, lignes
+sans page match.

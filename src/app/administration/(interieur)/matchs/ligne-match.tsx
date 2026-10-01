@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { dateEtHeure } from "@/lib/dates";
+import { quandDuMatch } from "@/lib/horaire";
 import { PastilleResultat } from "@/components/pastille-resultat";
 import { LIBELLES_ETAT } from "@/lib/etats-rencontre";
 import { scoreASaisir, type RencontreAvecSets } from "@/lib/rencontres";
@@ -41,7 +41,7 @@ export function LigneMatch({ rencontre }: { rencontre: RencontreAvecSets }) {
     >
       <div className="min-w-0 flex-1">
         <p className="text-xs text-[var(--color-craie-tenue)] first-letter:uppercase">
-          {dateEtHeure(rencontre.joueLe)}
+          {quandDuMatch(rencontre)}
         </p>
         <p className="mt-0.5 font-medium">
           {rencontre.aDomicile ? "Contre " : "Chez "}

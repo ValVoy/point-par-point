@@ -95,6 +95,7 @@ export default async function PageMatchs({ searchParams }: { searchParams: Promi
                   adversaire: prochain.adversaire,
                   domicile: prochain.aDomicile,
                   joueLe: prochain.joueLe,
+                  heureConnue: prochain.heureConnue,
                   salle: [prochain.salleNom, prochain.salleAdresse].filter(Boolean).join(", ") || null,
                 }}
                 maintenant={maintenant}

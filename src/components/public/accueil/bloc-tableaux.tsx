@@ -70,6 +70,7 @@ export function BlocTableaux({
                     adversaire: prochain.adversaire,
                     domicile: prochain.aDomicile,
                     joueLe: prochain.joueLe,
+                    heureConnue: prochain.heureConnue,
                     salle: salle || null,
                   }}
                   maintenant={maintenant}

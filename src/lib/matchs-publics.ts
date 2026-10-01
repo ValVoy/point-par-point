@@ -80,7 +80,7 @@ export const matchPublic = cache(async (slug: string) => {
   if (!match) return null;
 
   const voisin = (m: (typeof saison)[number] | undefined) =>
-    m ? { slug: m.slug, adversaire: m.adversaire, aDomicile: m.aDomicile, joueLe: m.joueLe } : null;
+    m ? { slug: m.slug, adversaire: m.adversaire, aDomicile: m.aDomicile, joueLe: m.joueLe, heureConnue: m.heureConnue } : null;
   return {
     // L'instant de reference de la page, lu une fois : le rendu reste pur.
     maintenant: new Date(),

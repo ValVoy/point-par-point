@@ -51,7 +51,13 @@ export function FormulaireMatch({
 
       <div className="grid grid-cols-2 gap-4">
         <Champ nom="date" libelle="Date" type="date" valeur={match?.date} requis />
-        <Champ nom="heure" libelle="Heure" type="time" valeur={match?.heure} requis />
+        <Champ
+          nom="heure"
+          libelle="Heure"
+          type="time"
+          valeur={match?.heure}
+          aide="Vide si l'horaire n'est pas encore connu : le site affichera « horaire à confirmer »."
+        />
       </div>
 
       <Champ

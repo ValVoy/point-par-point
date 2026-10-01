@@ -29,10 +29,16 @@ export function dateLongue(date: Date | null | undefined): string {
   return jourEnLettres(date, { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 }
 
+/** « samedi 3 octobre », sans l'annee ni l'heure. */
+export function jourEtMois(date: Date | null | undefined): string {
+  if (!date) return "";
+  return jourEnLettres(date, { weekday: "long", day: "numeric", month: "long" });
+}
+
 /** « samedi 3 octobre à 20 h 30 » : le jour, puis l'heure a la francaise. */
 export function dateEtHeure(date: Date | null | undefined): string {
   if (!date) return "";
-  return `${jourEnLettres(date, { weekday: "long", day: "numeric", month: "long" })} à ${heure(date)}`;
+  return `${jourEtMois(date)} à ${heure(date)}`;
 }
 
 /**

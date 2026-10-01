@@ -7,7 +7,7 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { ETATS_RENCONTRE, anciensSlugsRencontre, rencontres, setsRencontre } from "@/lib/db/schema";
 import { exigerDroit } from "@/lib/auth/session-courante";
-import { depuisChampDateHeure } from "@/lib/dates";
+import { instantDuMatch } from "@/lib/horaire";
 import { slugRencontreLibre } from "@/lib/rencontres";
 import {
   analyserScoreFinal,
@@ -29,7 +29,12 @@ const LIEUX = ["domicile", "exterieur"] as const;
 
 const schemaMatch = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "La date est obligatoire."),
-  heure: z.string().regex(/^\d{2}:\d{2}$/, "L'heure est obligatoire."),
+  // Facultative : vide, l'horaire est « a confirmer » (lib/horaire.ts).
+  heure: z
+    .string()
+    .trim()
+    .regex(/^(\d{2}:\d{2})?$/, "L'heure s'écrit 20:30, ou se laisse vide si elle n'est pas connue.")
+    .optional(),
   adversaire: z
     .string()
     .trim()
@@ -64,13 +69,14 @@ function lireMatch(donnees: FormData) {
   });
 }
 
-function versInstant(champs: ChampsMatch): Date | null {
-  return depuisChampDateHeure(`${champs.date}T${champs.heure}`);
+function versInstant(champs: ChampsMatch) {
+  return instantDuMatch(champs.date, champs.heure);
 }
 
-function colonnes(champs: ChampsMatch, joueLe: Date) {
+function colonnes(champs: ChampsMatch, horaire: { joueLe: Date; heureConnue: boolean }) {
   return {
-    joueLe,
+    joueLe: horaire.joueLe,
+    heureConnue: horaire.heureConnue,
     adversaire: champs.adversaire,
     aDomicile: champs.lieu === "domicile",
     competition: ouNull(champs.competition),
@@ -97,15 +103,15 @@ export async function creerMatch(
   if (!analyse.success) {
     return { erreurs: [analyse.error.issues[0]?.message ?? "Saisie invalide."] };
   }
-  const joueLe = versInstant(analyse.data);
-  if (!joueLe) return { erreurs: ["Cette date ou cette heure n'existe pas."] };
+  const horaire = versInstant(analyse.data);
+  if (!horaire) return { erreurs: ["Cette date ou cette heure n'existe pas."] };
 
   await db()
     .insert(rencontres)
     .values({
       saisonId,
-      slug: await slugRencontreLibre(joueLe, analyse.data.adversaire),
-      ...colonnes(analyse.data, joueLe),
+      slug: await slugRencontreLibre(horaire.joueLe, analyse.data.adversaire),
+      ...colonnes(analyse.data, horaire),
     });
 
   revalidatePath("/administration/matchs");
@@ -135,7 +141,7 @@ export async function creerCalendrier(
     colonnesSaisies;
 
   const erreurs: string[] = [];
-  const valides: { champs: ChampsMatch; joueLe: Date }[] = [];
+  const valides: { champs: ChampsMatch; horaire: { joueLe: Date; heureConnue: boolean } }[] = [];
 
   dates.forEach((date, index) => {
     const ligne = index + 1;
@@ -157,12 +163,12 @@ export async function creerCalendrier(
       erreurs.push(`Ligne ${ligne} : ${analyse.error.issues[0]?.message ?? "saisie invalide."}`);
       return;
     }
-    const joueLe = versInstant(analyse.data);
-    if (!joueLe) {
+    const horaire = versInstant(analyse.data);
+    if (!horaire) {
       erreurs.push(`Ligne ${ligne} : cette date ou cette heure n'existe pas.`);
       return;
     }
-    valides.push({ champs: analyse.data, joueLe });
+    valides.push({ champs: analyse.data, horaire });
   });
 
   if (erreurs.length > 0) return { erreurs };
@@ -170,10 +176,10 @@ export async function creerCalendrier(
 
   const reserves = new Set<string>();
   const valeurs = [];
-  for (const { champs, joueLe } of valides) {
-    const slug = await slugRencontreLibre(joueLe, champs.adversaire, { reserves });
+  for (const { champs, horaire } of valides) {
+    const slug = await slugRencontreLibre(horaire.joueLe, champs.adversaire, { reserves });
     reserves.add(slug);
-    valeurs.push({ saisonId, slug, ...colonnes(champs, joueLe) });
+    valeurs.push({ saisonId, slug, ...colonnes(champs, horaire) });
   }
 
   // Une seule requete d'insertion a plusieurs lignes : atomique par nature.
@@ -201,8 +207,8 @@ export async function modifierMatch(
   const etat = schemaEtat.safeParse(texte(donnees, "etat"));
   if (!etat.success) return { erreurs: ["État du match inconnu."] };
 
-  const joueLe = versInstant(analyse.data);
-  if (!joueLe) return { erreurs: ["Cette date ou cette heure n'existe pas."] };
+  const horaire = versInstant(analyse.data);
+  if (!horaire) return { erreurs: ["Cette date ou cette heure n'existe pas."] };
 
   const commentaire = texte(donnees, "commentaire")?.trim() ?? "";
   if (commentaire.length > 2000) {
@@ -213,7 +219,7 @@ export async function modifierMatch(
   // doit pas rester gravee dans l'URL du match. L'ancienne est gardee pour
   // rediriger les liens deja partages (table anciens_slugs_rencontre).
   const [avant] = await db().select({ slug: rencontres.slug }).from(rencontres).where(eq(rencontres.id, id)).limit(1);
-  const slug = await slugRencontreLibre(joueLe, analyse.data.adversaire, { sauf: id });
+  const slug = await slugRencontreLibre(horaire.joueLe, analyse.data.adversaire, { sauf: id });
   if (avant && avant.slug !== slug) {
     await db().insert(anciensSlugsRencontre).values({ slug: avant.slug, rencontreId: id }).onConflictDoNothing();
   }
@@ -221,7 +227,7 @@ export async function modifierMatch(
   const [rencontre] = await db()
     .update(rencontres)
     .set({
-      ...colonnes(analyse.data, joueLe),
+      ...colonnes(analyse.data, horaire),
       slug,
       etat: etat.data,
       commentaire: ouNull(commentaire),

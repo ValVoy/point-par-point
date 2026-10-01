@@ -43,6 +43,8 @@ const CHIFFRES: Record<string, Segment[]> = {
   "8": TOUS,
   "9": ["a", "b", "c", "d", "f", "g"],
   "-": ["g"],
+  // Le J du « J-16 » d'un match sans horaire, comme sur les tableaux qui affichent un compte en jours.
+  J: ["b", "c", "d", "e"],
   " ": [],
 };
 

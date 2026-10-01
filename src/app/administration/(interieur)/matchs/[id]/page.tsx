@@ -22,7 +22,9 @@ export default async function PageMatch({
   const rencontre = await rencontreParId(identifiant);
   if (!rencontre || rencontre.supprimeLe) notFound();
 
-  const [date = "", heure = ""] = pourChampDateHeure(rencontre.joueLe).split("T");
+  const [date = "", heureSaisie = ""] = pourChampDateHeure(rencontre.joueLe).split("T");
+  // Horaire a confirmer : le champ reste vide, jamais les 23 h 59 du rangement (lib/horaire.ts).
+  const heure = rencontre.heureConnue ? heureSaisie : "";
 
   return (
     <>

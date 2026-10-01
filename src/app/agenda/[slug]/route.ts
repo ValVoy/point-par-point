@@ -40,6 +40,7 @@ export async function GET(_requete: Request, { params }: { params: Promise<{ slu
   const ics = evenementAgenda({
     uid: `match-${rencontre.id}@point-par-point`,
     debut: rencontre.joueLe,
+    journeeEntiere: !rencontre.heureConnue,
     titre,
     lieu: lieu || null,
     description: rencontre.competition ?? null,

@@ -75,7 +75,7 @@ async function MatchRaconte({ slug }: { slug: string }) {
     const salle = [match.salleNom, match.salleAdresse].filter(Boolean).join(", ") || null;
     tableau = (
       <TableauProchainMatch
-        match={{ adversaire: match.adversaire, domicile: match.aDomicile, joueLe: match.joueLe, salle }}
+        match={{ adversaire: match.adversaire, domicile: match.aDomicile, joueLe: match.joueLe, heureConnue: match.heureConnue, salle }}
         maintenant={maintenant}
       />
     );

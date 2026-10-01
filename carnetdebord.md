@@ -1694,3 +1694,35 @@ L'utilisateur veut ensuite parler de la mise en page des vidéos YouTube et des 
   Domicile et 4 Extérieur sur la démo, noms accessibles relus.
 - Suite : feu vert pour pousser (cinq commits locaux), puis la mise en page des vidéos et des
   matchs.
+
+**23:18** · **[jalon] Les matchs sans horaire, et la veille de la refonte**
+
+Le calendrier fédéral publie trois matchs sans heure, et le modèle en exigeait une. Choix de
+l'utilisateur : le champ heure devient facultatif ; vide, le site dit « horaire à confirmer », le
+tableau du prochain match compte en jours (« J-16 », puis « C'est aujourd'hui ») au lieu d'un faux
+compte à rebours, et l'agenda propose la journée entière.
+
+Représentation retenue : une colonne `heure_connue` (migration additive 0010), et un match sans
+heure rangé à 23 h 59 ce jour-là. Toute la logique qui compare l'instant du match à maintenant le
+garde ainsi « à venir » jusqu'au soir sans être réécrite ; seuls l'affichage (`lib/horaire.ts`),
+le statut « en cours », le tableau et l'agenda lisent le drapeau. Un match sans heure n'est jamais
+annoncé « en cours ».
+
+En parallèle, trois veilles déléguées pour la refonte « trop tassé » (`veille.md`, section 19) :
+pages de vidéos, respiration et échelle (le graphiste), pages de matchs. Le constat central : l'air
+vient de l'asymétrie, un grand vide avant un titre puis le titre collé à son contenu, pas d'un
+espacement uniforme comme le nôtre.
+
+Incident : l'ancien serveur de développement avait des processus de compilation morts et rendait
+des 500 ; arrêté et relancé, rien dans le code.
+
+- Portée : schéma et migration 0010, `lib/horaire.ts` (+ tests), `calendrier.ts`, `resultats.ts`,
+  `agenda.ts`, `dates.ts`, tableau du prochain match, afficheur LED (lettre J), ligne de
+  calendrier, pages match, où nous voir, série, administration des matchs, veille.
+- Vérifié : 171 tests, `tsc`, lint ; sur la démo, tableau en jours, « horaire à confirmer » sur la
+  ligne et la page du match, agenda en journée entière (`DTSTART;VALUE=DATE`) ; administration :
+  création sans heure, champ vide à la modification, ajout d'une heure pris en compte. Migration
+  0010 appliquée en production avec l'accord de l'utilisateur (11 migrations, 10 matchs intacts).
+  Données et compte d'essai retirés de la base de développement.
+- Suite : push, puis les trois matchs sans heure en production ; ensuite les fiches du système
+  d'espacement, de la Série et des Matchs, à valider avant le code.

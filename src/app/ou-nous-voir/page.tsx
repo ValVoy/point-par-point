@@ -7,7 +7,7 @@ import { CopierAdresse } from "@/components/public/copier-adresse";
 import { EnTete } from "@/components/public/entete";
 import { TableauProchainMatch } from "@/components/public/tableau-prochain-match";
 import { TexteLeger } from "@/components/texte-leger";
-import { dateEtHeure } from "@/lib/dates";
+import { quandDuMatch } from "@/lib/horaire";
 import { CLES_REGLAGE, lireReglage } from "@/lib/reglages";
 import { EQUIPE } from "@/lib/site";
 import { ouNousVoir } from "@/lib/vitrine";
@@ -84,7 +84,7 @@ export default async function PageOuNousVoir() {
             <Revelations>
               <div className="mt-4" data-allume>
                 <TableauProchainMatch
-                  match={{ adversaire: prochain.adversaire, domicile: true, joueLe: prochain.joueLe, salle: prochain.salleNom }}
+                  match={{ adversaire: prochain.adversaire, domicile: true, joueLe: prochain.joueLe, heureConnue: prochain.heureConnue, salle: prochain.salleNom }}
                   maintenant={maintenant}
                 />
               </div>
@@ -115,7 +115,7 @@ export default async function PageOuNousVoir() {
                     <span className="titre-affiche text-2xl group-hover:text-[var(--color-jaune)] group-focus-visible:text-[var(--color-jaune)]">
                       Contre {m.adversaire}
                     </span>
-                    <span className="inline-block text-[var(--color-craie-douce)] first-letter:uppercase">{dateEtHeure(m.joueLe)}</span>
+                    <span className="inline-block text-[var(--color-craie-douce)] first-letter:uppercase">{quandDuMatch(m)}</span>
                   </Link>
                 </li>
               ))}

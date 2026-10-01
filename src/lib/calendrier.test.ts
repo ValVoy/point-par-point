@@ -23,6 +23,13 @@ describe("statutPublic", () => {
     assert.equal(statutPublic(match({ etat: "jouee" }), maintenant), "score_a_venir");
   });
 
+  it("ne dit jamais « en cours » pour un match sans horaire : il est a venir jusqu'au soir", () => {
+    // Range a 23 h 59 (lib/horaire.ts) : apres, c'est le score qu'on attend.
+    const sansHeure = match({ joueLe: new Date("2026-10-03T21:59:00Z"), heureConnue: false });
+    assert.equal(statutPublic(sansHeure, maintenant), "a_venir");
+    assert.equal(statutPublic(sansHeure, new Date("2026-10-03T22:30:00Z")), "score_a_venir");
+  });
+
   it("dit « joue » quand le total en sets est connu", () => {
     assert.equal(statutPublic(match({ etat: "jouee", setsNous: 3, setsEux: 1 }), maintenant), "jouee");
   });

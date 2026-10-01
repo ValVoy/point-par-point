@@ -15,7 +15,8 @@ import {
 import { TableauProchainMatch } from "@/components/public/tableau-prochain-match";
 import { TableauResultat } from "@/components/public/tableau-resultat";
 import { statutPublic } from "@/lib/calendrier";
-import { dateEtHeure, dateLongue } from "@/lib/dates";
+import { dateLongue } from "@/lib/dates";
+import { quandDuMatch } from "@/lib/horaire";
 import { matchPublic, nouvelleAdresse } from "@/lib/matchs-publics";
 import { resultatDepuis } from "@/lib/resultats";
 
@@ -57,7 +58,7 @@ export default async function PageMatch({ params }: Parametres) {
 
   const statut = statutPublic(match, maintenant);
   const resultat = resultatDepuis(match);
-  const quand = dateEtHeure(match.joueLe);
+  const quand = quandDuMatch(match);
   const salle = [match.salleNom, match.salleAdresse].filter(Boolean).join(", ") || null;
   // Salle ou commentaire a mettre a cote du score ; sinon le tableau prend la largeur.
   const aCote = Boolean(match.commentaire?.trim() || salle);
@@ -85,7 +86,7 @@ export default async function PageMatch({ params }: Parametres) {
           <Revelations>
           <div className="max-w-3xl" data-allume>
             <TableauProchainMatch
-              match={{ adversaire: match.adversaire, domicile: match.aDomicile, joueLe: match.joueLe, salle }}
+              match={{ adversaire: match.adversaire, domicile: match.aDomicile, joueLe: match.joueLe, heureConnue: match.heureConnue, salle }}
               maintenant={maintenant}
             />
             {statut === "a_venir" ? <ActionsMatch match={match} /> : null}

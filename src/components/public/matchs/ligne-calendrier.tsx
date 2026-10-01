@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { PastilleResultat } from "@/components/pastille-resultat";
 import { statutPublic, type StatutPublic } from "@/lib/calendrier";
-import { dateLongue, heure } from "@/lib/dates";
+import { dateLongue } from "@/lib/dates";
+import { heureDuMatch } from "@/lib/horaire";
 import type { RencontreAvecSets } from "@/lib/rencontres";
 
 /**
@@ -46,7 +47,15 @@ const ETATS: Partial<Record<StatutPublic, string>> = {
 
 function Emplacement({ match, statut }: { match: RencontreAvecSets; statut: StatutPublic }) {
   if (statut === "a_venir") {
-    return <span className="titre-affiche text-2xl normal-case sm:text-3xl">{heure(match.joueLe)}</span>;
+    const h = heureDuMatch(match);
+    return h ? (
+      <span className="titre-affiche text-2xl normal-case sm:text-3xl">{h}</span>
+    ) : (
+      <span className="text-right text-xs leading-snug font-semibold tracking-[0.15em] text-[var(--color-craie-douce)] uppercase">
+        Horaire
+        <br />à confirmer
+      </span>
+    );
   }
   if (statut === "jouee" && match.setsNous !== null && match.setsEux !== null) {
     const victoire = match.setsNous > match.setsEux;
@@ -72,7 +81,8 @@ function Emplacement({ match, statut }: { match: RencontreAvecSets; statut: Stat
 
 function nomAccessible(match: RencontreAvecSets, statut: StatutPublic, raconte: boolean) {
   const qui = `${match.aDomicile ? "à domicile contre" : "à l'extérieur, chez"} ${match.adversaire}`;
-  let quoi = `à ${heure(match.joueLe)}`;
+  const h = heureDuMatch(match);
+  let quoi = h ? `à ${h}` : "horaire à confirmer";
   if (statut === "jouee" && match.setsNous !== null && match.setsEux !== null) {
     quoi = `${match.setsNous > match.setsEux ? "victoire" : "défaite"} ${match.setsNous} sets à ${match.setsEux}`;
   } else if (ETATS[statut]) {

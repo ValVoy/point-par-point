@@ -4,7 +4,7 @@ import { exigerConnexion } from "@/lib/auth/session-courante";
 import { peut } from "@/lib/auth/roles";
 import { db } from "@/lib/db";
 import { actualites, episodes } from "@/lib/db/schema";
-import { dateEtHeure } from "@/lib/dates";
+import { quandDuMatch } from "@/lib/horaire";
 import { prochainMatch, rencontresDeLaSaison, scoreASaisir } from "@/lib/rencontres";
 import { saisonCourante } from "@/lib/saisons";
 import { classementARevoir } from "@/lib/classement-base";
@@ -78,7 +78,7 @@ export default async function TableauDeBord() {
               {rencontre.adversaire}
             </p>
             <p className="mt-0.5 text-xs text-[var(--color-craie-tenue)] first-letter:uppercase">
-              {dateEtHeure(rencontre.joueLe)}
+              {quandDuMatch(rencontre)}
             </p>
           </Link>
         ))}
@@ -150,7 +150,7 @@ export default async function TableauDeBord() {
               {prochain.adversaire}
             </p>
             <p className="mt-0.5 text-xs text-[var(--color-craie-tenue)] first-letter:uppercase">
-              {dateEtHeure(prochain.joueLe)}
+              {quandDuMatch(prochain)}
             </p>
           </Link>
         ) : null}

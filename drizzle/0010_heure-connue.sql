@@ -1,0 +1,1 @@
+ALTER TABLE `rencontres` ADD `heure_connue` integer DEFAULT true NOT NULL;

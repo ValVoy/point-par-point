@@ -44,6 +44,13 @@ function dateUtc(date: Date): string {
   return date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
 }
 
+/** Le jour a Paris, AAAAMMJJ, et le lendemain : les bornes d'un evenement sur la journee. */
+function journee(date: Date): [string, string] {
+  const jour = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Paris" }).format(date);
+  const lendemain = new Date(Date.parse(`${jour}T00:00:00Z`) + 86_400_000).toISOString().slice(0, 10);
+  return [jour.replace(/-/g, ""), lendemain.replace(/-/g, "")];
+}
+
 export type EvenementAgenda = {
   uid: string;
   debut: Date;
@@ -54,6 +61,8 @@ export type EvenementAgenda = {
   description?: string | null;
   url?: string | null;
   horodatage: Date;
+  /** Horaire a confirmer : un evenement sur la journee, plutot qu'une heure inventee. */
+  journeeEntiere?: boolean;
 };
 
 export function evenementAgenda(e: EvenementAgenda): string {
@@ -67,8 +76,9 @@ export function evenementAgenda(e: EvenementAgenda): string {
     "BEGIN:VEVENT",
     `UID:${echapperTexte(e.uid)}`,
     `DTSTAMP:${dateUtc(e.horodatage)}`,
-    `DTSTART:${dateUtc(e.debut)}`,
-    `DTEND:${dateUtc(fin)}`,
+    ...(e.journeeEntiere
+      ? [`DTSTART;VALUE=DATE:${journee(e.debut)[0]}`, `DTEND;VALUE=DATE:${journee(e.debut)[1]}`]
+      : [`DTSTART:${dateUtc(e.debut)}`, `DTEND:${dateUtc(fin)}`]),
     `SUMMARY:${echapperTexte(e.titre)}`,
     ...(e.lieu ? [`LOCATION:${echapperTexte(e.lieu)}`] : []),
     ...(e.description ? [`DESCRIPTION:${echapperTexte(e.description)}`] : []),
@@ -88,7 +98,7 @@ export function lienGoogleAgenda(e: EvenementAgenda): string {
   const lien = new URL("https://calendar.google.com/calendar/render");
   lien.searchParams.set("action", "TEMPLATE");
   lien.searchParams.set("text", e.titre);
-  lien.searchParams.set("dates", `${dateUtc(e.debut)}/${dateUtc(fin)}`);
+  lien.searchParams.set("dates", e.journeeEntiere ? journee(e.debut).join("/") : `${dateUtc(e.debut)}/${dateUtc(fin)}`);
   if (e.lieu) lien.searchParams.set("location", e.lieu);
   if (e.description) lien.searchParams.set("details", e.description);
   return lien.toString();

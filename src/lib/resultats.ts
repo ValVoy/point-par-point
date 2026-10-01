@@ -100,10 +100,15 @@ export function compteReboursEnLettres(valeurs: { jours: number; heures: number;
  * l'interet est le plus fort, le tableau sauterait au match suivant avant
  * que le score soit saisi. Liste deja triee par date.
  */
-export function matchDuTableau<T extends Pick<RencontreScoree, "etat" | "joueLe">>(
+export function matchDuTableau<T extends Pick<RencontreScoree, "etat" | "joueLe"> & { heureConnue?: boolean }>(
   liste: T[],
   maintenant: Date,
 ): T | undefined {
-  const limite = maintenant.getTime() - DUREE_EN_COURS;
-  return liste.find((r) => r.etat === "a_venir" && r.joueLe.getTime() >= limite);
+  // Les trois heures de grace ne valent que pour un coup d'envoi connu : un
+  // match sans horaire quitte le tableau a la fin de sa journee.
+  return liste.find(
+    (r) =>
+      r.etat === "a_venir" &&
+      r.joueLe.getTime() >= maintenant.getTime() - (r.heureConnue === false ? 0 : DUREE_EN_COURS),
+  );
 }

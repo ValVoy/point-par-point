@@ -30,6 +30,7 @@ export function ActionsMatch({ match }: { match: Rencontre }) {
   const google = lienGoogleAgenda({
     uid: `match-${match.id}`,
     debut: match.joueLe,
+    journeeEntiere: !match.heureConnue,
     titre: titreMatch(match),
     lieu: [match.salleNom, match.salleAdresse].filter(Boolean).join(", ") || null,
     horodatage: match.joueLe,

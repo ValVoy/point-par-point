@@ -35,7 +35,9 @@ export default async function PageCalendrier({
           <p className="mt-2 max-w-prose text-sm text-[var(--color-craie-douce)]">
             Tous les matchs de la saison {saison.libelle} en une fois, depuis
             le calendrier de la fédération. Une date posée sur une ligne sans
-            heure reprend l&apos;heure de la ligne du dessus. Si une ligne
+            heure reprend l&apos;heure de la ligne du dessus ; videz-la si
+            l&apos;horaire n&apos;est pas encore publié, le site dira « horaire à
+            confirmer ». Si une ligne
             pose problème, rien n&apos;est enregistré et la grille reste
             remplie : il n&apos;y a qu&apos;à corriger.
           </p>

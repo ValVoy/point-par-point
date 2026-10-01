@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Episode } from "@/lib/episodes";
-import { dateLongue, heure } from "@/lib/dates";
+import { dateLongue } from "@/lib/dates";
+import { heureDuMatch } from "@/lib/horaire";
 import type { Rencontre } from "@/lib/rencontres";
 import { lienItineraire } from "../actions-match";
 import { LecteurEpisode } from "../lecteur-episode";
@@ -96,7 +97,7 @@ export function BlocCommentaire({ texte }: { texte: string | null }) {
   );
 }
 
-type Voisin = { slug: string; adversaire: string; aDomicile: boolean; joueLe: Date } | null;
+type Voisin = { slug: string; adversaire: string; aDomicile: boolean; joueLe: Date; heureConnue: boolean } | null;
 
 function LienVoisin({ voisin, sens }: { voisin: Voisin; sens: "précédent" | "suivant" }) {
   if (!voisin) return <span />;
@@ -110,7 +111,7 @@ function LienVoisin({ voisin, sens }: { voisin: Voisin; sens: "précédent" | "s
         {voisin.aDomicile ? "Contre" : "Chez"} {voisin.adversaire}
       </span>
       <span className="block text-sm text-[var(--color-craie-douce)] first-letter:uppercase">
-        {dateLongue(voisin.joueLe)}, {heure(voisin.joueLe)}
+        {dateLongue(voisin.joueLe)}, {heureDuMatch(voisin) ?? "horaire à confirmer"}
       </span>
     </Link>
   );
