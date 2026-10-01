@@ -29,7 +29,7 @@ export function EtiquetteMatch({ match, maintenant }: { match: MatchRaconte; mai
     }[statut];
   }
   return (
-    <span className="text-xs font-semibold tracking-[0.18em] text-[var(--color-craie-douce)] uppercase">
+    <span className="etiquette text-[var(--color-craie-douce)]">
       {qui} · <span className="whitespace-nowrap">{quoi}</span>
     </span>
   );

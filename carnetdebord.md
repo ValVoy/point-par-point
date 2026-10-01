@@ -1726,3 +1726,34 @@ des 500 ; arrêté et relancé, rien dans le code.
   Données et compte d'essai retirés de la base de développement.
 - Suite : push, puis les trois matchs sans heure en production ; ensuite les fiches du système
   d'espacement, de la Série et des Matchs, à valider avant le code.
+
+**23:39** · **[jalon] La refonte respire : le système et la Série**
+
+Fiche `fiches/refonte-respiration.md`, validée avec les quatre recommandations : grande échelle
+de titres (189 et 96 px en grand écran), liste verticale à grandes vignettes, signal de lieu fort
+sur les matchs, livraison étape par étape. La colonne large reste à 84rem, contre la proposition du
+graphiste : l'utilisateur avait demandé un site plus large, l'air vient du vertical.
+
+Étape 1, le système : jetons de respiration (grand vide avant un chapitre, titre collé à son
+contenu, suite serrée), nouvelle échelle typographique, utilitaires, et le volet en triangle qui
+découvre titres et vignettes. Étape 2, la Série : ouverture avec le compte des épisodes en chiffre
+géant, dernier épisode en bandeau titré sur l'image, chapitre « Tous les épisodes » où chaque
+épisode a enfin sa vignette, annonce sous « Avant la série » ; page d'épisode avec le lecteur en
+bandeau et l'épisode suivant mis en avant ; bloc de l'accueil en bandeau.
+
+La critique à froid a relevé douze points, tous traités : le volet faisait clignoter ce qui était
+déjà à l'écran, un mot long débordait au téléphone, le titre posé sur une vignette claire manquait
+de contraste, les épisodes avaient perdu leurs niveaux de titre, les annonces disparaissaient sans
+épisode numéroté, des étiquettes restaient à 12 px. Une erreur de la séance, aussi : le contrôle
+anti-doublon des matchs tenait compte des majuscules ; le Saint-Fons saisi à 20 h par
+l'utilisateur a été supprimé avec son accord.
+
+- Portée : `globals.css`, `volets.tsx`, `titre-chapitre.tsx`, `serie/bandeau-episode.tsx`,
+  `serie/ligne-episode.tsx`, `serie/elements-serie.tsx`, pages `/serie` et `/serie/[slug]`,
+  `accueil/bloc-serie.tsx`, `/contact` (grille à 1024 px), fiche ; base de production : 3 matchs
+  sans horaire ajoutés, un doublon retiré, 12 matchs au total.
+- Vérifié : 171 tests, `tsc`, lint ; à l'écran en 1440 et 390 px ; titres h1, h2, h3 relus ; volet
+  absent sur ce qui est déjà à l'écran ; titre lu une fois sur l'accueil au téléphone ; aucun
+  débordement de 390 à 1920 px, `/contact` compris.
+- Suite : l'utilisateur regarde `/serie` en local et tranche l'ordre titre ou lecteur sur la page
+  d'épisode ; push ; puis l'étape 3, les Matchs.

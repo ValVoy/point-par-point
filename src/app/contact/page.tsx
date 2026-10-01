@@ -39,7 +39,7 @@ export default async function PageContact({ searchParams }: { searchParams: Prom
         <p className="mt-5 max-w-[46ch] text-lg leading-relaxed text-[var(--color-craie-douce)]">
           Une question sur un match, l&apos;envie de soutenir l&apos;équipe, un sujet pour la série : on lit tout.
         </p>
-        <div className="mt-12 grid gap-16 lg:grid-cols-[minmax(0,48rem)_minmax(0,1fr)] lg:gap-20">
+        <div className="mt-12 grid gap-16 xl:grid-cols-[minmax(0,48rem)_minmax(0,1fr)] xl:gap-20">
           <FormulaireContact sujet={sujetInitial(typeof sujet === "string" ? sujet : undefined)} />
           <aside aria-labelledby="titre-reponses" className="lg:border-l lg:border-[var(--color-nuit-trait)] lg:pl-10">
             <h2 id="titre-reponses" className="text-xs font-semibold tracking-[0.2em] text-[var(--color-craie-douce)] uppercase">

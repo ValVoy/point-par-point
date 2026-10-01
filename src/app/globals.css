@@ -85,9 +85,26 @@
 
   /* Echelle de largeurs : une colonne de lecture, une colonne large, et la
      pleine largeur pour l'image et le mouvement. La marge suit l'ecran. */
-  --largeur-lecture: 62ch;
+  --largeur-lecture: 38rem;
   --largeur-large: 84rem;
-  --marge: clamp(1rem, 4vw, 4rem);
+  --marge: clamp(1.25rem, 3.5vw, 3.5rem);
+
+  /* La respiration (fiche fiches/refonte-respiration.md, veille 19) : l'air
+     vient de l'asymetrie. Un chapitre s'ouvre sur un grand vide, son titre
+     colle a son contenu, puis tout ce qui suit s'enchaine serre. */
+  --air-chapitre: clamp(6rem, 3rem + 12vw, 16rem);
+  --titre-contenu: clamp(1.25rem, 0.75rem + 1.5vw, 2.5rem);
+  --air-suite: clamp(3rem, 2rem + 4vw, 6rem);
+  --gouttiere: clamp(0.875rem, 0.6rem + 1vw, 1.5rem);
+
+  /* L'echelle typographique du site public. Rien sous 16 px pour un
+     paragraphe, rien sous 13 px pour une etiquette, sur fond nuit. */
+  --texte-page: clamp(4rem, 1rem + 12vw, 12rem);
+  --texte-chapitre: clamp(2.75rem, 1.5rem + 5vw, 6.5rem);
+  --texte-geant: clamp(4rem, 2rem + 9vw, 10rem);
+  --texte-carte: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
+  --texte-chapeau: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  --texte-corps: clamp(1rem, 0.95rem + 0.25vw, 1.1875rem);
 }
 
 body {
@@ -143,6 +160,65 @@ body {
 @utility pleine-largeur {
   width: 100%;
   padding-inline: var(--marge);
+}
+
+/* --- La composition (fiche fiches/refonte-respiration.md) ----------------- */
+
+/* Un chapitre ouvre grand : le vide est avant le titre, jamais apres. */
+@utility chapitre {
+  padding-top: var(--air-chapitre);
+}
+
+/* Un bloc lie au precedent, dans la meme suite. */
+@utility suite {
+  margin-top: var(--air-suite);
+}
+
+/* Les grands titres se coupent plutot que de deborder : un mot long saisi
+   dans l'administration ne doit jamais elargir la page au telephone. */
+@utility titre-page {
+  font-size: var(--texte-page);
+  line-height: 0.86;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+@utility titre-chapitre {
+  font-size: var(--texte-chapitre);
+  line-height: 0.92;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+@utility chiffre-geant {
+  font-size: var(--texte-geant);
+  line-height: 0.85;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility titre-carte {
+  font-size: var(--texte-carte);
+  line-height: 0.95;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+@utility chapeau {
+  font-size: var(--texte-chapeau);
+  line-height: 1.4;
+}
+
+@utility corps {
+  font-size: var(--texte-corps);
+  line-height: 1.55;
+}
+
+/* L'etiquette : capitales espacees, le plus petit corps autorise. */
+@utility etiquette {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
 }
 
 /*
