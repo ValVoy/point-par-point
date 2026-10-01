@@ -180,20 +180,24 @@ preview jetable : vraie base Turso, vrai bucket R2, et ce qu'il saisit est gard�
 public consistera à retirer la barrière et à brancher le domaine définitif (recompilation, car
 `NEXT_PUBLIC_SITE_URL` est figé à la compilation).
 
-- [ ] Enregistrement DNS `volley` dans la zone Cloudflare `valentincheron.fr`
+- [x] Enregistrement DNS `volley` dans la zone Cloudflare `valentincheron.fr` (01-10-2026)
 - [x] Base Turso de production `projet-volley-prod` (aws-eu-west-1), migrations 0000 à 0009 appliquées avec l'accord de l'utilisateur (01-10-2026)
 - [x] Bucket R2 `projet-volley`, jeton Object Read & Write limité au bucket, domaine public `photos-volley.valentincheron.fr` ; dépôt, lecture publique et effacement vérifiés (01-10-2026)
-- [ ] Cache Rule Cloudflare sur `photos-volley` : cache du CDN limité à 1 jour, sinon une photo effacée reste servie jusqu'à un an (`immutable`) ; la politique annonce 24 heures
-- [ ] Application Coolify depuis `main`, santé sur `/sante`, variables de build et d'exécution
-- [ ] Barrière Traefik `basicauth` par label personnalisé (recette dans `Coolify/ETAT.md`)
-- [ ] Sauvegardes de la base et des photos **dès cette étape**, puisque les données sont réelles
-- [ ] Compte administrateur de Tom, données de démonstration gardées le temps de la découverte
+- [x] Cache Rule Cloudflare sur `photos-volley` (posée le 01-10-2026, durée non observable dans les en-têtes) : cache du CDN limité à 1 jour, sinon une photo effacée reste servie jusqu'à un an (`immutable`) ; la politique annonce 24 heures
+- [x] Application Coolify `yroel53ywoxpwgcxfuhv6gf1` depuis `main`, auto-déploiement à chaque push, santé sur `/sante`, purge à 02:41 UTC (01-10-2026)
+- [x] Barrière Basic Auth : 401 sans identifiants, 200 avec, identifiants dans `Coolify/.env` (01-10-2026)
+- [x] Sauvegardes de la base (03:17 UTC, 14 jours) et miroir des photos, restauration prouvée par le poste Coolify (01-10-2026)
+- [x] Compte administrateur de l'utilisateur, créé par `db:admin` en production (01-10-2026)
+- [ ] Compte administrateur de Tom, créé depuis la page « Comptes » avec un mot de passe provisoire
+- [ ] Une photo déposée de bout en bout : R2, puis le miroir `photos/volley/courant`
+- Pas de données de démonstration en production (décidé le 01-10-2026) : Tom découvre le site vide
+  et le remplit, rien à purger ensuite
 - Reportés au lancement public : Umami, sonde Todai, retrait de la barrière
 
 ### Avant la mise en ligne
 
 - [x] Audit complet du groupe (huit regards) le 01-10-2026 : `audits/2026-10-01-audit-groupe.md`, 66 constats sur 97 corrigés en séance, le reste arbitré ou à faire ci-dessous
-- [ ] Purge des données de démonstration, bandeau disparu
+- [x] Purge des données de démonstration : sans objet, la production n'en a jamais reçu (01-10-2026)
 - [ ] Déploiement Coolify depuis `main`
 - [ ] Sonde Todai sur le domaine
 - [ ] Sauvegarde nocturne de la base Turso, **30 jours** au plus (durée annoncée par la politique de confidentialité)
