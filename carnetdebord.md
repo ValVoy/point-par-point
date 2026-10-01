@@ -1572,7 +1572,7 @@ lancement public.
 - Suite : préparer l'avant-première, DNS, base Turso de production et migrations (avec accord),
   bucket R2, application Coolify, barrière, sauvegardes, puis le compte de Tom.
 
-**16:12** · **[jalon] L'avant-première : la base, les photos et le DNS sont prêts**
+**16:10** · **[jalon] L'avant-première : la base, les photos et le DNS sont prêts**
 
 Base Turso de production créée par l'utilisateur au tableau de bord, puis migrée depuis le poste
 avec son accord : `projet-volley-prod`, 10 migrations, 24 tables, aucun compte. Les valeurs vivent
