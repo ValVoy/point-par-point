@@ -1783,3 +1783,23 @@ ne bat plus que tableau à l'écran.
   compétition et sets ; aucune erreur console.
 - Suite : l'utilisateur regarde `/matchs` en local, push ; puis les autres pages publiques
   (effectif, actualités, projet, où nous voir) au même système.
+
+**23:57** · **[clôture] Fin de séance, la lenteur en tête de la suite**
+
+Séance longue, ouverte à 12:16. Le site est passé en avant-première pour Tom, derrière une
+barrière, sur `volley.valentincheron.fr` : base Turso et bucket R2 de production, application
+Coolify, sauvegardes. Puis l'accueil en porte d'entrée, le contenu réel (cinq vidéos de la chaîne,
+douze matchs du calendrier fédéral dont trois sans horaire), le tableau à la seconde, les matchs
+sans horaire, et la refonte « trop tassé » en trois étapes, chacune critiquée à froid puis
+validée par l'utilisateur avant le push.
+
+Dernier retour de l'utilisateur : en production, le site lui paraît « vraiment plutôt lent ».
+C'est la première chose à regarder à la prochaine séance, en mesurant avant de corriger.
+
+- Portée : ROADMAP (sections « lenteur en production » et « refonte, suite »), carnet.
+- Vérifié : tout est poussé sur `main` ; serveur de développement arrêté ; base de développement
+  sans données d'essai.
+- Suite : mesurer la lenteur en production page par page (serveur, base, navigateur) et la
+  corriger ; puis les autres pages publiques au système de la refonte. Pour Tom : relire et
+  publier les cinq étapes du projet en brouillon, l'adresse du gymnase Jean Boistard, les trois
+  horaires à confirmer, la poule SMB à confirmer, l'accord de droit à l'image.

@@ -176,6 +176,26 @@ zéro, la logique reste.
 - [x] Réhabillage de l'administration avec le nouveau système, sobre, clair et sans animation (29-09-2026)
 - [x] Une fiche de page validée avant chaque page publique
 
+### Prochaine séance, en premier : la lenteur en production (demandé le 01-10-2026)
+
+L'utilisateur trouve le site en ligne « vraiment plutôt lent ». Mesurer avant de corriger :
+temps de réponse serveur page par page (derrière la barrière), part de la base, poids et rendu côté
+navigateur. Pistes à vérifier, pas des certitudes : toutes les pages publiques sont rendues à
+chaque visite (`force-dynamic`), chaque page fait plusieurs allers-retours vers Turso en Irlande
+depuis le VPS en Allemagne, conteneur à 512 Mo, optimiseur d'images de Next sur le serveur, poids
+de l'intro et de GSAP sur l'accueil.
+
+- [ ] Mesures de référence (serveur et navigateur), page par page
+- [ ] Corrections, puis mêmes mesures pour comparer
+
+### Refonte « trop tassé », suite (fiche `fiches/refonte-respiration.md`)
+
+- [x] Étape 1, le système d'espacement et l'échelle typographique (01-10-2026)
+- [x] Étape 2, la Série : page, épisode, bloc de l'accueil (01-10-2026)
+- [x] Étape 3, les Matchs : calendrier, ligne de match, page d'un match (01-10-2026)
+- [ ] Les autres pages publiques au même système : effectif, fiche joueur, actualités, le projet,
+      où nous voir, partenaires, contact, pages juridiques
+
 ### Avant-première pour Tom (décidée le 01-10-2026)
 
 L'instance de production est mise en ligne **derrière une barrière**, sur
