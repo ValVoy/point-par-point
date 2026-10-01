@@ -1672,3 +1672,25 @@ défaut dans « Réessayez dans 1 minutes » : accord en nombre et unités à z�
   les brouillons ; 160 tests, `tsc`, lint.
 - Suite : feu vert de l'utilisateur, puis push sur `main` ; Tom relit les étapes, saisit les
   trois heures manquantes et l'adresse du gymnase Jean Boistard.
+
+**22:41** · **[jalon] Le tableau défile, les matchs disent où ils se jouent**
+
+Deux demandes de l'utilisateur après avoir vu le site. Le tableau du prochain match doit être
+dynamique : il défile désormais à la seconde, et chaque chiffre qui change bascule comme le volet
+d'un afficheur, lui seul. Sur `/matchs`, chaque ligne porte sa marque Domicile ou Extérieur ; un
+filtre était proposé, l'utilisateur a préféré la marque.
+
+Les mesures à l'écran ont trouvé deux défauts de mise en page, corrigés : les deux-points 9 px
+trop bas par rapport aux chiffres, et quatre groupes de chiffres qui débordaient du tableau à
+mi-largeur sur l'accueil à 1280 px, puis de 5 px au téléphone. La taille suit maintenant la largeur
+du tableau, par requête de conteneur.
+
+L'utilisateur veut ensuite parler de la mise en page des vidéos YouTube et des matchs.
+
+- Portée : `compte-rebours-led.tsx`, `afficheur-led.tsx`, `lib/resultats.ts` (+ tests),
+  `globals.css` (keyframes `bascule`), `ligne-calendrier.tsx`, fiche des matchs.
+- Vérifié : 160 tests, `tsc`, lint ; un seul chiffre animé par seconde, aucun sous mouvement
+  réduit ; place des chiffres et alignement des deux-points mesurés de 360 à 1920 px ; 4 marques
+  Domicile et 4 Extérieur sur la démo, noms accessibles relus.
+- Suite : feu vert pour pousser (cinq commits locaux), puis la mise en page des vidéos et des
+  matchs.

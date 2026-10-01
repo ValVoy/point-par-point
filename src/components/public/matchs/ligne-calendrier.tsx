@@ -14,7 +14,24 @@ import type { RencontreAvecSets } from "@/lib/rencontres";
  * Dans une liste, notre score vient toujours en premier (decision du
  * 30-09-2026) : « Chez X 0-3 » se lit d'un coup comme une defaite. Les
  * tableaux LED, eux, gardent l'ordre du gymnase, locaux a gauche.
+ *
+ * Chaque ligne porte sa marque Domicile ou Exterieur (demande du 01-10-2026),
+ * en tete de la ligne d'informations : on repere d'un coup d'oeil les matchs
+ * ou venir. Domicile en turquoise plein, la seule couleur vive ; Exterieur au
+ * trait, plus discret.
  */
+
+function MarqueLieu({ domicile }: { domicile: boolean }) {
+  return domicile ? (
+    <span className="bg-[var(--color-turquoise)] px-1.5 py-0.5 font-semibold tracking-[0.15em] text-[var(--color-nuit)] uppercase">
+      Domicile
+    </span>
+  ) : (
+    <span className="border border-[var(--color-craie-tenue)] px-1.5 py-px font-semibold tracking-[0.15em] uppercase">
+      Extérieur
+    </span>
+  );
+}
 
 const FUSEAU = "Europe/Paris";
 const jour = new Intl.DateTimeFormat("fr-FR", { day: "numeric", timeZone: FUSEAU });
@@ -54,7 +71,7 @@ function Emplacement({ match, statut }: { match: RencontreAvecSets; statut: Stat
 }
 
 function nomAccessible(match: RencontreAvecSets, statut: StatutPublic, raconte: boolean) {
-  const qui = `${match.aDomicile ? "contre" : "chez"} ${match.adversaire}`;
+  const qui = `${match.aDomicile ? "à domicile contre" : "à l'extérieur, chez"} ${match.adversaire}`;
   let quoi = `à ${heure(match.joueLe)}`;
   if (statut === "jouee" && match.setsNous !== null && match.setsEux !== null) {
     quoi = `${match.setsNous > match.setsEux ? "victoire" : "défaite"} ${match.setsNous} sets à ${match.setsEux}`;
@@ -90,7 +107,8 @@ export function LigneCalendrier({
           <span className="titre-affiche block text-xl text-balance sm:text-3xl">
             {match.aDomicile ? "Contre" : "Chez"} {match.adversaire}
           </span>
-          <span className="mt-1 flex flex-wrap items-center gap-x-3 text-xs text-[var(--color-craie-douce)]">
+          <span className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--color-craie-douce)]">
+            <MarqueLieu domicile={match.aDomicile} />
             {match.competition ? <span className="truncate">{match.competition}</span> : null}
             {raconte ? (
               <span className="font-semibold tracking-[0.15em] text-[var(--color-turquoise)] uppercase">Épisode</span>

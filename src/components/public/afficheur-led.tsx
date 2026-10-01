@@ -9,6 +9,11 @@
  * Le caractere mesure 1em de haut : l'afficheur prend la taille du texte qui
  * l'entoure. Purement decoratif : le parent donne toujours la meme
  * information en texte, pour les lecteurs d'ecran.
+ *
+ * `bascule` designe les positions des caracteres qui viennent de changer :
+ * ceux-la seuls jouent la bascule (keyframes `bascule`, globals.css). La cle
+ * porte la valeur, donc un caractere change est un nouvel element, et
+ * l'animation repart de zero.
  */
 
 type Segment = "a" | "b" | "c" | "d" | "e" | "f" | "g";
@@ -60,7 +65,9 @@ function Traits({ segments, couleur }: { segments: Segment[]; couleur: string })
   );
 }
 
-function Caractere({ c, eteint }: { c: string; eteint: boolean }) {
+const BASCULE = "origin-center motion-safe:animate-[bascule_280ms_cubic-bezier(0.2,0.7,0.3,1)]";
+
+function Caractere({ c, eteint, bascule }: { c: string; eteint: boolean; bascule: boolean }) {
   if (c === ":") {
     return (
       <svg viewBox="0 0 24 100" className="inline-block h-[1em] w-[0.24em] overflow-visible">
@@ -73,7 +80,7 @@ function Caractere({ c, eteint }: { c: string; eteint: boolean }) {
   }
   const allumes = CHIFFRES[c] ?? [];
   return (
-    <svg viewBox="0 0 60 100" className="inline-block h-[1em] w-[0.6em] overflow-visible">
+    <svg viewBox="0 0 60 100" className={`inline-block h-[1em] w-[0.6em] overflow-visible ${bascule ? BASCULE : ""}`}>
       {eteint ? <Traits segments={TOUS} couleur="var(--color-led-eteinte)" /> : null}
       <g style={{ filter: LUEUR }}>
         <Traits segments={allumes} couleur="var(--color-led)" />
@@ -85,17 +92,20 @@ function Caractere({ c, eteint }: { c: string; eteint: boolean }) {
 export function AfficheurLed({
   valeur,
   eteint = true,
+  bascule = [],
   className = "",
 }: {
   valeur: string;
   /** Montrer les segments eteints sous chaque caractere. */
   eteint?: boolean;
+  /** Positions des caracteres qui viennent de changer, et qui basculent. */
+  bascule?: number[];
   className?: string;
 }) {
   return (
     <span aria-hidden="true" className={`inline-flex items-center gap-[0.12em] leading-none ${className}`}>
       {[...valeur].map((c, i) => (
-        <Caractere key={i} c={c} eteint={eteint} />
+        <Caractere key={`${i}-${c}`} c={c} eteint={eteint} bascule={bascule.includes(i)} />
       ))}
     </span>
   );

@@ -56,20 +56,21 @@ export function derniersResultats(liste: RencontreScoree[]): Resultat[] {
     .sort((a, b) => b.joueLe.getTime() - a.joueLe.getTime());
 }
 
-const MINUTE = 60_000;
-
 /**
- * L'ecart jusqu'au coup d'envoi, en unites entieres. Jamais negatif : une
- * heure depassee affiche des zeros, le temps que la page se recharge et que le
- * match passe du cote des resultats. Les jours sont plafonnes a 99, la place
- * de deux chiffres sur le tableau.
+ * L'ecart jusqu'au coup d'envoi, en unites entieres, jusqu'a la seconde (le
+ * tableau defile, demande du 01-10-2026). Jamais negatif : une heure depassee
+ * affiche des zeros, le temps que la page se recharge et que le match passe
+ * du cote des resultats. Les jours sont plafonnes a 99, la place de deux
+ * chiffres sur le tableau.
  */
 export function compteRebours(joueLe: Date, maintenant: Date) {
-  const minutesRestantes = Math.max(0, Math.floor((joueLe.getTime() - maintenant.getTime()) / MINUTE));
+  const secondesRestantes = Math.max(0, Math.floor((joueLe.getTime() - maintenant.getTime()) / 1000));
+  const minutesRestantes = Math.floor(secondesRestantes / 60);
   return {
     jours: Math.min(99, Math.floor(minutesRestantes / (24 * 60))),
     heures: Math.floor(minutesRestantes / 60) % 24,
     minutes: minutesRestantes % 60,
+    secondes: secondesRestantes % 60,
   };
 }
 

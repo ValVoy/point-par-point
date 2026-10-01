@@ -27,10 +27,10 @@ function rencontre(partiel: Partial<RencontreScoree>): RencontreScoree {
 }
 
 describe("compteRebours", () => {
-  it("decoupe l'ecart en jours, heures et minutes entieres", () => {
+  it("decoupe l'ecart en jours, heures, minutes et secondes entieres", () => {
     const maintenant = new Date("2026-10-01T10:00:00Z");
     const joueLe = new Date(maintenant.getTime() + 4 * JOUR + 7 * 60 * MINUTE + 12 * MINUTE + 30_000);
-    assert.deepEqual(compteRebours(joueLe, maintenant), { jours: 4, heures: 7, minutes: 12 });
+    assert.deepEqual(compteRebours(joueLe, maintenant), { jours: 4, heures: 7, minutes: 12, secondes: 30 });
   });
 
   it("ne passe jamais sous zero quand l'heure est depassee", () => {
@@ -39,6 +39,7 @@ describe("compteRebours", () => {
       jours: 0,
       heures: 0,
       minutes: 0,
+      secondes: 0,
     });
   });
 

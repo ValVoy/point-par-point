@@ -317,3 +317,19 @@ html.intro-a-jouer [data-tableau-intro] {
     visibility: hidden;
   }
 }
+
+/*
+ * Le chiffre d'un tableau qui change bascule, comme le volet d'un afficheur de
+ * gymnase (compte a rebours du prochain match, demande du 01-10-2026). Seul le
+ * caractere qui change la joue ; rien sous `prefers-reduced-motion`.
+ */
+@keyframes bascule {
+  from {
+    transform: perspective(240px) rotateX(-75deg);
+    opacity: 0.35;
+  }
+  to {
+    transform: perspective(240px) rotateX(0deg);
+    opacity: 1;
+  }
+}

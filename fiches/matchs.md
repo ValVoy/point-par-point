@@ -96,3 +96,14 @@ et perdus, à domicile, à l'extérieur, puis la série en cours à partir de de
 victoires de suite », en jaune). Pas de pourcentage : sur huit matchs, il donnerait une précision
 qu'il n'a pas. Un match sans score saisi ne compte pas. Calcul pur dans `src/lib/bilan.ts`.
 
+
+## Retouches du 01-10-2026, demandées par l'utilisateur
+
+- **Le tableau défile à la seconde** : quatre groupes (jours, heures, minutes, secondes), et seul
+  le chiffre qui change bascule, comme le volet d'un afficheur. Rien ne bascule à l'arrivée (le
+  tableau a son allumage) ni sous mouvement réduit ; le texte des lecteurs d'écran reste à la
+  minute. La taille des chiffres suit la largeur du tableau (requête de conteneur) : à mi-largeur
+  sur l'accueil, quatre groupes débordaient à 1280 px.
+- **Chaque ligne du calendrier porte sa marque** « Domicile » (turquoise plein) ou « Extérieur »
+  (au trait), en tête de sa ligne d'informations ; le nom accessible dit « à domicile contre » ou
+  « à l'extérieur, chez ». Choix de l'utilisateur : une marque par ligne, sans filtre.
