@@ -1571,3 +1571,29 @@ lancement public.
 - Vérifié : rien d'exécuté, décision seulement ; recette `basicauth` relue dans `Coolify/ETAT.md`.
 - Suite : préparer l'avant-première, DNS, base Turso de production et migrations (avec accord),
   bucket R2, application Coolify, barrière, sauvegardes, puis le compte de Tom.
+
+**16:12** · **[jalon] L'avant-première : la base, les photos et le DNS sont prêts**
+
+Base Turso de production créée par l'utilisateur au tableau de bord, puis migrée depuis le poste
+avec son accord : `projet-volley-prod`, 10 migrations, 24 tables, aucun compte. Les valeurs vivent
+dans `.env.production.local`, à part de `.env.local` : un `db:demo` lancé par réflexe ne doit pas
+pouvoir viser la production.
+
+Bucket R2 `projet-volley` et son domaine public `photos-volley.valentincheron.fr`. Le premier
+jeton était en lecture seule : la liste passait, le dépôt rendait `AccessDenied`, corrigé par
+l'utilisateur. Le test de bout en bout a trouvé un vrai point : le bucket vidé, la photo restait
+servie par le cache de Cloudflare (`HIT`), parce que le site dépose en `immutable` pour un an.
+Contraire, à la lettre, à l'effacement définitif réglé ce matin. Choix de l'utilisateur : une
+Cache Rule à 1 jour, sans code ni nouveau secret, et la politique de confidentialité le dit.
+
+La suite part au poste de commande Coolify, par une consigne écrite : application, variables,
+barrière, purge et sauvegardes. Préalable que seul l'utilisateur peut lever : la GitHub App
+`coolify-valvoy` ne voit pas encore le dépôt.
+
+- Portée : `.env.production.local` (ignoré), politique de confidentialité, ROADMAP,
+  `Coolify/docs/Consignes/point-par-point-01-avant-premiere.md`.
+- Vérifié : migrations comptées en base ; R2 dépôt, lecture publique 200, effacement 404 par
+  l'API, bucket à 0 objet ; DNS `volley` sur la même IP que `todai` ; `tsc` et lint. La durée de
+  la Cache Rule n'est pas visible dans les en-têtes, donc pas prouvée.
+- Suite : la consigne #01 exécutée par le poste Coolify, puis ici le compte de Tom
+  (`db:admin` en production) et un envoi de photo de bout en bout.
