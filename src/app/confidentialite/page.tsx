@@ -99,7 +99,8 @@ export default function PageConfidentialite() {
         Turso et Cloudflare sont des sociétés américaines : même stockées en Europe, les données peuvent donc
         relever aussi du droit des États-Unis. La base est sauvegardée chaque nuit, chiffrée, et chaque sauvegarde est
         effacée au bout de 30 jours : une donnée effacée du site peut donc y subsister jusqu&apos;à 30 jours, sans
-        être consultée. Le détail des prestataires est dans les{" "}
+        être consultée. Une photo effacée peut aussi rester en cache chez Cloudflare jusqu&apos;à 24 heures, à une
+        adresse que plus aucune page ne donne. Le détail des prestataires est dans les{" "}
         <Link href="/mentions-legales">mentions légales</Link>.
       </p>
       <p>Aucune donnée n&apos;est vendue, louée ni transmise à qui que ce soit d&apos;autre.</p>

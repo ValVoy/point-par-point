@@ -182,7 +182,8 @@ public consistera à retirer la barrière et à brancher le domaine définitif (
 
 - [ ] Enregistrement DNS `volley` dans la zone Cloudflare `valentincheron.fr`
 - [x] Base Turso de production `projet-volley-prod` (aws-eu-west-1), migrations 0000 à 0009 appliquées avec l'accord de l'utilisateur (01-10-2026)
-- [ ] Bucket R2 et jeton limité (voir plus bas)
+- [x] Bucket R2 `projet-volley`, jeton Object Read & Write limité au bucket, domaine public `photos-volley.valentincheron.fr` ; dépôt, lecture publique et effacement vérifiés (01-10-2026)
+- [ ] Cache Rule Cloudflare sur `photos-volley` : cache du CDN limité à 1 jour, sinon une photo effacée reste servie jusqu'à un an (`immutable`) ; la politique annonce 24 heures
 - [ ] Application Coolify depuis `main`, santé sur `/sante`, variables de build et d'exécution
 - [ ] Barrière Traefik `basicauth` par label personnalisé (recette dans `Coolify/ETAT.md`)
 - [ ] Sauvegardes de la base et des photos **dès cette étape**, puisque les données sont réelles
