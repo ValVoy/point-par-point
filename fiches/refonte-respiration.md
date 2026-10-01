@@ -154,7 +154,7 @@ dans la série en bandeau (même composant que l'épisode), et « Match suivant 
   porte le sien.
 - **Sans épisode numéroté**, les annonces tiennent la page seules (la première sous « Annonce »).
 - **Étiquettes à 13 px partout** dans la Série, y compris l'étiquette du match raconté.
-- **À valider par l'utilisateur** : sur la page d'un épisode, le titre vient avant le lecteur, et
+- **Validé par l'utilisateur le 01-10-2026** : sur la page d'un épisode, le titre vient avant le lecteur, et
   non l'inverse comme écrit en section 2. Le titre situe la vidéo avant qu'on la lance.
 - Hors périmètre, corrigé au passage : la grille de `/contact` débordait à 1024 px ; elle passe en
   deux colonnes à partir de 1280 px.
