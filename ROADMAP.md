@@ -246,9 +246,17 @@ Aucun de ces points ne bloque le développement.
 
 - [ ] Le vrai nom du concept, puis renommer dossier et dépôt
 - [ ] Identité graphique de la série : logo, couleurs, typographie
-- [ ] Le championnat exact et la poule, et son format : trois sets gagnants ou autre (l'écran
-      de score alerte sans bloquer sur un format inhabituel)
+- [x] Le championnat exact et la poule (01-10-2026, portail FFVB public) : Seniors masculins
+      Division 2 du comité du Rhône, poule SMB, 13 équipes, une journée d'exemption. Source :
+      `ffvbbeach.org/ffvbapp/resu/vbspo_calendrier.php?saison=2026/2027&codent=PTRA69&poule=SMB`.
+      Trois sets gagnants d'après les scores de la D1 2025-2026. À confirmer avec Tom que c'est
+      bien l'équipe de la série (une seule D2 masculine au club)
+- [ ] Les trois matchs sans heure publiée : CO St Fons (17-10), CAVJ (09-01), Fidésienne VB
+      (30-01), à saisir quand l'heure sera connue
+- [ ] Relire et publier les cinq étapes du projet laissées en brouillon le 01-10-2026
 - [ ] Que l'accord de droit à l'image couvre aussi la publication sur un site public
-- [ ] La salle, son adresse et ses horaires
+- [ ] La salle, son adresse et ses horaires : le gymnase Jean Boistard (portail FFVB),
+      entraînements de la D2 le lundi et le mercredi de 18 h à 20 h (site du club) ; manque
+      l'adresse exacte, sans laquelle le bouton Itinéraire n'apparaît pas
 - [ ] Qui saisira, et donc s'il faut vraiment deux comptes dès le départ
 - [ ] Achat du nom de domaine, et transfert éventuel à son nom plus tard

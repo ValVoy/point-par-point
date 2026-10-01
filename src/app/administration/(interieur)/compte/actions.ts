@@ -8,6 +8,7 @@ import { fermerToutesLesSessions, NOM_COOKIE, optionsCookie, ouvrirSession } fro
 import { confirmerTentative, lireIp, oublierTentatives, reserverTentative } from "@/lib/auth/tentatives";
 import { db } from "@/lib/db";
 import { utilisateurs } from "@/lib/db/schema";
+import { quantite } from "@/lib/resultats";
 
 /**
  * Changer son propre mot de passe. Le mot de passe actuel est exige : une
@@ -46,7 +47,7 @@ export async function changerMonMotDePasse(_precedent: EtatMonCompte, donnees: F
   const ip = lireIp(await headers());
   const { id: tentative, verdict } = await reserverTentative(moi.email, ip);
   if (!verdict.autorise) {
-    return { erreur: `Trop de tentatives. Réessayez dans ${verdict.minutesRestantes} minutes.` };
+    return { erreur: `Trop de tentatives. Réessayez dans ${quantite(verdict.minutesRestantes, "minute")}.` };
   }
 
   const [compte] = await db()

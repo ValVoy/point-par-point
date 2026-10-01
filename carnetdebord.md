@@ -1647,3 +1647,28 @@ désormais (46 mots).
   l'épisode 4 dans le bloc série, `/serie` 200, page de l'épisode 4 avec sa miniature ; 157 tests,
   `tsc`.
 - Suite : feu vert de l'utilisateur sur l'accueil en local, puis push sur `main`.
+
+**21:54** · **[contenu] Le calendrier fédéral et la chronologie entrent en base**
+
+À la question « qu'est-ce qu'on peut déjà inclure », recherche de ce qui est public et vérifiable.
+Le site du club donne les entraînements de la D2 masculine et renvoie au portail de résultats de
+la FFVB, encore sur 2025-2026. Le portail publie pourtant déjà 2026-2027 : poule SMB, Seniors
+masculins Division 2 du comité du Rhône, 13 équipes. Le VBC Francheville finissait dernier de la
+D1 la saison passée, ce qui éclaire l'objectif de remonter.
+
+Avec l'accord de l'utilisateur, ajout en production des matchs dont l'heure est publiée : 9 sur
+12. Les trois autres, à l'extérieur, n'ont pas d'heure ; le modèle en exige une et rien n'est
+inventé, ils attendent Tom. La saison 2026-2027 existait déjà, créée dans l'administration à
+16:16. Cinq étapes du projet tirées des vidéos de Tom, en brouillon : c'est son histoire, il la
+publie. Les épisodes ne sont rattachés à aucun match : ils racontent des essais et des amicaux.
+
+La relecture du site en ligne a montré « Dans 1 jours » lu aux lecteurs d'écran, et le même
+défaut dans « Réessayez dans 1 minutes » : accord en nombre et unités à zéro omises, testés.
+
+- Portée : base de production (9 rencontres, 5 étapes en brouillon), `src/lib/resultats.ts`,
+  `compte-rebours-led.tsx`, deux actions de connexion, ROADMAP.
+- Vérifié : relecture en base ; site derrière la barrière, accueil avec le prochain match
+  (Écully, samedi 20 h) et son compte à rebours, `/matchs` avec le calendrier, `/le-projet` sans
+  les brouillons ; 160 tests, `tsc`, lint.
+- Suite : feu vert de l'utilisateur, puis push sur `main` ; Tom relit les étapes, saisit les
+  trois heures manquantes et l'adresse du gymnase Jean Boistard.

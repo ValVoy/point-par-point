@@ -10,6 +10,7 @@ import { HACHAGE_FACTICE, verifier } from "@/lib/auth/mots-de-passe";
 import { NOM_COOKIE, optionsCookie, ouvrirSession } from "@/lib/auth/sessions";
 import { purgerDonneesEchues } from "@/lib/purges";
 import { confirmerTentative, lireIp, oublierTentatives, reserverTentative } from "@/lib/auth/tentatives";
+import { quantite } from "@/lib/resultats";
 
 const schema = z.object({
   email: z.email(),
@@ -55,7 +56,7 @@ export async function connecter(
   const { id: tentative, verdict } = await reserverTentative(email, ip);
   if (!verdict.autorise) {
     return {
-      erreur: `Trop de tentatives. Réessayez dans ${verdict.minutesRestantes} minutes.`,
+      erreur: `Trop de tentatives. Réessayez dans ${quantite(verdict.minutesRestantes, "minute")}.`,
       email: brut.email,
     };
   }

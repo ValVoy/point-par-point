@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { compteRebours } from "@/lib/resultats";
+import { compteRebours, compteReboursEnLettres } from "@/lib/resultats";
 import { AfficheurLed } from "./afficheur-led";
 
 /**
@@ -46,7 +46,7 @@ export function CompteReboursLed({ cible, initial }: { cible: string; initial: V
       <p className="sr-only">
         {commence
           ? "Match en cours."
-          : `Dans ${valeurs.jours} jours, ${valeurs.heures} heures et ${valeurs.minutes} minutes.`}
+          : `Dans ${compteReboursEnLettres(valeurs)}.`}
       </p>
       <div aria-hidden="true" className="flex items-end justify-center gap-3 sm:gap-6">
         {unites.map((unite, index) => (

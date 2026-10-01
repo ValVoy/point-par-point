@@ -1,6 +1,14 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { compteRebours, derniersResultats, matchDuTableau, resultatDepuis, type RencontreScoree } from "./resultats";
+import {
+  compteRebours,
+  compteReboursEnLettres,
+  derniersResultats,
+  matchDuTableau,
+  quantite,
+  resultatDepuis,
+  type RencontreScoree,
+} from "./resultats";
 
 const MINUTE = 60_000;
 const JOUR = 24 * 60 * MINUTE;
@@ -107,5 +115,25 @@ describe("matchDuTableau", () => {
   it("ignore un match annule ou reporte", () => {
     const liste = [a("2026-10-04T18:00:00Z", "annulee"), a("2026-10-05T18:00:00Z", "reportee")];
     assert.equal(matchDuTableau(liste, maintenant), undefined);
+  });
+});
+
+describe("quantite", () => {
+  it("accorde le mot au nombre", () => {
+    assert.equal(quantite(1, "minute"), "1 minute");
+    assert.equal(quantite(0, "minute"), "0 minute");
+    assert.equal(quantite(5, "minute"), "5 minutes");
+  });
+});
+
+describe("compteReboursEnLettres", () => {
+  it("accorde chaque unite et relie la derniere par « et »", () => {
+    assert.equal(compteReboursEnLettres({ jours: 1, heures: 22, minutes: 6 }), "1 jour, 22 heures et 6 minutes");
+  });
+
+  it("omet les unites a zero", () => {
+    assert.equal(compteReboursEnLettres({ jours: 0, heures: 3, minutes: 1 }), "3 heures et 1 minute");
+    assert.equal(compteReboursEnLettres({ jours: 2, heures: 0, minutes: 0 }), "2 jours");
+    assert.equal(compteReboursEnLettres({ jours: 0, heures: 0, minutes: 0 }), "");
   });
 });

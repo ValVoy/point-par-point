@@ -73,6 +73,26 @@ export function compteRebours(joueLe: Date, maintenant: Date) {
   };
 }
 
+/** Un nombre et son mot accorde : « 1 minute », « 5 minutes » (0 reste au singulier en francais). */
+export function quantite(nombre: number, mot: string): string {
+  return `${nombre} ${mot}${nombre > 1 ? "s" : ""}`;
+}
+
+/**
+ * Le compte a rebours dit aux lecteurs d'ecran : chaque unite accordee, les
+ * unites a zero omises (« 22 heures et 6 minutes », pas « 0 jours, 22... »).
+ * Vide quand tout est a zero, le cas du match qui commence.
+ */
+export function compteReboursEnLettres(valeurs: { jours: number; heures: number; minutes: number }): string {
+  const morceaux = [
+    valeurs.jours ? quantite(valeurs.jours, "jour") : null,
+    valeurs.heures ? quantite(valeurs.heures, "heure") : null,
+    valeurs.minutes ? quantite(valeurs.minutes, "minute") : null,
+  ].filter((m): m is string => m !== null);
+  if (morceaux.length < 2) return morceaux.join("");
+  return `${morceaux.slice(0, -1).join(", ")} et ${morceaux.at(-1)}`;
+}
+
 /**
  * Le match du tableau « prochain match » : le premier a venir, en gardant
  * trois heures celui qui vient de commencer. Sans cela, au moment ou
