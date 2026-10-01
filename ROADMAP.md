@@ -172,6 +172,23 @@ zéro, la logique reste.
 - [x] Réhabillage de l'administration avec le nouveau système, sobre, clair et sans animation (29-09-2026)
 - [x] Une fiche de page validée avant chaque page publique
 
+### Avant-première pour Tom (décidée le 01-10-2026)
+
+L'instance de production est mise en ligne **derrière une barrière**, sur
+`volley.valentincheron.fr`, pour que Tom voie le site et essaie l'administration. Ce n'est pas une
+preview jetable : vraie base Turso, vrai bucket R2, et ce qu'il saisit est gardé. Le lancement
+public consistera à retirer la barrière et à brancher le domaine définitif (recompilation, car
+`NEXT_PUBLIC_SITE_URL` est figé à la compilation).
+
+- [ ] Enregistrement DNS `volley` dans la zone Cloudflare `valentincheron.fr`
+- [ ] Base Turso de production, migrations appliquées avec l'accord de l'utilisateur
+- [ ] Bucket R2 et jeton limité (voir plus bas)
+- [ ] Application Coolify depuis `main`, santé sur `/sante`, variables de build et d'exécution
+- [ ] Barrière Traefik `basicauth` par label personnalisé (recette dans `Coolify/ETAT.md`)
+- [ ] Sauvegardes de la base et des photos **dès cette étape**, puisque les données sont réelles
+- [ ] Compte administrateur de Tom, données de démonstration gardées le temps de la découverte
+- Reportés au lancement public : Umami, sonde Todai, retrait de la barrière
+
 ### Avant la mise en ligne
 
 - [x] Audit complet du groupe (huit regards) le 01-10-2026 : `audits/2026-10-01-audit-groupe.md`, 66 constats sur 97 corrigés en séance, le reste arbitré ou à faire ci-dessous

@@ -1550,3 +1550,24 @@ attendra le 07-10, et les limites Traefik se poseront au déploiement.
   la corbeille, description lue en texte alternatif ; données d'essai retirées.
 - Suite : les démarches « Avant la mise en ligne » (sauvegardes, Coolify, accords, mentions),
   puis le déploiement.
+
+**15:02** · **[décision] Une avant-première derrière une barrière**
+
+L'utilisateur veut que Tom voie le site et donne son avis avant la mise en ligne. Retenu : mettre
+en ligne dès maintenant l'instance de production elle-même, sur `volley.valentincheron.fr`,
+derrière une barrière Traefik `basicauth`.
+
+Pourquoi la production et pas une preview jetable : Tom va forcément saisir de vrais joueurs et de
+vrais matchs en essayant l'administration, et c'est elle qui décidera si le site vit dans la durée.
+Rien ne sera à migrer, le lancement reviendra à retirer la barrière et à brancher le domaine. La
+contrepartie est que les sauvegardes de la base et des photos passent avant, et non au lancement.
+
+Pourquoi Traefik plutôt qu'un écran dans le site : aucun code à écrire puis à défaire, aucune
+indexation possible, et la recette existe déjà sur le VPS. Elle ne gêne ni la session admin
+(cookie), ni `/sante` ni la purge, appelées en interne. Umami et la sonde Todai attendent le
+lancement public.
+
+- Portée : ROADMAP (section « Avant-première pour Tom »), carnet.
+- Vérifié : rien d'exécuté, décision seulement ; recette `basicauth` relue dans `Coolify/ETAT.md`.
+- Suite : préparer l'avant-première, DNS, base Turso de production et migrations (avec accord),
+  bucket R2, application Coolify, barrière, sauvegardes, puis le compte de Tom.
