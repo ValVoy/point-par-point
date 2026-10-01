@@ -375,3 +375,25 @@ Six références ouvertes, plus un complément ; aucune instruction injectée.
 
 Ce qui ressort : l'adresse et l'itinéraire dans le premier écran, l'accessibilité sur la page
 même, des logos normalisés et cliquables, et une chronologie aux titres qui se suffisent.
+
+## 18. Veille accueil, chapitres permanents, 01-10-2026 à 18:11
+
+Sept références observées dans un navigateur (captures, DOM, styles calculés), par une veille
+déléguée ; aucune instruction injectée. Question posée : comment un accueil présente un manifeste,
+un aperçu de l'effectif et un extrait de chronologie, qui ne dépendent pas de l'actualité.
+
+| Site | Ce qu'on prend, ou ce qu'on évite |
+|---|---|
+| Oakland Roots SC | Manifeste plein écran sur fond noir, sans image : titre de 11 mots en capitales condensées (environ 75 px), deux paragraphes de 27 et 31 mots. Posé sans respiration après un carrousel, il perd son poids |
+| LOVB (ligue) | Manifeste et aperçu dans une seule section : titre de 6 mots, phrase de 19 mots, bouton. Mais une joueuse à la fois (« 1 / 9 ») : on ne voit pas l'équipe, et aucun numéro |
+| Team Vitality | Les 5 joueurs côte à côte, lien « Découvre l'équipe » aligné sur le titre, cartes qui se retournent (poste, surnom, une phrase au dos). Mais piste dupliquée quatre fois pour une boucle infinie, et section détournée par un sponsor |
+| Hashtag United | Club né sur YouTube : « This club didn't start in a boardroom. It started on YouTube. » Mais l'accueil ne raconte pas cette origine, le piège même |
+| Clapton CFC | Slogan de 7 mots en bloc noir sur le motif du club ; effectif par poste. Un joueur sans photo n'a pas d'emplacement et casse la colonne |
+| WC26 Player Album (Awwwards, 17-06-2026) | L'emplacement vide est un état voulu : emblème grisé dans le cadre, compteur « 0/11 », manque assumé en toutes lettres |
+| FC Porto, Memorial (Awwwards, 22-03-2026) | Étapes « 01. », titre d'un mot, une ou deux phrases, dates précises. Mais récit piloté au défilement sur 43 000 px, écrans vides entre deux révélations, démarrage obligatoire |
+
+Ce qui ressort : un manifeste court et typographique (titre de 6 à 12 mots, 20 à 60 mots au plus),
+l'équipe entière plutôt qu'un joueur, un lien vers la page complète aligné sur le titre, un
+emplacement de même gabarit quand la photo manque, et trois étapes numérotées pour un extrait de
+chronologie. Pièges : l'équipe née d'une série qui ne raconte pas son origine, le carrousel une
+carte à la fois, les boucles infinies et le récit qui laisse des écrans vides.

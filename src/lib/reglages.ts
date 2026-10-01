@@ -9,6 +9,9 @@ import { reglages } from "./db/schema";
 export const CLES_REGLAGE = {
   /** Transports, parking, acces PMR, entree, buvette : en texte leger. */
   venirALaSalle: "venir_a_la_salle",
+  /** Le manifeste de l'accueil ; vide, le texte de depart de lib/porte-entree.ts. */
+  manifesteTitre: "manifeste_titre",
+  manifesteTexte: "manifeste_texte",
 } as const;
 
 export type CleReglage = (typeof CLES_REGLAGE)[keyof typeof CLES_REGLAGE];

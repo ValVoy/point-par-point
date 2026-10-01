@@ -115,6 +115,10 @@ design, demandés le 20-09-2026. Voir la section dédiée plus bas et `codex.md`
 ### Site public
 
 - [x] Accueil : dernier épisode et prochain match
+- [x] Accueil en porte d'entrée (01-10-2026, fiche `fiches/accueil-porte-entree.md`) : manifeste
+      « Qui on est » modifiable dans l'administration, aperçu de l'équipe, extrait du projet, repli
+      de la série sans épisode ; trois gestes (mots qui s'allument, numéros qui roulent, fil qui se
+      trace)
 - [x] Effectif, et une page par joueur
 - [x] Matchs : calendrier, page d'un match, bouton d'ajout à l'agenda
 - [x] Série : liste et page par épisode

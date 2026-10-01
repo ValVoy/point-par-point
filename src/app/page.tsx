@@ -1,5 +1,8 @@
 import { BlocActualites } from "@/components/public/accueil/bloc-actualites";
-import { BlocSerie } from "@/components/public/accueil/bloc-serie";
+import { BlocEquipe } from "@/components/public/accueil/bloc-equipe";
+import { BlocManifeste } from "@/components/public/accueil/bloc-manifeste";
+import { BlocProjet } from "@/components/public/accueil/bloc-projet";
+import { BlocSerie, BlocSerieInvitation } from "@/components/public/accueil/bloc-serie";
 import { BlocTableaux } from "@/components/public/accueil/bloc-tableaux";
 import { PiedDePage } from "@/components/public/accueil/pied-de-page";
 import { Revelations } from "@/components/public/accueil/revelations";
@@ -8,10 +11,12 @@ import { donneesAccueil } from "@/lib/accueil";
 import { EQUIPE } from "@/lib/site";
 
 /**
- * L'accueil (fiches accueil-ouverture.md et accueil.md) : l'ouverture, puis
- * deux rendez-vous et une memoire. La serie, qu'on regarde ; les matchs, ou
- * l'on vient ; les scores, qui disent ou en est l'equipe. Chaque bloc
- * disparait s'il n'a rien de publie ou de a jour a montrer.
+ * L'accueil, porte d'entree du site (fiches accueil-ouverture.md, accueil.md
+ * et accueil-porte-entree.md) : l'ouverture, puis des chapitres permanents
+ * (qui on est, l'equipe, le projet) entre lesquels s'intercalent les blocs de
+ * fraicheur (la serie, les matchs, les actualites). Le manifeste et la serie
+ * ne disparaissent jamais ; les autres chapitres attendent d'avoir quelque
+ * chose de publie a montrer.
  *
  * Rendue a chaque visite : un score saisi doit se voir tout de suite, et le
  * prochain match depend de l'heure. A cette echelle, une lecture en base par
@@ -26,8 +31,13 @@ export default async function Accueil() {
     <>
       <Ouverture sousTitre={`L'équipe D2 masculine du ${EQUIPE}, sur le terrain et dans la série.`} />
       <main id="contenu">
+        <BlocManifeste
+          titre={donnees.manifeste.titre}
+          texte={donnees.manifeste.texte}
+          lienHistoire={donnees.etapesTotal > 0}
+        />
         <Revelations>
-          {donnees.episode ? <BlocSerie episode={donnees.episode} /> : null}
+          {donnees.episode ? <BlocSerie episode={donnees.episode} /> : <BlocSerieInvitation />}
           <BlocTableaux
             prochain={donnees.prochain}
             dernier={donnees.dernier}
@@ -35,6 +45,8 @@ export default async function Accueil() {
             maintenant={donnees.maintenant}
             rang={donnees.rang}
           />
+          <BlocEquipe membres={donnees.equipe.membres} saison={donnees.equipe.saison} />
+          <BlocProjet etapes={donnees.etapes} total={donnees.etapesTotal} />
           <BlocActualites actualites={donnees.actualites} maintenant={donnees.maintenant} />
         </Revelations>
       </main>

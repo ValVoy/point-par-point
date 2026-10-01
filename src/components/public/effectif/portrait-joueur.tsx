@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
 import { Motif } from "@/components/motif";
 import type { Poste } from "@/lib/db/schema";
 
@@ -28,6 +29,7 @@ export function PortraitJoueur({
   format = "aspect-[4/5]",
   prioritaire = false,
   position = "50% 0%",
+  numeroAffiche,
 }: {
   photo: string | null;
   /** `object-position` de la photo : le point de visage place dans l'administration. */
@@ -37,6 +39,8 @@ export function PortraitJoueur({
   sizes: string;
   format?: string;
   prioritaire?: boolean;
+  /** Ce qui s'affiche a la place du numero sans photo : l'accueil y fait rouler les chiffres. */
+  numeroAffiche?: ReactNode;
 }) {
   return (
     <span className={`relative block overflow-hidden bg-[var(--color-nuit-surface)] ${format}`}>
@@ -61,7 +65,7 @@ export function PortraitJoueur({
           aria-hidden="true"
           className="titre-affiche absolute inset-0 grid place-items-center text-[clamp(4.5rem,11vw,8rem)] text-[var(--color-craie)]/90 transition-colors duration-[var(--duree)] group-hover:text-[var(--color-jaune)] group-focus-visible:text-[var(--color-jaune)]"
         >
-          {numero ?? SIGLES[poste]}
+          {numero !== null ? (numeroAffiche ?? numero) : SIGLES[poste]}
         </span>
       )}
     </span>

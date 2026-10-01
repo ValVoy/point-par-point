@@ -1597,3 +1597,33 @@ barrière, purge et sauvegardes. Préalable que seul l'utilisateur peut lever : 
   la Cache Rule n'est pas visible dans les en-têtes, donc pas prouvée.
 - Suite : la consigne #01 exécutée par le poste Coolify, puis ici le compte de Tom
   (`db:admin` en production) et un envoi de photo de bout en bout.
+
+**18:43** · **[jalon] L'accueil devient la porte d'entrée**
+
+Vu en production sur la base vide, l'accueil ne montrait que l'intro puis le pied de page : la
+fiche du 30-09 ne retenait que des blocs de fraîcheur, qui disparaissent tous sans données. Et même
+rempli, rien ne disait qui est l'équipe. L'utilisateur a tranché : une porte d'entrée complète, trois
+chapitres permanents (Qui on est, L'équipe, Le projet), le manifeste modifiable par Tom, et le
+mouvement comme objectif à chaque bloc, « c'est comme ça qu'on crée notre identité ».
+
+Veille déléguée (section 18) puis fiche validée avant le code. Trois gestes tirés de la salle : le
+manifeste s'allume mot à mot comme des rampes, les numéros roulent comme un tableau d'affichage, le
+fil du projet se trace et allume chaque étape. La série ne disparaît plus : sans épisode, elle
+invite à la chaîne. Sur la base vide, la page montre désormais le manifeste et la série, et
+s'étoffe à chaque saisie de Tom.
+
+Les essais à l'écran ont trouvé un plantage au rechargement en bas de page (animation appelée
+avant d'exister). La critique à froid en a trouvé douze autres, tous corrigés, dont un élevé : juste
+avant le pied de page, la page était trop courte pour finir le geste et la dernière étape restait
+éteinte. Le fil est désormais fait de tronçons d'un repère au suivant, et sa fin bornée au bas de la
+page. Bourde de séance : un Prettier lancé sans configuration a reformaté quatre fichiers que je
+n'avais pas touchés ; restaurés depuis git, et mes modifications réappliquées seules.
+
+- Portée : `src/app/page.tsx`, `src/lib/{porte-entree,accueil,reglages}.ts`, cinq composants
+  neufs dans `components/public/accueil`, `portrait-joueur.tsx`, écran
+  `administration/projet/manifeste`, `onglets.tsx` (débordement d'un pixel corrigé), fiche, veille.
+- Vérifié : 157 tests (14 neufs), `tsc`, lint, `next build` ; à l'écran en 1440 et 390 px sur la
+  démo, sur une base vide jetable, avec une et deux étapes, projet juste avant le pied de page,
+  mouvement réduit ; mesures des trois gestes au défilement ; écran du manifeste de bout en bout
+  (enregistrer, texte de départ tel quel, retours à la ligne, confirmation et annulation).
+- Suite : l'utilisateur regarde la page en local, puis push sur `main` (déploie chez Tom).

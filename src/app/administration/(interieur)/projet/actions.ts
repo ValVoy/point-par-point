@@ -1,10 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { etapesProjet, membresStaff, partenaires, reglages } from "@/lib/db/schema";
+import { MANIFESTE_DEPART, MANIFESTE_TEXTE_MAX, MANIFESTE_TITRE_MAX } from "@/lib/porte-entree";
 import { CLES_REGLAGE } from "@/lib/reglages";
 import { exigerDroit } from "@/lib/auth/session-courante";
 import { deplacer, ordreSuivant, tableOrdonnee, type ListeOrdonnee } from "@/lib/ordre";
@@ -304,6 +305,49 @@ export async function enregistrerVenirALaSalle(_precedent: EtatProjet, donnees: 
 
   revalidatePath(`${CHEMIN}/salle`);
   return { erreur: null, valeurs: { texte, enregistre: "1" } };
+}
+
+/**
+ * Le manifeste de l'accueil (fiche fiches/accueil-porte-entree.md). Les blancs
+ * sont ramenes a une espace avant de compter : l'accueil les affiche ainsi, et
+ * un retour a la ligne ne doit pas faire refuser un texte que le navigateur
+ * annonce dans la limite. Un champ vide, ou egal au texte de depart, efface
+ * son reglage : l'accueil suit alors le texte de depart, meme s'il change.
+ */
+export async function enregistrerManifeste(_precedent: EtatProjet, donnees: FormData): Promise<EtatProjet> {
+  await exigerDroit("gererProjet");
+  const cles = [CLES_REGLAGE.manifesteTitre, CLES_REGLAGE.manifesteTexte];
+
+  if (donnees.get("depart") === "1") {
+    await db().delete(reglages).where(inArray(reglages.cle, cles));
+    revalidatePath(`${CHEMIN}/manifeste`);
+    revalidatePath("/");
+    return { erreur: null, valeurs: { titre: "", texte: "", enregistre: "depart" } };
+  }
+
+  const titre = (donnees.get("titre") ?? "").toString().trim().replace(/\s+/g, " ");
+  const texte = (donnees.get("texte") ?? "").toString().trim().replace(/\s+/g, " ");
+  if (titre.length > MANIFESTE_TITRE_MAX) return refus(donnees, `Le titre dépasse ${MANIFESTE_TITRE_MAX} caractères.`);
+  if (texte.length > MANIFESTE_TEXTE_MAX) return refus(donnees, `Le texte dépasse ${MANIFESTE_TEXTE_MAX} caractères.`);
+
+  for (const [cle, valeur, depart] of [
+    [CLES_REGLAGE.manifesteTitre, titre, MANIFESTE_DEPART.titre],
+    [CLES_REGLAGE.manifesteTexte, texte, MANIFESTE_DEPART.texte],
+  ] as const) {
+    if (valeur && valeur !== depart) {
+      await db()
+        .insert(reglages)
+        .values({ cle, valeur })
+        .onConflictDoUpdate({ target: reglages.cle, set: { valeur, modifieLe: new Date() } });
+    } else {
+      await db().delete(reglages).where(eq(reglages.cle, cle));
+    }
+  }
+
+  revalidatePath(`${CHEMIN}/manifeste`);
+  revalidatePath("/");
+  const personnalise = (titre && titre !== MANIFESTE_DEPART.titre) || (texte && texte !== MANIFESTE_DEPART.texte);
+  return { erreur: null, valeurs: { titre, texte, enregistre: "1", personnalise: personnalise ? "1" : "" } };
 }
 
 /**
