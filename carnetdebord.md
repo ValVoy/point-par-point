@@ -1628,7 +1628,7 @@ n'avais pas touchés ; restaurés depuis git, et mes modifications réappliquée
   (enregistrer, texte de départ tel quel, retours à la ligne, confirmation et annulation).
 - Suite : l'utilisateur regarde la page en local, puis push sur `main` (déploie chez Tom).
 
-**19:53** · **[contenu] Les épisodes de la chaîne entrent en production**
+**19:50** · **[contenu] Les épisodes de la chaîne entrent en production**
 
 Sur proposition de l'utilisateur : les vidéos déjà publiées sur la chaîne de Tom (« Tom Com »,
 `UCpuZ9Cx5BFLEQfrHMSy6tFg`) lues par son flux RSS public, sans clé ni API. Sept vidéos, dont les
