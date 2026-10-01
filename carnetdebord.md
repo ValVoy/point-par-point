@@ -1627,3 +1627,23 @@ n'avais pas touchés ; restaurés depuis git, et mes modifications réappliquée
   mouvement réduit ; mesures des trois gestes au défilement ; écran du manifeste de bout en bout
   (enregistrer, texte de départ tel quel, retours à la ligne, confirmation et annulation).
 - Suite : l'utilisateur regarde la page en local, puis push sur `main` (déploie chez Tom).
+
+**19:53** · **[contenu] Les épisodes de la chaîne entrent en production**
+
+Sur proposition de l'utilisateur : les vidéos déjà publiées sur la chaîne de Tom (« Tom Com »,
+`UCpuZ9Cx5BFLEQfrHMSy6tFg`) lues par son flux RSS public, sans clé ni API. Sept vidéos, dont les
+quatre épisodes numérotés de la série ; un live de 2018 et une vidéo courte écartés. Décisions de
+l'utilisateur : les quatre épisodes publiés tout de suite, l'annonce du 30-07 en épisode sans
+numéro, et l'objectif de la saison dans le manifeste de départ.
+
+Ajout en production avec son accord, par un script ponctuel qui reprend la fabrique d'adresses de
+l'administration et ignore une vidéo déjà présente. Titres sans leur suffixe « | EP.0x », le site
+affiche déjà le numéro ; résumés condensés des descriptions de Tom, qu'il peut retoucher. Les
+descriptions disent l'objectif de la saison, passer de D2 à D1 : le manifeste de départ le dit
+désormais (46 mots).
+
+- Portée : base de production (5 lignes dans `episodes`), `src/lib/porte-entree.ts`, fiche.
+- Vérifié : relecture des 5 lignes en base ; sur le site derrière la barrière, accueil 200 avec
+  l'épisode 4 dans le bloc série, `/serie` 200, page de l'épisode 4 avec sa miniature ; 157 tests,
+  `tsc`.
+- Suite : feu vert de l'utilisateur sur l'accueil en local, puis push sur `main`.

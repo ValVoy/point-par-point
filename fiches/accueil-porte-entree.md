@@ -166,3 +166,6 @@ un nom complet. Le numéro animé est doublé du numéro réel en texte.
   champ et tenue par le navigateur. Les blancs sont ramenés à une espace avant de compter (le texte
   s'affiche d'un seul paragraphe). Enregistrer le texte de départ tel quel ne le fige pas en base.
   Le retour au texte de départ se confirme en deux temps.
+- **Texte de départ du manifeste revu le 01-10-2026** : il dit l'objectif de la saison, passer de
+  Départementale 2 à Départementale 1, que Tom répète dans chaque épisode. Les extraits « les
+  entraînements, les déplacements, les sets qui basculent » sont retirés pour rester sous 60 mots.

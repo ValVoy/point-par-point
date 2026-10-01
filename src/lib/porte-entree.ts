@@ -9,9 +9,9 @@
 export const MANIFESTE_DEPART = {
   titre: "Une équipe de D2, filmée de l'intérieur.",
   texte:
-    "Point Par Point suit l'équipe D2 masculine du VF Francheville, dans l'ouest lyonnais, match après match. " +
-    "Sur **le terrain** le week-end, dans **la série** le reste du temps : les entraînements, les déplacements, " +
-    "les sets qui basculent. Ici, tout ce qui dure : l'effectif, les scores, le calendrier.",
+    "Point Par Point suit l'équipe D2 masculine du VF Francheville, dans l'ouest lyonnais, toute la saison. " +
+    "Un objectif : passer de **Départementale 2 à Départementale 1**. Sur le terrain le week-end, dans " +
+    "**la série** le reste du temps. Ici, tout ce qui dure : l'effectif, les scores, le calendrier.",
 } as const;
 
 export const MANIFESTE_TITRE_MAX = 80;
