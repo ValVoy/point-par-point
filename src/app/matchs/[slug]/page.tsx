@@ -4,6 +4,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { ActionsMatch, titreMatch } from "@/components/public/actions-match";
 import { PiedDePage } from "@/components/public/accueil/pied-de-page";
 import { Revelations } from "@/components/public/accueil/revelations";
+import { Volets } from "@/components/public/volets";
 import { EnTete } from "@/components/public/entete";
 import {
   BandeauEtat,
@@ -66,25 +67,25 @@ export default async function PageMatch({ params }: Parametres) {
   return (
     <>
       <EnTete actif="/matchs" />
-      <main id="contenu" className="colonne-large space-y-16 pt-10 pb-24 sm:space-y-20 sm:pt-16">
+      <main id="contenu" className="colonne-large pt-10 pb-[var(--air-chapitre)] sm:pt-16">
+        <Volets>
+        <div className="space-y-[var(--air-suite)]">
         <div>
           <Link href="/matchs" className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
             ← Tous les matchs
           </Link>
-          <p className="mt-8 text-xs font-semibold tracking-[0.2em] text-[var(--color-craie-douce)] uppercase">
-            {match.competition ?? "Match"}
-          </p>
-          <h1 className="titre-affiche mt-3 text-5xl text-balance sm:text-7xl">
+          <p className="etiquette mt-8 text-[var(--color-turquoise)]">{match.competition ?? "Match"}</p>
+          <h1 className="titre-affiche titre-chapitre mt-4 max-w-[18ch] text-balance">
             {match.aDomicile ? "Contre" : "Chez"} {match.adversaire}
           </h1>
-          <p className={`mt-3 text-lg text-[var(--color-craie-douce)] first-letter:uppercase ${statut === "annulee" || statut === "reportee" ? "line-through" : ""}`}>
+          <p className={`chapeau mt-4 text-[var(--color-craie-douce)] first-letter:uppercase ${statut === "annulee" || statut === "reportee" ? "line-through" : ""}`}>
             {quand}
           </p>
         </div>
 
         {statut === "a_venir" || statut === "en_cours" ? (
           <Revelations>
-          <div className="max-w-3xl" data-allume>
+          <div data-allume>
             <TableauProchainMatch
               match={{ adversaire: match.adversaire, domicile: match.aDomicile, joueLe: match.joueLe, heureConnue: match.heureConnue, salle }}
               maintenant={maintenant}
@@ -95,16 +96,14 @@ export default async function PageMatch({ params }: Parametres) {
         ) : null}
 
         {statut === "jouee" && resultat ? (
-          <div className="grid items-start gap-12 lg:grid-cols-12">
-            <div className={aCote ? "lg:col-span-7" : "max-w-4xl lg:col-span-12"}>
-              <Revelations>
-                <div data-allume>
-                  <TableauResultat resultat={resultat} etiquette="Score final" avecDate={false} />
-                </div>
-              </Revelations>
-            </div>
+          <div>
+            <Revelations>
+              <div data-allume>
+                <TableauResultat resultat={resultat} etiquette="Score final" avecDate={false} />
+              </div>
+            </Revelations>
             {aCote ? (
-              <div className="space-y-12 lg:col-span-5">
+              <div className="suite grid gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-16">
                 <BlocCommentaire texte={match.commentaire} />
                 <BlocSalle match={match} />
               </div>
@@ -126,6 +125,8 @@ export default async function PageMatch({ params }: Parametres) {
         {statut !== "jouee" ? <BlocCommentaire texte={match.commentaire} /> : null}
         {statut !== "jouee" ? <BlocSalle match={match} avecItineraire={statut !== "a_venir"} /> : null}
         <Voisins precedent={precedent} suivant={suivant} />
+        </div>
+        </Volets>
       </main>
       <PiedDePage />
     </>

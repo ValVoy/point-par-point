@@ -2,12 +2,13 @@ import type { Bilan } from "@/lib/bilan";
 
 /**
  * Le bilan de la saison, en tete de la page Matchs (complement du
- * 01-10-2026) : les chiffres de la page joueur, meme grammaire. Notre total
+ * 01-10-2026) : des chiffres geants sur des legendes minuscules (fiche
+ * refonte-respiration.md, veille 19.2). Notre total
  * d'abord, comme partout dans les listes. Pas de pourcentage : sur huit
  * matchs, il donnerait une precision qu'il n'a pas.
  */
 
-const etiquette = "text-xs font-semibold tracking-[0.2em] text-[var(--color-craie-douce)] uppercase";
+const etiquette = "etiquette text-[var(--color-craie-douce)]";
 const pluriel = (n: number, mot: string) => `${n} ${mot}${n > 1 ? "s" : ""}`;
 
 function VictoiresDefaites({ victoires, defaites }: { victoires: number; defaites: number }) {
@@ -31,17 +32,17 @@ export function BilanSaison({ bilan: b }: { bilan: Bilan | null }) {
   const aDomicile = b.domicile.victoires + b.domicile.defaites > 0;
   const aLExterieur = b.exterieur.victoires + b.exterieur.defaites > 0;
   return (
-    <div className="mt-8">
-      <dl className="flex flex-wrap gap-x-10 gap-y-6">
+    <div className="mt-[var(--titre-contenu)]">
+      <dl className="flex flex-wrap items-end gap-x-12 gap-y-8 sm:gap-x-16">
         <div>
           <dt className={etiquette}>Bilan</dt>
-          <dd className="titre-affiche mt-1 text-5xl">
+          <dd className="titre-affiche chiffre-geant mt-2">
             <VictoiresDefaites victoires={b.victoires} defaites={b.defaites} />
           </dd>
         </div>
         <div>
           <dt className={etiquette}>Sets</dt>
-          <dd className="titre-affiche mt-1 text-5xl">
+          <dd className="titre-affiche chiffre-geant mt-2">
             <span aria-hidden="true">
               {b.setsPour}
               <span className="mx-1 text-[var(--color-craie-douce)]">-</span>
@@ -55,7 +56,7 @@ export function BilanSaison({ bilan: b }: { bilan: Bilan | null }) {
         {aDomicile ? (
           <div>
             <dt className={etiquette}>À domicile</dt>
-            <dd className="titre-affiche mt-1 text-3xl sm:mt-3">
+            <dd className="titre-affiche titre-chapitre mt-2">
               <VictoiresDefaites {...b.domicile} />
             </dd>
           </div>
@@ -63,7 +64,7 @@ export function BilanSaison({ bilan: b }: { bilan: Bilan | null }) {
         {aLExterieur ? (
           <div>
             <dt className={etiquette}>À l&apos;extérieur</dt>
-            <dd className="titre-affiche mt-1 text-3xl sm:mt-3">
+            <dd className="titre-affiche titre-chapitre mt-2">
               <VictoiresDefaites {...b.exterieur} />
             </dd>
           </div>

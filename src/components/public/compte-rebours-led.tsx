@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { compteRebours, compteReboursEnLettres } from "@/lib/resultats";
 import { AfficheurLed } from "./afficheur-led";
 
@@ -42,7 +42,10 @@ function changes(avant: string, apres: string): number[] {
 
 export function CompteReboursLed({ cible, initial }: { cible: string; initial: Valeurs }) {
   const [etat, setEtat] = useState({ valeurs: initial, precedentes: initial });
+  const racine = useRef<HTMLDivElement>(null);
 
+  // Le battement ne tourne que tableau a l'ecran : rien ne bouge pendant qu'on
+  // lit le calendrier plus bas (critique du 01-10-2026), et la page dort.
   useEffect(() => {
     const date = new Date(cible);
     let minuterie = 0;
@@ -50,8 +53,23 @@ export function CompteReboursLed({ cible, initial }: { cible: string; initial: V
       setEtat((avant) => ({ valeurs: compteRebours(date, new Date()), precedentes: avant.valeurs }));
       minuterie = window.setTimeout(battre, 1000 - (Date.now() % 1000) + 5);
     };
-    minuterie = window.setTimeout(battre, 1000 - (Date.now() % 1000) + 5);
-    return () => window.clearTimeout(minuterie);
+    const arreter = () => {
+      window.clearTimeout(minuterie);
+      minuterie = 0;
+    };
+    const observateur = new IntersectionObserver(([entree]) => {
+      if (entree?.isIntersecting) {
+        // Reprise calee sur la prochaine seconde : rien ne bascule a l'arrivee.
+        if (!minuterie) minuterie = window.setTimeout(battre, 1000 - (Date.now() % 1000) + 5);
+      } else {
+        arreter();
+      }
+    });
+    if (racine.current) observateur.observe(racine.current);
+    return () => {
+      observateur.disconnect();
+      arreter();
+    };
   }, [cible]);
 
   const { valeurs, precedentes } = etat;
@@ -59,7 +77,7 @@ export function CompteReboursLed({ cible, initial }: { cible: string; initial: V
   const lettres = compteReboursEnLettres(valeurs);
 
   return (
-    <div className="@container">
+    <div ref={racine} className="@container">
       <p className="sr-only">{commence ? "Match en cours." : `Dans ${lettres || "moins d'une minute"}.`}</p>
       <div aria-hidden="true" className="flex items-end justify-center gap-1.5 @md:gap-4">
         {UNITES.map((unite, index) => {
@@ -67,15 +85,15 @@ export function CompteReboursLed({ cible, initial }: { cible: string; initial: V
           return (
             <div key={unite.cle} className="flex items-end gap-1.5 @md:gap-4">
               {index > 0 ? (
-                <AfficheurLed valeur=":" className="mb-[2.15rem] text-[1.92rem] @md:mb-[2.25rem] @md:text-5xl @xl:text-6xl" />
+                <AfficheurLed valeur=":" className="mb-[2.15rem] text-[1.92rem] @md:mb-[2.25rem] @md:text-5xl @xl:text-6xl @3xl:mb-[2.65rem] @3xl:text-7xl" />
               ) : null}
               <div className="text-center">
                 <AfficheurLed
                   valeur={valeur}
                   bascule={changes(deux(precedentes[unite.cle]), valeur)}
-                  className="text-[2.4rem] @md:text-6xl @xl:text-7xl"
+                  className="text-[2.4rem] @md:text-6xl @xl:text-7xl @3xl:text-8xl"
                 />
-                <span className="mt-2 block text-[0.65rem] tracking-[0.2em] text-[var(--color-craie-douce)] uppercase">
+                <span className="etiquette mt-2 block text-[var(--color-craie-douce)]">
                   {unite.nom}
                 </span>
               </div>

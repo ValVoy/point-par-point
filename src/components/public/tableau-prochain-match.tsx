@@ -37,7 +37,7 @@ function JoursLed({ jours }: { jours: number }) {
       <p className="sr-only">{texte}</p>
       <div aria-hidden="true" className="text-center">
         <AfficheurLed valeur={`J-${Math.min(jours, 99)}`} className="text-[2.75rem] sm:text-7xl" />
-        <span className="mt-2 block text-[0.65rem] tracking-[0.2em] text-[var(--color-craie-douce)] uppercase">
+        <span className="etiquette mt-2 block text-[var(--color-craie-douce)]">
           {jours === 0 ? "C'est aujourd'hui" : "Horaire à confirmer"}
         </span>
       </div>
@@ -57,14 +57,14 @@ export function TableauProchainMatch({ match, maintenant }: { match: ProchainMat
       className="rounded-sm border border-[var(--color-nuit-trait)] bg-[var(--color-boitier)] p-5 sm:p-8"
       style={{ boxShadow: "inset 0 0 0 6px var(--color-nuit)" }}
     >
-      <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-jaune)] uppercase">Prochain match</p>
+      <p className="etiquette text-[var(--color-jaune)]">Prochain match</p>
       <div className="titre-affiche mt-3 flex items-start justify-between gap-4 text-xl text-balance sm:text-4xl">
         <div>
-          <p className="text-xs tracking-[0.2em] text-[var(--color-craie-douce)]">Locaux</p>
+          <p className="etiquette font-normal text-[var(--color-craie-douce)]">Locaux</p>
           <p className="mt-1">{gauche}</p>
         </div>
         <div className="text-right">
-          <p className="text-xs tracking-[0.2em] text-[var(--color-craie-douce)]">Visiteurs</p>
+          <p className="etiquette font-normal text-[var(--color-craie-douce)]">Visiteurs</p>
           <p className="mt-1">{droite}</p>
         </div>
       </div>

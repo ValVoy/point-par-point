@@ -4,23 +4,23 @@ import { dateLongue } from "@/lib/dates";
 import { heureDuMatch } from "@/lib/horaire";
 import type { Rencontre } from "@/lib/rencontres";
 import { lienItineraire } from "../actions-match";
-import { LecteurEpisode } from "../lecteur-episode";
-import { MiniatureEpisode } from "../miniature-episode";
+import { BandeauEpisode } from "../serie/bandeau-episode";
 import { titreSansNumero } from "@/lib/titre-episode";
 
 /**
- * Les blocs de la page d'un match (fiche fiches/matchs.md), chacun absent
- * quand il n'a rien a dire : jamais de case vide, jamais de zero invente.
+ * Les blocs de la page d'un match (fiches matchs.md et refonte-respiration.md),
+ * chacun absent quand il n'a rien a dire : jamais de case vide, jamais de zero
+ * invente. L'episode passe en bandeau, comme sur la page Serie.
  */
 
-const etiquette = "text-xs font-semibold tracking-[0.2em] text-[var(--color-craie-douce)] uppercase";
+const etiquette = "etiquette text-[var(--color-craie-douce)]";
 
 /** Reporte, annule, score pas encore saisi : l'etat en toutes lettres. */
 export function BandeauEtat({ titre, texte }: { titre: string; texte: string }) {
   return (
-    <div className="border-l-4 border-[var(--color-jaune)] bg-[var(--color-nuit-surface)] px-5 py-4">
-      <p className="titre-affiche text-3xl">{titre}</p>
-      <p className="mt-1 text-[var(--color-craie-douce)]">{texte}</p>
+    <div className="border-l-4 border-[var(--color-jaune)] bg-[var(--color-nuit-surface)] p-8">
+      <p className="titre-affiche titre-carte">{titre}</p>
+      <p className="corps mt-2 text-[var(--color-craie-douce)]">{texte}</p>
     </div>
   );
 }
@@ -33,8 +33,8 @@ export function BlocSalle({ match, avecItineraire = true }: { match: Rencontre; 
       <h2 id="titre-salle" className={etiquette}>
         La salle
       </h2>
-      {match.salleNom ? <p className="titre-affiche mt-3 text-3xl">{match.salleNom}</p> : null}
-      {match.salleAdresse ? <p className="mt-1 text-[var(--color-craie-douce)]">{match.salleAdresse}</p> : null}
+      {match.salleNom ? <p className="titre-affiche titre-carte mt-3">{match.salleNom}</p> : null}
+      {match.salleAdresse ? <p className="corps mt-2 text-[var(--color-craie-douce)]">{match.salleAdresse}</p> : null}
       {match.aDomicile ? (
         <p className="mt-2 text-sm">
           <Link href="/ou-nous-voir" className="font-semibold text-[var(--color-craie-douce)] underline underline-offset-4 hover:text-[var(--color-craie)]">
@@ -58,27 +58,28 @@ export function BlocSalle({ match, avecItineraire = true }: { match: Rencontre; 
 }
 
 export function BlocEpisode({ episode, prioritaire = false }: { episode: Episode; prioritaire?: boolean }) {
+  const titre = titreSansNumero(episode);
   return (
-    <section aria-labelledby="titre-episode" className="grid items-end gap-6 lg:grid-cols-12">
-      <div className="relative aspect-video overflow-hidden bg-[var(--color-nuit-surface)] lg:col-span-7">
-        <LecteurEpisode youtubeId={episode.youtubeId} titre={titreSansNumero(episode)}>
-          <MiniatureEpisode youtubeId={episode.youtubeId} sizes="(min-width: 1024px) 58vw, 100vw" prioritaire={prioritaire} />
-        </LecteurEpisode>
+    <section aria-labelledby="titre-episode">
+      <h2 id="titre-episode" className="etiquette text-[var(--color-turquoise)]">
+        Le match dans la série<span className="sr-only"> : {titre}</span>
+      </h2>
+      <div className="mt-4">
+        <BandeauEpisode
+          lecteur
+          youtubeId={episode.youtubeId}
+          titre={titre}
+          etiquette={episode.numero ? `Épisode ${String(episode.numero).padStart(2, "0")}` : "Avant la série"}
+          prioritaire={prioritaire}
+        />
       </div>
-      <div className="lg:col-span-5">
-        <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">
-          Le match dans la série{episode.numero ? ` · épisode ${episode.numero}` : ""}
-        </p>
-        <h2 id="titre-episode" className="titre-affiche mt-3 text-4xl text-balance">
-          {titreSansNumero(episode)}
-        </h2>
-        {episode.resume ? <p className="mt-4 leading-relaxed text-[var(--color-craie-douce)]">{episode.resume}</p> : null}
+      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-12">
+        {episode.resume ? <p className="chapeau max-w-[46ch] text-[var(--color-craie-douce)]">{episode.resume}</p> : <span />}
         <Link
           href={`/serie/${episode.slug}`}
-          className="mt-5 inline-flex min-h-12 items-center font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--color-jaune)]"
+          className="inline-flex min-h-12 items-center self-start font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--color-jaune)] lg:justify-self-end"
         >
-          {episode.numero ? `Épisode ${episode.numero} : ` : ""}
-          {titreSansNumero(episode)}
+          Voir l&apos;épisode
         </Link>
       </div>
     </section>
@@ -92,7 +93,7 @@ export function BlocCommentaire({ texte }: { texte: string | null }) {
       <h2 id="titre-commentaire" className={etiquette}>
         Après le match
       </h2>
-      <p className="colonne-lecture mt-4 ml-0 text-lg leading-relaxed whitespace-pre-line">{texte}</p>
+      <p className="chapeau mt-4 max-w-[var(--largeur-lecture)] whitespace-pre-line">{texte}</p>
     </section>
   );
 }
@@ -104,13 +105,13 @@ function LienVoisin({ voisin, sens }: { voisin: Voisin; sens: "précédent" | "s
   return (
     <Link
       href={`/matchs/${voisin.slug}`}
-      className={`group block min-h-16 py-4 ${sens === "suivant" ? "text-right" : ""}`}
+      className={`group block min-h-16 py-6 ${sens === "suivant" ? "text-right" : ""}`}
     >
       <span className={etiquette}>{sens === "précédent" ? "← Match précédent" : "Match suivant →"}</span>
-      <span className="titre-affiche mt-2 block text-2xl group-hover:text-[var(--color-jaune)]">
+      <span className="titre-affiche titre-carte mt-3 block group-hover:text-[var(--color-jaune)]">
         {voisin.aDomicile ? "Contre" : "Chez"} {voisin.adversaire}
       </span>
-      <span className="block text-sm text-[var(--color-craie-douce)] first-letter:uppercase">
+      <span className="mt-2 block text-sm text-[var(--color-craie-douce)] first-letter:uppercase">
         {dateLongue(voisin.joueLe)}, {heureDuMatch(voisin) ?? "horaire à confirmer"}
       </span>
     </Link>

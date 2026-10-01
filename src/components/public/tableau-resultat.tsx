@@ -40,7 +40,7 @@ export function TableauResultat({
 
   return (
     <div
-      className="rounded-sm border border-[var(--color-nuit-trait)] bg-[var(--color-boitier)] p-5 sm:p-8"
+      className="@container rounded-sm border border-[var(--color-nuit-trait)] bg-[var(--color-boitier)] p-5 sm:p-8"
       style={{ boxShadow: "inset 0 0 0 6px var(--color-nuit)" }}
     >
       <div className="flex items-center justify-between gap-4">
@@ -70,9 +70,10 @@ export function TableauResultat({
         className="mt-6 flex items-center justify-center gap-4 sm:gap-8"
         style={{ opacity: "calc(0.25 + 0.75 * var(--allume, 1))" }}
       >
-        <AfficheurLed valeur={String(setsGauche)} className="text-7xl sm:text-9xl" />
-        <AfficheurLed valeur="-" className="text-4xl sm:text-6xl" />
-        <AfficheurLed valeur={String(setsDroite)} className="text-7xl sm:text-9xl" />
+        {/* Le score suit la largeur du tableau : en bandeau sur la page d'un match, il grandit avec lui. */}
+        <AfficheurLed valeur={String(setsGauche)} className="text-7xl sm:text-9xl @4xl:text-[11rem]" />
+        <AfficheurLed valeur="-" className="text-4xl sm:text-6xl @4xl:text-7xl" />
+        <AfficheurLed valeur={String(setsDroite)} className="text-7xl sm:text-9xl @4xl:text-[11rem]" />
       </div>
 
       {sets.length > 0 ? (

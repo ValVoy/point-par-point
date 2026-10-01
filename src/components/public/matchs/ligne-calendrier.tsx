@@ -4,35 +4,23 @@ import { statutPublic, type StatutPublic } from "@/lib/calendrier";
 import { dateLongue } from "@/lib/dates";
 import { heureDuMatch } from "@/lib/horaire";
 import type { RencontreAvecSets } from "@/lib/rencontres";
+import { ChiffresRoulants } from "../accueil/chiffres-roulants";
 
 /**
- * Une ligne du calendrier (fiche fiches/matchs.md) : le jour en grand,
- * l'adversaire, et a droite un seul emplacement qui porte l'heure avant le
- * match, le score apres, ou l'etat en toutes lettres. Mate, en chiffres
- * d'affiche : la lumiere est reservee aux tableaux. Toute la ligne mene a la
- * page du match, et son nom accessible dit tout d'une traite.
+ * Une ligne du calendrier (fiches matchs.md et refonte-respiration.md, veille
+ * 19.3) : trois blocs seulement. Le jour en chiffres de tableau, qui roulent a
+ * l'entree du mois ; l'adversaire en grand, avec en sur-titre la marque de lieu
+ * et la competition ; et a droite une seule case, qui porte l'heure avant le
+ * match (ou « horaire a confirmer »), le score apres, avec les sets en petit.
  *
- * Dans une liste, notre score vient toujours en premier (decision du
- * 30-09-2026) : « Chez X 0-3 » se lit d'un coup comme une defaite. Les
- * tableaux LED, eux, gardent l'ordre du gymnase, locaux a gauche.
- *
- * Chaque ligne porte sa marque Domicile ou Exterieur (demande du 01-10-2026),
- * en tete de la ligne d'informations : on repere d'un coup d'oeil les matchs
- * ou venir. Domicile en turquoise plein, la seule couleur vive ; Exterieur au
- * trait, plus discret.
+ * A domicile, la ligne s'eclaire et porte un filet turquoise a gauche : on
+ * repere d'un coup d'oeil les matchs ou venir (Racing 92). Notre score vient
+ * toujours en premier dans une liste (decision du 30-09-2026) ; les tableaux
+ * LED, eux, gardent l'ordre du gymnase. Toute la ligne mene a la page du
+ * match, et son nom accessible dit tout d'une traite, competition et sets
+ * compris. Au telephone, la case passe sous l'adversaire, qui garde toute la
+ * largeur (critique du 01-10-2026).
  */
-
-function MarqueLieu({ domicile }: { domicile: boolean }) {
-  return domicile ? (
-    <span className="bg-[var(--color-turquoise)] px-1.5 py-0.5 font-semibold tracking-[0.15em] text-[var(--color-nuit)] uppercase">
-      Domicile
-    </span>
-  ) : (
-    <span className="border border-[var(--color-craie-tenue)] px-1.5 py-px font-semibold tracking-[0.15em] uppercase">
-      Extérieur
-    </span>
-  );
-}
 
 const FUSEAU = "Europe/Paris";
 const jour = new Intl.DateTimeFormat("fr-FR", { day: "numeric", timeZone: FUSEAU });
@@ -45,35 +33,64 @@ const ETATS: Partial<Record<StatutPublic, string>> = {
   annulee: "Annulé",
 };
 
-function Emplacement({ match, statut }: { match: RencontreAvecSets; statut: StatutPublic }) {
+function MarqueLieu({ domicile }: { domicile: boolean }) {
+  return domicile ? (
+    <span className="bg-[var(--color-turquoise)] px-1.5 py-0.5 text-[var(--color-nuit)]">Domicile</span>
+  ) : (
+    <span className="border border-[var(--color-craie-tenue)] px-1.5 py-px">Extérieur</span>
+  );
+}
+
+function setsJoues(sets: RencontreAvecSets["sets"]) {
+  return [...sets].sort((a, b) => a.numero - b.numero).filter((s) => s.pointsNous !== null && s.pointsEux !== null);
+}
+
+/** Les sets en petit sous le score : gagnes en clair, perdus attenues. Dits en texte par le nom accessible. */
+function Sets({ sets }: { sets: RencontreAvecSets["sets"] }) {
+  const joues = setsJoues(sets);
+  if (joues.length === 0) return null;
+  return (
+    <span aria-hidden="true" className="flex gap-2 text-sm tabular-nums sm:mt-2 sm:justify-end">
+      {joues.map((s) => (
+        <span
+          key={s.id}
+          className={s.pointsNous! > s.pointsEux! ? "font-semibold text-[var(--color-craie)]" : "text-[var(--color-craie-tenue)]"}
+        >
+          {s.pointsNous}-{s.pointsEux}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+function Case({ match, statut }: { match: RencontreAvecSets; statut: StatutPublic }) {
   if (statut === "a_venir") {
     const h = heureDuMatch(match);
     return h ? (
-      <span className="titre-affiche text-2xl normal-case sm:text-3xl">{h}</span>
+      <span className="titre-affiche titre-carte normal-case">{h}</span>
     ) : (
-      <span className="text-right text-xs leading-snug font-semibold tracking-[0.15em] text-[var(--color-craie-douce)] uppercase">
+      <span className="etiquette leading-snug text-[var(--color-turquoise)] sm:text-right">
         Horaire
-        <br />à confirmer
+        <br className="max-sm:hidden" /> à confirmer
       </span>
     );
   }
   if (statut === "jouee" && match.setsNous !== null && match.setsEux !== null) {
     const victoire = match.setsNous > match.setsEux;
     return (
-      <span className="flex items-center gap-3">
-        <span className={`titre-affiche text-3xl sm:text-4xl ${victoire ? "" : "font-normal text-[var(--color-craie-douce)]"}`}>
-          {match.setsNous}-{match.setsEux}
+      <span className="flex flex-wrap items-center gap-x-5 sm:flex-col sm:items-end">
+        <span className="flex items-center gap-3">
+          <span className={`titre-affiche text-4xl sm:text-5xl ${victoire ? "" : "font-normal text-[var(--color-craie-douce)]"}`}>
+            {match.setsNous}-{match.setsEux}
+          </span>
+          <PastilleResultat victoire={victoire} className="text-lg" />
         </span>
-        <PastilleResultat victoire={victoire} className="text-base" />
+        <Sets sets={match.sets} />
       </span>
     );
   }
   return (
-    <span
-      className={`text-xs font-semibold tracking-[0.2em] uppercase ${
-        statut === "en_cours" ? "text-[var(--color-jaune)]" : "text-[var(--color-craie-douce)]"
-      }`}
-    >
+    <span className={`etiquette ${statut === "en_cours" ? "text-[var(--color-jaune)]" : "text-[var(--color-craie-douce)]"}`}>
       {ETATS[statut]}
     </span>
   );
@@ -85,10 +102,14 @@ function nomAccessible(match: RencontreAvecSets, statut: StatutPublic, raconte: 
   let quoi = h ? `à ${h}` : "horaire à confirmer";
   if (statut === "jouee" && match.setsNous !== null && match.setsEux !== null) {
     quoi = `${match.setsNous > match.setsEux ? "victoire" : "défaite"} ${match.setsNous} sets à ${match.setsEux}`;
+    const detail = setsJoues(match.sets).map((s) => `${s.pointsNous}-${s.pointsEux}`);
+    if (detail.length > 0) quoi += ` (${detail.join(", ")})`;
   } else if (ETATS[statut]) {
     quoi = ETATS[statut]!.toLowerCase();
   }
-  return `${dateLongue(match.joueLe)}, ${qui}, ${quoi}${raconte ? ", raconté dans la série" : ""}`;
+  return [dateLongue(match.joueLe), qui, quoi, match.competition, raconte ? "raconté dans la série" : null]
+    .filter(Boolean)
+    .join(", ");
 }
 
 export function LigneCalendrier({
@@ -107,25 +128,33 @@ export function LigneCalendrier({
       <Link
         href={`/matchs/${match.slug}`}
         aria-label={nomAccessible(match, statut, raconte)}
-        className="group grid min-h-16 grid-cols-[3.5rem_1fr_auto] items-center gap-4 border-b border-[var(--color-nuit-trait)] py-4 transition-colors duration-[80ms] hover:bg-[var(--color-nuit-surface)] sm:grid-cols-[5rem_1fr_auto] sm:gap-6 sm:px-3"
+        className={`group grid min-h-24 grid-cols-[3.5rem_minmax(0,1fr)] items-center gap-x-4 gap-y-3 border-l-4 py-4 pr-3 pl-3 transition-colors duration-[80ms] sm:grid-cols-[5.5rem_minmax(0,1fr)_auto] sm:gap-x-8 sm:py-5 sm:pr-6 ${
+          match.aDomicile
+            ? "border-[var(--color-turquoise)] bg-[var(--color-nuit-surface)] hover:bg-[var(--color-nuit-releve)]"
+            : "border-transparent hover:bg-[var(--color-nuit-surface)]"
+        }`}
       >
-        <span className={`text-center ${barre ? "line-through decoration-2" : ""}`}>
-          <span className="titre-affiche block text-4xl sm:text-5xl">{jour.format(match.joueLe)}</span>
-          <span className="block text-xs text-[var(--color-craie-douce)]">{jourSemaine.format(match.joueLe)}</span>
-        </span>
-        <span className="min-w-0">
-          <span className="titre-affiche block text-xl text-balance sm:text-3xl">
-            {match.aDomicile ? "Contre" : "Chez"} {match.adversaire}
+        {/* Les colonnes de chiffres ne se copient pas : le jour est dit par le nom accessible. */}
+        <span className={`row-span-2 self-start text-center select-none sm:row-span-1 sm:self-center ${barre ? "line-through decoration-2" : ""}`} data-nosnippet>
+          <span className="titre-affiche block text-5xl">
+            <ChiffresRoulants valeur={Number(jour.format(match.joueLe))} />
           </span>
-          <span className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--color-craie-douce)]">
+          <span className="etiquette mt-1 block text-[var(--color-craie-douce)]">{jourSemaine.format(match.joueLe)}</span>
+        </span>
+        <div className="min-w-0">
+          <span className="etiquette flex flex-wrap items-center gap-x-3 gap-y-1 text-[var(--color-craie-douce)]">
             <MarqueLieu domicile={match.aDomicile} />
-            {match.competition ? <span className="truncate">{match.competition}</span> : null}
-            {raconte ? (
-              <span className="font-semibold tracking-[0.15em] text-[var(--color-turquoise)] uppercase">Épisode</span>
-            ) : null}
+            {/* Identique sur toutes les lignes : au telephone, elle cede la place (le nom accessible la dit). */}
+            {match.competition ? <span className="max-sm:hidden">{match.competition}</span> : null}
+            {raconte ? <span className="text-[var(--color-turquoise)]">Épisode</span> : null}
           </span>
+          <h3 className="titre-affiche titre-carte mt-2 text-balance group-hover:text-[var(--color-jaune)] group-focus-visible:text-[var(--color-jaune)]">
+            {match.aDomicile ? "Contre" : "Chez"} {match.adversaire}
+          </h3>
+        </div>
+        <span className="col-start-2 sm:col-start-auto sm:justify-self-end">
+          <Case match={match} statut={statut} />
         </span>
-        <Emplacement match={match} statut={statut} />
       </Link>
     </li>
   );

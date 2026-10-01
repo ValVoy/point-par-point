@@ -1757,3 +1757,29 @@ l'utilisateur a été supprimé avec son accord.
   débordement de 390 à 1920 px, `/contact` compris.
 - Suite : l'utilisateur regarde `/serie` en local et tranche l'ordre titre ou lecteur sur la page
   d'épisode ; push ; puis l'étape 3, les Matchs.
+
+**23:54** · **[jalon] La refonte respire : les Matchs**
+
+Étape 3 de la refonte. La page `/matchs` s'ouvre sur le titre en très grand et le bilan en
+chiffres géants, le prochain match en bandeau dont les chiffres grandissent avec lui, puis un
+chapitre par mois. La ligne de match tient en trois blocs : le jour en chiffres de tableau qui
+roulent à l'entrée du mois, l'adversaire avec sa marque de lieu, l'heure ou le score avec le
+détail des sets. À domicile, la ligne s'éclaire et porte un filet turquoise. La page d'un match
+met le score en bandeau, commentaire et salle côte à côte, l'épisode en bandeau.
+
+La critique à froid a relevé huit points, tous traités : lignes trop hautes et colonne de
+l'adversaire étranglée au téléphone (la case passe dessous), compétition tronquée et sets
+absents du nom accessible, jours affichés « 00 » avant leur mois, adversaire sans niveau de titre,
+étiquettes sous 13 px, et le compte à rebours qui tournait pendant la lecture du calendrier : il
+ne bat plus que tableau à l'écran.
+
+- Portée : `matchs/ligne-calendrier.tsx`, `app/matchs/page.tsx`, `matchs/bilan-saison.tsx`,
+  `matchs/tableau-classement.tsx`, `matchs/blocs-match.tsx`, `app/matchs/[slug]/page.tsx`,
+  `compte-rebours-led.tsx`, `tableau-resultat.tsx`, `tableau-prochain-match.tsx`,
+  `mouvements-porte-entree.tsx`, fiche.
+- Vérifié : 171 tests, `tsc`, lint ; lignes de 116 px en grand écran, 124 à 181 au téléphone ;
+  aucun débordement de 360 à 1920 px sur six pages ; jours qui roulent jusqu'à leur valeur ;
+  compte à rebours qui défile à l'écran, figé hors écran, repris au retour ; nom accessible avec
+  compétition et sets ; aucune erreur console.
+- Suite : l'utilisateur regarde `/matchs` en local, push ; puis les autres pages publiques
+  (effectif, actualités, projet, où nous voir) au même système.

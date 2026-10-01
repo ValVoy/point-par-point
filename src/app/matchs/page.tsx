@@ -6,7 +6,10 @@ import { EnTete } from "@/components/public/entete";
 import { LigneCalendrier } from "@/components/public/matchs/ligne-calendrier";
 import { BilanSaison } from "@/components/public/matchs/bilan-saison";
 import { TableauClassement } from "@/components/public/matchs/tableau-classement";
+import { EquipeEnMouvement } from "@/components/public/accueil/mouvements-porte-entree";
 import { TableauProchainMatch } from "@/components/public/tableau-prochain-match";
+import { TitreChapitre } from "@/components/public/titre-chapitre";
+import { Volets } from "@/components/public/volets";
 import { bilanDeLaSaison } from "@/lib/bilan";
 import { DUREE_EN_COURS, grouperParMois } from "@/lib/calendrier";
 import { classementDeLaSaison, classementPublic } from "@/lib/classement-base";
@@ -15,9 +18,11 @@ import { matchDuTableau } from "@/lib/resultats";
 import { EQUIPE } from "@/lib/site";
 
 /**
- * Le calendrier de la saison (fiche fiches/matchs.md) : les saisons, le
- * prochain match en tableau, puis une seule liste par mois, avec un filet
- * « Aujourd'hui » entre ce qui est joue et ce qui vient. La saison est dans
+ * Le calendrier de la saison (fiches matchs.md et refonte-respiration.md) :
+ * l'ouverture et le bilan en chiffres geants, le prochain match en bandeau,
+ * puis un chapitre par mois, ouvert sur un grand vide, avec un filet
+ * « Aujourd'hui » entre ce qui est joue et ce qui vient. A l'entree de chaque
+ * mois, les jours roulent comme sur un tableau d'affichage. La saison est dans
  * l'adresse, en parametre : /matchs?saison=2026-2027.
  */
 export const dynamic = "force-dynamic";
@@ -31,8 +36,8 @@ export const metadata: Metadata = {
 /** Le filet entre ce qui est joue et ce qui vient, hors des listes : un vrai separateur. */
 function Aujourdhui() {
   return (
-    <div role="separator" aria-label="Aujourd'hui" className="flex items-center gap-3 py-4">
-      <span aria-hidden="true" className="text-xs font-semibold tracking-[0.2em] text-[var(--color-jaune)] uppercase">
+    <div role="separator" aria-label="Aujourd'hui" className="flex items-center gap-3 py-6">
+      <span aria-hidden="true" className="etiquette text-[var(--color-jaune)]">
         Aujourd&apos;hui
       </span>
       <span aria-hidden="true" className="h-0.5 flex-1 bg-[var(--color-jaune)]" />
@@ -59,12 +64,11 @@ export default async function PageMatchs({ searchParams }: { searchParams: Promi
   return (
     <>
       <EnTete actif="/matchs" />
-      <main id="contenu" className="pb-24">
-        <section className="colonne-large pt-16 pb-12 sm:pt-24">
-          <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-craie-douce)] uppercase">
-            {EQUIPE}
-          </p>
-          <h1 className="titre-affiche mt-3 text-6xl sm:text-8xl">Les matchs</h1>
+      <main id="contenu" className="pb-[var(--air-chapitre)]">
+        <Volets>
+        <section className="colonne-large pt-16 sm:pt-24">
+          <p className="etiquette text-[var(--color-turquoise)]">{EQUIPE}</p>
+          <h1 className="titre-affiche titre-page mt-4">Les matchs</h1>
           <BilanSaison bilan={bilan} />
           {saisons.length > 1 ? (
             <nav aria-label="Saisons" className="mt-8">
@@ -88,8 +92,8 @@ export default async function PageMatchs({ searchParams }: { searchParams: Promi
         </section>
 
         {prochain ? (
-          <section aria-label="Prochain match" className="colonne-large pb-16">
-            <div className="max-w-3xl">
+          <section aria-label="Prochain match" className="colonne-large suite">
+            <div>
               <TableauProchainMatch
                 match={{
                   adversaire: prochain.adversaire,
@@ -105,39 +109,40 @@ export default async function PageMatchs({ searchParams }: { searchParams: Promi
           </section>
         ) : null}
 
-        <section aria-labelledby="titre-calendrier" className="colonne-large">
-          <h2 id="titre-calendrier" className="sr-only">
-            Calendrier {saison ? `de la saison ${saison.libelle}` : ""}
-          </h2>
+        <section aria-label={`Calendrier${saison ? ` de la saison ${saison.libelle}` : ""}`} className="colonne-large">
           {matchs.length === 0 ? (
-            <p className="max-w-[46ch] text-lg text-[var(--color-craie-douce)]">
+            <p className="chapeau suite max-w-[46ch] text-[var(--color-craie-douce)]">
               Le calendrier de cette saison n&apos;est pas encore publié.
             </p>
           ) : (
             grouperParMois(matchs).map((groupe) => {
               const coupe = groupe.matchs.findIndex((m) => m.id === premierAVenir && m !== matchs[0]);
               const lignes = (liste: typeof groupe.matchs) => (
-                <ul>
+                <ul className="space-y-2">
                   {liste.map((m) => (
                     <LigneCalendrier key={m.id} match={m} maintenant={maintenant} raconte={racontes.has(m.id)} />
                   ))}
                 </ul>
               );
               return (
-                <div key={groupe.cle} className="mt-10 first:mt-0">
-                  {coupe === 0 ? <Aujourdhui /> : null}
-                  <h3 className="border-b-2 border-[var(--color-craie)] pb-2 text-xs font-semibold tracking-[0.2em] uppercase">
-                    {groupe.libelle}
-                  </h3>
-                  {coupe > 0 ? (
-                    <>
-                      {lignes(groupe.matchs.slice(0, coupe))}
-                      <Aujourdhui />
-                      {lignes(groupe.matchs.slice(coupe))}
-                    </>
-                  ) : (
-                    lignes(groupe.matchs)
-                  )}
+                <div key={groupe.cle} className="chapitre">
+                  <TitreChapitre id={`mois-${groupe.cle}`}>
+                    <span className="first-letter:uppercase">{groupe.libelle}</span>
+                  </TitreChapitre>
+                  <div className="mt-[var(--titre-contenu)]">
+                    <EquipeEnMouvement>
+                      {coupe === 0 ? <Aujourdhui /> : null}
+                      {coupe > 0 ? (
+                        <>
+                          {lignes(groupe.matchs.slice(0, coupe))}
+                          <Aujourdhui />
+                          {lignes(groupe.matchs.slice(coupe))}
+                        </>
+                      ) : (
+                        lignes(groupe.matchs)
+                      )}
+                    </EquipeEnMouvement>
+                  </div>
                 </div>
               );
             })
@@ -152,6 +157,7 @@ export default async function PageMatchs({ searchParams }: { searchParams: Promi
             final={!saison?.courante}
           />
         ) : null}
+        </Volets>
       </main>
       <PiedDePage />
     </>

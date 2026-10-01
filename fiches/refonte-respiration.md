@@ -158,3 +158,20 @@ dans la série en bandeau (même composant que l'épisode), et « Match suivant 
   non l'inverse comme écrit en section 2. Le titre situe la vidéo avant qu'on la lance.
 - Hors périmètre, corrigé au passage : la grille de `/contact` débordait à 1024 px ; elle passe en
   deux colonnes à partir de 1280 px.
+
+## 6. Étape 3, les Matchs : écarts assumés après la critique à froid du 01-10-2026
+
+- **Hauteur des lignes** : 116 px en grand écran (fiche : 96), 124 à 181 px au téléphone (fiche :
+  128). Le jour en chiffres de tableau et son jour de semaine imposent cette hauteur ; la veille
+  mesure 80 à 130 px chez les clubs lisibles. Au téléphone, la case heure ou score passe sous
+  l'adversaire, la compétition (identique sur toutes les lignes) cède la place et reste dans le nom
+  accessible, avec le détail des sets.
+- **L'adversaire est un h3** sous le h2 du mois.
+- **Le titre d'une page de match est au corps des chapitres** (96 px), pas au titre de page :
+  « Chez Volley Club des Trois Rivières » ne tiendrait pas à 189 px.
+- **« Match suivant »** reste un lien de navigation à deux colonnes, agrandi, pas une carte.
+- **Le compte à rebours ne tourne que tableau à l'écran** : rien ne bouge pendant qu'on lit le
+  calendrier.
+- **Les jours qui roulent** gardent leur valeur finale tant que leur mois n'est pas atteint (rien
+  ne montre « 00 » dans une capture ou une impression).
+- **Étiquettes à 13 px** aussi sur le tableau du prochain match et l'en-tête du classement.

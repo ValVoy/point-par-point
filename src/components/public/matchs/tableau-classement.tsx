@@ -32,16 +32,16 @@ export function TableauClassement({
   final: boolean;
 }) {
   return (
-    <section aria-labelledby="titre-classement" className="colonne-large mt-20">
-      <h2 id="titre-classement" className="titre-affiche text-4xl sm:text-5xl">
+    <section aria-labelledby="titre-classement" className="colonne-large chapitre">
+      <h2 id="titre-classement" data-volet className="titre-affiche titre-chapitre">
         {final ? "Classement final" : "Classement"}
       </h2>
-      <p className="mt-2 text-[var(--color-craie-douce)]">
+      <p className="corps mt-4 text-[var(--color-craie-douce)]">
         {[intitule, misAJourLe ? `à jour au ${dateLongue(misAJourLe)}` : null].filter(Boolean).join(" · ")}
       </p>
-      <table className="mt-6 w-full max-w-3xl border-collapse text-left tabular-nums">
+      <table className="mt-[var(--titre-contenu)] w-full max-w-3xl border-collapse text-left tabular-nums">
         <thead>
-          <tr className="border-b-2 border-[var(--color-craie)] text-xs font-semibold tracking-[0.15em] uppercase">
+          <tr className="etiquette border-b-2 border-[var(--color-craie)]">
             <th scope="col" className="w-10 py-2 pr-2">
               <abbr title="Rang" className="no-underline">#</abbr>
             </th>

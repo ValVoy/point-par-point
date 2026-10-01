@@ -105,7 +105,7 @@ export function EquipeEnMouvement({ children }: { children: ReactNode }) {
           vague.fromTo(
             colonnes,
             // y: 0 reprend la main sur la translation posee par le rendu serveur.
-            { y: 0, yPercent: 0 },
+            { y: 0, yPercent: 0, immediateRender: false },
             {
               y: 0,
               yPercent: (_j: number, colonne: HTMLElement) => -10 * Number(colonne.dataset.chiffre),
