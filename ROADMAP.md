@@ -192,6 +192,7 @@ de l'intro et de GSAP sur l'accueil.
       chaque écriture, purge après la réponse, bandeau LED en pause hors écran, MorphSVG chargé
       par l'intro seule ; accueil 165 → 16 ms côté serveur en local
 - [ ] Remesurer en production après le déploiement du 02-10, puis sans la barrière au lancement
+- [ ] Purger l'équipe de vérification (12 joueurs numérotés 0 ou 99, `demo = 1`) de la production avant la vraie saisie de Tom, avec accord
 
 ### Dette relevée par l'audit du 02-10-2026, sans décision
 

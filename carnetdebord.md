@@ -1941,3 +1941,21 @@ le même, il n'est plus sec. À juger par l'utilisateur sur la production.
   erreur ; 188 tests, `tsc`, lint, build.
 - Suite : l'utilisateur juge à la molette sur la production ; si un saut persiste, le filmer pour
   situer le bloc ; puis la fiche de la barre de navigation.
+
+**16:11** · **[jalon] Une équipe de vérification en production**
+
+Demande de l'utilisateur, avec son accord explicite pour la base de production (question à choix) :
+une équipe pour vérifier la mise en page de l'Effectif, numérotée 0 ou 99 pour qu'aucun joueur
+fictif ne passe inaperçu. Douze joueurs répartis comme une D2 (2 passeurs, 4 réceptionneurs, 3
+centraux, 1 pointu, 2 libéros), un capitaine, présentation « à effacer », adresses en `-verif`.
+Tout est marqué `demo = 1` (joueurs et lignes d'effectif), inséré en une transaction, après avoir
+vérifié que la production n'avait aucun joueur.
+
+À retenir : la production contient donc des données de démonstration, contrairement à la décision
+du 01-10. Elles s'enlèvent avec `db:purge-demo` lancé sur la base de production, avec accord, avant
+que Tom ne saisisse sa vraie équipe.
+
+- Portée : base de production, tables `joueurs` et `effectifs` (12 lignes chacune).
+- Vérifié : 12 lignes relues après la transaction ; `/effectif` en production les affiche.
+- Suite : l'utilisateur valide la fiche de l'étape 4 ; coder l'Effectif dans une nouvelle séance,
+  vérifier sur cette équipe ; purger l'équipe de vérification avant la vraie saisie de Tom.
