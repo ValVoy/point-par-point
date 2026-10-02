@@ -2,7 +2,7 @@
 
 import { useRef, type ReactNode } from "react";
 import { CARRES } from "@/components/motif";
-import { gsap, useGSAP } from "@/lib/gsap";
+import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap-morph";
 import { ajouterGeste, preparerBallon, trouverElementsGeste } from "../ballon-geste";
 import { TITRE_TRACES } from "../titre-traces";
 import { INTRO_GRAND, INTRO_PORTRAIT, placementTitre, TAILLE_BANDEAU } from "./geometrie-intro";
@@ -50,6 +50,18 @@ export function AnimationOuverture({ children }: { children: ReactNode }) {
           const motif = salle.querySelector<HTMLElement>("[data-bandeau-motif]");
           const tuile = CARRES * TAILLE_BANDEAU[grand ? "grand" : "portrait"];
           const defilement = motif && !reduit ? gsap.to(motif, { x: -tuile, duration: 2.4, ease: "none", repeat: -1 }) : null;
+          // En pause des que la salle quitte l'ecran : sans cela, le moteur travaillait a
+          // chaque image pendant toute la lecture de l'accueil (audit du 02-10-2026, D12).
+          // Le declencheur appartient au contexte de matchMedia, qui le retire seul.
+          if (defilement) {
+            ScrollTrigger.create({
+              trigger: salle,
+              start: "top bottom",
+              end: "bottom top",
+              animation: defilement,
+              toggleActions: "play pause resume pause",
+            });
+          }
 
           if (reduit || !introAJouer()) return;
           marquerIntroVue();

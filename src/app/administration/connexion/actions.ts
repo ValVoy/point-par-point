@@ -2,6 +2,7 @@
 
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { after } from "next/server";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
@@ -90,8 +91,9 @@ export async function connecter(
 
   await confirmerTentative(tentative);
   await oublierTentatives(analyse.data.email);
-  // Sessions expirees et autres donnees echues : menage a chaque connexion (audit S12, R4).
-  await purgerDonneesEchues();
+  // Sessions expirees et autres donnees echues : menage a chaque connexion (audit S12, R4),
+  // une fois la reponse partie.
+  after(() => purgerDonneesEchues());
 
   const magasin = await cookies();
   magasin.set(NOM_COOKIE, jeton, optionsCookie(expireLe));

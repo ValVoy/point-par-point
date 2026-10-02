@@ -1,6 +1,7 @@
 "use server";
 
 import { headers } from "next/headers";
+import { after } from "next/server";
 import { lireIp } from "@/lib/auth/tentatives";
 import { lireMessage, type ChampContact } from "@/lib/contact";
 import { db } from "@/lib/db";
@@ -52,7 +53,8 @@ export async function envoyerMessage(_precedent: EtatContact, donnees: FormData)
 
   await db().insert(messagesContact).values(lu.message);
   // Apres l'insertion, et sans jamais faire echouer l'envoi (audit F6) : le
-  // visiteur ne renvoie pas un message deja recu.
-  await purgerDonneesEchues();
+  // visiteur ne renvoie pas un message deja recu. Apres la reponse, aussi : il
+  // n'a pas a attendre le menage.
+  after(() => purgerDonneesEchues());
   return { envoye: true, erreur: null };
 }

@@ -23,6 +23,7 @@ export async function POST(requete: Request) {
   const recu = requete.headers.get("authorization")?.replace(/^Bearer\s+/i, "") ?? "";
   if (!timingSafeEqual(empreinte(recu), empreinte(attendu))) return new Response(null, { status: 401 });
 
-  await purgerDonneesEchues();
-  return new Response(null, { status: 204, headers: { "cache-control": "no-store" } });
+  // Un echec repond 500 : la tache planifiee le voit, au lieu d'un succes de facade (audit F14).
+  const reussie = await purgerDonneesEchues();
+  return new Response(null, { status: reussie ? 204 : 500, headers: { "cache-control": "no-store" } });
 }

@@ -1,3 +1,4 @@
+import { after } from "next/server";
 import { peut } from "@/lib/auth/roles";
 import { exigerConnexion } from "@/lib/auth/session-courante";
 import { nombreNonLus } from "@/lib/messages";
@@ -23,7 +24,9 @@ export default async function InterieurLayout({
 }) {
   const utilisateur = await exigerConnexion();
   // Purge des donnees echues, qui ne peut pas faire tomber l'administration (audit F6).
-  await purgerDonneesEchues();
+  // Apres la reponse : c'est une ecriture vers Turso, et la faire attendre ajoutait un
+  // aller-retour a chaque page de l'administration (audit du 02-10-2026).
+  after(() => purgerDonneesEchues());
   let nonLus = 0;
   if (peut(utilisateur, "lireMessages")) {
     nonLus = await nombreNonLus().catch(() => 0);

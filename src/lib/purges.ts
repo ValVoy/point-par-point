@@ -8,9 +8,10 @@ import { envoisContact, messagesContact, sessions, tentativesAuth } from "./db/s
  * etait jusqu'ici declenchee par l'evenement qui fait grossir sa table : le
  * dernier message de la saison gardait son adresse reseau des mois.
  *
- * Appelee au passage (connexion, envoi de contact, administration) et, en
- * production, chaque nuit par une tache planifiee. Elle ne fait jamais
- * echouer l'action qui la porte : une purge ratee se rattrape a la suivante.
+ * Appelee au passage (connexion, envoi de contact, administration), apres la
+ * reponse (`after`) pour ne jamais faire attendre personne, et, en production,
+ * chaque nuit par une tache planifiee. Elle ne fait jamais echouer l'action
+ * qui la porte : une purge ratee se rattrape a la suivante.
  */
 
 const MINUTE = 60 * 1000;
@@ -22,7 +23,8 @@ export const CONSERVATION = {
   messages: 365 * JOUR,
 } as const;
 
-export async function purgerDonneesEchues(maintenant = Date.now()): Promise<void> {
+/** Rend `false` en cas d'echec, pour que la tache de nuit puisse le signaler (audit F14). */
+export async function purgerDonneesEchues(maintenant = Date.now()): Promise<boolean> {
   try {
     const base = db();
     await base.batch([
@@ -31,7 +33,9 @@ export async function purgerDonneesEchues(maintenant = Date.now()): Promise<void
       base.delete(messagesContact).where(lt(messagesContact.creeLe, new Date(maintenant - CONSERVATION.messages))),
       base.delete(sessions).where(lt(sessions.expireLe, new Date(maintenant))),
     ]);
+    return true;
   } catch (erreur) {
     console.error("[purges] echec, reprise a la prochaine occasion", erreur instanceof Error ? erreur.message : erreur);
+    return false;
   }
 }

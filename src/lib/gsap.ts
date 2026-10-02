@@ -1,7 +1,6 @@
 "use client";
 
 import { gsap } from "gsap";
-import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
@@ -14,9 +13,9 @@ import { useGSAP } from "@gsap/react";
  * Licence standard de GSAP : gratuite, usage commercial compris, mais ce
  * n'est pas du MIT.
  */
-// MorphSVG transforme le terrain en titre (intro de l'accueil). Inclus dans le
-// paquet gsap 3.15.0, meme licence.
-gsap.registerPlugin(ScrollTrigger, useGSAP, MorphSVGPlugin);
+// MorphSVG, qui ne sert qu'a l'intro de l'accueil, s'enregistre a part dans
+// gsap-morph.ts : ici, il partait sur toutes les pages animees (audit D13).
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 // En developpement seulement : GSAP accessible depuis la console, pour ralentir
 // le temps (`__gsap.globalTimeline.timeScale(0.1)`) et juger une animation

@@ -1,5 +1,6 @@
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
+import { avecCacheDeLectures } from "./cache-lectures";
 import * as schema from "./schema";
 
 /**
@@ -17,10 +18,14 @@ function creer() {
         "ou les variables d'execution de Coolify en production.",
     );
   }
-  const client = createClient({
-    url,
-    authToken: process.env.TURSO_AUTH_TOKEN,
-  });
+  // Lectures gardees en memoire jusqu'a la prochaine ecriture (voir
+  // cache-lectures.ts) : un aller-retour vers Turso coute plus que le rendu.
+  const client = avecCacheDeLectures(
+    createClient({
+      url,
+      authToken: process.env.TURSO_AUTH_TOKEN,
+    }),
+  );
   return drizzle(client, { schema });
 }
 
