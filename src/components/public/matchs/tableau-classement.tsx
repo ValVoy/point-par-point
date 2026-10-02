@@ -39,23 +39,25 @@ export function TableauClassement({
       <p className="corps mt-4 text-[var(--color-craie-douce)]">
         {[intitule, misAJourLe ? `à jour au ${dateLongue(misAJourLe)}` : null].filter(Boolean).join(" · ")}
       </p>
+      {/* Colonnes de chiffres serrees au telephone (le nom passait sur deux lignes), et une
+          marge a droite du dernier chiffre, comme a gauche du rang (retour du 02-10-2026). */}
       <table className="mt-[var(--titre-contenu)] w-full max-w-3xl border-collapse text-left tabular-nums">
         <thead>
           <tr className="etiquette border-b-2 border-[var(--color-craie)]">
-            <th scope="col" className="w-10 py-2 pr-2">
+            <th scope="col" className="w-9 py-2 pr-1 pl-3 sm:w-12">
               <abbr title="Rang" className="no-underline">#</abbr>
             </th>
             <th scope="col" className="py-2 pr-2">Équipe</th>
-            <th scope="col" className="w-14 py-2 text-right">
+            <th scope="col" className="w-11 py-2 text-right sm:w-16">
               <abbr title="Points" className="no-underline">Pts</abbr>
             </th>
-            <th scope="col" className="w-10 py-2 text-right">
+            <th scope="col" className="w-8 py-2 text-right sm:w-12">
               <abbr title="Matchs joués" className="no-underline">J</abbr>
             </th>
-            <th scope="col" className="w-10 py-2 text-right">
+            <th scope="col" className="w-8 py-2 text-right sm:w-12">
               <abbr title="Gagnés" className="no-underline">G</abbr>
             </th>
-            <th scope="col" className="w-10 py-2 text-right">
+            <th scope="col" className="w-11 py-2 pr-3 text-right sm:w-16">
               <abbr title="Perdus" className="no-underline">P</abbr>
             </th>
           </tr>
@@ -67,7 +69,7 @@ export function TableauClassement({
               aria-current={l.estNous ? "true" : undefined}
               className={`border-b border-[var(--color-nuit-trait)] ${l.estNous ? "bg-[var(--color-nuit-surface)] font-semibold text-[var(--color-jaune)] shadow-[inset_4px_0_0_var(--color-jaune)]" : "text-[var(--color-craie-lecture)]"}`}
             >
-              <td className="py-3 pr-2 pl-3 titre-affiche text-xl">{l.rang}</td>
+              <td className="py-3 pr-1 pl-3 titre-affiche text-xl">{l.rang}</td>
               <th scope="row" className="py-3 pr-2 font-[inherit] break-words">
                 {l.equipe}
                 {l.estNous ? <span className="sr-only"> (notre équipe)</span> : null}
@@ -75,7 +77,7 @@ export function TableauClassement({
               <td className="py-3 text-right text-lg font-semibold">{chiffre(l.points)}</td>
               <td className="py-3 text-right">{chiffre(l.joues)}</td>
               <td className="py-3 text-right">{chiffre(l.gagnes)}</td>
-              <td className="py-3 text-right">{chiffre(l.perdus)}</td>
+              <td className="py-3 pr-3 text-right">{chiffre(l.perdus)}</td>
             </tr>
           ))}
         </tbody>
