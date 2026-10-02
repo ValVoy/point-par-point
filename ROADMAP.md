@@ -241,7 +241,7 @@ public consistera à retirer la barrière et à brancher le domaine définitif (
 - [x] Purge des données de démonstration : sans objet, la production n'en a jamais reçu (01-10-2026)
 - [x] Audit du groupe, deuxième passage, le 02-10-2026 : `audits/2026-10-02-audit-groupe.md`
 - [x] Déploiement Coolify depuis `main` (01-10-2026, voir « Avant-première »)
-- [ ] Sonde Todai sur le domaine
+- [ ] Sonde Todai sur `/sante`, dès l'avant-première (arbitrage F15 du 02-10) ; santé Coolify sur `/robots.txt` (F16), purge toutes les heures avec battement (R16, F14) : consigne `Coolify/docs/Consignes/point-par-point-02-fiabilite.md`
 - [x] Sauvegarde nocturne de la base Turso, 14 jours, sous les **30 jours** annoncés par la politique (01-10-2026)
 - [x] Migrations 0000 à 0009 appliquées en production avec l'accord de l'utilisateur (01-10-2026)
 - [ ] Umami : poser `UMAMI_URL=https://stats.valentincheron.fr` en variable de **build ET
@@ -258,7 +258,7 @@ public consistera à retirer la barrière et à brancher le domaine définitif (
 - [ ] Copie nocturne des photos R2 en place (01-10-2026) ; reste la restauration d'une photo réelle, quand Tom en aura déposé une (audit F3) ; seconde copie vérifiée de la clé `age` (F4)
 - [ ] Umami : purge au-delà de 25 mois, puis la durée dans la politique (audit R6)
 - [ ] Mentions légales : coordonnées de Tom chez l'hébergeur réel, article 6 revérifié ; note de sous-traitance ; registre (audit R7, R8, R10)
-- [ ] Fiche « que faire si » pour Tom (audit F12)
+- [ ] Fiche « que faire si » pour Tom (audit F12), avec la relecture hebdomadaire des messages, pour ne manquer aucune demande d'exercice des droits (arbitrage R15 du 02-10)
 - [x] R2 (01-10-2026) : créer le bucket `projet-volley`, un jeton limité à ce bucket (lecture et écriture), et
   son domaine public ; poser `R2_COMPTE_ID`, `R2_CLE_ACCES`, `R2_CLE_SECRETE` en variables
   d'exécution et **`R2_DOMAINE_PUBLIC` aussi en variable de build** (lu par `next.config.ts`

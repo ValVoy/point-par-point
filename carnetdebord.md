@@ -1849,3 +1849,32 @@ second passage, et la base de développement a été purgée puis ressemée une 
 - Suite : remesurer la production page par page après ce déploiement ; trancher les questions
   d'arbitrage (barrière, `.env.production.local`, sonde Todai, santé du conteneur, tests dans
   l'image, composition) ; puis la refonte des autres pages publiques, avec les espaces insécables.
+
+**13:54** · **[jalon] Les arbitrages de l'audit, faits dans la séance**
+
+Reprise après une coupure de l'API, sans perte : l'audit était déjà poussé. L'utilisateur a
+tranché douze questions, toutes sur l'option recommandée sauf une : les demandes d'exercice des
+droits seront vues par une relecture hebdomadaire plutôt que par un e-mail.
+
+Faits : le fichier des accès de production renommé en `.env.turso-prod.local`, que Next ne charge
+jamais (le build n'annonce plus que `.env.local`) ; les tests dans l'image avant la compilation et
+une santé de conteneur qui n'interroge plus la base ; les tableaux de l'accueil qui mènent à la page
+du match ; l'en-tête de navigation sur l'accueil, caché pendant l'intro et en fondu ensuite, par la
+seule classe que l'intro pose déjà ; un dégradé plus dense sous le titre des miniatures ; un seul
+appel à s'abonner par page. La règle « on » et « nous » était déjà tenue, elle passe au codex.
+
+Ce qui revient au poste Coolify part en consigne écrite : santé sur `/robots.txt`, sonde Todai sur
+`/sante` dès maintenant, purge toutes les heures avec battement, nom du fichier de secrets, et la
+vérification du premier build qui lance les tests.
+
+- Portée : `Dockerfile`, `resultats.ts`, `bloc-tableaux.tsx`, `ouverture.tsx`, `globals.css`,
+  `bandeau-episode.tsx`, `elements-serie.tsx`, pages Série, rapport d'audit, codex, ROADMAP,
+  `Coolify/docs/Consignes/point-par-point-02-fiabilite.md`, `.env.turso-prod.local` (ignoré).
+- Vérifié : 187 tests, lint, build de production local ; à l'écran, en-tête caché pendant l'intro
+  puis visible, lien vers l'effectif à 44 px du haut au lieu de 5 827, deux tableaux cliquables,
+  aucun débordement à 390 px, aucune erreur console, dégradé en capture à 1440 px, un seul appel
+  sur la Série. L'image Docker avec les tests n'a pas été éprouvée sur le poste.
+- Suite : le poste Coolify applique la consigne #02 et vérifie le premier build avec tests ;
+  remesurer la production page par page ; l'utilisateur dit si le nom de l'en-tête doit
+  disparaître de l'accueil ; puis la refonte des autres pages publiques, avec les espaces
+  insécables.

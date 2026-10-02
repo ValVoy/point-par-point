@@ -253,3 +253,27 @@ battement Healthchecks sur la sauvegarde.
 - textes sous 13 px sur les pages refondues (0 au 02-10) ;
 - espaces insécables avant `: ? !` (0 au 02-10, W11) ;
 - restauration d'une photo réelle, avec sa date.
+
+## Arbitrages de l'utilisateur, 02-10-2026
+
+Douze questions à choix, posées en fin de passe. Ce qui a été fait dans la séance est marqué.
+
+| Constat | Décision | Suite |
+|---|---|---|
+| F23, barrière | La garder jusqu'au lancement | ACCEPTÉ |
+| F13, `.env.production.local` | Renommer en `.env.turso-prod.local` | FAIT : `next build` ne charge plus que `.env.local` (prouvé) ; consigne #02 au poste Coolify |
+| F15, sonde Todai | Maintenant, sur `/sante` | Consigne #02 au poste Coolify |
+| F16, santé du conteneur | Sans base | FAIT dans le Dockerfile (`/robots.txt`) ; réglage Coolify par la consigne #02 |
+| F17, tests dans l'image | Oui | FAIT : `RUN npm test` avant la compilation ; premier build à vérifier par le poste |
+| U17, tableaux de l'accueil | Tableau entier cliquable | FAIT, nom accessible court ; prouvé à 390 px |
+| U21, navigation de l'accueil | En-tête après l'intro | FAIT, en CSS sur la classe de l'intro : caché et hors tabulation pendant, en fondu après ; lien vers l'effectif à 44 px au lieu de 5 827 |
+| G15, miniatures | Dégradé plus dense en bas | FAIT, vérifié en capture à 1440 px |
+| W15, voix | « On » sujet, « nous » complément | Déjà tenu dans le code (relevé) ; règle au codex |
+| R15, droits RGPD | Relecture hebdomadaire des messages | Dans la fiche « que faire si » de Tom (F12, ROADMAP) |
+| R16, adresse réseau | Purge toutes les heures | Consigne #02 au poste Coolify |
+| W16, abonnement | Un seul appel par page, même phrase | FAIT |
+
+Suite choisie : les arbitrages (faits), puis la refonte des autres pages publiques.
+
+Point soumis à l'utilisateur sans être tranché : sur l'accueil, le nom en petit dans l'en-tête
+fait doublon avec le grand titre de l'ouverture.

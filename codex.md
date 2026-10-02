@@ -380,3 +380,9 @@ deuxième visite après 5 minutes, ou au redéploiement.
 La purge des données échues est une écriture : elle part dans `after()`, une fois la page envoyée,
 dans l'administration, à la connexion et à l'envoi de contact. Même règle pour tout futur ménage,
 journal ou notification.
+
+### La voix de l'équipe : « on » sujet, « nous » complément
+
+Tranché le 02-10-2026 (audit W15) : l'équipe parle avec « on » (« on lit tout », « on en parle »),
+et « nous » n'apparaît qu'en complément ou à l'impératif (« Écrivez-nous », « Où nous voir »,
+« dites-nous »). Le visiteur est vouvoyé partout.
