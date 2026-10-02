@@ -175,3 +175,68 @@ dans la série en bandeau (même composant que l'épisode), et « Match suivant 
 - **Les jours qui roulent** gardent leur valeur finale tant que leur mois n'est pas atteint (rien
   ne montre « 00 » dans une capture ou une impression).
 - **Étiquettes à 13 px** aussi sur le tableau du prochain match et l'en-tête du classement.
+
+## 7. Étape 4, l'Effectif et la fiche joueur (fiche du 02-10-2026)
+
+Arbitré par l'utilisateur le 02-10-2026, par questions à choix : le poste en colonne fixe, et une
+ouverture avec titre géant et chiffre. L'intention de `fiches/effectif.md` ne change pas (le
+vestiaire avant le match, des maillots alignés par poste, tous de la même taille) ; ses références
+restent celles de cette fiche, aucune veille nouvelle n'a été faite pour cette étape.
+
+### Le diagnostic, mesuré en capture à 1440 et 390 px
+
+- Le titre de page à 96 px, la moitié de l'échelle (189 px).
+- Cinq bandes identiques, une par poste, chacune ouverte par une étiquette de 12 px sur filet ; deux
+  ou trois cartes par poste, si bien que **la moitié droite de l'écran reste vide** sur toute la
+  hauteur.
+- Le staff en petit, comme une note.
+- Fiche joueur : la structure tient ; étiquettes à 12 px, « Parcours » et « Sur le terrain » en
+  étiquettes au lieu de chapitres.
+
+### La page `/effectif`
+
+- **Ouverture**, comme la Série : sur-titre de l'équipe, « L'effectif » au titre de page (189 px),
+  le chapeau, et à droite le **nombre de joueurs en chiffre géant** avec « joueurs cette saison » en
+  étiquette. Ce n'est pas un compteur au sens de la fiche d'origine (aucun classement, aucune
+  statistique) : c'est la taille du vestiaire. Les onglets de saison restent sous le chapeau.
+- **Le poste en colonne fixe** (à partir de 1024 px) : chaque poste est une rangée à deux colonnes,
+  `minmax(14rem, 1fr)` et `3fr`. À gauche, le nom du poste au corps des titres de carte (40 px),
+  coupé proprement (« Réceptionneurs-attaquants » est long), et le nombre de joueurs du poste en
+  chiffres turquoise ; cette colonne **reste en place pendant qu'on défile les joueurs du poste**
+  (`position: sticky`), comme la marge d'un programme de match. À droite, les cartes, trois par
+  ligne : plus grandes qu'aujourd'hui (environ 320 px contre 210), et plus de vide à droite.
+- Les rangées se suivent à `--air-suite`, séparées par un filet craie ; le premier poste ouvre le
+  chapitre.
+- **Au téléphone**, le poste repasse au-dessus de ses cartes (titre de carte et nombre), deux
+  cartes par ligne, rien de fixe.
+- **Le staff** devient un chapitre : « Le staff » en titre de chapitre (96 px) avec son volet, puis
+  les membres en titre de carte, le rôle en étiquette de 13 px, la présentation au corps.
+- **États** : un poste sans joueur disparaît (inchangé) ; un effectif vide garde son message ; une
+  saison passée s'affiche à l'identique, sans mention « actuel ».
+
+### La fiche d'un joueur, `/effectif/<slug>`
+
+- Le nom au titre de page, coupé proprement au téléphone ; le numéro turquoise devant reste.
+- Poste, âge et taille : étiquettes à 13 px, valeurs inchangées.
+- « Parcours » : bloc `suite`, titre au corps des titres de carte, texte au corps de lecture.
+- « Sur le terrain en 2026-2027 » : un **chapitre** (titre de chapitre et volet), lignes inchangées.
+- « L'effectif 2026-2027 », la navigation par numéros : bloc `suite`, titre en étiquette de 13 px,
+  pastilles de 44 px au moins.
+
+### Le mouvement
+
+- Les titres de chapitre entrent par le volet du système, une fois.
+- La colonne du poste qui reste en place est le seul mouvement nouveau, et ce n'est pas une
+  animation : elle suit le défilement sans rien calculer.
+- Les cartes gardent leur geste au survol ; rien de plus, conformément à « un geste propre par
+  bloc ».
+
+### Fullstack
+
+- `app/effectif/page.tsx`, `components/public/effectif/cartes.tsx`, `app/effectif/[slug]/page.tsx`,
+  enveloppe `Volets`, `TitreChapitre`.
+- Le décalage de la colonne fixe se règle sur l'air du haut de page : l'en-tête ne suit pas le
+  défilement.
+- Vérification : tests, `tsc`, lint, build ; écran à 390, 768, 1024, 1440 et 1920 px, avec un
+  poste à un joueur, un poste à quatre, et un nom très long ; aucun texte sous 13 px ; aucun
+  débordement ; critique à froid par un agent qui ne l'a pas construite.
