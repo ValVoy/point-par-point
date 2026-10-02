@@ -1959,3 +1959,24 @@ que Tom ne saisisse sa vraie équipe.
 - Vérifié : 12 lignes relues après la transaction ; `/effectif` en production les affiche.
 - Suite : l'utilisateur valide la fiche de l'étape 4 ; coder l'Effectif dans une nouvelle séance,
   vérifier sur cette équipe ; purger l'équipe de vérification avant la vraie saisie de Tom.
+
+**16:22** · **[jalon] Une vraie démo en production, à côté du contenu réel**
+
+L'utilisateur revient sur la décision du 01-10 : Tom ne voit que la production, c'est donc là que
+la démonstration sert à juger le rendu. Accord pour compléter. Règle tenue : rien de réel n'est
+touché (les cinq épisodes, les douze matchs du calendrier fédéral, les cinq étapes en brouillon que
+Tom doit relire), aucun score inventé pour un vrai match. Seules les rubriques vides reçoivent des
+contenus visiblement factices, tous marqués `demo = 1`.
+
+Ajoutés : un match amical de démonstration joué le 26-09 (3-1, sets détaillés) pour que l'accueil
+et les Matchs aient un dernier résultat, un classement d'« Équipe démo » où VF Francheville est
+troisième, trois actualités, trois membres du staff, trois partenaires. Pas de texte d'accès à la
+salle : c'est une vraie information que seul Tom a. Le script refusait de tourner si l'une de ces
+rubriques contenait déjà quelque chose.
+
+- Portée : base de production, `rencontres` et `sets_rencontre` (1 match), `classements` et
+  `lignes_classement`, `actualites`, `membres_staff`, `partenaires`.
+- Vérifié : comptes relus ; l'accueil, `/matchs`, `/actualites` et `/partenaires` les affichent ;
+  le staff de `/effectif` attend la fin du cache (écriture faite hors de l'application).
+- Suite : `db:purge-demo` sur la production, avec accord, quand Tom commencera la vraie saisie ;
+  coder l'Effectif selon la fiche de l'étape 4.
