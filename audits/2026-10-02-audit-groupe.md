@@ -277,3 +277,37 @@ Suite choisie : les arbitrages (faits), puis la refonte des autres pages publiqu
 
 Point soumis à l'utilisateur sans être tranché : sur l'accueil, le nom en petit dans l'en-tête
 fait doublon avec le grand titre de l'ouverture.
+
+## Passe de l'après-midi : le site avec ses données (02-10-2026, 16:30)
+
+Demandée par l'utilisateur après l'ajout de la démonstration en production : trois regards
+(`dev` fullstack, `graphisme` et veille, `ux`), sur la production réelle en lecture seule, par un
+relais local qui ajoute la barrière et refuse tout sauf GET. 44 pages, 88 liens internes (tous en
+200), 0 erreur console, 0 décalage de mise en page. Plus le classement signalé par l'utilisateur.
+
+| Id | Gravité | Constat | Statut |
+|---|---|---|---|
+| — | moyenne | Classement de `/matchs` : dernière colonne collée au bord, noms coupés au téléphone | CORRIGÉ (marge, colonnes serrées) ; la demi-largeur en grand écran À ARBITRER |
+| U34 | élevée | Le saut à la molette, objectivé : numéros de maillot roulant 1 267 px en 450 ms (169 px dès la première image) pendant la montée de la section ; tableaux LED éteints puis grésillant en 230 ms | CORRIGÉ : deux crans seulement, 0,6 s en `power2.inOut`, après la montée ; LED en veilleuse puis allumage doux |
+| G18 | élevée | Accents des capitales touchant la ligne du dessus (interlignes 0,86 à 0,95) | CORRIGÉ : interligne 1 (0,94 au titre de page), vérifié en capture |
+| G24 | faible | Mots trop serrés à 62 % de chasse | CORRIGÉ : `word-spacing` 0,08 em |
+| D24 / G19 | moyenne | « Prochain match » sur n'importe quel match à venir | CORRIGÉ : « Match à venir », « Prochain match à domicile » |
+| D29 | faible | Le dernier résultat ne dit pas sa compétition | CORRIGÉ, vérifié en capture |
+| D28 | faible | Saison inconnue en 200 avec la courante | CORRIGÉ : 404 |
+| D27 | moyenne | Pas d'Open Graph par défaut ; image de partage d'épisode en 480×360 | PARTIEL : Open Graph par défaut, image 1280×720 ; `canonical` À FAIRE |
+| D31, D34, U32, U24, G20/U26, G21, G22 | faible à moyenne | Légende du classement ; dates du plan du site ; horaire à confirmer dans l'agenda ; Tab qui sautait l'en-tête pendant l'intro ; encart d'abonnement au-dessus de l'épisode suivant ; pastilles de lieu ; « Horaire à confirmer » sur deux lignes | CORRIGÉS |
+| D26 | moyenne | La démonstration contredit le réel : l'épisode 4 raconte un premier match perdu 3-0, le match amical de démo est une victoire 3-1 ; classement à 3 joués avant le premier match | À ARBITRER |
+| D23 | moyenne | Le bilan compte les matchs amicaux | À ARBITRER (type de rencontre) |
+| D25 / U23 | élevée | Salles sans commune : itinéraire et agenda n'envoient que « Palais des Sports » | À ARBITRER |
+| D30, D32, D33 | faible, amélioration | Classement non relié à la compétition ; aucune donnée structurée ; `.ics` sans `SEQUENCE` | À FAIRE |
+| G23, G26, U28, U31, U33 | faible | Coupures de noms de salle et de dates ; « Avant la série » en double ; pas de « où suis-je » dans le pied ; « Le projet » lié alors que vide ; lien d'actualités en double | À FAIRE |
+| G27 à G32, U25, U27, U29, U30 | moyenne à faible | Composition : bouton de lecture hors image sur `/serie`, trois signaux pour un épisode, miniatures grises au téléphone, navigation d'épisodes asymétrique, bilan de `/matchs`, date isolée ; lecture hors écran à l'arrivée sur un épisode ; dernier épisode sans issue ; rien pour « rejoindre l'équipe » ; aide du contact après Envoyer | À ARBITRER |
+
+Veille retenue (URL vérifiées) : Stade Toulousain (interligne 1,0 sur capitales étroites,
+apostrophe typographique, heure en tuile), Wrexham AFC (lieu sur une ligne, compte à rebours
+compact), Formula 1 2026 (compte à rebours à un seul endroit, « précédent / à suivre »), Nebula
+Jet Lag (vignettes en couleur au tactile, navigation symétrique).
+
+Pour la refonte des pages restantes, au-delà de l'échelle : une même ouverture avec chiffre
+géant, au moins une vraie image par page, le geste du bloc, retirer l'encart à filet jaune et les
+colonnes à moitié vides, des états d'attente dessinés.

@@ -1980,3 +1980,28 @@ rubriques contenait déjà quelque chose.
   le staff de `/effectif` attend la fin du cache (écriture faite hors de l'application).
 - Suite : `db:purge-demo` sur la production, avec accord, quand Tom commencera la vraie saisie ;
   coder l'Effectif selon la fiche de l'étape 4.
+
+**16:42** · **[jalon] Audit du site avec ses données, et le saut enfin trouvé**
+
+L'utilisateur signale le classement de `/matchs` et demande un audit complet par les trois
+casquettes, maintenant que la production a du contenu. Trois relectures en parallèle sur la
+production en lecture seule (relais local qui ajoute la barrière sans écrire les identifiants et
+refuse tout sauf GET), pendant que je corrigeais le classement.
+
+Le saut à la molette est enfin objectivé : ce n'étaient ni le rendu ni la montée des sections, mais
+les numéros de maillot qui roulaient de 0 à 9 (1 267 px en 450 ms avec les 99 de l'équipe de
+vérification) pendant que leur section montait encore, et les tableaux LED qui s'allumaient en
+sursaut. Roulement réduit à deux crans après la montée, LED en veilleuse. Autres corrections : les
+accents des titres en capitales qui touchaient la ligne du dessus, le tableau qui disait « Prochain
+match » sur tous les matchs à venir, la compétition du dernier résultat, l'Open Graph, une saison
+inconnue en 404, l'agenda sans horaire, l'encart d'abonnement en doublon, les pastilles de lieu.
+
+Le constat le plus gênant me concerne : la démonstration ajoutée en production contredit le réel
+(l'épisode 4 raconte un premier match perdu, la démo montre une victoire et un bilan positif). À
+arbitrer, avec le bilan des amicaux, les salles sans commune et une série de choix de composition.
+
+- Portée : `audits/2026-10-02-audit-groupe.md` (passe de l'après-midi), 18 fichiers de `src/`.
+- Vérifié : 188 tests, `tsc`, lint, build ; captures du titre long à 390 px, du tableau de résultat
+  à 1440 px, du classement à 390 px ; aucune erreur console, aucun débordement.
+- Suite : trancher les questions d'arbitrage de cette passe ; l'utilisateur rejuge le saut à la
+  molette en production ; puis l'Effectif selon la fiche de l'étape 4.
