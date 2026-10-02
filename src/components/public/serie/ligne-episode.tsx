@@ -14,7 +14,9 @@ import { EtiquetteMatch } from "./elements-serie";
  * texte. La vignette se decouvre par le volet (`Volets` sur la page).
  */
 
-export const libelleEpisode = (n: number | null) => (n === null ? "Avant la série" : `Épisode ${String(n).padStart(2, "0")}`);
+// « Annonce » et non « Avant la serie » : sous le titre « Avant la serie », l'etiquette
+// repetait le meme mot (audit G26) ; c'est aussi le mot de la vedette.
+export const libelleEpisode = (n: number | null) => (n === null ? "Annonce" : `Épisode ${String(n).padStart(2, "0")}`);
 
 export function LigneEpisode({
   episode,

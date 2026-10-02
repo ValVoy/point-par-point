@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MesureAudience } from "@/components/mesure-audience";
+import { LiensPied } from "./liens-pied";
 import { saisonCourante } from "@/lib/saisons";
 import { EQUIPE, NOM_DU_SITE } from "@/lib/site";
 import { RUBRIQUES, VITRINE } from "../entete";
@@ -27,15 +28,7 @@ export async function PiedDePage() {
           {EQUIPE}
         </p>
         <nav aria-label="Rubriques du site">
-          <ul className="flex flex-wrap gap-x-6 gap-y-1 font-semibold">
-            {[...RUBRIQUES, ...VITRINE].map((r) => (
-              <li key={r.href}>
-                <Link href={r.href} className="inline-flex min-h-12 items-center hover:text-[var(--color-craie)]">
-                  {r.nom}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <LiensPied rubriques={[...RUBRIQUES, ...VITRINE]} />
         </nav>
         <div className="flex flex-wrap items-center gap-x-6 sm:self-center">
           {saison ? <p>Saison {saison}</p> : null}

@@ -2024,3 +2024,32 @@ perdu, et le classement de démo repasse à zéro match joué. Le reste est insc
 - Suite : nouvelle séance pour coder les arbitrages (type de rencontre et sa migration, salles,
   classement, Série) puis l'Effectif selon la fiche de l'étape 4 ; l'utilisateur rejuge le saut à
   la molette en production.
+
+**18:05** · **[jalon] Les arbitrages codés, et l'Effectif refondu**
+
+Travail en autonomie complète, à la demande de l'utilisateur. Le type de rencontre (championnat,
+coupe, amical) entre en base par la migration 0011, appliquée en production avant le code, comme
+l'ordre l'exige ; seul le championnat compte au bilan, et le match de démo est classé amical. Plus
+d'itinéraire vers un nom de salle seul (« Adresse à confirmer », et l'administration signale la
+salle à compléter). Notre place en chiffre géant à côté du classement. Sur la Série, bouton de
+lecture au centre de l'image partout, un seul signal sur le dernier épisode, miniatures en couleur
+à l'entrée à l'écran sur tactile, et le prochain match avec l'équipe en bas du dernier épisode.
+
+L'Effectif suit la fiche de l'étape 4 : ouverture avec chiffre géant, une rangée par poste dont le
+nom reste en place au défilement, staff en chapitre, fiche joueur à l'échelle. La critique à froid
+a relevé neuf défauts, tous corrigés : classement trop étroit à 1024 px (deux colonnes à 1280 px
+seulement), nom long sur cinq lignes (corps des chapitres au-delà de 14 signes), carte du joueur
+calée en bas, scores en dents de scie, double bord gauche sur la Série, bouton de lecture pas encore
+centré sur la page d'épisode, nombre du poste, textes à 15 px, noms d'équipe coupés au trait
+d'union. Aussi : le titre de page à interligne 1, « Avant la série » en double, le lien
+d'actualités en double, la page en cours marquée dans le pied de page.
+
+- Portée : migration `0011_type-rencontre`, administration des matchs, `bilan.ts`, classement,
+  salles, Série, page d'épisode, Effectif et fiche joueur, pied de page, `globals.css`.
+- Vérifié : 189 tests, `tsc`, lint, build ; aucun débordement ni texte sous 13 px de 390 à
+  1920 px sur l'Effectif et la fiche ; classement à 1024 et 1440 px ; alignements et centre du
+  bouton mesurés au pixel ; aucune erreur console. Base de production migrée et relue (12
+  championnats, 1 amical).
+- Suite : à proposer à l'utilisateur, les postes à deux joueurs qui laissent un tiers vide et
+  « Parcours » sous la carte du joueur ; puis la refonte des pages restantes (actualités, le
+  projet, où nous voir, partenaires, contact, juridiques), avec une vraie image par page.

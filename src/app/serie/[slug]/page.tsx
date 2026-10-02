@@ -76,15 +76,7 @@ async function SuiteDuDernier() {
   const prochain = matchDuTableau(matchs, maintenant);
   return (
     <section aria-labelledby="titre-sortie" className="chapitre">
-      <TitreChapitre
-        id="titre-sortie"
-        surtitre="En attendant le prochain épisode"
-        action={
-          <Link href="/effectif" className="inline-flex min-h-12 items-center font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--color-jaune)]">
-            Découvrir l&apos;équipe
-          </Link>
-        }
-      >
+      <TitreChapitre id="titre-sortie" surtitre="Sur le terrain">
         {prochain ? "Au prochain match" : "L'équipe"}
       </TitreChapitre>
       {prochain ? (
@@ -106,6 +98,13 @@ async function SuiteDuDernier() {
           <ActionsMatch match={prochain} />
         </div>
       ) : null}
+      {/* Apres l'agenda plutot qu'a cote du titre (critique a froid du 02-10-2026) : isole
+          a droite en grand ecran, il coupait le titre de son tableau au telephone. */}
+      <p className="mt-6">
+        <Link href="/effectif" className="inline-flex min-h-12 items-center font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--color-jaune)]">
+          Découvrir l&apos;équipe
+        </Link>
+      </p>
     </section>
   );
 }

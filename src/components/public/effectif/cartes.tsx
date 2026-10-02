@@ -44,7 +44,7 @@ export function CarteJoueur({ membre: m, maintenant }: { membre: Membre; mainten
           position={positionPhoto({ x: m.visageX, y: m.visageY })}
           numero={m.numero}
           poste={m.poste}
-          sizes="(min-width: 1024px) 22vw, (min-width: 640px) 30vw, 45vw"
+          sizes="(min-width: 1024px) 20rem, (min-width: 640px) 30vw, 45vw"
         />
         <span className="sr-only">{LIBELLES_POSTE[m.poste]}, </span>
         <span className="mt-4 flex items-baseline gap-3">
@@ -59,10 +59,10 @@ export function CarteJoueur({ membre: m, maintenant }: { membre: Membre; mainten
             {m.prenom} {m.nom}
           </span>
         </span>
-        <span className="mt-2 flex flex-wrap items-center gap-x-3 text-sm text-[var(--color-craie-douce)]">
+        <span className="mt-2 flex flex-wrap items-center gap-x-3 text-base text-[var(--color-craie-douce)]">
           {details ? <span>{details}</span> : null}
           {m.capitaine ? (
-            <span className="border border-[var(--color-craie-tenue)] px-1.5 text-xs font-semibold tracking-[0.15em] uppercase">
+            <span className="etiquette border border-[var(--color-craie-tenue)] px-1.5">
               <span aria-hidden="true">C</span>
               <span className="sr-only">capitaine</span>
             </span>
@@ -85,9 +85,9 @@ export function CarteStaff({ membre: s }: { membre: MembreStaff }) {
         </span>
       ) : null}
       <span className="min-w-0">
-        <span className="block text-xs font-semibold tracking-[0.15em] text-[var(--color-turquoise)] uppercase">{s.role}</span>
-        <span className="titre-affiche mt-1 block text-3xl">{s.nom}</span>
-        {s.texte?.trim() ? <span className="mt-2 block leading-relaxed text-[var(--color-craie-douce)]">{s.texte}</span> : null}
+        <span className="etiquette block text-[var(--color-turquoise)]">{s.role}</span>
+        <span className="titre-affiche titre-carte mt-2 block">{s.nom}</span>
+        {s.texte?.trim() ? <span className="corps mt-3 block text-[var(--color-craie-douce)]">{s.texte}</span> : null}
       </span>
     </li>
   );

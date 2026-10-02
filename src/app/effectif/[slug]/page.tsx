@@ -6,6 +6,8 @@ import { PiedDePage } from "@/components/public/accueil/pied-de-page";
 import { taille } from "@/components/public/effectif/cartes";
 import { PortraitJoueur } from "@/components/public/effectif/portrait-joueur";
 import { EnTete } from "@/components/public/entete";
+import { TitreChapitre } from "@/components/public/titre-chapitre";
+import { Volets } from "@/components/public/volets";
 import { statutPublic } from "@/lib/calendrier";
 import { age, dateLongue } from "@/lib/dates";
 import { effectifDeLaSaison, joueurPublic, urlPhoto } from "@/lib/effectif-public";
@@ -35,7 +37,7 @@ export async function generateMetadata({ params }: Parametres): Promise<Metadata
   };
 }
 
-const etiquette = "text-xs font-semibold tracking-[0.2em] text-[var(--color-craie-douce)] uppercase";
+const etiquette = "etiquette text-[var(--color-craie-douce)]";
 
 export default async function PageJoueur({ params }: Parametres) {
   const { slug } = await params;
@@ -59,14 +61,15 @@ export default async function PageJoueur({ params }: Parametres) {
   return (
     <>
       <EnTete actif="/effectif" />
-      <main id="contenu" className="colonne-large space-y-16 pt-10 pb-24 sm:pt-16">
+      <main id="contenu" className="colonne-large pt-10 pb-[var(--air-chapitre)] sm:pt-16">
+        <Volets>
         <p>
           <Link href={effectif.saison.courante ? "/effectif" : `/effectif?saison=${encodeURIComponent(effectif.saison.libelle)}`} className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--color-craie-douce)] hover:text-[var(--color-craie)]">
             ← Tout l&apos;effectif
           </Link>
         </p>
 
-        <div className="grid items-end gap-10 lg:grid-cols-12 lg:gap-12">
+        <div className="mt-10 grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="max-w-sm lg:col-span-4 lg:max-w-none">
             <PortraitJoueur
               photo={urlPhoto(joueur.photoCle)}
@@ -78,12 +81,14 @@ export default async function PageJoueur({ params }: Parametres) {
             />
           </div>
           <div className="lg:col-span-8">
-            <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">
+            <p className="etiquette text-[var(--color-turquoise)]">
               {LIBELLES_POSTE[effectif.poste]}
               {effectif.capitaine ? " · Capitaine" : ""}
               {effectif.saison.courante ? "" : ` · Saison ${effectif.saison.libelle}`}
             </p>
-            <h1 className="titre-affiche mt-3 text-6xl text-balance sm:text-8xl">
+            {/* Au-dela d'environ 14 signes, le nom passe au corps des chapitres : a celui des
+                pages, un nom compose tenait sur cinq lignes (critique a froid du 02-10-2026). */}
+            <h1 className={`titre-affiche mt-4 text-balance ${`${joueur.prenom} ${joueur.nom}`.length > 14 ? "titre-chapitre" : "titre-page"}`}>
               {effectif.numero !== null ? (
                 <span className="mr-4 text-[var(--color-turquoise)]">
                   <span className="sr-only">Numéro </span>
@@ -98,13 +103,13 @@ export default async function PageJoueur({ params }: Parametres) {
                 {donneesPhysiques.map((d) => (
                   <div key={d.nom}>
                     <dt className={etiquette}>{d.nom}</dt>
-                    <dd className="titre-affiche mt-1 text-4xl">{d.valeur}</dd>
+                    <dd className="titre-affiche titre-carte mt-1">{d.valeur}</dd>
                   </div>
                 ))}
               </dl>
             ) : null}
             {joueur.presentation?.trim() ? (
-              <p className="mt-8 max-w-[58ch] text-lg leading-relaxed whitespace-pre-line text-[var(--color-craie-douce)]">
+              <p className="chapeau mt-8 max-w-[46ch] whitespace-pre-line text-[var(--color-craie-douce)]">
                 {joueur.presentation}
               </p>
             ) : null}
@@ -112,33 +117,31 @@ export default async function PageJoueur({ params }: Parametres) {
         </div>
 
         {joueur.parcours?.trim() ? (
-          <section aria-labelledby="titre-parcours" className="max-w-3xl">
-            <h2 id="titre-parcours" className={etiquette}>
+          <section aria-labelledby="titre-parcours" className="suite max-w-3xl">
+            <h2 id="titre-parcours" className="titre-affiche titre-carte">
               Parcours
             </h2>
-            <p className="mt-4 text-lg leading-relaxed whitespace-pre-line">{joueur.parcours}</p>
+            <p className="corps mt-[var(--titre-contenu)] whitespace-pre-line">{joueur.parcours}</p>
           </section>
         ) : null}
 
         {joues.length > 0 ? (
-          <section aria-labelledby="titre-matchs-joueur">
-            <h2 id="titre-matchs-joueur" className="border-b-2 border-[var(--color-craie)] pb-2 text-xs font-semibold tracking-[0.2em] uppercase">
-              Sur le terrain en {effectif.saison.libelle}
-            </h2>
-            <ul>
+          <section aria-labelledby="titre-matchs-joueur" className="chapitre">
+            <TitreChapitre id="titre-matchs-joueur">Sur le terrain en {effectif.saison.libelle}</TitreChapitre>
+            <ul className="mt-[var(--titre-contenu)] border-t-2 border-[var(--color-craie)]">
               {joues.map((m) => {
                 const victoire = (m.setsNous ?? 0) > (m.setsEux ?? 0);
                 return (
                   <li key={m.slug}>
                     <Link
                       href={`/matchs/${m.slug}`}
-                      className="group flex min-h-16 flex-wrap items-center justify-between gap-x-6 gap-y-1 border-b border-[var(--color-nuit-trait)] py-4 hover:bg-[var(--color-nuit-surface)] sm:px-3"
+                      className="group grid min-h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 border-b border-[var(--color-nuit-trait)] py-4 hover:bg-[var(--color-nuit-surface)] sm:gap-x-6 sm:px-3"
                     >
                       <span>
                         <span className="titre-affiche block text-2xl group-hover:text-[var(--color-jaune)]">
                           {m.aDomicile ? "Contre" : "Chez"} {m.adversaire}
                         </span>
-                        <span className="inline-block text-sm text-[var(--color-craie-douce)] first-letter:uppercase">{dateLongue(m.joueLe)}</span>
+                        <span className="inline-block text-base text-[var(--color-craie-douce)] first-letter:uppercase">{dateLongue(m.joueLe)}</span>
                       </span>
                       <span className="flex items-center gap-3">
                         <span className={`titre-affiche text-3xl ${victoire ? "" : "font-normal text-[var(--color-craie-douce)]"}`}>
@@ -155,7 +158,7 @@ export default async function PageJoueur({ params }: Parametres) {
         ) : null}
 
         {coequipiers.length > 1 ? (
-          <nav aria-labelledby="titre-coequipiers">
+          <nav aria-labelledby="titre-coequipiers" className="suite">
             <h2 id="titre-coequipiers" className={etiquette}>
               L&apos;effectif {effectif.saison.libelle}
             </h2>
@@ -175,6 +178,7 @@ export default async function PageJoueur({ params }: Parametres) {
             </ul>
           </nav>
         ) : null}
+        </Volets>
       </main>
       <PiedDePage />
     </>

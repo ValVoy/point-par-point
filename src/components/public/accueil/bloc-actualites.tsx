@@ -22,9 +22,10 @@ export function BlocActualites({ actualites, maintenant }: { actualites: Actuali
         <h2 id="titre-actualites" className="titre-affiche text-5xl sm:text-6xl">
           Les actualités
         </h2>
+        {/* En grand ecran seulement : au telephone, le meme lien ferme la liste (audit U33). */}
         <Link
           href="/actualites"
-          className="inline-flex min-h-12 items-center font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--color-jaune)]"
+          className="inline-flex min-h-12 items-center font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--color-jaune)] max-lg:hidden"
         >
           Toutes les actualités
         </Link>

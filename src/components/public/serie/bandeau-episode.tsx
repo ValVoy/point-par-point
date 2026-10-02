@@ -91,7 +91,6 @@ export function BandeauEpisode(props: Props) {
           G27) : en bas a gauche, il repoussait le titre et creait un second bord gauche. En
           mode lecteur, la place du bouton de la facade (bottom-8 left-8) reste reservee. */}
       <Calque className="absolute inset-x-0 bottom-0 hidden items-end gap-8 p-8 pr-40 text-left lg:flex">
-        {lien ? null : <span aria-hidden="true" className="size-20 shrink-0" />}
         <Calque className="block min-w-0">
           <Texte titre={titre} etiquette={etiquette} nouveau={nouveau} enTitre={lien} surImage />
         </Calque>

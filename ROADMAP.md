@@ -196,16 +196,16 @@ de l'intro et de GSAP sur l'accueil.
 
 ### Arbitrages de l'audit du site avec ses données (02-10-2026, à coder)
 
-- [ ] Type de rencontre (championnat, coupe, amical) choisi à la saisie, migration non destructive ;
+- [x] Type de rencontre (championnat, coupe, amical) choisi à la saisie, migration non destructive ;
       le bilan et le classement ne comptent que le championnat (D23)
-- [ ] Salle : commune ou adresse signalée comme manquante dans l'administration ; côté public, pas
+- [x] Salle : commune ou adresse signalée comme manquante dans l'administration ; côté public, pas
       d'itinéraire sur un nom seul, « Adresse à confirmer » à la place (D25, U23)
-- [ ] Classement de `/matchs` en grand écran : le tableau à gauche, notre rang en chiffre géant à
+- [x] Classement de `/matchs` en grand écran : le tableau à gauche, notre rang en chiffre géant à
       droite (« 3e sur 8 »), les points et l'écart au premier
-- [ ] Bouton de lecture dans l'image partout, titre aligné sur la colonne (G27)
-- [ ] Le dernier épisode n'affiche que « Épisode 04 » (G28)
-- [ ] Miniatures : du gris à la couleur à l'entrée à l'écran au téléphone (G29)
-- [ ] Bas de page du dernier épisode : le prochain match (avec l'agenda) et un lien vers l'effectif (U27)
+- [x] Bouton de lecture dans l'image partout, titre aligné sur la colonne (G27)
+- [x] Le dernier épisode n'affiche que « Épisode 04 » (G28)
+- [x] Miniatures : du gris à la couleur à l'entrée à l'écran au téléphone (G29)
+- [x] Bas de page du dernier épisode : le prochain match (avec l'agenda) et un lien vers l'effectif (U27)
 - [x] Démonstration de production rendue cohérente avec la série : amical perdu 0-3, classement à
       zéro match joué (D26, 02-10-2026)
 
@@ -234,7 +234,8 @@ de l'intro et de GSAP sur l'accueil.
 - [x] Étape 1, le système d'espacement et l'échelle typographique (01-10-2026)
 - [x] Étape 2, la Série : page, épisode, bloc de l'accueil (01-10-2026)
 - [x] Étape 3, les Matchs : calendrier, ligne de match, page d'un match (01-10-2026)
-- [ ] Les autres pages publiques au même système : effectif, fiche joueur, actualités, le projet,
+- [x] Étape 4, l'Effectif et la fiche joueur (02-10-2026), critique à froid traitée
+- [ ] Les autres pages publiques au même système : actualités, le projet,
       où nous voir, partenaires, contact, pages juridiques
 
 ### Avant-première pour Tom (décidée le 01-10-2026)

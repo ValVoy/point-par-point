@@ -77,7 +77,7 @@ export default async function PageSerie() {
                   etiquette={vedette.episode.numero === null ? "Annonce" : libelleEpisode(vedette.episode.numero)}
                   prioritaire
                 />
-                <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-12">
+                <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-12 lg:px-8">
                   {vedette.episode.resume ? (
                     <p className="chapeau max-w-[46ch] text-[var(--color-craie-douce)]">{vedette.episode.resume}</p>
                   ) : (
@@ -105,7 +105,7 @@ export default async function PageSerie() {
 
               {numerotes.length > 0 && avant.length > 0 ? (
                 <section aria-labelledby="titre-avant" className="colonne-large suite">
-                  <h2 id="titre-avant" className="etiquette border-t border-[var(--color-nuit-trait)] pt-6 text-[var(--color-craie-douce)]">
+                  <h2 id="titre-avant" className="titre-affiche titre-carte border-t border-[var(--color-nuit-trait)] pt-6">
                     Avant la série
                   </h2>
                   <ol className="mt-6 divide-y divide-[var(--color-nuit-trait)]">

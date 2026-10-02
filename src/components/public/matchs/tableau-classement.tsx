@@ -33,7 +33,7 @@ function NotrePlace({ lignes }: { lignes: Ligne[] }) {
   const ecart = premier && premier !== nous && premier.points !== null && nous.points !== null ? premier.points - nous.points : null;
   const suffixe = nous.rang === 1 ? "er" : "e";
   return (
-    <div className="lg:sticky lg:top-8">
+    <div className="xl:sticky xl:top-8">
       <p className="etiquette text-[var(--color-craie-douce)]">Notre place</p>
       <p className="titre-affiche chiffre-geant mt-2 text-[var(--color-jaune)]">
         {nous.rang}
@@ -75,9 +75,9 @@ export function TableauClassement({
       </p>
       {/* Colonnes de chiffres serrees au telephone (le nom passait sur deux lignes), et une
           marge a droite du dernier chiffre, comme a gauche du rang (retour du 02-10-2026). */}
-      <div className="mt-[var(--titre-contenu)] grid items-start gap-[var(--air-suite)] lg:grid-cols-[minmax(0,48rem)_minmax(0,1fr)] lg:gap-16">
+      <div className="mt-[var(--titre-contenu)] grid items-start gap-[var(--air-suite)] xl:grid-cols-[minmax(0,48rem)_minmax(16rem,1fr)] xl:gap-16">
       <NotrePlace lignes={lignes} />
-      <table className="w-full border-collapse text-left tabular-nums lg:order-first">
+      <table className="w-full border-collapse text-left tabular-nums xl:order-first">
         {/* Annonce du tableau pour qui navigue de tableau en tableau (audit D31). */}
         <caption className="sr-only">
           {[final ? "Classement final" : "Classement", intitule, misAJourLe ? `à jour au ${dateLongue(misAJourLe)}` : null].filter(Boolean).join(", ")}
@@ -111,7 +111,8 @@ export function TableauClassement({
             >
               <td className="py-3 pr-1 pl-3 titre-affiche text-xl">{l.rang}</td>
               <th scope="row" className="py-3 pr-2 font-[inherit] break-words">
-                {l.equipe}
+                {/* Trait d'union insecable : « VBC Sainte- / Colombe » se coupait au telephone. */}
+                {l.equipe.replace(/-/g, "‑")}
                 {l.estNous ? <span className="sr-only"> (notre équipe)</span> : null}
               </th>
               <td className="py-3 text-right text-lg font-semibold">{chiffre(l.points)}</td>

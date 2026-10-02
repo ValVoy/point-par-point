@@ -183,7 +183,9 @@ body {
    dans l'administration ne doit jamais elargir la page au telephone. */
 @utility titre-page {
   font-size: var(--texte-page);
-  line-height: 0.94;
+  /* A 1 comme les autres titres : un nom de joueur sur deux lignes (« Lucas / Démo »)
+     faisait frôler l'accent du É contre la ligne du dessus a 0,94. */
+  line-height: 1;
   overflow-wrap: break-word;
   hyphens: auto;
 }

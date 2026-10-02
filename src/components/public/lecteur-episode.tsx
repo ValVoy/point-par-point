@@ -67,7 +67,7 @@ export function LecteurEpisode({
       />
       <span
         aria-hidden="true"
-        className="absolute bottom-5 left-5 grid size-16 place-items-center bg-[var(--color-jaune)] text-[var(--color-nuit)] transition-transform duration-[var(--duree-breve)] group-hover:scale-110 sm:bottom-8 sm:left-8 sm:size-20"
+        className="absolute top-1/2 left-1/2 grid size-16 -translate-x-1/2 -translate-y-1/2 place-items-center bg-[var(--color-jaune)] text-[var(--color-nuit)] transition-transform duration-[var(--duree-breve)] group-hover:scale-110 sm:size-20"
       >
         <svg viewBox="0 0 24 24" className="ml-1 size-7 sm:size-8" fill="currentColor">
           <path d="M6 4l14 8-14 8z" />
