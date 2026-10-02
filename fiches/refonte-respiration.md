@@ -240,3 +240,68 @@ restent celles de cette fiche, aucune veille nouvelle n'a été faite pour cette
 - Vérification : tests, `tsc`, lint, build ; écran à 390, 768, 1024, 1440 et 1920 px, avec un
   poste à un joueur, un poste à quatre, et un nom très long ; aucun texte sous 13 px ; aucun
   débordement ; critique à froid par un agent qui ne l'a pas construite.
+
+## 8. Étape 5, les pages restantes (fiche du 02-10-2026)
+
+Arbitré par l'utilisateur le 02-10-2026, quatre choix, tous sur l'option recommandée. Point de
+départ : la relecture graphique de l'après-midi (audit du jour, « ce que la refonte des pages
+restantes doit apporter ») et les captures à 1440 px : titres à 96 px, aucune image, des blocs de
+texte en demi-largeur, l'encart à filet jaune latéral.
+
+### Ce qui vaut pour toutes
+
+- **La même ouverture** que la Série et l'Effectif : sur-titre, titre de page, chapeau ; un chiffre
+  géant seulement là où il dit quelque chose (nombre d'articles, d'étapes, de partenaires).
+- **Une vraie image** là où la base en porte une (actualités, étapes, logos), et le **motif du
+  maillot** comme repli dessiné quand Tom n'en a pas encore mis.
+- **Le geste du bloc** : titres de chapitre en volet, rien de plus.
+- **Plus d'encart à filet jaune** ; plus de colonne à moitié vide ; le pied de page ne flotte plus au
+  milieu d'une page courte (hauteur minimale du contenu).
+- Étiquettes à 13 px, textes de lecture à 16 px au moins, interligne 1 sur les titres.
+
+### Les Actualités
+
+- **La une en bandeau** : la dernière actualité en image pleine largeur, titre posé dessus avec le
+  dégradé de la Série, date en étiquette ; sans photo, le motif.
+- **Les précédentes en cartes à image**, trois par ligne en grand écran, deux puis une en dessous :
+  image en 16:9 (ou motif), date, titre au corps des cartes, chapô.
+- **L'article** : titre de page, chapô, image en bandeau si présente, texte en colonne de lecture
+  (`--largeur-lecture`), partage en fin.
+
+### Le projet
+
+- **Un fil vertical** turquoise qui se trace au défilement (le geste de l'accueil), chaque étape en
+  grand : date en étiquette, titre au corps des chapitres, texte, et sa photo **en alternance** à
+  gauche puis à droite en grand écran ; au téléphone, photo au-dessus du texte.
+- Sans photo, l'étape garde la place du texte seul, sans case vide.
+- État vide dessiné : tant qu'aucune étape n'est publiée, une phrase d'attente posée sur le motif,
+  pas une page inachevée.
+
+### Partenaires
+
+- **Un mur de logos** régulier : logo sur une case claire de taille égale, le nom en lettres
+  quand il n'y a pas de logo, lien sur la case quand il existe.
+- **« Devenir partenaire » en bandeau** pleine largeur, titre de chapitre et appel vers le contact au
+  sujet « partenariat » ; plus d'encart à filet.
+
+### Où nous voir
+
+- **Deux colonnes pleines** en grand écran : à gauche la salle (nom en titre, adresse ou « Adresse à
+  confirmer », itinéraire et copie seulement avec une adresse, texte d'accès) ; à droite le
+  prochain match à domicile en tableau. Puis les suivants en lignes de calendrier.
+
+### Contact
+
+- **Deux colonnes pleines** : à gauche le formulaire ; à droite l'aide par sujet, sous le choix du
+  sujet au téléphone, le délai de réponse annoncé, et la chaîne YouTube. Pas d'Instagram : aucune
+  adresse connue, et l'intégration a été écartée au cadrage.
+
+### Pages juridiques et 404
+
+- Ouverture à l'échelle, texte en colonne de lecture, hauteur minimale ; la 404 propose les quatre
+  rubriques.
+
+### Fullstack
+
+- Une page à la fois, chacune vérifiée à 390, 1024 et 1440 px (aucun débordement, rien sous
+  13 px), tests, `tsc`, lint, build, puis poussée ; une critique à froid sur l'ensemble à la fin.
