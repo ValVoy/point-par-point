@@ -1,3 +1,4 @@
+import { EnTete } from "../entete";
 import { TITRE } from "../titre-traces";
 import { AnimationOuverture } from "./animation-ouverture";
 import { INTRO_GRAND, INTRO_PORTRAIT } from "./geometrie-intro";
@@ -30,6 +31,11 @@ export function Ouverture({ sousTitre }: { sousTitre: string }) {
       <h1 id="titre-du-site" className="sr-only">
         {TITRE}
       </h1>
+      {/* Les rubriques, des le haut de l'accueil, une fois l'intro jouee (audit U21) :
+          au telephone, le premier lien vers l'effectif etait a 5 800 px. */}
+      <div data-entete-accueil className="absolute inset-x-0 top-0 z-20">
+        <EnTete />
+      </div>
       <AnimationOuverture>
         <Salle gi={INTRO_GRAND} variante="grand">
           {suite}

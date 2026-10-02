@@ -9,6 +9,8 @@ import type { EtatRencontre } from "./db/schema";
 
 /** Le strict necessaire d'un match pour en tirer un resultat. */
 export type RencontreScoree = {
+  /** L'adresse publique du match, quand on veut pouvoir y mener. */
+  slug?: string;
   adversaire: string;
   aDomicile: boolean;
   joueLe: Date;
@@ -19,6 +21,7 @@ export type RencontreScoree = {
 };
 
 export type Resultat = {
+  slug?: string;
   adversaire: string;
   domicile: boolean;
   joueLe: Date;
@@ -39,6 +42,7 @@ export function resultatDepuis(r: RencontreScoree): Resultat | null {
     pointsNous === null || pointsEux === null ? [] : [[pointsNous, pointsEux] as [number, number]],
   );
   return {
+    slug: r.slug,
     adversaire: r.adversaire,
     domicile: r.aDomicile,
     joueLe: r.joueLe,

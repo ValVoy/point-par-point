@@ -81,9 +81,11 @@ export function BandeauEpisode(props: Props) {
   const image = (
     <>
       <MiniatureEpisode youtubeId={youtubeId} sizes="(min-width: 1344px) 84rem, 100vw" prioritaire={prioritaire} />
+      {/* Plus dense dans le tiers bas (arbitrage du 02-10-2026, audit G15) : le texte que
+          YouTube incruste parfois dans la miniature (« 4K ») ne heurte plus le titre ni le bouton. */}
       <span
         aria-hidden="true"
-        className="absolute inset-0 hidden bg-gradient-to-t from-[var(--color-nuit)] from-10% via-[var(--color-nuit)]/75 via-45% to-transparent lg:block"
+        className="absolute inset-0 hidden bg-gradient-to-t from-[var(--color-nuit)] from-25% via-[var(--color-nuit)]/85 via-50% to-transparent lg:block"
       />
       {/* La place du bouton : le notre en mode lien, celui de la facade (bottom-8 left-8) en mode lecteur. */}
       <Calque className="absolute inset-x-0 bottom-0 hidden items-end gap-8 p-8 pr-40 text-left lg:flex">

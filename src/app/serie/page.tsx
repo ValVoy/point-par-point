@@ -115,9 +115,6 @@ export default async function PageSerie() {
                 </section>
               ) : null}
 
-              <p className="colonne-large suite chapeau text-[var(--color-craie-douce)]">
-                Pour ne manquer aucun épisode : <BoutonAbonnement discret />
-              </p>
             </>
           )}
         </Volets>

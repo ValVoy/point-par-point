@@ -382,6 +382,26 @@ html.intro-a-jouer [data-tableau-intro] {
   opacity: 0.35;
 }
 
+/* L'en-tete de l'accueil attend la fin de l'intro, puis entre en fondu
+   (arbitrage du 02-10-2026, audit U21). Cache, il sort aussi de l'ordre de
+   tabulation ; le meme filet de six secondes le ramene si l'intro echoue. */
+[data-entete-accueil] {
+  transition: opacity 600ms ease-out;
+}
+
+html.intro-a-jouer [data-entete-accueil] {
+  opacity: 0;
+  visibility: hidden;
+  animation: intro-filet-de-securite-entete 0s 6s forwards;
+}
+
+@keyframes intro-filet-de-securite-entete {
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 @keyframes intro-filet-de-securite {
   to {
     opacity: 1;

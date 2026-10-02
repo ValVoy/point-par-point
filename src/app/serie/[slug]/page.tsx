@@ -6,7 +6,7 @@ import { Revelations } from "@/components/public/accueil/revelations";
 import { EnTete } from "@/components/public/entete";
 import { LecteurEpisode } from "@/components/public/lecteur-episode";
 import { MiniatureEpisode } from "@/components/public/miniature-episode";
-import { BoutonAbonnement } from "@/components/public/serie/elements-serie";
+import { BoutonAbonnement, PHRASE_ABONNEMENT } from "@/components/public/serie/elements-serie";
 import { LigneEpisode } from "@/components/public/serie/ligne-episode";
 import { TableauProchainMatch } from "@/components/public/tableau-prochain-match";
 import { TableauResultat } from "@/components/public/tableau-resultat";
@@ -147,7 +147,7 @@ export default async function PageEpisode({ params }: Parametres) {
             {episode.resume ? <p className="chapeau max-w-[46ch] text-[var(--color-craie-douce)]">{episode.resume}</p> : <span />}
             <section aria-label="S'abonner" className="border-l-4 border-[var(--color-jaune)] bg-[var(--color-nuit-surface)] p-8">
               <p className="titre-affiche titre-carte">La suite au prochain épisode</p>
-              <p className="corps mt-3 mb-6 text-[var(--color-craie-douce)]">Abonnez-vous à la chaîne pour ne manquer aucune sortie.</p>
+              <p className="corps mt-3 mb-6 text-[var(--color-craie-douce)]">{PHRASE_ABONNEMENT}</p>
               <BoutonAbonnement />
             </section>
           </div>

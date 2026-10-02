@@ -42,17 +42,15 @@ export function estNouveau(publieLe: Date | null, maintenant: Date) {
   return publieLe !== null && maintenant.getTime() - publieLe.getTime() < NOUVEAU;
 }
 
-/** Le bouton d'abonnement, absent tant que la chaine n'est pas renseignee. */
-export function BoutonAbonnement({ discret = false }: { discret?: boolean }) {
+/**
+ * Le bouton d'abonnement, absent tant que la chaine n'est pas renseignee. Un
+ * seul appel par page, toujours le meme (arbitrage du 02-10-2026, audit W16).
+ */
+export const PHRASE_ABONNEMENT = "Abonnez-vous pour ne manquer aucun épisode.";
+
+export function BoutonAbonnement() {
   if (!CHAINE_YOUTUBE) return null;
   const lien = `${CHAINE_YOUTUBE}?sub_confirmation=1`;
-  if (discret) {
-    return (
-      <a href={lien} className="font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--color-jaune)]">
-        S&apos;abonner à la série sur YouTube
-      </a>
-    );
-  }
   return (
     <a
       href={lien}

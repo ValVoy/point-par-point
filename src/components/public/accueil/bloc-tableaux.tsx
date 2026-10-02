@@ -14,6 +14,14 @@ import { TableauResultat } from "../tableau-resultat";
  * un telephone, c'est lui qu'on voit d'abord.
  */
 
+/**
+ * Le tableau entier mene a la page du match (arbitrage du 02-10-2026, audit
+ * U17) : la salle et l'itineraire y sont, et au telephone c'est le geste
+ * naturel. Un survol discret, le focus du site.
+ */
+const LIEN_TABLEAU =
+  "block rounded-sm transition-transform duration-[var(--duree-appuyee)] hover:-translate-y-0.5 motion-reduce:hover:translate-y-0";
+
 export function BlocTableaux({
   prochain,
   dernier,
@@ -65,22 +73,30 @@ export function BlocTableaux({
           <div className={`mt-12 grid items-start gap-10 ${prochain && dernier ? "xl:grid-cols-2 xl:gap-6" : "max-w-3xl"}`}>
             {prochain ? (
               <div data-allume>
-                <TableauProchainMatch
-                  match={{
-                    adversaire: prochain.adversaire,
-                    domicile: prochain.aDomicile,
-                    joueLe: prochain.joueLe,
-                    heureConnue: prochain.heureConnue,
-                    salle: salle || null,
-                  }}
-                  maintenant={maintenant}
-                />
+                <Link href={`/matchs/${prochain.slug}`} aria-label={`Le prochain match, contre ${prochain.adversaire} : la salle, l'horaire et l'itinéraire`} className={LIEN_TABLEAU}>
+                  <TableauProchainMatch
+                    match={{
+                      adversaire: prochain.adversaire,
+                      domicile: prochain.aDomicile,
+                      joueLe: prochain.joueLe,
+                      heureConnue: prochain.heureConnue,
+                      salle: salle || null,
+                    }}
+                    maintenant={maintenant}
+                  />
+                </Link>
                 <ActionsMatch match={prochain} />
               </div>
             ) : null}
             {dernier ? (
               <div data-allume>
-                <TableauResultat resultat={dernier} />
+                {dernier.slug ? (
+                  <Link href={`/matchs/${dernier.slug}`} aria-label={`Le dernier résultat, contre ${dernier.adversaire} : le détail du match`} className={LIEN_TABLEAU}>
+                    <TableauResultat resultat={dernier} />
+                  </Link>
+                ) : (
+                  <TableauResultat resultat={dernier} />
+                )}
               </div>
             ) : null}
           </div>

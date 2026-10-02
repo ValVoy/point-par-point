@@ -34,6 +34,10 @@ ARG UMAMI_URL
 ENV R2_DOMAINE_PUBLIC=$R2_DOMAINE_PUBLIC
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 ENV UMAMI_URL=$UMAMI_URL
+# Les tests avant la compilation (audit du 02-10-2026, F17) : un push sur main
+# part en production, un test casse doit donc arreter l'image ici, et Coolify
+# garde le conteneur precedent. Ils passent aussi en UTC, le fuseau de l'image.
+RUN npm test
 RUN npm run build
 
 # --- Execution -------------------------------------------------------------
@@ -54,8 +58,12 @@ COPY --from=compilation --chown=nextjs:nodejs /app/.next/static ./.next/static
 USER nextjs
 EXPOSE 3000
 
-# Sante (audit F7) : serveur et base, pour que Coolify ne bascule pas vers un
-# conteneur qui ne repond pas. wget est fourni par l'image alpine.
-HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3   CMD wget -q -O /dev/null http://127.0.0.1:3000/sante || exit 1
+# Vivacite (audit F7, revue le 02-10-2026, F16) : le serveur repond, sans
+# interroger la base. Avec /sante, une panne de Turso rendait le conteneur
+# malsain, Traefik le retirait et tout le site repondait un 404 brut, pages
+# juridiques comprises ; mieux vaut un site qui sert ses pages d'erreur.
+# /sante, qui interroge la base, reste la sonde de Todai. wget est fourni par
+# l'image alpine.
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3   CMD wget -q -O /dev/null http://127.0.0.1:3000/robots.txt || exit 1
 
 CMD ["node", "server.js"]
