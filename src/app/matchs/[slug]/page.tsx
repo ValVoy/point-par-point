@@ -89,6 +89,7 @@ export default async function PageMatch({ params }: Parametres) {
             <TableauProchainMatch
               match={{ adversaire: match.adversaire, domicile: match.aDomicile, joueLe: match.joueLe, heureConnue: match.heureConnue, salle }}
               maintenant={maintenant}
+              etiquette={statut === "en_cours" ? "Match en cours" : "Match à venir"}
             />
             {statut === "a_venir" ? <ActionsMatch match={match} /> : null}
           </div>

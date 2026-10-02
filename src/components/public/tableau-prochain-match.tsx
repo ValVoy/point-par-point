@@ -45,7 +45,20 @@ function JoursLed({ jours }: { jours: number }) {
   );
 }
 
-export function TableauProchainMatch({ match, maintenant }: { match: ProchainMatch; maintenant: Date }) {
+/**
+ * `etiquette` : « Prochain match » par defaut, mais une page de match ou une
+ * page de salle montre un match qui n'est pas forcement le prochain (audit du
+ * 02-10-2026, D24) : chacune dit ce qu'elle montre.
+ */
+export function TableauProchainMatch({
+  match,
+  maintenant,
+  etiquette = "Prochain match",
+}: {
+  match: ProchainMatch;
+  maintenant: Date;
+  etiquette?: string;
+}) {
   const initial = compteRebours(match.joueLe, maintenant);
   const [gauche, droite] = match.domicile ? [EQUIPE, match.adversaire] : [match.adversaire, EQUIPE];
   const heureConnue = match.heureConnue !== false;
@@ -57,7 +70,7 @@ export function TableauProchainMatch({ match, maintenant }: { match: ProchainMat
       className="couche-propre rounded-sm border border-[var(--color-nuit-trait)] bg-[var(--color-boitier)] p-5 sm:p-8"
       style={{ boxShadow: "inset 0 0 0 6px var(--color-nuit)" }}
     >
-      <p className="etiquette text-[var(--color-jaune)]">Prochain match</p>
+      <p className="etiquette text-[var(--color-jaune)]">{etiquette}</p>
       <div className="titre-affiche mt-3 flex items-start justify-between gap-4 text-xl text-balance sm:text-4xl">
         <div>
           <p className="etiquette font-normal text-[var(--color-craie-douce)]">Locaux</p>

@@ -125,8 +125,13 @@ body {
   font-weight: 800;
   font-stretch: 62%;
   text-transform: uppercase;
-  line-height: 0.88;
+  /* Interligne a 1 au moins, et l'espace entre les mots elargie (audit du 02-10-2026,
+     G18 et G24) : a 0,88, les accents des capitales (É, Ô, È) touchaient la ligne du
+     dessus des qu'un titre passait sur deux lignes ; a 62 % de chasse, « BEAUCOUP PLUS »
+     se lisait d'un seul mot. */
+  line-height: 1;
   letter-spacing: -0.01em;
+  word-spacing: 0.08em;
   font-variant-numeric: tabular-nums;
 }
 
@@ -178,14 +183,14 @@ body {
    dans l'administration ne doit jamais elargir la page au telephone. */
 @utility titre-page {
   font-size: var(--texte-page);
-  line-height: 0.86;
+  line-height: 0.94;
   overflow-wrap: break-word;
   hyphens: auto;
 }
 
 @utility titre-chapitre {
   font-size: var(--texte-chapitre);
-  line-height: 0.92;
+  line-height: 1;
   overflow-wrap: break-word;
   hyphens: auto;
 }
@@ -198,7 +203,7 @@ body {
 
 @utility titre-carte {
   font-size: var(--texte-carte);
-  line-height: 0.95;
+  line-height: 1;
   overflow-wrap: break-word;
   hyphens: auto;
 }

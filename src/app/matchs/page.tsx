@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ActionsMatch } from "@/components/public/actions-match";
@@ -48,6 +49,8 @@ function Aujourdhui() {
 export default async function PageMatchs({ searchParams }: { searchParams: Promise<{ saison?: string }> }) {
   const { saison: demandee } = await searchParams;
   const { maintenant, saison, saisons, matchs, racontes } = await calendrierDeLaSaison(demandee);
+  // Une saison inconnue dans l'adresse n'affiche pas la courante en silence (audit D28).
+  if (demandee && saison?.libelle !== demandee) notFound();
 
   const prochain = saison?.courante ? matchDuTableau(matchs, maintenant) : undefined;
   const bilan = bilanDeLaSaison(matchs);

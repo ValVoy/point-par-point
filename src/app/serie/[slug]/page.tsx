@@ -18,7 +18,7 @@ import type { Episode } from "@/lib/episodes";
 import { matchPublic } from "@/lib/matchs-publics";
 import { resultatDepuis } from "@/lib/resultats";
 import { episodePublic, nouvelleAdresseEpisode } from "@/lib/serie";
-import { miniatureYoutube } from "@/lib/youtube";
+import { miniatureYoutubeHD } from "@/lib/youtube";
 import { titreSansNumero } from "@/lib/titre-episode";
 
 /**
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: Parametres): Promise<Metadata
       type: "video.episode",
       title: titre,
       description: episode.resume ?? undefined,
-      images: [{ url: miniatureYoutube(episode.youtubeId), width: 480, height: 360 }],
+      images: [{ url: miniatureYoutubeHD(episode.youtubeId), width: 1280, height: 720 }],
     },
   };
 }
@@ -80,6 +80,7 @@ async function MatchRaconte({ slug }: { slug: string }) {
       <TableauProchainMatch
         match={{ adversaire: match.adversaire, domicile: match.aDomicile, joueLe: match.joueLe, heureConnue: match.heureConnue, salle }}
         maintenant={maintenant}
+        etiquette={statut === "en_cours" ? "Match en cours" : "Match à venir"}
       />
     );
   }
@@ -145,11 +146,17 @@ export default async function PageEpisode({ params }: Parametres) {
 
           <div className="suite grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-16">
             {episode.resume ? <p className="chapeau max-w-[46ch] text-[var(--color-craie-douce)]">{episode.resume}</p> : <span />}
-            <section aria-label="S'abonner" className="border-l-4 border-[var(--color-jaune)] bg-[var(--color-nuit-surface)] p-8">
-              <p className="titre-affiche titre-carte">La suite au prochain épisode</p>
-              <p className="corps mt-3 mb-6 text-[var(--color-craie-douce)]">{PHRASE_ABONNEMENT}</p>
-              <BoutonAbonnement />
-            </section>
+            {/* « La suite au prochain épisode » seulement sur le dernier : ailleurs, l'episode
+                suivant est juste dessous (audit G20 et U26). */}
+            {!suivant ? (
+              <section aria-label="S'abonner" className="border-l-4 border-[var(--color-jaune)] bg-[var(--color-nuit-surface)] p-8">
+                <p className="titre-affiche titre-carte">La suite au prochain épisode</p>
+                <p className="corps mt-3 mb-6 text-[var(--color-craie-douce)]">{PHRASE_ABONNEMENT}</p>
+                <BoutonAbonnement />
+              </section>
+            ) : (
+              <span />
+            )}
           </div>
 
           {match ? <MatchRaconte slug={match.slug} /> : null}

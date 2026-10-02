@@ -86,6 +86,7 @@ export default async function PageOuNousVoir() {
                 <TableauProchainMatch
                   match={{ adversaire: prochain.adversaire, domicile: true, joueLe: prochain.joueLe, heureConnue: prochain.heureConnue, salle: prochain.salleNom }}
                   maintenant={maintenant}
+                  etiquette="Prochain match à domicile"
                 />
               </div>
             </Revelations>

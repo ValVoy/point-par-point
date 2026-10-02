@@ -47,7 +47,7 @@ export function BlocManifeste({
             <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">Qui on est</p>
             <h2
               id="titre-manifeste"
-              className="titre-affiche mt-4 max-w-[14ch] hyphens-auto text-[clamp(2.75rem,6vw,5.25rem)] leading-[0.92] text-balance break-words"
+              className="titre-affiche mt-4 max-w-[14ch] hyphens-auto text-[clamp(2.75rem,6vw,5.25rem)] leading-none text-balance break-words"
             >
               <Mots mots={decouperMots(titre)} />
             </h2>

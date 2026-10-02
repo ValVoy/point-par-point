@@ -100,17 +100,22 @@ export function EquipeEnMouvement({ children }: { children: ReactNode }) {
 
         // 40 ms d'une carte a l'autre, toute la vague en 600 ms au plus.
         const ecart = cartes.length > 1 ? Math.min(0.04, 0.15 / (cartes.length - 1)) : 0;
-        const vague = gsap.timeline({ scrollTrigger: { trigger: noeud, start: "top 80%", once: true } });
+        // Les deux derniers crans seulement, apres la montee de la section (retour de
+        // l'utilisateur du 02-10-2026, mesure par l'audit U34) : tout le cadran, de 0 a 9,
+        // faisait parcourir 1 267 px a une colonne en 450 ms, 169 px des la premiere image,
+        // pendant que la section montait encore. Le geste reste, le saut part.
+        const cran = (colonne: HTMLElement) => Number(colonne.dataset.chiffre);
+        const vague = gsap.timeline({ scrollTrigger: { trigger: noeud, start: "top 80%", once: true }, delay: 0.35 });
         cartes.forEach((colonnes, i) => {
           vague.fromTo(
             colonnes,
             // y: 0 reprend la main sur la translation posee par le rendu serveur.
-            { y: 0, yPercent: 0, immediateRender: false },
+            { y: 0, yPercent: (_j: number, colonne: HTMLElement) => -10 * Math.max(0, cran(colonne) - 2), immediateRender: false },
             {
               y: 0,
-              yPercent: (_j: number, colonne: HTMLElement) => -10 * Number(colonne.dataset.chiffre),
-              duration: 0.45,
-              ease: "power3.out",
+              yPercent: (_j: number, colonne: HTMLElement) => -10 * cran(colonne),
+              duration: 0.6,
+              ease: "power2.inOut",
             },
             i * ecart,
           );

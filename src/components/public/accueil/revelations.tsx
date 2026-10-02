@@ -57,12 +57,15 @@ export function Revelations({ children }: { children: ReactNode }) {
         noeud.addEventListener("focusin", auFocus);
 
         for (const tableau of gsap.utils.toArray<HTMLElement>("[data-allume]", noeud)) {
-          gsap.set(tableau, { "--allume": 0 });
+          // En veilleuse plutot qu'eteint, et un gresillement plus court (audit du 02-10-2026,
+          // U34) : de 0 a 1 en 50 ms puis a 0,35, pendant la montee du bloc, se lisait comme
+          // un sursaut au defilement.
+          gsap.set(tableau, { "--allume": 0.35 });
           gsap
-            .timeline({ scrollTrigger: { trigger: tableau, start: "top 75%", once: true } })
-            .to(tableau, { "--allume": 1, duration: 0.05, ease: "none" })
-            .to(tableau, { "--allume": 0.35, duration: 0.06, ease: "none" })
-            .to(tableau, { "--allume": 1, duration: 0.12, ease: "none" });
+            .timeline({ scrollTrigger: { trigger: tableau, start: "top 80%", once: true } })
+            .to(tableau, { "--allume": 1, duration: 0.18, ease: "power1.out" })
+            .to(tableau, { "--allume": 0.75, duration: 0.07, ease: "none" })
+            .to(tableau, { "--allume": 1, duration: 0.2, ease: "power1.out" });
         }
 
         return () => noeud.removeEventListener("focusin", auFocus);

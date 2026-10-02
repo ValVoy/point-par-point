@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PiedDePage } from "@/components/public/accueil/pied-de-page";
@@ -29,6 +30,8 @@ export default async function PageEffectif({ searchParams }: { searchParams: Pro
     effectifDeLaSaison(demandee),
     lireStaff(),
   ]);
+  // Une saison inconnue dans l'adresse n'affiche pas la courante en silence (audit D28).
+  if (demandee && saison?.libelle !== demandee) notFound();
   const groupes = grouperParPoste(membres);
   const equipe = groupes.flatMap((g) => g.membres);
 

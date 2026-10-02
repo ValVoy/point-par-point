@@ -22,6 +22,15 @@ export const metadata: Metadata = {
     template: `%s · ${NOM_DU_SITE}`,
   },
   description: DESCRIPTION_DU_SITE,
+  // Un lien partage arrive avec le nom du site et la langue (audit du 02-10-2026, D27).
+  // Une page qui pose son propre openGraph (un episode) le remplace en entier.
+  openGraph: {
+    type: "website",
+    siteName: NOM_DU_SITE,
+    locale: "fr_FR",
+    title: NOM_DU_SITE,
+    description: DESCRIPTION_DU_SITE,
+  },
   metadataBase: process.env.NEXT_PUBLIC_SITE_URL
     ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
     : undefined,

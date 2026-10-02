@@ -25,7 +25,9 @@ import { sourcesDuTitre } from "./sources-titre";
  * moment, et le filet de securite en CSS interviendrait au milieu.
  */
 
-const TOUCHES_NEUTRES = new Set(["Tab", "Shift", "Alt", "Control", "Meta"]);
+// Tab passe l'intro comme les autres touches (audit U24) : sinon le focus filait vers la
+// Serie, la page defilait de 1 779 px et l'intro continuait hors ecran.
+const TOUCHES_NEUTRES = new Set(["Shift", "Alt", "Control", "Meta"]);
 
 export function AnimationOuverture({ children }: { children: ReactNode }) {
   const racine = useRef<HTMLDivElement>(null);

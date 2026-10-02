@@ -25,9 +25,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
   return [
     ...FIXES.map((chemin) => ({ url: adresse(chemin) })),
-    ...calendrier.matchs.map((m) => ({ url: adresse(`/matchs/${m.slug}`) })),
+    ...calendrier.matchs.map((m) => ({ url: adresse(`/matchs/${m.slug}`), lastModified: m.modifieLe })),
     ...effectif.membres.map((m) => ({ url: adresse(`/effectif/${m.slug}`) })),
     ...episodes.map(({ episode }) => ({ url: adresse(`/serie/${episode.slug}`), lastModified: episode.modifieLe })),
-    ...actualites.map((a) => ({ url: adresse(`/actualites/${a.slug}`) })),
+    ...actualites.map((a) => ({ url: adresse(`/actualites/${a.slug}`), lastModified: a.publieLe ?? undefined })),
   ];
 }

@@ -11,6 +11,8 @@ import type { EtatRencontre } from "./db/schema";
 export type RencontreScoree = {
   /** L'adresse publique du match, quand on veut pouvoir y mener. */
   slug?: string;
+  /** La competition, pour qu'un amical ne se lise pas comme un match de championnat. */
+  competition?: string | null;
   adversaire: string;
   aDomicile: boolean;
   joueLe: Date;
@@ -22,6 +24,7 @@ export type RencontreScoree = {
 
 export type Resultat = {
   slug?: string;
+  competition?: string | null;
   adversaire: string;
   domicile: boolean;
   joueLe: Date;
@@ -43,6 +46,7 @@ export function resultatDepuis(r: RencontreScoree): Resultat | null {
   );
   return {
     slug: r.slug,
+    competition: r.competition,
     adversaire: r.adversaire,
     domicile: r.aDomicile,
     joueLe: r.joueLe,

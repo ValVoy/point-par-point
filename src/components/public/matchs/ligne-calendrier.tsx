@@ -35,9 +35,11 @@ const ETATS: Partial<Record<StatutPublic, string>> = {
 
 function MarqueLieu({ domicile }: { domicile: boolean }) {
   return domicile ? (
-    <span className="bg-[var(--color-turquoise)] px-1.5 py-0.5 text-[var(--color-nuit)]">Domicile</span>
+    // Meme largeur pour les deux marques : la competition qui suit ne saute plus de 16 px
+    // d'une ligne a l'autre (audit G21).
+    <span className="inline-block min-w-[6.75rem] bg-[var(--color-turquoise)] px-1.5 py-0.5 text-center text-[var(--color-nuit)]">Domicile</span>
   ) : (
-    <span className="border border-[var(--color-craie-tenue)] px-1.5 py-px">Extérieur</span>
+    <span className="inline-block min-w-[6.75rem] border border-[var(--color-craie-tenue)] px-1.5 py-px text-center">Extérieur</span>
   );
 }
 
@@ -69,9 +71,8 @@ function Case({ match, statut }: { match: RencontreAvecSets; statut: StatutPubli
     return h ? (
       <span className="titre-affiche titre-carte normal-case">{h}</span>
     ) : (
-      <span className="etiquette leading-snug text-[var(--color-turquoise)] sm:text-right">
-        Horaire
-        <br className="max-sm:hidden" /> à confirmer
+      <span className="etiquette leading-snug whitespace-nowrap text-[var(--color-turquoise)] sm:text-right">
+        Horaire à confirmer
       </span>
     );
   }

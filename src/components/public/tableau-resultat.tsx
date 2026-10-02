@@ -107,8 +107,13 @@ export function TableauResultat({
       </ol>
       ) : null}
       {avecDate ? (
-        <p aria-hidden="true" className="mt-4 border-t border-[var(--color-nuit-trait)] pt-4 text-center text-sm text-[var(--color-craie-douce)] first-letter:uppercase">
-          {dateLisible}
+        <p className="mt-4 border-t border-[var(--color-nuit-trait)] pt-4 text-center text-sm text-[var(--color-craie-douce)]">
+          {/* La competition d'abord (audit du 02-10-2026, D29) : un amical ne doit pas se
+              lire comme un match de championnat. */}
+          {resultat.competition ? <span>{resultat.competition} · </span> : null}
+          <span aria-hidden="true" className="inline-block first-letter:uppercase">
+            {dateLisible}
+          </span>
         </p>
       ) : null}
     </div>

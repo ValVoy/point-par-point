@@ -42,6 +42,10 @@ export function TableauClassement({
       {/* Colonnes de chiffres serrees au telephone (le nom passait sur deux lignes), et une
           marge a droite du dernier chiffre, comme a gauche du rang (retour du 02-10-2026). */}
       <table className="mt-[var(--titre-contenu)] w-full max-w-3xl border-collapse text-left tabular-nums">
+        {/* Annonce du tableau pour qui navigue de tableau en tableau (audit D31). */}
+        <caption className="sr-only">
+          {[final ? "Classement final" : "Classement", intitule, misAJourLe ? `à jour au ${dateLongue(misAJourLe)}` : null].filter(Boolean).join(", ")}
+        </caption>
         <thead>
           <tr className="etiquette border-b-2 border-[var(--color-craie)]">
             <th scope="col" className="w-9 py-2 pr-1 pl-3 sm:w-12">

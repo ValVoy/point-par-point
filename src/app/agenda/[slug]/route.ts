@@ -43,7 +43,12 @@ export async function GET(_requete: Request, { params }: { params: Promise<{ slu
     journeeEntiere: !rencontre.heureConnue,
     titre,
     lieu: lieu || null,
-    description: rencontre.competition ?? null,
+    // Sans horaire, le dire dans l'evenement lui-meme (audit U32) : une journee entiere
+    // se lit sinon comme un match sans heure, et l'agenda ne se met pas a jour seul.
+    description:
+      [rencontre.competition, rencontre.heureConnue ? null : "Horaire à confirmer : à revoir sur la page du match."]
+        .filter(Boolean)
+        .join(". ") || null,
     // La page du match, pas l'accueil (audit T6).
     url: site ? new URL(`/matchs/${rencontre.slug}`, site).toString() : null,
     horodatage: maintenant,
