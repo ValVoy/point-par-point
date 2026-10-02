@@ -54,7 +54,7 @@ export function TableauProchainMatch({ match, maintenant }: { match: ProchainMat
   return (
     <div
       data-tableau
-      className="rounded-sm border border-[var(--color-nuit-trait)] bg-[var(--color-boitier)] p-5 sm:p-8"
+      className="couche-propre rounded-sm border border-[var(--color-nuit-trait)] bg-[var(--color-boitier)] p-5 sm:p-8"
       style={{ boxShadow: "inset 0 0 0 6px var(--color-nuit)" }}
     >
       <p className="etiquette text-[var(--color-jaune)]">Prochain match</p>

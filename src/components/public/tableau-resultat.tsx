@@ -40,7 +40,7 @@ export function TableauResultat({
 
   return (
     <div
-      className="@container rounded-sm border border-[var(--color-nuit-trait)] bg-[var(--color-boitier)] p-5 sm:p-8"
+      className="couche-propre @container rounded-sm border border-[var(--color-nuit-trait)] bg-[var(--color-boitier)] p-5 sm:p-8"
       style={{ boxShadow: "inset 0 0 0 6px var(--color-nuit)" }}
     >
       <div className="flex items-center justify-between gap-4">

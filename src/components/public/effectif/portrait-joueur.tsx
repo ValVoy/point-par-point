@@ -43,7 +43,7 @@ export function PortraitJoueur({
   numeroAffiche?: ReactNode;
 }) {
   return (
-    <span className={`relative block overflow-hidden bg-[var(--color-nuit-surface)] ${format}`}>
+    <span className={`couche-propre relative block overflow-hidden bg-[var(--color-nuit-surface)] ${format}`}>
       <span aria-hidden="true" className="absolute inset-0 opacity-30">
         <Motif contour sombre="var(--color-turquoise)" taille={26} />
       </span>

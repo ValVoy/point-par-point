@@ -1900,3 +1900,25 @@ une lecture sans table ne se garde plus, test ajouté.
 - Suite : vérifier que `/sante` coûte de nouveau un aller-retour après ce déploiement ; le poste
   Coolify applique la consigne #02 ; fiche de page pour la barre de navigation (avec l'idée du
   ballon qui devient « POINT PAR POINT ») ; puis la refonte des autres pages publiques.
+
+**14:26** · **[jalon] La saccade de l'accueil, à la vidéo et au tableau des matchs**
+
+Signalée par l'utilisateur : un ralentissement en défilant vers la vidéo et le tableau des matchs.
+Le fil principal ne montrait rien (aucune tâche longue, même processeur bridé quatre fois) : c'est
+la trace de rendu complète qui l'a trouvée. La rastérisation était multipliée par cinq dès que la
+section du tableau entrait à l'écran, et le restait sur la section de l'équipe.
+
+Mesures par élimination, même défilement à chaque fois : le grain ne pesait que 15 %. Les deux vrais
+coûts étaient les chiffres LED, chacun avec trois lueurs en filtre SVG, redessinés à chaque
+allumage et à chaque seconde du compte à rebours, et les portraits posés sur le motif du maillot en
+SVG. Retirer les lueurs ou le motif aurait touché l'identité. On les isole donc sur leur propre
+couche graphique (`couche-propre`, `will-change: transform`) : ils sont dessinés une fois, puis
+composés. Rastérisation du même défilement : 1,2 à 1,4 s avant, 0,47 à 0,61 s après, de 75 à 85 %
+de moins dans la zone signalée. Rendu identique, vérifié en capture.
+
+- Portée : `globals.css` (utilitaire `couche-propre`, grain en couche), `tableau-prochain-match.tsx`,
+  `tableau-resultat.tsx`, `portrait-joueur.tsx`.
+- Vérifié : traces de rendu avant, après et par élimination, deux passages après ; captures du
+  tableau LED et de la section Équipe ; 188 tests, `tsc`, lint.
+- Suite : l'utilisateur redéfile l'accueil en production pour confirmer à son ressenti ; fiche de
+  la barre de navigation (ballon et « POINT PAR POINT ») ; puis la refonte des autres pages.
