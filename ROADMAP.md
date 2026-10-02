@@ -194,6 +194,21 @@ de l'intro et de GSAP sur l'accueil.
 - [ ] Remesurer en production après le déploiement du 02-10, puis sans la barrière au lancement
 - [ ] Purger la démonstration de production (`db:purge-demo` avec les accès de production, avec accord) quand Tom commence la vraie saisie : 12 joueurs en 0 ou 99, un match amical joué le 26-09, un classement d'« Équipe démo », 3 actualités, 3 membres du staff, 3 partenaires. Décidé le 02-10 : la démo reste en production d'ici là, c'est là que Tom juge le rendu
 
+### Arbitrages de l'audit du site avec ses données (02-10-2026, à coder)
+
+- [ ] Type de rencontre (championnat, coupe, amical) choisi à la saisie, migration non destructive ;
+      le bilan et le classement ne comptent que le championnat (D23)
+- [ ] Salle : commune ou adresse signalée comme manquante dans l'administration ; côté public, pas
+      d'itinéraire sur un nom seul, « Adresse à confirmer » à la place (D25, U23)
+- [ ] Classement de `/matchs` en grand écran : le tableau à gauche, notre rang en chiffre géant à
+      droite (« 3e sur 8 »), les points et l'écart au premier
+- [ ] Bouton de lecture dans l'image partout, titre aligné sur la colonne (G27)
+- [ ] Le dernier épisode n'affiche que « Épisode 04 » (G28)
+- [ ] Miniatures : du gris à la couleur à l'entrée à l'écran au téléphone (G29)
+- [ ] Bas de page du dernier épisode : le prochain match (avec l'agenda) et un lien vers l'effectif (U27)
+- [x] Démonstration de production rendue cohérente avec la série : amical perdu 0-3, classement à
+      zéro match joué (D26, 02-10-2026)
+
 ### Dette relevée par l'audit du 02-10-2026, sans décision
 
 - [ ] Saisons : validation des dates, libellé déjà pris à la restauration depuis la corbeille (T9)
@@ -205,6 +220,14 @@ de l'intro et de GSAP sur l'accueil.
 - [ ] JavaScript de `/contact` (D14), deux assertions forcées (D15), exports morts (D16),
       duplications (D17), tests de `purges` et `tentatives` (D18)
 - [ ] Miniatures YouTube : borner l'optimiseur (F20) ; geste de restauration écrit (F21)
+- [ ] `canonical` par page (D27) ; données structurées `SportsEvent`, `VideoObject` (D32) ; `.ics` avec
+      `SEQUENCE` (D33) ; classement relié à la compétition (D30)
+- [ ] Insécables dans les noms de salle et les dates (G23) ; « Avant la série » en double (G26) ;
+      « où suis-je » dans le pied (U28) ; masquer « Le projet » tant qu'aucune étape n'est publiée
+      (U31) ; lien d'actualités en double sur l'accueil (U33) ; navigation d'épisodes symétrique (G30) ;
+      bilan de `/matchs` à la même échelle (G31) ; date de publication dans la ligne d'étiquettes (G32) ;
+      lecture visible à l'arrivée sur un épisode (U25) ; appel « Rejoindre l'équipe » (U29) ; aide du
+      contact sous le sujet (U30)
 
 ### Refonte « trop tassé », suite (fiche `fiches/refonte-respiration.md`)
 

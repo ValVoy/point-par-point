@@ -2005,3 +2005,22 @@ arbitrer, avec le bilan des amicaux, les salles sans commune et une série de ch
   à 1440 px, du classement à 390 px ; aucune erreur console, aucun débordement.
 - Suite : trancher les questions d'arbitrage de cette passe ; l'utilisateur rejuge le saut à la
   molette en production ; puis l'Effectif selon la fiche de l'étape 4.
+
+**17:42** · **[clôture] Arbitrages de l'audit du site, la démo remise d'accord avec la série**
+
+Huit arbitrages rendus par l'utilisateur, tous sur l'option recommandée : la démonstration gardée
+mais cohérente, un type de rencontre pour sortir les amicaux du bilan, la commune obligatoire pour
+une salle, le rang en chiffre géant à côté du classement, le bouton de lecture dans l'image
+partout, « Épisode 04 » seul, les miniatures en couleur à l'entrée à l'écran au téléphone, et le
+prochain match avec l'équipe en bas du dernier épisode.
+
+Fait dans la foulée, avec son accord, sur les seules lignes marquées démo : le match amical devient
+une défaite 0-3 (21-25, 23-25, 19-25), en accord avec l'épisode 4 qui raconte un premier match
+perdu, et le classement de démo repasse à zéro match joué. Le reste est inscrit à la ROADMAP.
+
+- Portée : base de production (`rencontres`, `sets_rencontre`, `lignes_classement`, lignes démo
+  seulement), ROADMAP.
+- Vérifié : relu en base après la transaction (0-3, trois sets, zéro match joué au classement).
+- Suite : nouvelle séance pour coder les arbitrages (type de rencontre et sa migration, salles,
+  classement, Série) puis l'Effectif selon la fiche de l'étape 4 ; l'utilisateur rejuge le saut à
+  la molette en production.
