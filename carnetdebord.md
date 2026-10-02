@@ -1878,3 +1878,25 @@ vérification du premier build qui lance les tests.
   remesurer la production page par page ; l'utilisateur dit si le nom de l'en-tête doit
   disparaître de l'accueil ; puis la refonte des autres pages publiques, avec les espaces
   insécables.
+
+**14:03** · **[jalon] La production remesurée après le cache**
+
+Mesure demandée par l'utilisateur, même protocole que le matin : six passages par page, nouvelle
+connexion à chaque fois, derrière la barrière. L'accueil passe de 500 à 725 ms à 215 à 240 ms, les
+matchs de 470 à 580 ms à 220 à 240 ms, l'effectif de 335 à 445 ms à 200 à 212 ms. Toutes les pages
+sont désormais au niveau d'un fichier statique (`/icon.svg`, 186 à 220 ms) : ce qui reste est le
+réseau, le chiffrement et la barrière. Sur une connexion réutilisée, les mentions légales répondent
+en 113 ms contre 104 pour le statique.
+
+Deux points relevés. La première visite de `/matchs` après le déploiement a pris 3,0 s : conteneur
+neuf, cache vide, connexion à Turso à ouvrir ; la page n'est à froid qu'une fois par déploiement.
+Et un défaut introduit par le cache : `/sante` répondait aussi vite qu'un statique, son
+`select 1` était gardé en mémoire et la sonde aurait dit « ok » base coupée. Corrigé et poussé :
+une lecture sans table ne se garde plus, test ajouté.
+
+- Portée : `src/lib/db/cache-lectures.ts` et ses tests.
+- Vérifié : nouvelle version en ligne (en-tête de l'accueil présent), ce qui prouve aussi que
+  l'image a passé ses tests ; 188 tests, `tsc`, lint.
+- Suite : vérifier que `/sante` coûte de nouveau un aller-retour après ce déploiement ; le poste
+  Coolify applique la consigne #02 ; fiche de page pour la barre de navigation (avec l'idée du
+  ballon qui devient « POINT PAR POINT ») ; puis la refonte des autres pages publiques.
