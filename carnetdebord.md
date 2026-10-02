@@ -1922,3 +1922,22 @@ de moins dans la zone signalée. Rendu identique, vérifié en capture.
   tableau LED et de la section Équipe ; 188 tests, `tsc`, lint.
 - Suite : l'utilisateur redéfile l'accueil en production pour confirmer à son ressenti ; fiche de
   la barre de navigation (ballon et « POINT PAR POINT ») ; puis la refonte des autres pages.
+
+**15:30** · **[jalon] Les blocs de l'accueil ne sautent plus à la molette**
+
+L'utilisateur voyait encore une saccade après le correctif des couches. Mesurée sur la production
+elle-même (relais local qui ajoute les identifiants de la barrière sans les écrire nulle part), avec
+un écran haute densité et une molette simulée : aucune image lente sur 1 555, aucune tâche longue,
+la miniature chargée avant le défilement. Ni la barrière ni le rendu n'étaient en cause.
+
+Ses réponses ont tranché : Brave, à la molette, « des éléments sautent ». Les blocs de l'accueil
+apparaissaient en montant de 48 px avec une courbe `expo.out`, déclenchés quand leur haut atteignait
+85 % de l'écran : presque tout le trajet en un dixième de seconde, ajouté au cran de molette. La
+montée passe à 24 px, en `power2.out` sur 0,8 s, déclenchée dès l'entrée par le bas. Le geste reste
+le même, il n'est plus sec. À juger par l'utilisateur sur la production.
+
+- Portée : `src/components/public/accueil/revelations.tsx`.
+- Vérifié : blocs révélés progressivement au défilement, pleine opacité et position finale, aucune
+  erreur ; 188 tests, `tsc`, lint, build.
+- Suite : l'utilisateur juge à la molette sur la production ; si un saut persiste, le filmer pour
+  situer le bloc ; puis la fiche de la barre de navigation.

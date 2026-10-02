@@ -31,12 +31,15 @@ export function Revelations({ children }: { children: ReactNode }) {
         for (const bloc of gsap.utils.toArray<HTMLElement>("[data-apparait]", noeud)) {
           revelations.set(
             bloc,
+            // Montee courte et douce, lancee des que le bloc entre par le bas (retour de
+            // l'utilisateur du 02-10-2026) : 48 px en expo.out, declenches a 85 %, se
+            // faisaient en un dixieme de seconde, et a la molette le bloc sautait.
             gsap.from(bloc, {
               opacity: 0,
-              y: 48,
-              duration: 0.9,
-              ease: "expo.out",
-              scrollTrigger: { trigger: bloc, start: "top 85%", once: true },
+              y: 24,
+              duration: 0.8,
+              ease: "power2.out",
+              scrollTrigger: { trigger: bloc, start: "top 100%", once: true },
             }),
           );
         }
