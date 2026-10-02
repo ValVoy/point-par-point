@@ -359,3 +359,24 @@ se périme pas. Un chiffre non renseigné s'écrit « – », jamais 0.
 
 `Intl` écrit « jeudi 1 octobre » ; `dateLongue` et `dateEtHeure` passent par `jourEnLettres`,
 qui écrit « 1er ». Toute nouvelle date au mois en toutes lettres doit passer par là.
+
+### Une lecture faite resert jusqu'à la prochaine écriture
+
+Le site ne change que quand quelqu'un écrit dans l'administration, et un aller-retour vers Turso
+coûte plus que tout le rendu d'une page (100 à 130 ms depuis le VPS, mesuré le 02-10-2026). Le
+client de base est donc enveloppé (`src/lib/db/cache-lectures.ts`) : un `select` identique rend la
+réponse gardée en mémoire, et **toute écriture vide la mémoire une fois terminée**. La règle vit
+au niveau du client, pas des pages : aucune action future ne peut oublier d'invalider.
+
+Les comptes, sessions, tentatives de connexion et messages ne sont jamais gardés, et une écriture
+qui ne touche qu'eux ne vide rien. Passé 5 minutes, une réponse est encore servie une fois
+pendant qu'une lecture neuve part en coulisse : c'est le filet des écritures faites hors du
+processus (`db:sql` depuis le poste, conteneur voisin pendant un déploiement). **Conséquence
+pratique** : une correction faite en base de production à la main n'apparaît sur le site qu'à la
+deuxième visite après 5 minutes, ou au redéploiement.
+
+### Ce qui n'a pas à faire attendre passe après la réponse
+
+La purge des données échues est une écriture : elle part dans `after()`, une fois la page envoyée,
+dans l'administration, à la connexion et à l'envoi de contact. Même règle pour tout futur ménage,
+journal ou notification.

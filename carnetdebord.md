@@ -1803,3 +1803,49 @@ C'est la première chose à regarder à la prochaine séance, en mesurant avant 
   corriger ; puis les autres pages publiques au système de la refonte. Pour Tom : relire et
   publier les cinq étapes du projet en brouillon, l'adresse du gymnase Jean Boistard, les trois
   horaires à confirmer, la poule SMB à confirmer, l'accord de droit à l'image.
+
+## 02-10-2026
+
+**11:43** · **[jalon] Audit du groupe, deuxième passage : la lenteur mesurée et corrigée**
+
+Demande de l'utilisateur : un site sans aucun ralentissement, quelque chose de carré, par le groupe
+d'audit au complet. La lenteur d'abord, mesurée avant d'être corrigée. En production, derrière la
+barrière, l'accueil répondait en 500 à 725 ms et même les mentions légales en 250 ms.
+
+La décomposition est nette. Le rendu ne coûte que quelques millisecondes. La barrière ajoute
+environ 70 ms à chaque requête, fichiers statiques compris, et disparaîtra au lancement. Le reste
+est l'attente de Turso : 100 à 130 ms par aller-retour depuis le VPS (35 ms depuis le poste, la
+connexion se fermant entre deux visites), et les pages en enchaînaient une à quatre vagues, le pied
+de page imposant au moins une lecture à toutes.
+
+Le correctif est un cache des lectures posé sur le client de base, vidé à chaque écriture une fois
+celle-ci terminée, servi puis rafraîchi en coulisse passé cinq minutes, qui ne garde jamais les
+tables sensibles. En local, l'accueil passe de 165 à 16 ms côté serveur, les autres pages à 4 à
+9 ms. Prouvé de bout en bout : un manifeste enregistré dans l'administration, puis remis au départ,
+apparaît aussitôt sur un accueil déjà en cache. La purge, qui attendait avant chaque page de
+l'administration, part après la réponse.
+
+Les quatre relectures à froid ont rendu 58 constats, 64 avec ceux de la mesure. Corrigés : le
+blocage du compte d'autrui au-delà de 30 essais (S19, régression du correctif d'hier, prouvé avant
+et après), le bandeau LED qui tournait hors écran (D12), MorphSVG chargé partout (D13), les
+libellés sous 13 px du tableau de match, la purge qui disait réussir en échouant, la durée de cache
+des photos alignée sur la politique, trois faits de la politique, deux saisons au même nom. Deux
+constats retirés, dont une fausse alerte de ma part sur des données de démonstration en production :
+le fichier analysé avait été réécrit depuis le serveur local.
+
+Erreur de séance à retenir : deux semis de démonstration lancés par moi ont chacun créé une saison
+courante avant d'échouer, ce qui a vidé `/matchs` en développement. Le semis refuse désormais un
+second passage, et la base de développement a été purgée puis ressemée une fois.
+
+- Portée : `src/lib/db/cache-lectures.ts` et ses tests, `db/index.ts`, `gsap.ts`, `gsap-morph.ts`,
+  intro, `tentatives.ts`, `purges.ts`, route de purge, `stockage.ts`, `contact.ts`, saisons,
+  tableau de résultat, pastille, politique de confidentialité, `semer-demo.ts`, ROADMAP, codex,
+  `audits/2026-10-02-audit-groupe.md`.
+- Vérifié : 187 tests (aussi en UTC et en heure du Pacifique), `tsc`, lint ; build de production
+  local, mesures avant et après ; parcours de l'administration avec un compte jetable supprimé
+  ensuite ; tableau de résultat à 360, 390 et 1440 px ; bandeau figé hors écran ; intro rejouée
+  sans erreur. Aucune opération sur la base de production. Pas de Docker sur le poste : l'image
+  n'a pas été éprouvée localement.
+- Suite : remesurer la production page par page après ce déploiement ; trancher les questions
+  d'arbitrage (barrière, `.env.production.local`, sonde Todai, santé du conteneur, tests dans
+  l'image, composition) ; puis la refonte des autres pages publiques, avec les espaces insécables.

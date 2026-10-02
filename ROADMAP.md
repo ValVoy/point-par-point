@@ -185,8 +185,25 @@ chaque visite (`force-dynamic`), chaque page fait plusieurs allers-retours vers 
 depuis le VPS en Allemagne, conteneur à 512 Mo, optimiseur d'images de Next sur le serveur, poids
 de l'intro et de GSAP sur l'accueil.
 
-- [ ] Mesures de référence (serveur et navigateur), page par page
-- [ ] Corrections, puis mêmes mesures pour comparer
+- [x] Mesures de référence (serveur et navigateur), page par page (02-10-2026,
+      `audits/2026-10-02-audit-groupe.md`) : chaque aller-retour Turso coûte 100 à 130 ms depuis
+      le VPS, une page en enchaînait 1 à 4 vagues ; la barrière ajoute 70 ms par requête
+- [x] Corrections, puis mêmes mesures pour comparer (02-10-2026) : cache des lectures vidé à
+      chaque écriture, purge après la réponse, bandeau LED en pause hors écran, MorphSVG chargé
+      par l'intro seule ; accueil 165 → 16 ms côté serveur en local
+- [ ] Remesurer en production après le déploiement du 02-10, puis sans la barrière au lancement
+
+### Dette relevée par l'audit du 02-10-2026, sans décision
+
+- [ ] Saisons : validation des dates, libellé déjà pris à la restauration depuis la corbeille (T9)
+- [ ] Boutons d'action de l'administration sans état d'envoi (U18)
+- [ ] Espaces insécables et apostrophe typographique, fonction `typo()` (W11, G17), avec la refonte
+- [ ] Compte à rebours au-delà de 99 jours (T10), filet « Aujourd'hui » (T11), titres numérotés (T13),
+      heure ambiguë du 25-10 figée par un test (T15), doublons de la saisie du calendrier (T14)
+- [ ] Avertissement avant de quitter sur tous les formulaires (T16)
+- [ ] JavaScript de `/contact` (D14), deux assertions forcées (D15), exports morts (D16),
+      duplications (D17), tests de `purges` et `tentatives` (D18)
+- [ ] Miniatures YouTube : borner l'optimiseur (F20) ; geste de restauration écrit (F21)
 
 ### Refonte « trop tassé », suite (fiche `fiches/refonte-respiration.md`)
 
@@ -222,25 +239,27 @@ public consistera à retirer la barrière et à brancher le domaine définitif (
 
 - [x] Audit complet du groupe (huit regards) le 01-10-2026 : `audits/2026-10-01-audit-groupe.md`, 66 constats sur 97 corrigés en séance, le reste arbitré ou à faire ci-dessous
 - [x] Purge des données de démonstration : sans objet, la production n'en a jamais reçu (01-10-2026)
-- [ ] Déploiement Coolify depuis `main`
+- [x] Audit du groupe, deuxième passage, le 02-10-2026 : `audits/2026-10-02-audit-groupe.md`
+- [x] Déploiement Coolify depuis `main` (01-10-2026, voir « Avant-première »)
 - [ ] Sonde Todai sur le domaine
-- [ ] Sauvegarde nocturne de la base Turso, **30 jours** au plus (durée annoncée par la politique de confidentialité)
-- [ ] Migrations 0002 à 0009 appliquées en production, **avant** le déploiement du code, avec l'accord de l'utilisateur
-- [ ] Umami : poser `UMAMI_URL=https://stats.valentincheron.fr` et
-  `UMAMI_SITE_ID=15868b64-5057-4ce2-bc1a-0bc7adbc6eaa` en variables d'**exécution** (relire
-  `is_buildtime` par l'API, Coolify coche Buildtime par défaut) ; renseigner le domaine du site
+- [x] Sauvegarde nocturne de la base Turso, 14 jours, sous les **30 jours** annoncés par la politique (01-10-2026)
+- [x] Migrations 0000 à 0009 appliquées en production avec l'accord de l'utilisateur (01-10-2026)
+- [ ] Umami : poser `UMAMI_URL=https://stats.valentincheron.fr` en variable de **build ET
+  d'exécution** (la CSP la fige à la compilation, le composant la relit à l'exécution : posée d'un
+  seul côté, le script est bloqué ou absent, audit F18), et
+  `UMAMI_SITE_ID=15868b64-5057-4ce2-bc1a-0bc7adbc6eaa` en exécution seule ; renseigner le domaine du site
   dans Umami ; mettre en place la sauvegarde de la base d'Umami ; vérifier qu'une visite apparaît
   (un bloqueur de publicité peut arrêter `script.js`)
 - [ ] Accord de droit à l'image couvrant le site, accord parental pour les mineurs (audit R9)
-- [ ] Coolify : vérification de santé sur `/sante` ; variables de build `R2_DOMAINE_PUBLIC`, `NEXT_PUBLIC_SITE_URL` et `UMAMI_URL` (la CSP les fige à la compilation) (audit F5, F7, S8)
-- [ ] Purge nocturne : `PURGE_JETON` (32 caractères au moins) en variable d'exécution, et une tâche planifiée Coolify qui lance `wget -q -O - --post-data="" --header="Authorization: Bearer $PURGE_JETON" http://127.0.0.1:3000/taches/purge` (audit R3)
+- [x] Coolify : vérification de santé sur `/sante` ; `R2_DOMAINE_PUBLIC` et `NEXT_PUBLIC_SITE_URL` en build et exécution (01-10-2026) ; `UMAMI_URL` reste, voir Umami (audit F5, F7, S8)
+- [x] Purge nocturne : `PURGE_JETON` en exécution, tâche planifiée Coolify à 02:41 UTC (01-10-2026, audit R3). La route répond 500 si la purge échoue depuis le 02-10 (audit F14) : reste à brancher un battement Healthchecks derrière la commande
 - [ ] Traefik : 64 Ko de corps hors administration, limite de débit sur `/contact` et la connexion (audit S7)
-- [ ] Le 07-10-2026 au plus tôt : Next 16.3.6 (correctif de sécurité, règle des 15 jours), contrôle des dépendances tirées (audit S10)
-- [ ] Copie nocturne des photos R2, restauration testée avec la base (audit F3) ; seconde copie vérifiée de la clé `age` (F4)
+- [ ] Le 07-10-2026 au plus tôt : la dernière version 16.3.x de Next publiée depuis au moins 15 jours (16.3.8 est sortie depuis, `npm audit` classe 16.3.5 en critique pour `next/og`, que le site n'utilise pas), contrôle des dépendances tirées (audit S10, S22)
+- [ ] Copie nocturne des photos R2 en place (01-10-2026) ; reste la restauration d'une photo réelle, quand Tom en aura déposé une (audit F3) ; seconde copie vérifiée de la clé `age` (F4)
 - [ ] Umami : purge au-delà de 25 mois, puis la durée dans la politique (audit R6)
 - [ ] Mentions légales : coordonnées de Tom chez l'hébergeur réel, article 6 revérifié ; note de sous-traitance ; registre (audit R7, R8, R10)
 - [ ] Fiche « que faire si » pour Tom (audit F12)
-- [ ] R2 : créer le bucket `projet-volley`, un jeton limité à ce bucket (lecture et écriture), et
+- [x] R2 (01-10-2026) : créer le bucket `projet-volley`, un jeton limité à ce bucket (lecture et écriture), et
   son domaine public ; poser `R2_COMPTE_ID`, `R2_CLE_ACCES`, `R2_CLE_SECRETE` en variables
   d'exécution et **`R2_DOMAINE_PUBLIC` aussi en variable de build** (lu par `next.config.ts`
   pour autoriser les images) ; sans R2, l'envoi est refusé en production
