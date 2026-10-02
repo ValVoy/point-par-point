@@ -28,8 +28,9 @@ export function titreMatch(match: Pick<Rencontre, "aDomicile" | "adversaire">) {
 const bouton =
   "inline-flex min-h-12 items-center justify-center border-2 px-5 font-semibold whitespace-nowrap transition-colors duration-[80ms]";
 
-export function ActionsMatch({ match }: { match: Rencontre }) {
-  const itineraire = lienItineraire(match);
+/** `sansItineraire` : quand la page offre deja l'itineraire vers la meme salle (Ou nous voir). */
+export function ActionsMatch({ match, sansItineraire = false }: { match: Rencontre; sansItineraire?: boolean }) {
+  const itineraire = sansItineraire ? null : lienItineraire(match);
   const google = lienGoogleAgenda({
     uid: `match-${match.id}`,
     debut: match.joueLe,

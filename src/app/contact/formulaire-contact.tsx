@@ -137,10 +137,10 @@ export function FormulaireContact({ sujet }: { sujet: Sujet }) {
 
       <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
         <Envoyer />
-        <p className="max-w-[52ch] text-sm leading-relaxed text-[var(--color-craie-tenue)]">
+        <p className="max-w-[52ch] text-base leading-relaxed text-[var(--color-craie-tenue)]">
           Votre nom, votre e-mail et votre message servent uniquement à vous répondre : seule l&apos;équipe du site
           les lit, ils sont effacés un an après. Votre adresse réseau est gardée 24 heures, contre les robots.{" "}
-          <Link href="/confidentialite" className="inline-flex min-h-11 items-center underline underline-offset-2 hover:text-[var(--color-craie)]">
+          <Link href="/confidentialite" className="-my-3 inline-block py-3 underline underline-offset-2 hover:text-[var(--color-craie)]">
             Confidentialité
           </Link>
         </p>

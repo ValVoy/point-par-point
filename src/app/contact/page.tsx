@@ -33,27 +33,27 @@ export default async function PageContact({ searchParams }: { searchParams: Prom
   return (
     <>
       <EnTete actif="/contact" />
-      <main id="contenu" className="colonne-large pt-16 pb-24 sm:pt-24">
-        <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">{EQUIPE}</p>
-        <h1 className="titre-affiche mt-3 text-6xl sm:text-8xl">Nous écrire</h1>
-        <p className="mt-5 max-w-[46ch] text-lg leading-relaxed text-[var(--color-craie-douce)]">
+      <main id="contenu" className="colonne-large min-h-[70svh] pt-16 pb-[var(--air-chapitre)] sm:pt-24">
+        <p className="etiquette text-[var(--color-turquoise)]">{EQUIPE}</p>
+        <h1 className="titre-affiche titre-page mt-4">Nous écrire</h1>
+        <p className="chapeau mt-[var(--titre-contenu)] max-w-[40ch] text-[var(--color-craie-douce)]">
           Une question sur un match, l&apos;envie de soutenir l&apos;équipe, un sujet pour la série : on lit tout.
         </p>
-        <div className="mt-12 grid gap-16 xl:grid-cols-[minmax(0,48rem)_minmax(0,1fr)] xl:gap-20">
+        <div className="suite grid gap-[var(--air-suite)] lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-16">
           <FormulaireContact sujet={sujetInitial(typeof sujet === "string" ? sujet : undefined)} />
           <aside aria-labelledby="titre-reponses" className="lg:border-l lg:border-[var(--color-nuit-trait)] lg:pl-10">
-            <h2 id="titre-reponses" className="text-xs font-semibold tracking-[0.2em] text-[var(--color-craie-douce)] uppercase">
+            <h2 id="titre-reponses" className="titre-affiche titre-carte">
               Ce qu&apos;on peut vous répondre
             </h2>
             <dl className="mt-6 space-y-6">
               {REPONSES.map((r) => (
                 <div key={r.titre}>
-                  <dt className="titre-affiche text-2xl">{r.titre}</dt>
-                  <dd className="mt-1 leading-relaxed text-[var(--color-craie-douce)]">{r.texte}</dd>
+                  <dt className="etiquette text-[var(--color-turquoise)]">{r.titre}</dt>
+                  <dd className="corps mt-2 text-[var(--color-craie-douce)]">{r.texte}</dd>
                 </div>
               ))}
             </dl>
-            <p className="mt-10 border-t border-[var(--color-nuit-trait)] pt-6 leading-relaxed text-[var(--color-craie-douce)]">
+            <p className="corps mt-10 border-t border-[var(--color-nuit-trait)] pt-6 text-[var(--color-craie-douce)]">
               Sans attendre de réponse :{" "}
               <Link href="/matchs" className="font-semibold text-[var(--color-craie)] underline underline-offset-4">
                 l&apos;heure des matchs

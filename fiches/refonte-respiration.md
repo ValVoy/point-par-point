@@ -279,8 +279,9 @@ texte en demi-largeur, l'encart à filet jaune latéral.
 
 ### Partenaires
 
-- **Un mur de logos** régulier : logo sur une case claire de taille égale, le nom en lettres
-  quand il n'y a pas de logo, lien sur la case quand il existe.
+- **Un mur de logos** régulier : cases sombres de taille égale, logo passé en blanc qui reprend
+  sa couleur au survol (le traitement existant, plus juste pour l'identité nocturne qu'une case
+  claire, écart assumé au codage), le nom en lettres quand il n'y a pas de logo, lien sur la case.
 - **« Devenir partenaire » en bandeau** pleine largeur, titre de chapitre et appel vers le contact au
   sujet « partenariat » ; plus d'encart à filet.
 
@@ -292,8 +293,9 @@ texte en demi-largeur, l'encart à filet jaune latéral.
 
 ### Contact
 
-- **Deux colonnes pleines** : à gauche le formulaire ; à droite l'aide par sujet, sous le choix du
-  sujet au téléphone, le délai de réponse annoncé, et la chaîne YouTube. Pas d'Instagram : aucune
+- **Deux colonnes pleines** dès 1024 px : à gauche le formulaire ; à droite l'aide par sujet et la
+  chaîne YouTube. Le délai de réponse n'est pas annoncé : ce serait un engagement pris au nom de
+  Tom, à fixer avec lui (écart assumé au codage). Pas d'Instagram : aucune
   adresse connue, et l'intégration a été écartée au cadrage.
 
 ### Pages juridiques et 404

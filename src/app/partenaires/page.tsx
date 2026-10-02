@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { PiedDePage } from "@/components/public/accueil/pied-de-page";
 import { EnTete } from "@/components/public/entete";
+import { TitreChapitre } from "@/components/public/titre-chapitre";
+import { Volets } from "@/components/public/volets";
 import { urlPhoto } from "@/lib/effectif-public";
 import { EQUIPE } from "@/lib/site";
 import { partenairesAffiches } from "@/lib/vitrine";
@@ -35,7 +37,7 @@ function Case({ partenaire: p }: { partenaire: Partenaire }) {
       />
     </span>
   ) : (
-    <span className="titre-affiche hyphens-auto text-center text-xl text-balance break-words group-hover:text-[var(--color-jaune)] group-focus-visible:text-[var(--color-jaune)] sm:text-3xl">
+    <span className="titre-affiche titre-carte min-w-0 text-center text-balance hyphens-auto [overflow-wrap:anywhere] group-hover:text-[var(--color-jaune)] group-focus-visible:text-[var(--color-jaune)]">
       {p.nom}
     </span>
   );
@@ -60,36 +62,55 @@ export default async function PagePartenaires() {
   return (
     <>
       <EnTete actif="/partenaires" />
-      <main id="contenu" className="colonne-large pt-16 pb-24 sm:pt-24">
-        <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">{EQUIPE}</p>
-        <h1 className="titre-affiche mt-3 text-6xl sm:text-8xl">Partenaires</h1>
-        {liste.length > 0 ? (
-          <>
-            <p className="mt-5 max-w-[46ch] text-lg leading-relaxed text-[var(--color-craie-douce)]">
-              Merci à celles et ceux qui soutiennent l&apos;équipe, sur le terrain et dans la série.
-            </p>
-            <ul className="mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+      <main id="contenu" className="min-h-[70svh]">
+        <Volets>
+          <section className="colonne-large pt-16 sm:pt-24">
+            <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-8">
+              <div className="min-w-0">
+                <p className="etiquette text-[var(--color-turquoise)]">{EQUIPE}</p>
+                <h1 className="titre-affiche titre-page mt-4">Partenaires</h1>
+              </div>
+              {liste.length > 0 ? (
+                <p className="pb-2 sm:text-right">
+                  <span className="titre-affiche chiffre-geant block">{String(liste.length).padStart(2, "0")}</span>
+                  <span className="etiquette mt-2 block text-[var(--color-craie-douce)]">à nos côtés</span>
+                </p>
+              ) : null}
+            </div>
+            {liste.length > 0 ? (
+              <p className="chapeau mt-[var(--titre-contenu)] max-w-[40ch] text-[var(--color-craie-douce)]">
+                Merci à celles et ceux qui soutiennent l&apos;équipe, sur le terrain et dans la série.
+              </p>
+            ) : null}
+          </section>
+
+          {liste.length > 0 ? (
+            <ul className={`colonne-large suite grid grid-cols-2 gap-[var(--gouttiere)] sm:grid-cols-3 ${liste.length >= 4 ? "lg:grid-cols-4" : ""}`}>
               {liste.map((p) => (
                 <Case key={p.id} partenaire={p} />
               ))}
             </ul>
-          </>
-        ) : null}
+          ) : null}
 
-        <section aria-labelledby="titre-rejoindre" className="mt-20 max-w-3xl border-l-4 border-[var(--color-jaune)] bg-[var(--color-nuit-surface)] px-6 py-8">
-          <h2 id="titre-rejoindre" className="titre-affiche text-4xl">
-            Devenir partenaire
-          </h2>
-          <p className="mt-3 text-lg leading-relaxed text-[var(--color-craie-douce)]">
-            Vous voulez soutenir l&apos;équipe et apparaître à ses côtés ? Écrivez-nous, on en parle.
-          </p>
-          <Link
-            href="/contact?sujet=partenariat"
-            className="mt-6 inline-flex min-h-12 items-center bg-[var(--color-jaune)] px-6 font-semibold text-[var(--color-nuit)] transition-colors duration-[80ms] hover:bg-[var(--color-craie)]"
-          >
-            Nous écrire
-          </Link>
-        </section>
+          {/* L'appel en bandeau pleine largeur (fiche refonte, section 8) : plus d'encart a
+              filet jaune, abandonne partout ailleurs. */}
+          <section aria-labelledby="titre-rejoindre" className="grain relative chapitre mt-[var(--air-chapitre)] bg-[var(--color-nuit-violet)] pb-[var(--air-chapitre)]">
+            <div className="colonne-large relative">
+              <TitreChapitre id="titre-rejoindre">Devenir partenaire</TitreChapitre>
+              <div className="mt-[var(--titre-contenu)] flex flex-wrap items-center gap-x-10 gap-y-6">
+                <p className="chapeau max-w-[40ch] text-[var(--color-craie-douce)]">
+                  Vous voulez soutenir l&apos;équipe et apparaître à ses côtés, sur le terrain et dans la série ? Écrivez-nous, on en parle.
+                </p>
+                <Link
+                  href="/contact?sujet=partenariat"
+                  className="inline-flex min-h-12 items-center bg-[var(--color-jaune)] px-6 font-semibold text-[var(--color-nuit)] transition-colors duration-[80ms] hover:bg-[var(--color-craie)]"
+                >
+                  Nous écrire
+                </Link>
+              </div>
+            </div>
+          </section>
+        </Volets>
       </main>
       <PiedDePage />
     </>

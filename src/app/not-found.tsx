@@ -21,10 +21,10 @@ export default function PageIntrouvable() {
   return (
     <>
       <EnTete />
-      <main id="contenu" className="colonne-large pt-16 pb-24 sm:pt-24">
-        <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-turquoise)] uppercase">Erreur 404</p>
-        <h1 className="titre-affiche mt-3 text-6xl sm:text-8xl">Balle dehors</h1>
-        <p className="mt-5 max-w-[46ch] text-lg leading-relaxed text-[var(--color-craie-douce)]">
+      <main id="contenu" className="colonne-large min-h-[70svh] pt-16 pb-[var(--air-chapitre)] sm:pt-24">
+        <p className="etiquette text-[var(--color-turquoise)]">Erreur 404</p>
+        <h1 className="titre-affiche titre-page mt-4">Balle dehors</h1>
+        <p className="chapeau mt-[var(--titre-contenu)] max-w-[40ch] text-[var(--color-craie-douce)]">
           Cette page n&apos;existe pas, ou plus. L&apos;adresse a peut-être changé : repartez d&apos;ici.
         </p>
         <ul className="mt-10 flex flex-wrap gap-3">
@@ -35,7 +35,7 @@ export default function PageIntrouvable() {
                 className={
                   i === 0
                     ? "inline-flex min-h-12 items-center bg-[var(--color-jaune)] px-6 font-semibold text-[var(--color-nuit)] transition-colors duration-[80ms] hover:bg-[var(--color-craie)]"
-                    : "inline-flex min-h-12 items-center border border-[var(--color-nuit-trait)] px-6 font-semibold hover:border-[var(--color-craie-tenue)]"
+                    : "inline-flex min-h-12 items-center border-2 border-[var(--color-craie-tenue)] px-6 font-semibold hover:border-[var(--color-craie)]"
                 }
               >
                 {s.nom}

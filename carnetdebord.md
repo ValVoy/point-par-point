@@ -2053,3 +2053,33 @@ d'actualités en double, la page en cours marquée dans le pied de page.
 - Suite : à proposer à l'utilisateur, les postes à deux joueurs qui laissent un tiers vide et
   « Parcours » sous la carte du joueur ; puis la refonte des pages restantes (actualités, le
   projet, où nous voir, partenaires, contact, juridiques), avec une vraie image par page.
+
+**22:45** · **[jalon] Étape 5 : tout le site public au même système**
+
+Fiche des pages restantes écrite puis arbitrée par l'utilisateur (quatre choix, tous recommandés) :
+la une des actualités en bandeau puis des cartes à image, le projet en fil vertical avec photos en
+alternance, un mur de logos et l'appel aux partenaires en bandeau, deux colonnes pleines pour Où
+nous voir et le contact. Un composant commun, `ImageOuMotif`, montre la photo quand Tom en a mis
+une et le motif du maillot sinon : jamais de case vide. Le fil du projet est une version verticale
+qui n'assombrit jamais le texte, tracé d'emblée sous mouvement réduit.
+
+Trois écarts assumés au codage, écrits dans la fiche : le mur de logos reste sombre (logos en blanc
+qui reprennent leur couleur au survol, plus juste pour l'identité nocturne) ; pas de délai de
+réponse annoncé sur le contact, ce serait un engagement pris au nom de Tom ; les pages juridiques
+au corps des chapitres, « Confidentialité » ne tenant pas au titre de page.
+
+La critique à froid a relevé sept défauts et quatre propositions, tout est traité : titre de la une
+qui n'était pas un titre, chiffre décalé à 1024 px, noms de partenaires qui débordaient au
+téléphone, interligne cassé par un lien, mention du contact à 14 px, itinéraire en double, contour
+des boutons de la 404 ; chapô dans le bandeau, salle en pleine largeur sans texte d'accès, mur à
+autant de colonnes que de partenaires, phrase d'ouverture des actualités.
+
+- Portée : pages actualités, article, le projet, partenaires, où nous voir, contact, juridiques,
+  404 ; `image-ou-motif.tsx`, `projet/fil-vertical.tsx`, `actions-match.tsx`, fiche section 8.
+- Vérifié : 189 tests, `tsc`, lint, build ; aucun débordement ni texte sous 13 px ni case qui
+  déborde sur 9 pages à 390, 1024 et 1440 px ; hiérarchie des titres relue ; fil tracé au
+  défilement et d'emblée sous mouvement réduit (critique) ; aucune erreur console. Une première
+  sonde avait tourné sur un ancien serveur resté ouvert : écartée et refaite.
+- Suite : l'utilisateur et Tom regardent le site complet en production ; fixer avec Tom le délai de
+  réponse du contact ; les photos de Tom donneront aux pages leur vraie image ; dette restante à la
+  ROADMAP (canonical, données structurées, glossaire, espaces insécables).

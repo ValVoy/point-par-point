@@ -235,8 +235,9 @@ de l'intro et de GSAP sur l'accueil.
 - [x] Étape 2, la Série : page, épisode, bloc de l'accueil (01-10-2026)
 - [x] Étape 3, les Matchs : calendrier, ligne de match, page d'un match (01-10-2026)
 - [x] Étape 4, l'Effectif et la fiche joueur (02-10-2026), critique à froid traitée
-- [ ] Les autres pages publiques au même système : actualités, le projet,
-      où nous voir, partenaires, contact, pages juridiques
+- [x] Étape 5, les pages restantes (02-10-2026) : actualités et article, le projet, où nous voir,
+      partenaires, contact, pages juridiques, 404 ; critique à froid traitée
+- [ ] Délai de réponse du contact : à fixer avec Tom avant de l'annoncer
 
 ### Avant-première pour Tom (décidée le 01-10-2026)
 
