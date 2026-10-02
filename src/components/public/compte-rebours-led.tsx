@@ -104,7 +104,7 @@ export function CompteReboursLed({ cible, initial }: { cible: string; initial: V
       {commence ? (
         <p
           aria-hidden="true"
-          className="mt-4 text-center text-xs font-semibold tracking-[0.2em] text-[var(--color-jaune)] uppercase"
+          className="etiquette mt-4 text-center text-[var(--color-jaune)]"
         >
           Match en cours
         </p>

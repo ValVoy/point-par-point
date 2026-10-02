@@ -44,19 +44,19 @@ export function TableauResultat({
       style={{ boxShadow: "inset 0 0 0 6px var(--color-nuit)" }}
     >
       <div className="flex items-center justify-between gap-4">
-        <p className="text-xs font-semibold tracking-[0.2em] text-[var(--color-jaune)] uppercase">{etiquette}</p>
-        <p className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase" aria-hidden="true">
+        <p className="etiquette text-[var(--color-jaune)]">{etiquette}</p>
+        <p className="etiquette flex items-center gap-2" aria-hidden="true">
           <PastilleResultat victoire={victoire} className="text-base" />
           {victoire ? "Victoire" : "Défaite"}
         </p>
       </div>
       <div className="titre-affiche mt-3 flex items-start justify-between gap-4 text-xl text-balance sm:text-4xl">
         <div>
-          <p className="text-xs tracking-[0.2em] text-[var(--color-craie-douce)]">Locaux</p>
+          <p className="etiquette text-[var(--color-craie-douce)]">Locaux</p>
           <p className="mt-1">{gauche}</p>
         </div>
         <div className="text-right">
-          <p className="text-xs tracking-[0.2em] text-[var(--color-craie-douce)]">Visiteurs</p>
+          <p className="etiquette text-[var(--color-craie-douce)]">Visiteurs</p>
           <p className="mt-1">{droite}</p>
         </div>
       </div>
@@ -86,7 +86,7 @@ export function TableauResultat({
           const gagne = set[0] > set[1];
           return (
             <li key={i} className="titre-affiche">
-              <span className="block text-[0.65rem] tracking-[0.15em] text-[var(--color-craie-douce)] sm:text-xs sm:tracking-[0.2em]">
+              <span className="etiquette block text-[var(--color-craie-douce)]">
                 {i === 4 ? (
                   <>
                     <span className="sm:hidden">Set 5</span>

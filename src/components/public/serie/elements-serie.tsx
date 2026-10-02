@@ -42,14 +42,6 @@ export function estNouveau(publieLe: Date | null, maintenant: Date) {
   return publieLe !== null && maintenant.getTime() - publieLe.getTime() < NOUVEAU;
 }
 
-export function MarqueNouveau() {
-  return (
-    <span className="bg-[var(--color-jaune)] px-2 py-1 text-xs font-semibold tracking-[0.2em] text-[var(--color-nuit)] uppercase">
-      Nouveau
-    </span>
-  );
-}
-
 /** Le bouton d'abonnement, absent tant que la chaine n'est pas renseignee. */
 export function BoutonAbonnement({ discret = false }: { discret?: boolean }) {
   if (!CHAINE_YOUTUBE) return null;

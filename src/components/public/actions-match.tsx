@@ -62,9 +62,10 @@ export function ActionsMatch({ match }: { match: Rencontre }) {
           href={google}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-semibold text-[var(--color-craie)] underline underline-offset-4"
+          className="inline-flex min-h-11 items-center font-semibold text-[var(--color-craie)] underline underline-offset-4"
         >
           L&apos;ajouter directement
+          <span className="sr-only"> (ouvre Google Agenda dans un nouvel onglet)</span>
         </a>
       </p>
     </div>

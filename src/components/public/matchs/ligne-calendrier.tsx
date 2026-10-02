@@ -54,7 +54,7 @@ function Sets({ sets }: { sets: RencontreAvecSets["sets"] }) {
       {joues.map((s) => (
         <span
           key={s.id}
-          className={s.pointsNous! > s.pointsEux! ? "font-semibold text-[var(--color-craie)]" : "text-[var(--color-craie-tenue)]"}
+          className={(s.pointsNous ?? 0) > (s.pointsEux ?? 0) ? "font-semibold text-[var(--color-craie)]" : "text-[var(--color-craie-tenue)]"}
         >
           {s.pointsNous}-{s.pointsEux}
         </span>

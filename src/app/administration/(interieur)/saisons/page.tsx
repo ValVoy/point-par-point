@@ -101,7 +101,7 @@ export default async function PageSaisons() {
                             type="submit"
                             className="text-[var(--color-craie-tenue)] action-admin"
                           >
-                            Corbeille
+                            Mettre à la corbeille
                           </button>
                         </form>
                       </>

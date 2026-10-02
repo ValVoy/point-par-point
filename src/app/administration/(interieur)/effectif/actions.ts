@@ -140,7 +140,7 @@ export async function modifierLigneEffectif(
     numero: donnees.get("numero")?.toString(),
     poste: donnees.get("poste"),
   });
-  if (!analyse.success) return { erreur: "Saisie invalide." };
+  if (!analyse.success) return { erreur: analyse.error.issues[0]?.message ?? "Saisie invalide." };
 
   const effectifId = versEntier(analyse.data.effectifId);
   if (!effectifId) return { erreur: "Ligne inconnue." };

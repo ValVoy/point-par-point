@@ -7,7 +7,7 @@
 export function PastilleResultat({ victoire, className = "" }: { victoire: boolean; className?: string }) {
   return (
     <span
-      className={`inline-grid size-[1.6em] shrink-0 place-items-center rounded-full border-2 border-current text-[0.75em] leading-none font-bold ${
+      className={`inline-grid size-[1.6em] shrink-0 place-items-center rounded-full border-2 border-current text-[max(0.75em,0.8125rem)] leading-none font-bold ${
         victoire ? "bg-[var(--color-craie)] text-[var(--color-nuit)] [border-color:var(--color-craie)]" : "text-[var(--color-craie)]"
       } ${className}`}
     >

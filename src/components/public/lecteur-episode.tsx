@@ -54,7 +54,7 @@ export function LecteurEpisode({
           YouTube tant qu'on n'a pas choisi de lire. */}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute right-2 bottom-2 z-10 bg-[var(--color-boitier)]/80 px-2 py-1 text-xs text-[var(--color-craie-douce)]"
+        className="pointer-events-none absolute right-2 bottom-2 z-10 bg-[var(--color-boitier)]/80 px-2 py-1 text-[0.8125rem] text-[var(--color-craie-douce)]"
       >
         Lecture via YouTube
       </span>
