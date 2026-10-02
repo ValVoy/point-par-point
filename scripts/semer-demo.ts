@@ -1,6 +1,7 @@
 import { config } from "dotenv";
 config({ path: ".env.local" });
 
+import { eq } from "drizzle-orm";
 import { db } from "../src/lib/db";
 import {
   actualites,
@@ -121,6 +122,14 @@ const MATCHS = [
 async function principal() {
   const base = db();
   const demo = true;
+
+  // Un second semis echouait a mi-chemin (adresses de joueurs deja prises) apres
+  // avoir cree une saison courante de plus : refuser d'emblee (audit du 02-10-2026).
+  const [deja] = await base.select({ id: saisons.id }).from(saisons).where(eq(saisons.demo, true)).limit(1);
+  if (deja) {
+    console.error("Des données de démonstration existent déjà. D'abord : npm run db:purge-demo");
+    process.exit(1);
+  }
 
   console.log("Semis des données de démonstration...");
 

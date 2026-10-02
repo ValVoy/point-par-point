@@ -69,6 +69,12 @@ describe("cartesEquipe", () => {
 });
 
 describe("extraitEtape", () => {
+  it("ne coupe jamais un emoji en deux (audit T12)", () => {
+    const extrait = extraitEtape("🏐".repeat(30), 15) ?? "";
+    assert.equal(extrait.isWellFormed(), true);
+    assert.equal(Array.from(extrait).length, 16);
+  });
+
   it("rend un texte court tel quel", () => {
     assert.equal(extraitEtape("Premier match.", 200), "Premier match.");
   });

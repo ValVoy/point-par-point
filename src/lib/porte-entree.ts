@@ -91,6 +91,7 @@ export function extraitEtape(texte: string | null, max: number): string | null {
   if (finDePhrase >= max * 0.6) return debut.slice(0, finDePhrase + 1);
 
   const espace = debut.lastIndexOf(" ");
-  const coupe = espace > 0 ? debut.slice(0, espace) : propre.slice(0, max);
+  // Sans espace, couper par caractere et non par unite de code : un emoji ne se coupe pas en deux (audit T12).
+  const coupe = espace > 0 ? debut.slice(0, espace) : Array.from(propre).slice(0, max).join("");
   return `${coupe.replace(/[\s,;:.]+$/, "")}…`;
 }

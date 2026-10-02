@@ -47,6 +47,14 @@ export const DOSSIER_LOCAL = path.join(process.cwd(), ".stockage-local");
 
 export class StockageIndisponible extends Error {}
 
+/**
+ * 24 heures, la duree annoncee par la politique de confidentialite pour qu'une
+ * photo effacee cesse d'etre servie (audit du 02-10-2026, R14). Un an et
+ * `immutable` la laissaient vivre un an dans le cache de l'optimiseur d'images
+ * de Next, qui reprend la duree donnee par la source.
+ */
+const CACHE_PHOTO = "public, max-age=86400";
+
 export async function deposer(cle: string, octets: Buffer): Promise<void> {
   if (!cleValide(cle)) throw new Error("Clé de stockage invalide.");
   const r2 = configurationR2();
@@ -55,7 +63,7 @@ export async function deposer(cle: string, octets: Buffer): Promise<void> {
       method: "PUT",
       body: new Uint8Array(octets),
       // Longueur explicite : sans elle, le corps peut partir decoupe, ce que R2 refuse (411).
-      headers: { "content-type": "image/webp", "content-length": String(octets.byteLength), "cache-control": "public, max-age=31536000, immutable" },
+      headers: { "content-type": "image/webp", "content-length": String(octets.byteLength), "cache-control": CACHE_PHOTO },
     });
     if (!reponse.ok) throw new Error(`Envoi vers R2 refusé (${reponse.status}).`);
     return;

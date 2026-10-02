@@ -19,7 +19,7 @@ export const SUJETS = {
 
 export type Sujet = keyof typeof SUJETS;
 
-const estSujet = (valeur: unknown): valeur is Sujet => typeof valeur === "string" && valeur in SUJETS;
+const estSujet = (valeur: unknown): valeur is Sujet => typeof valeur === "string" && Object.hasOwn(SUJETS, valeur);
 
 /** Le sujet pre-rempli depuis l'adresse (/contact?sujet=partenariat), s'il est connu. */
 export function sujetInitial(valeur: string | undefined): Sujet {

@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function PageConfidentialite() {
   return (
-    <PageJuridique surtitre={NOM_DU_SITE} titre="Confidentialité" misAJour="30 septembre 2026">
+    <PageJuridique surtitre={NOM_DU_SITE} titre="Confidentialité" misAJour="2 octobre 2026">
       <p>
         Ce site collecte peu de choses, et seulement ce dont il a besoin. Voici tout ce qu&apos;il garde, pourquoi,
         et pour combien de temps.
@@ -66,8 +66,8 @@ export default function PageConfidentialite() {
 
       <h3>Quand vous visitez le site</h3>
       <p>
-        Pour savoir combien de personnes le lisent, le site utilise Umami, un compteur de visites installé sur notre
-        propre serveur. Il ne dépose aucun cookie et ne garde pas votre adresse réseau. Il retient la page vue, le
+        Pour savoir combien de personnes le lisent, le site utilise Umami, un compteur de visites installé sur le
+        serveur qui héberge le site, en Allemagne. Il ne dépose aucun cookie et ne garde pas votre adresse réseau. Il retient la page vue, le
         site d&apos;où vous venez, le type d&apos;appareil, le navigateur, la langue et le pays. Une visite est
         reconnue par une empreinte calculée, qui ne permet pas de savoir qui vous êtes. Ces chiffres ne sont
         partagés avec personne. Si votre navigateur demande à ne pas être suivi (réglage « Do Not Track »), rien
@@ -99,8 +99,9 @@ export default function PageConfidentialite() {
         Turso et Cloudflare sont des sociétés américaines : même stockées en Europe, les données peuvent donc
         relever aussi du droit des États-Unis. La base est sauvegardée chaque nuit, chiffrée, et chaque sauvegarde est
         effacée au bout de 30 jours : une donnée effacée du site peut donc y subsister jusqu&apos;à 30 jours, sans
-        être consultée. Une photo effacée peut aussi rester en cache chez Cloudflare jusqu&apos;à 24 heures, à une
-        adresse que plus aucune page ne donne. Le détail des prestataires est dans les{" "}
+        être consultée. Les photos sont elles aussi copiées chaque nuit : une photo effacée subsiste au plus 30 jours
+        dans cette copie, et jusqu&apos;à 24 heures en cache chez Cloudflare et sur le serveur, à une adresse que
+        plus aucune page ne donne. Le détail des prestataires est dans les{" "}
         <Link href="/mentions-legales">mentions légales</Link>.
       </p>
       <p>Aucune donnée n&apos;est vendue, louée ni transmise à qui que ce soit d&apos;autre.</p>

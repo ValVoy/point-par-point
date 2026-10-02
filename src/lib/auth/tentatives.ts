@@ -90,8 +90,13 @@ export async function reserverTentative(
     // La tentative qui vient d'etre reservee compte : au-dela du plafond, refus.
     if ((resultat?.nombre ?? 0) > plafond) {
       const libre = (resultat?.plusAncienne?.getTime() ?? Date.now()) + FENETRE_MS;
+      // Refusee, elle n'a essaye aucun mot de passe : elle ne doit pas rester
+      // un echec. Sinon celui qui insiste depuis une seule adresse reseau, deja
+      // bloque par le couple, ferait monter le compteur de l'adresse visee
+      // jusqu'a bloquer le vrai titulaire (audit du 02-10-2026, S19).
+      if (ligne) await base.delete(tentativesAuth).where(eq(tentativesAuth.id, ligne.id));
       return {
-        id: ligne?.id ?? null,
+        id: null,
         verdict: { autorise: false, minutesRestantes: Math.max(1, Math.ceil((libre - Date.now()) / 60000)) },
       };
     }

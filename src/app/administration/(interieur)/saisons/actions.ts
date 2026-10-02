@@ -28,6 +28,22 @@ function versDate(valeur: string | undefined): Date | null {
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
+/**
+ * Le site public designe une saison par son libelle (`/matchs?saison=2026-2027`) :
+ * deux saisons du meme nom rendraient la seconde inatteignable, et les onglets
+ * identiques (audit du 02-10-2026, U16). Les saisons a la corbeille ne comptent pas.
+ */
+const MESSAGE_LIBELLE_PRIS = "Une saison porte déjà ce libellé. Choisissez-en un autre, par exemple « 2026-2027 bis ».";
+
+async function libellePris(libelle: string, sauf?: number): Promise<boolean> {
+  const actives = await db()
+    .select({ id: saisons.id, libelle: saisons.libelle })
+    .from(saisons)
+    .where(isNull(saisons.supprimeLe));
+  const cherche = libelle.toLocaleLowerCase("fr");
+  return actives.some((saison) => saison.id !== sauf && saison.libelle.trim().toLocaleLowerCase("fr") === cherche);
+}
+
 function lire(donnees: FormData) {
   return schema.safeParse({
     libelle: donnees.get("libelle"),
@@ -46,6 +62,8 @@ export async function creerSaison(
   if (!analyse.success) {
     return { erreur: analyse.error.issues[0]?.message ?? "Saisie invalide." };
   }
+
+  if (await libellePris(analyse.data.libelle)) return { erreur: MESSAGE_LIBELLE_PRIS };
 
   const base = db();
   const existantes = await base
@@ -84,6 +102,7 @@ export async function modifierSaison(
   if (!analyse.success) {
     return { erreur: analyse.error.issues[0]?.message ?? "Saisie invalide." };
   }
+  if (await libellePris(analyse.data.libelle, id)) return { erreur: MESSAGE_LIBELLE_PRIS };
 
   await db()
     .update(saisons)

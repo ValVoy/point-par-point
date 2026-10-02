@@ -47,5 +47,9 @@ describe("sujetInitial", () => {
     assert.equal(sujetInitial("partenariat"), "partenariat");
     assert.equal(sujetInitial("n'importe quoi"), "question");
     assert.equal(sujetInitial(undefined), "question");
+    // Les cles heritees de l'objet ne sont pas des sujets (audit du 02-10-2026, S20).
+    assert.equal(sujetInitial("constructor"), "question");
+    assert.equal(sujetInitial("__proto__"), "question");
+    assert.equal(sujetInitial("toString"), "question");
   });
 });
