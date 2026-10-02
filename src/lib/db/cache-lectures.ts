@@ -68,6 +68,16 @@ export function toucheTableSensible(sql: string): boolean {
   return TABLES_SENSIBLES.some((table) => citeTable(sql, table));
 }
 
+/**
+ * Une lecture sans table (`select 1`) ne se garde jamais non plus : il n'y a
+ * rien a economiser, et c'est justement la sonde de sante (`/sante`), qui doit
+ * prouver a chaque appel que la base repond. Gardee, elle repondait « ok »
+ * base coupee (constate en production le 02-10-2026).
+ */
+export function litUneTable(sql: string): boolean {
+  return /\bfrom\b/i.test(sql);
+}
+
 /** La table visee par une ecriture simple, sinon null (ecriture inconnue). */
 export function tableEcrite(sql: string): string | null {
   const trouve = /^\s*(?:insert\s+(?:or\s+\w+\s+)?into|replace\s+into|update(?:\s+or\s+\w+)?|delete\s+from)\s+"?(\w+)"?/i.exec(sql);
@@ -194,7 +204,7 @@ export function avecCacheDeLectures(client: Client, magasin = magasinPartage()):
     execute(stmt: InStatement | string, args?: InArgs) {
       const { sql, args: valeurs } = decomposer(stmt, args);
       if (estLecture(sql)) {
-        const cle = toucheTableSensible(sql) ? null : cleDeLecture(sql, valeurs);
+        const cle = toucheTableSensible(sql) || !litUneTable(sql) ? null : cleDeLecture(sql, valeurs);
         return cle ? magasin.lire(cle, () => execute(stmt, args)) : execute(stmt, args);
       }
       const travail = execute(stmt, args);

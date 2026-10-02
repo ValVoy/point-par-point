@@ -178,6 +178,14 @@ describe("avecCacheDeLectures", () => {
     assert.equal(appels.filter((sql) => sql.startsWith("select")).length, 2);
   });
 
+  it("la sonde de sante interroge toujours la base", async () => {
+    const { client, appels } = fauxClient();
+    const c = avecCacheDeLectures(client, new MagasinDeLectures());
+    await c.execute("select 1");
+    await c.execute("select 1");
+    assert.equal(appels.length, 2);
+  });
+
   it("une connexion ou un message de contact ne vide pas le cache public", async () => {
     const { client, appels } = fauxClient();
     const c = avecCacheDeLectures(client, new MagasinDeLectures());
