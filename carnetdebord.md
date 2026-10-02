@@ -2083,3 +2083,26 @@ autant de colonnes que de partenaires, phrase d'ouverture des actualités.
 - Suite : l'utilisateur et Tom regardent le site complet en production ; fixer avec Tom le délai de
   réponse du contact ; les photos de Tom donneront aux pages leur vraie image ; dette restante à la
   ROADMAP (canonical, données structurées, glossaire, espaces insécables).
+
+**22:56** · **[clôture] Fin de séance : un site rapide, audité deux fois, entièrement refondu**
+
+Séance ouverte à 10:30 sur la lenteur ressentie en production. Elle a été mesurée puis corrigée :
+un cache des lectures vidé à chaque écriture ramène les pages au niveau d'un fichier statique
+(accueil de 500 à 725 ms à 215 à 240 ms derrière la barrière). Deux audits du groupe, le matin sur
+le code et l'après-midi sur le site avec ses données, ont été suivis de leurs arbitrages, tous
+codés. La saccade de l'accueil venait du mouvement, pas du rendu. L'Effectif et toutes les pages
+restantes sont passés au système de la refonte, chacun avec sa fiche validée et sa critique à
+froid. La production porte une démonstration voulue, marquée `demo`.
+
+Deux coupures de l'API en cours de séance, sans perte : tout était poussé ou consigné à chaque
+étape. Mis à jour en clôture : le `CLAUDE.md` du projet (« rien n'est commencé » remplacé par
+l'état réel) et la carte de `APP/CLAUDE.md` (Point Par Point passe dans « En service »).
+
+- Portée : `CLAUDE.md`, `APP/CLAUDE.md` (hors dépôt), carnet ; deux notes de mémoire de séance.
+- Vérifié : arbre propre et poussé, `main` à jour avec `origin/main` ; aucun serveur local ni
+  relais vers la production laissé ouvert.
+- Suite : le poste Coolify applique la consigne #02 (santé sur `/robots.txt`, sonde Todai, purge
+  horaire avec battement, vérification du build avec tests) ; l'utilisateur et Tom parcourent le
+  site complet en production et rejugent le saut à la molette ; fixer avec Tom le délai de réponse
+  du contact ; purger la démonstration quand Tom commence la vraie saisie ; le 07-10, montée de Next
+  (S22) ; puis la barre de navigation (idée du ballon qui devient « POINT PAR POINT »).

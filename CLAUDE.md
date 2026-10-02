@@ -19,8 +19,14 @@ La chaîne YouTube de la série : `https://www.youtube.com/@oger_tom`.
 Projet coup de coeur, mené en aide à un ami. Cela ne change rien aux exigences techniques, mais
 beaucoup à ce qu'on promet dans la durée : voir la question de la maintenance au cadrage.
 
-Rien n'est commencé. Le dossier est un squelette posé le 19-09-2026 pour pouvoir démarrer sans
-refaire le cadrage de zéro.
+**État au 02-10-2026** : le site est en ligne en avant-première, derrière une barrière, sur
+`volley.valentincheron.fr` (instance de production : vraie base Turso, vrai bucket R2 ; tout push
+sur `main` s'y déploie). Tout le site public suit le système de la refonte
+(`fiches/refonte-respiration.md`, étapes 1 à 5). La production contient une **démonstration
+marquée `demo`**, voulue par l'utilisateur pour que Tom juge le rendu, à purger quand Tom commence
+la vraie saisie. Les accès de production vivent dans `.env.turso-prod.local`, que Next ne charge
+jamais : un build local ne lit que `.env.local`. Le reste à faire est dans `ROADMAP.md`, la reprise
+dans la dernière ligne `Suite :` du carnet.
 
 ## Les trois choses déjà tranchées
 
