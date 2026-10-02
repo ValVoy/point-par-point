@@ -87,15 +87,17 @@ export function BandeauEpisode(props: Props) {
         aria-hidden="true"
         className="absolute inset-0 hidden bg-gradient-to-t from-[var(--color-nuit)] from-25% via-[var(--color-nuit)]/85 via-50% to-transparent lg:block"
       />
-      {/* La place du bouton : le notre en mode lien, celui de la facade (bottom-8 left-8) en mode lecteur. */}
+      {/* En mode lien, le bouton est au centre de l'image (arbitrage du 02-10-2026, audit
+          G27) : en bas a gauche, il repoussait le titre et creait un second bord gauche. En
+          mode lecteur, la place du bouton de la facade (bottom-8 left-8) reste reservee. */}
       <Calque className="absolute inset-x-0 bottom-0 hidden items-end gap-8 p-8 pr-40 text-left lg:flex">
-        {lien ? <Lecture /> : <span aria-hidden="true" className="size-20 shrink-0" />}
+        {lien ? null : <span aria-hidden="true" className="size-20 shrink-0" />}
         <Calque className="block min-w-0">
           <Texte titre={titre} etiquette={etiquette} nouveau={nouveau} enTitre={lien} surImage />
         </Calque>
       </Calque>
       {lien ? (
-        <span className="absolute bottom-4 left-4 lg:hidden">
+        <span className="absolute inset-0 grid place-items-center">
           <Lecture />
         </span>
       ) : null}

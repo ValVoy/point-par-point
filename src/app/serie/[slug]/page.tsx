@@ -8,6 +8,7 @@ import { LecteurEpisode } from "@/components/public/lecteur-episode";
 import { MiniatureEpisode } from "@/components/public/miniature-episode";
 import { BoutonAbonnement, PHRASE_ABONNEMENT } from "@/components/public/serie/elements-serie";
 import { LigneEpisode } from "@/components/public/serie/ligne-episode";
+import { ActionsMatch } from "@/components/public/actions-match";
 import { TableauProchainMatch } from "@/components/public/tableau-prochain-match";
 import { TableauResultat } from "@/components/public/tableau-resultat";
 import { TitreChapitre } from "@/components/public/titre-chapitre";
@@ -15,8 +16,8 @@ import { Volets } from "@/components/public/volets";
 import { statutPublic } from "@/lib/calendrier";
 import { dateLongue } from "@/lib/dates";
 import type { Episode } from "@/lib/episodes";
-import { matchPublic } from "@/lib/matchs-publics";
-import { resultatDepuis } from "@/lib/resultats";
+import { calendrierDeLaSaison, matchPublic } from "@/lib/matchs-publics";
+import { matchDuTableau, resultatDepuis } from "@/lib/resultats";
 import { episodePublic, nouvelleAdresseEpisode } from "@/lib/serie";
 import { miniatureYoutubeHD } from "@/lib/youtube";
 import { titreSansNumero } from "@/lib/titre-episode";
@@ -62,6 +63,50 @@ function LienVoisin({ episode, sens }: { episode: Episode | null; sens: "précé
         {titreSansNumero(episode)}
       </span>
     </Link>
+  );
+}
+
+/**
+ * La sortie du dernier episode, la page la plus partagee (arbitrage du 02-10-2026,
+ * audit U27) : le spectateur de la serie devient spectateur du prochain match,
+ * et peut decouvrir l'equipe. Rien si aucun match n'est a venir.
+ */
+async function SuiteDuDernier() {
+  const { matchs, maintenant } = await calendrierDeLaSaison();
+  const prochain = matchDuTableau(matchs, maintenant);
+  return (
+    <section aria-labelledby="titre-sortie" className="chapitre">
+      <TitreChapitre
+        id="titre-sortie"
+        surtitre="En attendant le prochain épisode"
+        action={
+          <Link href="/effectif" className="inline-flex min-h-12 items-center font-semibold underline decoration-2 underline-offset-4 hover:text-[var(--color-jaune)]">
+            Découvrir l&apos;équipe
+          </Link>
+        }
+      >
+        {prochain ? "Au prochain match" : "L'équipe"}
+      </TitreChapitre>
+      {prochain ? (
+        <div className="mt-[var(--titre-contenu)] max-w-3xl">
+          <Revelations>
+            <div data-allume>
+              <TableauProchainMatch
+                match={{
+                  adversaire: prochain.adversaire,
+                  domicile: prochain.aDomicile,
+                  joueLe: prochain.joueLe,
+                  heureConnue: prochain.heureConnue,
+                  salle: [prochain.salleNom, prochain.salleAdresse].filter(Boolean).join(", ") || null,
+                }}
+                maintenant={maintenant}
+              />
+            </div>
+          </Revelations>
+          <ActionsMatch match={prochain} />
+        </div>
+      ) : null}
+    </section>
   );
 }
 
@@ -170,7 +215,9 @@ export default async function PageEpisode({ params }: Parametres) {
                 <LigneEpisode episode={suivant} match={null} maintenant={new Date()} />
               </ol>
             </section>
-          ) : null}
+          ) : (
+            <SuiteDuDernier />
+          )}
 
           {precedent ? (
             <nav aria-label="Épisode précédent" className="suite border-t border-[var(--color-nuit-trait)]">

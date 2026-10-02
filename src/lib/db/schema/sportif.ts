@@ -29,6 +29,15 @@ export const ETATS_RENCONTRE = [
 export type EtatRencontre = (typeof ETATS_RENCONTRE)[number];
 
 /**
+ * Le type d'une rencontre (arbitrage du 02-10-2026, audit D23) : seul le
+ * championnat compte au bilan de la saison ; une coupe ou un amical s'affiche,
+ * se raconte, mais ne fausse pas le bilan.
+ */
+export const TYPES_RENCONTRE = ["championnat", "coupe", "amical"] as const;
+
+export type TypeRencontre = (typeof TYPES_RENCONTRE)[number];
+
+/**
  * Tout contenu date est rattache a une saison, decide au cadrage. La colonne
  * coute une ligne aujourd'hui et evite une migration penible l'ete prochain.
  */
@@ -123,6 +132,7 @@ export const rencontres = sqliteTable(
       .notNull()
       .default(true),
     competition: text("competition"),
+    type: text("type", { enum: TYPES_RENCONTRE }).notNull().default("championnat"),
     salleNom: text("salle_nom"),
     salleAdresse: text("salle_adresse"),
     salleLatitude: real("salle_latitude"),

@@ -1,0 +1,1 @@
+ALTER TABLE `rencontres` ADD `type` text DEFAULT 'championnat' NOT NULL;

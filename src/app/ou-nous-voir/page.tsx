@@ -25,12 +25,15 @@ export const metadata: Metadata = {
   description: `La salle de l'équipe D2 masculine du ${EQUIPE}, comment y venir, et les prochains matchs à domicile.`,
 };
 
+/** Null sans adresse ni coordonnees : jamais d'itineraire vers un nom seul (audit D25). */
 function itineraire(salle: { nom: string; adresse: string | null; latitude: number | null; longitude: number | null }) {
   const destination =
     salle.latitude !== null && salle.longitude !== null
       ? `${salle.latitude},${salle.longitude}`
-      : [salle.nom, salle.adresse].filter(Boolean).join(", ");
-  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
+      : salle.adresse
+        ? `${salle.nom}, ${salle.adresse}`
+        : null;
+  return destination ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}` : null;
 }
 
 export default async function PageOuNousVoir() {
@@ -48,18 +51,24 @@ export default async function PageOuNousVoir() {
               <h1 id="titre-salle" className="titre-affiche mt-3 hyphens-auto text-5xl text-balance break-words sm:text-8xl">
                 {salle.nom}
               </h1>
-              {salle.adresse ? <p className="mt-4 text-xl text-[var(--color-craie)]">{salle.adresse}</p> : null}
-              <div className="mt-8 flex flex-wrap items-center gap-3">
-                <a
-                  href={itineraire(salle)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-12 items-center justify-center bg-[var(--color-jaune)] px-6 font-semibold text-[var(--color-nuit)] transition-colors duration-[80ms] hover:bg-[var(--color-craie)]"
-                >
-                  Itinéraire<span className="sr-only"> (ouvre Google Maps)</span>
-                </a>
-                <CopierAdresse adresse={[salle.nom, salle.adresse].filter(Boolean).join(", ")} />
-              </div>
+              {salle.adresse ? (
+                <p className="mt-4 text-xl text-[var(--color-craie)]">{salle.adresse}</p>
+              ) : (
+                <p className="mt-4 text-xl text-[var(--color-craie-tenue)]">Adresse à confirmer</p>
+              )}
+              {itineraire(salle) ? (
+                <div className="mt-8 flex flex-wrap items-center gap-3">
+                  <a
+                    href={itineraire(salle) ?? undefined}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-12 items-center justify-center bg-[var(--color-jaune)] px-6 font-semibold text-[var(--color-nuit)] transition-colors duration-[80ms] hover:bg-[var(--color-craie)]"
+                  >
+                    Itinéraire<span className="sr-only"> (ouvre Google Maps)</span>
+                  </a>
+                  {salle.adresse ? <CopierAdresse adresse={`${salle.nom}, ${salle.adresse}`} /> : null}
+                </div>
+              ) : null}
             </>
           ) : (
             <>

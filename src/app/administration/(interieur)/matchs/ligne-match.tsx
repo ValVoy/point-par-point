@@ -56,6 +56,12 @@ export function LigneMatch({ rencontre }: { rencontre: RencontreAvecSets }) {
           ) : null}
         </p>
         {rencontre.etat === "jouee" ? <Score rencontre={rencontre} /> : null}
+        {/* Sans adresse, le site n'offre ni itineraire ni adresse a copier (audit D25). */}
+        {rencontre.etat === "a_venir" && !rencontre.salleAdresse && rencontre.salleLatitude === null ? (
+          <p className="mt-1 text-xs text-[var(--color-jaune)]">
+            {rencontre.salleNom ? "Adresse de la salle à compléter : sans elle, pas d'itinéraire sur le site." : "Salle à compléter."}
+          </p>
+        ) : null}
       </div>
 
       <div className="flex items-center gap-3 text-sm">

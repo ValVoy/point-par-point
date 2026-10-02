@@ -78,6 +78,13 @@
       "when": 1790888845250,
       "tag": "0010_heure-connue",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "6",
+      "when": 1790956085538,
+      "tag": "0011_type-rencontre",
+      "breakpoints": true
     }
   ]
 }

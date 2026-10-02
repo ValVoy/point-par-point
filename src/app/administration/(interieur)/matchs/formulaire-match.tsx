@@ -8,7 +8,7 @@ import {
   Selection,
   ZoneTexte,
 } from "@/components/formulaire";
-import type { EtatRencontre } from "@/lib/db/schema";
+import type { EtatRencontre, TypeRencontre } from "@/lib/db/schema";
 import { LIBELLES_ETAT } from "@/lib/etats-rencontre";
 import { creerMatch, modifierMatch, type EtatMatch } from "./actions";
 
@@ -21,11 +21,18 @@ export type MatchModifiable = {
   adversaire: string;
   domicile: boolean;
   competition: string;
+  type: TypeRencontre;
   salleNom: string;
   salleAdresse: string;
   etat: EtatRencontre;
   commentaire: string;
 };
+
+const OPTIONS_TYPE = [
+  { valeur: "championnat", libelle: "Championnat" },
+  { valeur: "coupe", libelle: "Coupe" },
+  { valeur: "amical", libelle: "Match amical" },
+];
 
 export const OPTIONS_LIEU = [
   { valeur: "domicile", libelle: "Domicile" },
@@ -83,13 +90,20 @@ export function FormulaireMatch({
         placeholder="Championnat départemental 2"
       />
 
+      <Selection
+        nom="type"
+        libelle="Type de rencontre"
+        valeur={match?.type ?? "championnat"}
+        options={OPTIONS_TYPE}
+      />
+
       <Champ nom="salleNom" libelle="Salle" valeur={match?.salleNom} maxLength={80} />
       <Champ
         nom="salleAdresse"
         libelle="Adresse de la salle"
         valeur={match?.salleAdresse}
         maxLength={160}
-        aide="Elle servira à la carte et au bouton d'itinéraire."
+        aide="Rue et commune : sans adresse, le site ne propose pas d'itinéraire (un nom de salle seul existe dans bien des villes)."
       />
 
       {match ? (

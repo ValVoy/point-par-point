@@ -14,8 +14,11 @@ export function lienItineraire(match: Rencontre) {
   if (match.salleLatitude !== null && match.salleLongitude !== null) {
     return `https://www.google.com/maps/dir/?api=1&destination=${match.salleLatitude},${match.salleLongitude}`;
   }
+  // Jamais d'itineraire vers un nom seul (arbitrage du 02-10-2026, audit D25) :
+  // « Palais des Sports » existe dans cent communes, Maps choisirait au hasard.
+  if (!match.salleAdresse) return null;
   const adresse = [match.salleNom, match.salleAdresse].filter(Boolean).join(", ");
-  return adresse ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(adresse)}` : null;
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(adresse)}`;
 }
 
 export function titreMatch(match: Pick<Rencontre, "aDomicile" | "adversaire">) {

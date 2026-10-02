@@ -34,7 +34,12 @@ export function BlocSalle({ match, avecItineraire = true }: { match: Rencontre; 
         La salle
       </h2>
       {match.salleNom ? <p className="titre-affiche titre-carte mt-3">{match.salleNom}</p> : null}
-      {match.salleAdresse ? <p className="corps mt-2 text-[var(--color-craie-douce)]">{match.salleAdresse}</p> : null}
+      {match.salleAdresse ? (
+        <p className="corps mt-2 text-[var(--color-craie-douce)]">{match.salleAdresse}</p>
+      ) : match.salleLatitude === null ? (
+        // Un nom seul ne situe pas la salle (audit D25) : on le dit plutot que d'envoyer au hasard.
+        <p className="corps mt-2 text-[var(--color-craie-tenue)]">Adresse à confirmer</p>
+      ) : null}
       {match.aDomicile ? (
         <p className="mt-2 text-sm">
           <Link href="/ou-nous-voir" className="font-semibold text-[var(--color-craie-douce)] underline underline-offset-4 hover:text-[var(--color-craie)]">

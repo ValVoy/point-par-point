@@ -54,6 +54,7 @@ export default async function PageMatch({
               adversaire: rencontre.adversaire,
               domicile: rencontre.aDomicile,
               competition: rencontre.competition ?? "",
+              type: rencontre.type,
               salleNom: rencontre.salleNom ?? "",
               salleAdresse: rencontre.salleAdresse ?? "",
               etat: rencontre.etat,

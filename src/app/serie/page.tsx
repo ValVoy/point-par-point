@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PiedDePage } from "@/components/public/accueil/pied-de-page";
 import { EnTete } from "@/components/public/entete";
 import { BandeauEpisode } from "@/components/public/serie/bandeau-episode";
-import { BoutonAbonnement, EtiquetteMatch, estNouveau } from "@/components/public/serie/elements-serie";
+import { BoutonAbonnement, EtiquetteMatch } from "@/components/public/serie/elements-serie";
 import { libelleEpisode, LigneEpisode } from "@/components/public/serie/ligne-episode";
 import { TitreChapitre } from "@/components/public/titre-chapitre";
 import { Volets } from "@/components/public/volets";
@@ -72,8 +72,9 @@ export default async function PageSerie() {
                   href={`/serie/${vedette.episode.slug}`}
                   youtubeId={vedette.episode.youtubeId}
                   titre={titreSansNumero(vedette.episode)}
-                  etiquette={vedette.episode.numero === null ? "Annonce" : `Dernier épisode · ${libelleEpisode(vedette.episode.numero)}`}
-                  nouveau={estNouveau(vedette.episode.publieLe, maintenant)}
+                  // Un seul signal, comme sur l'accueil (arbitrage du 02-10-2026, audit G28) : la
+                  // place en tete de page dit deja que c'est le dernier.
+                  etiquette={vedette.episode.numero === null ? "Annonce" : libelleEpisode(vedette.episode.numero)}
                   prioritaire
                 />
                 <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:gap-12">

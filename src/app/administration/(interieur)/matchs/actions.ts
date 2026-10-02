@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { and, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { ETATS_RENCONTRE, anciensSlugsRencontre, rencontres, setsRencontre } from "@/lib/db/schema";
+import { ETATS_RENCONTRE, TYPES_RENCONTRE, anciensSlugsRencontre, rencontres, setsRencontre } from "@/lib/db/schema";
 import { exigerDroit } from "@/lib/auth/session-courante";
 import { instantDuMatch } from "@/lib/horaire";
 import { slugRencontreLibre } from "@/lib/rencontres";
@@ -42,6 +42,8 @@ const schemaMatch = z.object({
     .max(80, "Le nom de l'adversaire dépasse 80 caractères."),
   lieu: z.enum(LIEUX, "Précisez domicile ou extérieur."),
   competition: z.string().trim().max(80, "La compétition dépasse 80 caractères.").optional(),
+  // Seul le championnat compte au bilan (arbitrage du 02-10-2026, audit D23).
+  type: z.enum(TYPES_RENCONTRE, "Précisez championnat, coupe ou amical.").default("championnat"),
   salleNom: z.string().trim().max(80, "Le nom de la salle dépasse 80 caractères.").optional(),
   salleAdresse: z.string().trim().max(160, "L'adresse de la salle dépasse 160 caractères.").optional(),
 });
@@ -64,6 +66,7 @@ function lireMatch(donnees: FormData) {
     adversaire: texte(donnees, "adversaire"),
     lieu: texte(donnees, "lieu"),
     competition: texte(donnees, "competition"),
+    type: texte(donnees, "type") || undefined,
     salleNom: texte(donnees, "salleNom"),
     salleAdresse: texte(donnees, "salleAdresse"),
   });
@@ -80,6 +83,7 @@ function colonnes(champs: ChampsMatch, horaire: { joueLe: Date; heureConnue: boo
     adversaire: champs.adversaire,
     aDomicile: champs.lieu === "domicile",
     competition: ouNull(champs.competition),
+    type: champs.type,
     salleNom: ouNull(champs.salleNom),
     salleAdresse: ouNull(champs.salleAdresse),
   };

@@ -1,4 +1,5 @@
 import { dateLongue } from "@/lib/dates";
+import { quantite } from "@/lib/resultats";
 
 /**
  * Le classement de la poule (fiche fiches/classement.md) : un vrai tableau,
@@ -19,6 +20,39 @@ type Ligne = {
 };
 
 const chiffre = (n: number | null) => (n === null ? <span aria-label="non renseigné">–</span> : n);
+
+/**
+ * Notre place, a cote du tableau en grand ecran, au-dessus au telephone
+ * (arbitrage du 02-10-2026) : le vide a droite du tableau devient l'information
+ * qu'on vient chercher. Rang en chiffre geant, points, ecart au premier.
+ */
+function NotrePlace({ lignes }: { lignes: Ligne[] }) {
+  const nous = lignes.find((l) => l.estNous);
+  if (!nous) return null;
+  const premier = lignes.find((l) => l.rang === 1);
+  const ecart = premier && premier !== nous && premier.points !== null && nous.points !== null ? premier.points - nous.points : null;
+  const suffixe = nous.rang === 1 ? "er" : "e";
+  return (
+    <div className="lg:sticky lg:top-8">
+      <p className="etiquette text-[var(--color-craie-douce)]">Notre place</p>
+      <p className="titre-affiche chiffre-geant mt-2 text-[var(--color-jaune)]">
+        {nous.rang}
+        <sup className="ml-1 align-super font-sans text-[0.3em] font-semibold normal-case">{suffixe}</sup>
+        <span className="ml-3 text-[0.35em] text-[var(--color-craie-douce)]">sur {lignes.length}</span>
+      </p>
+      <p className="corps mt-4 text-[var(--color-craie-lecture)]">
+        {nous.points !== null ? quantite(nous.points, "point") : null}
+        {nous.rang === 1
+          ? " · en tête"
+          : ecart === 0
+            ? " · à égalité de points avec le premier"
+            : ecart !== null && ecart > 0
+              ? ` · ${quantite(ecart, "point")} de moins que le premier`
+              : null}
+      </p>
+    </div>
+  );
+}
 
 export function TableauClassement({
   intitule,
@@ -41,7 +75,9 @@ export function TableauClassement({
       </p>
       {/* Colonnes de chiffres serrees au telephone (le nom passait sur deux lignes), et une
           marge a droite du dernier chiffre, comme a gauche du rang (retour du 02-10-2026). */}
-      <table className="mt-[var(--titre-contenu)] w-full max-w-3xl border-collapse text-left tabular-nums">
+      <div className="mt-[var(--titre-contenu)] grid items-start gap-[var(--air-suite)] lg:grid-cols-[minmax(0,48rem)_minmax(0,1fr)] lg:gap-16">
+      <NotrePlace lignes={lignes} />
+      <table className="w-full border-collapse text-left tabular-nums lg:order-first">
         {/* Annonce du tableau pour qui navigue de tableau en tableau (audit D31). */}
         <caption className="sr-only">
           {[final ? "Classement final" : "Classement", intitule, misAJourLe ? `à jour au ${dateLongue(misAJourLe)}` : null].filter(Boolean).join(", ")}
@@ -86,6 +122,7 @@ export function TableauClassement({
           ))}
         </tbody>
       </table>
+      </div>
     </section>
   );
 }

@@ -16,6 +16,17 @@ describe("bilanDeLaSaison", () => {
     assert.equal(bilanDeLaSaison([m(3, null, null), m(10, 0, 0, true, "a_venir")]), null);
   });
 
+  it("ne compte que le championnat : amical et coupe restent hors du bilan (audit D23)", () => {
+    const amical = { ...m(3, 3, 0), type: "amical" };
+    const coupe = { ...m(5, 0, 3), type: "coupe" };
+    assert.equal(bilanDeLaSaison([amical, coupe]), null);
+    const b = bilanDeLaSaison([amical, coupe, { ...m(10, 3, 1), type: "championnat" }]);
+    assert.ok(b);
+    assert.equal(b.victoires, 1);
+    assert.equal(b.defaites, 0);
+    assert.equal(b.setsPour, 3);
+  });
+
   it("compte victoires, sets, domicile et exterieur", () => {
     const b = bilanDeLaSaison([m(3, 3, 1, true), m(10, 2, 3, false), m(17, 3, 0, false), m(24, null, null)]);
     assert.ok(b);

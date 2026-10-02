@@ -35,12 +35,6 @@ export function EtiquetteMatch({ match, maintenant }: { match: MatchRaconte; mai
   );
 }
 
-/** Deux semaines : au-dela, un episode n'est plus « nouveau ». */
-const NOUVEAU = 14 * 24 * 3_600_000;
-
-export function estNouveau(publieLe: Date | null, maintenant: Date) {
-  return publieLe !== null && maintenant.getTime() - publieLe.getTime() < NOUVEAU;
-}
 
 /**
  * Le bouton d'abonnement, absent tant que la chaine n'est pas renseignee. Un

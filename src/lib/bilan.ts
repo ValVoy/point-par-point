@@ -5,7 +5,7 @@
  * n'est stocke. Un match sans score saisi ne compte pas, il n'est pas 0-0.
  */
 
-type Match = { etat: string; setsNous: number | null; setsEux: number | null; aDomicile: boolean; joueLe: Date };
+type Match = { etat: string; setsNous: number | null; setsEux: number | null; aDomicile: boolean; joueLe: Date; type?: string };
 
 export type Bilan = {
   victoires: number;
@@ -22,6 +22,8 @@ export function bilanDeLaSaison(matchs: Match[]): Bilan | null {
   const joues = matchs
     // Une egalite n'est pas un resultat de volley : ecartee plutot que comptee en defaite.
     .filter((m) => m.etat === "jouee" && m.setsNous !== null && m.setsEux !== null && m.setsNous !== m.setsEux)
+    // Le championnat seul (audit D23) : un amical ou une coupe ne faussent pas le bilan.
+    .filter((m) => (m.type ?? "championnat") === "championnat")
     .sort((a, b) => a.joueLe.getTime() - b.joueLe.getTime());
   if (joues.length === 0) return null;
 
